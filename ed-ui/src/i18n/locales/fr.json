@@ -5513,10 +5513,10 @@
 		"submitHint": "Ctrl + Entrée pour envoyer",
 		"counter": "{count} / {max}",
 		"argument": {
-			"author": "auteur",
-			"character": "personnage",
-			"title": "titre",
-			"linkText": "texte du lien"
+			"author": "Auteur",
+			"character": "Personnage",
+			"title": "Titre",
+			"linkText": "Texte du lien"
 		},
 		"tool": {
 			"strong": "Gras",
@@ -5590,20 +5590,20 @@
 		},
 		"tabs": {
 			"clan": "Dinoz du clan",
-			"mine": "Mes dinoz",
+			"mine": "Mes Dinoz",
 			"selection": "Sélection",
 			"journal": "Journal"
 		},
 		"matchPlace": "Lieu du match : {place}",
 		"enter": "Entrer",
 		"leave": "Sortir",
-		"noEligible": "Aucun dinoz disponible pour entrer.",
-		"elsewhere": "{count} dinoz ailleurs",
+		"noEligible": "Aucun Dinoz disponible pour entrer.",
+		"elsewhere": "{count} Dinoz ailleurs",
 		"onBoard": "Sur le damier",
-		"noneOnBoard": "Aucun dinoz sur le damier.",
+		"noneOnBoard": "Aucun Dinoz sur le damier.",
 		"hp": ":pv:",
 		"ap": "PA",
-		"noSelection": "Aucun dinoz sélectionné.",
+		"noSelection": "Aucun Dinoz sélectionné.",
 		"won": "victoire",
 		"lost": "défaite",
 		"journalEntry": "{clan} attaque : {outcome}, {count} participants, {dead} morts",

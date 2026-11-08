@@ -2636,7 +2636,8 @@
 		"completion": "Completado",
 		"pantheon": "Panteón",
 		"stats": "Estadísticas",
-		"wars": "Guerras"
+		"wars": "Guerras",
+		"championship": "Championnat"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -2745,7 +2746,7 @@
 		"headers": {
 			"title": "Título",
 			"status": "Estatus",
-			"level": "Niveau"
+			"level": "Nivel"
 		},
 		"xp": "puntos de experiencia",
 		"gold": "oro",
@@ -2763,7 +2764,7 @@
 			"available": "",
 			"unavailable": "",
 			"ongoing": "En curso...",
-			"finished": "Terminar",
+			"finished": "Completado",
 			"over": "¡Felicidades! ¡Has completado la misión \"{mission}\"!"
 		},
 		"name": {
@@ -4082,7 +4083,7 @@
 			"cinec3": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Parodia del Festival de Cine del Cinema Paradino.",
 			"cinec4": "Este magnífico trofeo fue otorgado al ganador del Premio a la Mejor Adaptación del Festival de Cine del Cinema Paradino.",
 			"hallow": "¡Este magnífico trofeo fue entregado al ganador del desfile de Halloween!",
-			"tid1": "¡Felicitaciones por haber ganado el Torneo Inter-Dojos! La Medalla Zen recompensa al mejor Dojo de Dinoland, ¡Sí, eres el mejor de los Maestros! ¡Bravo! tu estrategia fue brillante.",
+			"tid1": "¡Felicitaciones por haber ganado el Torneo Inter-Dojos! La Medalla Zen recompensa al mejor Dojo de Dinoland. ¡Sí, eres el mejor de los Maestros! ¡Bravo! Tu estrategia fue brillante.",
 			"tid2": "¡Felicitaciones por haber ganado el Torneo! La figura del Maestro Zenit moldeada en oro macizo es el trofeo para los mejores maestros de DinoRPG.¡¡La gloria y la admiración todo Dinoland son tuyas!!",
 			"gazeli": "Tu artículo en el boletín de Dinoland te hace ganar este trofeo \\\"periodinístico\\\".",
 			"hunt1": "Tus hazañas en la Caza de Monstruos han hecho de ti una leyenda. Eres un cazador nato y desde ahora los monstruos deberán pensarlo dos veces antes de atacar Dinoland.",
@@ -4159,7 +4160,7 @@
 			"ongoing": "En curso",
 			"castleDestroyed": "Castillo destruido",
 			"timeout": "Defendido",
-			"stolen": "Destruction volée"
+			"stolen": "Guerra robada"
 		}
 	},
 	"clan": {
@@ -4673,7 +4674,8 @@
 			"frozen": "Tu Dino está congelado. Puedes descongelarlo si lo deseas; la descongelación terminará a medianoche.",
 			"defending": "Tu Dino defiende el castillo de tu clan.",
 			"selling": "Tu Dino está en venta.",
-			"superdom": "Tu Dino está en el domo de Sulaflota."
+			"superdom": "Tu Dino está en el domo de Sulaflota.",
+			"clanChampionship": "Votre Dinoz participe à un match du Championnat des Clans."
 		}
 	},
 	"logs": {
@@ -4695,6 +4697,7 @@
 		"AdminUpdateQuest": "**Admin ({playerId})** ha incrementado/decrementado en {progress} la progresión de la misión {quest} del jugador {targetId}",
 		"AdminUpdatePlayer": "**Admin ({playerId})** ha actualizado {stat} a {value} del jugador {targetId}",
 		"AdminUpdateSecret": "**Admin ({playerId})** ha actualizado la clave {key} a {value}",
+		"BypassGatheringGridUpdated": "**{player} ({playerId})** a réglé le contournement de la grille de cueillette sur **{value}**.",
 		"ItemUsed": "**{player} ({playerId})** usó **{quantity}x {item}** con Dino **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** ha comprado **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** ha vendido **{quantity}x {item}** (restante {amount}).",
@@ -5586,6 +5589,7 @@
 			"finished": "Terminado"
 		},
 		"tabs": {
+			"clan": "Dinoz du clan",
 			"mine": "Mis dinoz",
 			"selection": "Selección",
 			"journal": "Registro"

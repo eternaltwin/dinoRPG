@@ -2636,7 +2636,8 @@
 		"completion": "Completion",
 		"pantheon": "Pantheon",
 		"stats": "Stats",
-		"wars": "Wars"
+		"wars": "Wars",
+		"championship": "Championship"
 	},
 	"layout": {
 		"fx": "Statuses",
@@ -4673,7 +4674,8 @@
 			"frozen": "Your Dinoz is frozen. You can unfreeze it, the process completes at midnight.",
 			"defending": "Your Dinoz is defending your Clan castle.",
 			"selling": "Your Dinoz is on sale.",
-			"superdom": "Your Dinoz is at the Superdom."
+			"superdom": "Your Dinoz is at the Superdom.",
+			"clanChampionship": "Your Dinoz participates in a battle for the Clan Championship."
 		}
 	},
 	"logs": {
@@ -4695,6 +4697,7 @@
 		"AdminUpdateQuest": "**Admin ({playerId})** has incremented/decremented of {progress} the progress of quest {quest} of player {targetId}",
 		"AdminUpdatePlayer": "**Admin ({playerId})** has updated {stat} to {value} of player {targetId}",
 		"AdminUpdateSecret": "**Admin ({playerId})** has updated the secret {key} to {value}",
+		"BypassGatheringGridUpdated": "**{player} ({playerId}) set the grid bypass to **{value}**.",
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** has purchased **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}** ({amount} remains).",
@@ -5300,9 +5303,9 @@
 		"unread": "New posts",
 		"threadCount": "Number of threads",
 		"columns": {
-			"subject": "Subject",
+			"subject": "Topic",
 			"posts": "Posts",
-			"lastPost": "Last post"
+			"lastPost": "Last Post"
 		},
 		"newThread": {
 			"open": "New thread",
@@ -5391,7 +5394,17 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
+		"doorNames_prefix": [
+			"Trees",
+			"Dragons",
+			"Squids",
+			"Goblins",
+			"Kabukis",
+			"Romeos",
+			"Wizards",
+			"Angels",
+			"Demons"
+		],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
@@ -5500,47 +5513,47 @@
 		"submitHint": "Ctrl + Enter to send",
 		"counter": "{count} / {max}",
 		"argument": {
-			"author": "author",
-			"character": "character",
-			"title": "title",
-			"linkText": "link text"
+			"author": "Author",
+			"character": "Character",
+			"title": "Title",
+			"linkText": "Link text"
 		},
 		"tool": {
 			"strong": "Bold",
 			"emphasis": "Italic",
 			"underline": "Underline",
 			"strikethrough": "Strikethrough",
-			"big": "Big text",
-			"bad": "Wrong text",
+			"big": "Big Text",
+			"bad": "Wrong Text",
 			"spoiler": "Spoiler (hidden until clicked)",
 			"code": "Code",
 			"quote": "Quote",
 			"rp": "Roleplay",
 			"sidenote": "Aside",
-			"collapse": "Collapsible section",
-			"list": "Bulleted list",
-			"orderedList": "Numbered list",
-			"codeBlock": "Code block",
+			"collapse": "Collapsible Section",
+			"list": "Bulleted List",
+			"orderedList": "Numbered List",
+			"codeBlock": "Code Block",
 			"link": "Link"
 		}
 	},
 	"clanChampionship": {
 		"connectionLost": "Clan connection lost, try again in a moment.",
 		"phase": {
-			"registration": "Registrations open",
-			"running": "Championship in progress",
-			"cancelled": "Championship cancelled",
-			"finished": "Championship finished"
+			"registration": "Registrations Open",
+			"running": "Championship in Progress",
+			"cancelled": "Championship Cancelled",
+			"finished": "Championship Finished"
 		},
-		"registrationEnd": "Registrations close: {date}",
+		"registrationEnd": "Registrations Cutoff: {date}",
 		"registrationStart": "Registrations open from {date}",
-		"endDate": "Championship ends: {date}",
-		"register": "Register the clan",
-		"unregister": "Unregister the clan",
-		"registeredClans": "Registered clans ({count})",
+		"endDate": "Championship End: {date}",
+		"register": "Register The Clan",
+		"unregister": "Unregister The Clan",
+		"registeredClans": "Registered Clans ({count})",
 		"noRegistration": "No clan registered yet.",
 		"standings": "Standings",
-		"nextMatch": "Next match",
+		"nextMatch": "Next Match",
 		"placeRevealAt": "Place revealed on {date}",
 		"kickOff": "Kick-off: {date}",
 		"opponent": "Opponent: {clan}",
@@ -5559,8 +5572,8 @@
 		"calendar": "Calendar",
 		"round": "Round {round}",
 		"versus": "vs",
-		"daysShort": "{days}d",
-		"noMatch": "No match in progress",
+		"daysShort": "{days} d",
+		"noMatch": "No battle in progress",
 		"loadError": "Unable to load the board.",
 		"viewBoard": "View the board",
 		"backToBoard": "Back to the board",
@@ -5569,27 +5582,28 @@
 		"quota": "Quota: {used}/{max}",
 		"timeLeft": "Time left: {time}",
 		"startsAt": "Starts: {date}",
-		"level": "lvl {level}",
+		"level": "lvl. {level}",
 		"status": {
 			"scheduled": "Upcoming",
 			"live": "Live",
 			"finished": "Finished"
 		},
 		"tabs": {
-			"mine": "My dinoz",
+			"clan": "Clan's Dinoz",
+			"mine": "My Dinoz",
 			"selection": "Selection",
-			"journal": "Journal"
+			"journal": "Log"
 		},
 		"matchPlace": "Match location: {place}",
 		"enter": "Enter",
 		"leave": "Leave",
-		"noEligible": "No dinoz available to enter.",
-		"elsewhere": "{count} dinoz elsewhere",
+		"noEligible": "No Dinoz available to enter.",
+		"elsewhere": "{count} Dinoz elsewhere",
 		"onBoard": "On the board",
-		"noneOnBoard": "No dinoz on the board.",
+		"noneOnBoard": "No Dinoz on the board.",
 		"hp": ":pv:",
 		"ap": "AP",
-		"noSelection": "No dinoz selected.",
+		"noSelection": "No Dinoz selected.",
 		"won": "victory",
 		"lost": "defeat",
 		"journalEntry": "{clan} attacks: {outcome}, {count} participants, {dead} dead",
@@ -5598,7 +5612,7 @@
 		"moreFights": "Show more",
 		"reason": {
 			"dead": "Dead",
-			"deadInMatch": "Dead in this match",
+			"deadInMatch": "Dead in this battle",
 			"wrongPlace": "Wrong place",
 			"inGroup": "In a group",
 			"busy": "Unavailable"
