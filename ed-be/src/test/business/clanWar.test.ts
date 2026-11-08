@@ -36,7 +36,8 @@ const txObj = {
 	clanCastle: { findUnique: vi.fn(), update: vi.fn() },
 	dinoz: { update: vi.fn() },
 	clan: { findUnique: vi.fn() },
-	clanWar: { create: vi.fn() }
+	clanWar: { create: vi.fn(), updateMany: vi.fn(), findMany: vi.fn() },
+	clanWarRanking: { upsert: vi.fn(), update: vi.fn() }
 };
 vi.mock('../../prisma.js', () => ({
 	prisma: {
@@ -46,6 +47,7 @@ vi.mock('../../prisma.js', () => ({
 		clan: { update: vi.fn() },
 		clanWarRanking: { upsert: vi.fn() },
 		clanHistory: { create: vi.fn() },
+		notification: { create: vi.fn() },
 		clanWar: { findMany: vi.fn(), findUnique: vi.fn() },
 		clanCastleRepair: { findMany: vi.fn(), fields: { totalTicks: 'totalTicks' } },
 		dinoz: { findUnique: vi.fn(), update: vi.fn(), updateMany: vi.fn() },
@@ -56,7 +58,10 @@ vi.mock('../../prisma.js', () => ({
 
 import { prisma } from '../../prisma.js';
 import { auth } from '../../dao/playerDao.js';
-import { playerHasRightRequest } from '../../dao/clansDao.js';
+import { getWarForResolve, playerHasRightRequest } from '../../dao/clansDao.js';
+import { computeWarRankingUpdates } from '../../utils/warCalculation.js';
+import { createNotification } from '../../dao/notificationDao.js';
+import { scheduleJob } from 'node-schedule';
 import {
 	eventState,
 	currentWar,
@@ -140,6 +145,12 @@ describe('declareWar', () => {
 		await declareWar(req({ clanId: '2' }));
 		expect(txObj.clanWar.create).toHaveBeenCalled();
 		expect(prisma.clanHistory.create).toHaveBeenCalled();
+		// Both clans get a ranking for the event, even when their castle comes from a previous event
+		const rankedClans = txObj.clanWarRanking.upsert.mock.calls.map((c: any[]) => c[0].create);
+		expect(rankedClans).toEqual([
+			{ clanId: 1, eventId: 'w1' },
+			{ clanId: 2, eventId: 'w1' }
+		]);
 	});
 	it('throws when attacking your own clan', async () => {
 		await expect(declareWar(req({ clanId: '1' }))).rejects.toThrow('sameClan');
@@ -161,10 +172,15 @@ describe('buildClanCastle', () => {
 		expect(prisma.clanCastle.upsert).toHaveBeenCalled();
 		expect(prisma.clanHistory.create).toHaveBeenCalled();
 	});
-	it('rebuilds an existing destroyed castle', async () => {
+	it('rebuilds an existing destroyed castle, with a ranking for the current event', async () => {
 		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ currentLife: 0 } as never);
 		await buildClanCastle(req());
 		expect(prisma.clanCastle.upsert).toHaveBeenCalled();
+		expect(prisma.clanWarRanking.upsert).toHaveBeenCalledWith({
+			where: { clanId_eventId: { clanId: 1, eventId: 'w1' } },
+			create: { clanId: 1, eventId: 'w1' },
+			update: {}
+		});
 	});
 	it('throws when castle already built', async () => {
 		vi.mocked(prisma.clanCastle.findUnique).mockResolvedValue({ currentLife: 300 } as never);
@@ -182,7 +198,9 @@ describe('buildClanCastle', () => {
 
 describe('scheduleWarExpiration', () => {
 	it('schedules ongoing wars and pending repairs', async () => {
-		vi.mocked(prisma.clanWar.findMany).mockResolvedValue([{ id: 'w1', endsAt: new Date() }] as never);
+		vi.mocked(prisma.clanWar.findMany).mockResolvedValue([
+			{ id: 'w1', endsAt: new Date(Date.now() + 60_000) }
+		] as never);
 		vi.mocked(prisma.dinoz.updateMany).mockResolvedValue({ count: 2 } as never);
 		vi.mocked(prisma.clanCastleRepair.findMany).mockResolvedValue([
 			{ id: 'r1', castleId: 'c1', hpPerTick: 1, frequency: 'hourly', totalTicks: 5 }
@@ -190,10 +208,68 @@ describe('scheduleWarExpiration', () => {
 		await scheduleWarExpiration();
 		expect(prisma.clanWar.findMany).toHaveBeenCalled();
 	});
-	it('returns early when no war', async () => {
+	it('still plans the unresolved wars when no event is active, then stops', async () => {
 		vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue(null as never);
+		vi.mocked(prisma.clanWar.findMany).mockResolvedValue([
+			{ id: 'w1', endsAt: new Date(Date.now() + 60_000) }
+		] as never);
 		await scheduleWarExpiration();
-		expect(prisma.clanWar.findMany).not.toHaveBeenCalled();
+		expect(scheduleJob).toHaveBeenCalledWith('war_w1', expect.any(Date), expect.any(Function));
+		expect(prisma.dinoz.updateMany).not.toHaveBeenCalled();
+	});
+	it('resolves at once a war that expired while the server was down', async () => {
+		vi.mocked(prisma.clanWar.findMany).mockResolvedValue([
+			{ id: 'w1', endsAt: new Date(Date.now() - 60_000) }
+		] as never);
+		vi.mocked(prisma.dinoz.updateMany).mockResolvedValue({ count: 0 } as never);
+		vi.mocked(prisma.clanCastleRepair.findMany).mockResolvedValue([] as never);
+		vi.mocked(getWarForResolve).mockResolvedValue(null as never);
+		await scheduleWarExpiration();
+		expect(getWarForResolve).toHaveBeenCalledWith('w1');
+		expect(scheduleJob).not.toHaveBeenCalledWith('war_w1', expect.anything(), expect.anything());
+	});
+});
+
+describe('war resolution', () => {
+	const war = () => ({
+		id: 'w1',
+		eventId: 'ev2',
+		isCastleDestroyed: false,
+		attacker: { id: 1, leaderId: 'p1', name: 'Us', members: [], clanWarRanking: [{ eventId: 'old' }] },
+		defender: { id: 2, leaderId: 'p2', name: 'Foes', members: [], clanWarRanking: [] }
+	});
+	beforeEach(() => {
+		vi.mocked(prisma.clanWar.findUnique).mockResolvedValue({ attackerClanId: 1 } as never);
+		vi.mocked(getWarForResolve).mockResolvedValue(war() as never);
+		vi.mocked(computeWarRankingUpdates).mockReturnValue([
+			{ clanId: 1, totalPWin: 0, totalPLost: 3, downtimeCount: 0, reputation: 90 }
+		] as never);
+		txObj.clanWarRanking.upsert.mockImplementation(async ({ create }: any) => ({ ...create, reputation: 100 }));
+	});
+
+	it('writes the winner and the rankings of the event of the war in one transaction', async () => {
+		txObj.clanWar.updateMany.mockResolvedValue({ count: 1 });
+		await forfeitWar(req({ warId: 'w1' }));
+		expect(txObj.clanWar.updateMany).toHaveBeenCalledWith({
+			where: { id: 'w1', winnerClanId: null },
+			data: { winnerClanId: 2, isCastleDestroyed: false }
+		});
+		// The rankings of this event, created when missing, not the first ranking found for the clan
+		const rankings = vi.mocked(computeWarRankingUpdates).mock.calls[0][0] as any;
+		expect(rankings.attacker.clanWarRanking).toEqual([{ clanId: 1, eventId: 'ev2', reputation: 100 }]);
+		expect(rankings.defender.clanWarRanking).toEqual([{ clanId: 2, eventId: 'ev2', reputation: 100 }]);
+		expect(txObj.clanWarRanking.update).toHaveBeenCalledWith({
+			where: { clanId_eventId: { clanId: 1, eventId: 'ev2' } },
+			data: { totalPWin: 0, totalPLost: 3, downtimeCount: 0, reputation: 90 }
+		});
+	});
+
+	it('counts nothing twice when the war was resolved meanwhile', async () => {
+		txObj.clanWar.updateMany.mockResolvedValue({ count: 0 });
+		await forfeitWar(req({ warId: 'w1' }));
+		expect(txObj.clanWarRanking.update).not.toHaveBeenCalled();
+		expect(createNotification).not.toHaveBeenCalled();
+		expect(prisma.clanHistory.create).not.toHaveBeenCalled();
 	});
 });
 
