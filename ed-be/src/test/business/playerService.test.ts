@@ -12,6 +12,7 @@ vi.mock('../../dao/playerDao.js', () => ({
 	getCommonDataRequest: vi.fn(),
 	getPlayerArchivedSiteId: vi.fn(),
 	getPlayerDataRequest: vi.fn(),
+	getPlayerExportData: vi.fn(),
 	getPlayerRewardsRequest: vi.fn(),
 	getToolTipInfos: vi.fn(),
 	isPlayerLeaderOfClanRequest: vi.fn(),
@@ -53,6 +54,7 @@ import {
 	playerToolTip,
 	logout,
 	resetAccount,
+	exportPlayerData,
 	updatePlayerSettings
 } from '../../business/playerService.js';
 
@@ -237,6 +239,21 @@ describe('logout', () => {
 		vi.mocked(playerDao.auth).mockRejectedValue(new Error('Invalid user token'));
 		await expect(logout(req())).rejects.toThrow('Invalid user token');
 		expect(playerDao.setPlayer).not.toHaveBeenCalled();
+	});
+});
+
+describe('exportPlayerData', () => {
+	it('exports the data of the authenticated player, read by their own id', async () => {
+		vi.mocked(playerDao.getPlayerExportData).mockResolvedValue({ id: 'p1', name: 'Bob' } as never);
+		const result = await exportPlayerData(req());
+		expect(playerDao.getPlayerExportData).toHaveBeenCalledWith('p1');
+		expect(result.player).toEqual({ id: 'p1', name: 'Bob' });
+	});
+
+	it('refuses an anonymous caller', async () => {
+		vi.mocked(playerDao.auth).mockRejectedValueOnce(new Error('Missing authorization header'));
+		await expect(exportPlayerData(req())).rejects.toThrow('authorization');
+		expect(playerDao.getPlayerExportData).not.toHaveBeenCalled();
 	});
 });
 

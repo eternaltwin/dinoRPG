@@ -93,6 +93,11 @@ export const PlayerService = {
 		const res = await http().get(`/player/smallMenu/${playerId}`);
 		return res.data;
 	},
+	/** Every data the game stores about the logged-in player, as a JSON document. */
+	async exportData(): Promise<unknown> {
+		const res = await http().get(`/player/export`);
+		return res.data;
+	},
 	async resetAccount(): Promise<void> {
 		const res = await http().delete(`/player`);
 		return res.data;

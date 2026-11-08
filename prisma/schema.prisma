@@ -939,6 +939,8 @@ model Moderation {
   bannedUser   Player?           @relation("AcceptedBan")
   targetClanId Int?
   targetClan   Clan?             @relation("TargetClanRelation", fields: [targetClanId], references: [id], onDelete: SetNull)
+  /// Reports open for longer than the account deletion grace period no longer block the deletion
+  createdAt    DateTime          @default(now())
 }
 
 model Conversation {

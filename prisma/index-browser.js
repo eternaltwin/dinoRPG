@@ -695,7 +695,8 @@ exports.Prisma.ModerationScalarFieldEnum = {
   sorted: 'sorted',
   reporterId: 'reporterId',
   targetId: 'targetId',
-  targetClanId: 'targetClanId'
+  targetClanId: 'targetClanId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {

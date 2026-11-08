@@ -3581,6 +3581,7 @@
 			"title": "Options du compte",
 			"fight": "Afficher les combats",
 			"todo": "Non disponible",
+			"export": "Télécharger mes données",
 			"reset": "Supprimer le compte"
 		},
 		"twinoidgoals": {

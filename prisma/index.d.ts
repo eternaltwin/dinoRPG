@@ -78594,6 +78594,7 @@ export namespace Prisma {
     reporterId: string | null
     targetId: string | null
     targetClanId: number | null
+    createdAt: Date | null
   }
 
   export type ModerationMaxAggregateOutputType = {
@@ -78607,6 +78608,7 @@ export namespace Prisma {
     reporterId: string | null
     targetId: string | null
     targetClanId: number | null
+    createdAt: Date | null
   }
 
   export type ModerationCountAggregateOutputType = {
@@ -78620,6 +78622,7 @@ export namespace Prisma {
     reporterId: number
     targetId: number
     targetClanId: number
+    createdAt: number
     _all: number
   }
 
@@ -78647,6 +78650,7 @@ export namespace Prisma {
     reporterId?: true
     targetId?: true
     targetClanId?: true
+    createdAt?: true
   }
 
   export type ModerationMaxAggregateInputType = {
@@ -78660,6 +78664,7 @@ export namespace Prisma {
     reporterId?: true
     targetId?: true
     targetClanId?: true
+    createdAt?: true
   }
 
   export type ModerationCountAggregateInputType = {
@@ -78673,6 +78678,7 @@ export namespace Prisma {
     reporterId?: true
     targetId?: true
     targetClanId?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -78773,6 +78779,7 @@ export namespace Prisma {
     reporterId: string | null
     targetId: string
     targetClanId: number | null
+    createdAt: Date
     _count: ModerationCountAggregateOutputType | null
     _avg: ModerationAvgAggregateOutputType | null
     _sum: ModerationSumAggregateOutputType | null
@@ -78805,6 +78812,7 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     targetClanId?: boolean
+    createdAt?: boolean
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
     reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -78823,6 +78831,7 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     targetClanId?: boolean
+    createdAt?: boolean
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
     reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -78840,6 +78849,7 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     targetClanId?: boolean
+    createdAt?: boolean
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
     reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -78857,9 +78867,10 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     targetClanId?: boolean
+    createdAt?: boolean
   }
 
-  export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozId" | "reason" | "comment" | "banDate" | "banEndDate" | "sorted" | "reporterId" | "targetId" | "targetClanId", ExtArgs["result"]["moderation"]>
+  export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozId" | "reason" | "comment" | "banDate" | "banEndDate" | "sorted" | "reporterId" | "targetId" | "targetClanId" | "createdAt", ExtArgs["result"]["moderation"]>
   export type ModerationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
     reporter?: boolean | Moderation$reporterArgs<ExtArgs>
@@ -78900,6 +78911,10 @@ export namespace Prisma {
       reporterId: string | null
       targetId: string
       targetClanId: number | null
+      /**
+       * Reports open for longer than the account deletion grace period no longer block the deletion
+       */
+      createdAt: Date
     }, ExtArgs["result"]["moderation"]>
     composites: {}
   }
@@ -79338,6 +79353,7 @@ export namespace Prisma {
     readonly reporterId: FieldRef<"Moderation", 'String'>
     readonly targetId: FieldRef<"Moderation", 'String'>
     readonly targetClanId: FieldRef<"Moderation", 'Int'>
+    readonly createdAt: FieldRef<"Moderation", 'DateTime'>
   }
     
 
@@ -97765,7 +97781,8 @@ export namespace Prisma {
     sorted: 'sorted',
     reporterId: 'reporterId',
     targetId: 'targetId',
-    targetClanId: 'targetClanId'
+    targetClanId: 'targetClanId',
+    createdAt: 'createdAt'
   };
 
   export type ModerationScalarFieldEnum = (typeof ModerationScalarFieldEnum)[keyof typeof ModerationScalarFieldEnum]
@@ -102559,6 +102576,7 @@ export namespace Prisma {
     reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
     targetClanId?: IntNullableFilter<"Moderation"> | number | null
+    createdAt?: DateTimeFilter<"Moderation"> | Date | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     reporter?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
@@ -102577,6 +102595,7 @@ export namespace Prisma {
     reporterId?: SortOrderInput | SortOrder
     targetId?: SortOrder
     targetClanId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     dinoz?: DinozOrderByWithRelationInput
     reporter?: PlayerOrderByWithRelationInput
     target?: PlayerOrderByWithRelationInput
@@ -102598,6 +102617,7 @@ export namespace Prisma {
     reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
     targetClanId?: IntNullableFilter<"Moderation"> | number | null
+    createdAt?: DateTimeFilter<"Moderation"> | Date | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     reporter?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
@@ -102616,6 +102636,7 @@ export namespace Prisma {
     reporterId?: SortOrderInput | SortOrder
     targetId?: SortOrder
     targetClanId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: ModerationCountOrderByAggregateInput
     _avg?: ModerationAvgOrderByAggregateInput
     _max?: ModerationMaxOrderByAggregateInput
@@ -102637,6 +102658,7 @@ export namespace Prisma {
     reporterId?: UuidNullableWithAggregatesFilter<"Moderation"> | string | null
     targetId?: UuidWithAggregatesFilter<"Moderation"> | string
     targetClanId?: IntNullableWithAggregatesFilter<"Moderation"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Moderation"> | Date | string
   }
 
   export type ConversationWhereInput = {
@@ -107913,6 +107935,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     dinoz?: DinozCreateNestedOneWithoutModerationInput
     reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
@@ -107931,6 +107954,7 @@ export namespace Prisma {
     reporterId?: string | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -107940,6 +107964,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
     reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
@@ -107958,6 +107983,7 @@ export namespace Prisma {
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -107972,6 +107998,7 @@ export namespace Prisma {
     reporterId?: string | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
   }
 
   export type ModerationUpdateManyMutationInput = {
@@ -107980,6 +108007,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ModerationUncheckedUpdateManyInput = {
@@ -107993,6 +108021,7 @@ export namespace Prisma {
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ConversationCreateInput = {
@@ -113043,6 +113072,7 @@ export namespace Prisma {
     reporterId?: SortOrder
     targetId?: SortOrder
     targetClanId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type ModerationAvgOrderByAggregateInput = {
@@ -113062,6 +113092,7 @@ export namespace Prisma {
     reporterId?: SortOrder
     targetId?: SortOrder
     targetClanId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type ModerationMinOrderByAggregateInput = {
@@ -113075,6 +113106,7 @@ export namespace Prisma {
     reporterId?: SortOrder
     targetId?: SortOrder
     targetClanId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type ModerationSumOrderByAggregateInput = {
@@ -121650,6 +121682,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
@@ -121666,6 +121699,7 @@ export namespace Prisma {
     reporterId?: string | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -122577,6 +122611,7 @@ export namespace Prisma {
     reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
     targetClanId?: IntNullableFilter<"Moderation"> | number | null
+    createdAt?: DateTimeFilter<"Moderation"> | Date | string
   }
 
   export type OfferUpsertWithWhereUniqueWithoutDinozInput = {
@@ -127129,6 +127164,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     dinoz?: DinozCreateNestedOneWithoutModerationInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
@@ -127145,6 +127181,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -127164,6 +127201,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     dinoz?: DinozCreateNestedOneWithoutModerationInput
     reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
@@ -127180,6 +127218,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     reporterId?: string | null
     targetClanId?: number | null
+    createdAt?: Date | string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -127494,6 +127533,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     dinoz?: DinozCreateNestedOneWithoutModerationInput
     reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
@@ -127511,6 +127551,7 @@ export namespace Prisma {
     reporterId?: string | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
   }
 
   export type ModerationCreateOrConnectWithoutBannedUserInput = {
@@ -128682,6 +128723,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
     reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
@@ -128699,6 +128741,7 @@ export namespace Prisma {
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -137418,6 +137461,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
+    createdAt?: Date | string
     dinoz?: DinozCreateNestedOneWithoutModerationInput
     reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
@@ -137434,6 +137478,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     reporterId?: string | null
     targetId: string
+    createdAt?: Date | string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -149966,6 +150011,7 @@ export namespace Prisma {
     reporterId?: string | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
   }
 
   export type OfferCreateManyDinozInput = {
@@ -150161,6 +150207,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
@@ -150177,6 +150224,7 @@ export namespace Prisma {
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -150190,6 +150238,7 @@ export namespace Prisma {
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OfferUpdateWithoutDinozInput = {
@@ -150937,6 +150986,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     targetId: string
     targetClanId?: number | null
+    createdAt?: Date | string
   }
 
   export type ModerationCreateManyTargetInput = {
@@ -150949,6 +150999,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     reporterId?: string | null
     targetClanId?: number | null
+    createdAt?: Date | string
   }
 
   export type NotificationCreateManyPlayerInput = {
@@ -151379,6 +151430,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
@@ -151395,6 +151447,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -151408,6 +151461,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     targetId?: StringFieldUpdateOperationsInput | string
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ModerationUpdateWithoutTargetInput = {
@@ -151416,6 +151470,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
     reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
@@ -151432,6 +151487,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -151445,6 +151501,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetClanId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationUpdateWithoutPlayerInput = {
@@ -152643,6 +152700,7 @@ export namespace Prisma {
     sorted?: $Enums.ModerationAction | null
     reporterId?: string | null
     targetId: string
+    createdAt?: Date | string
   }
 
   export type ClanWarCreateManyWinnerInput = {
@@ -153122,6 +153180,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
     reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
@@ -153138,6 +153197,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -153151,6 +153211,7 @@ export namespace Prisma {
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClanWarUpdateWithoutWinnerInput = {
