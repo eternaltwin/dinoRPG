@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sdino } from '@eternaltwin/dinorpg_animations';
+import { loadDinorpgAnimations } from '../../utils/dinorpgAnimations.js';
 
 export default defineComponent({
 	name: 'DinozMini',
@@ -29,7 +29,9 @@ export default defineComponent({
 			};
 		}
 	},
-	mounted() {
+	async mounted() {
+		// Loaded on demand: a static import put the whole animation library in the entry chunk
+		const { sdino } = await loadDinorpgAnimations();
 		const dinoAnimDiv = this.$refs.dino as HTMLDivElement | null;
 		if (!dinoAnimDiv) return;
 		new sdino({

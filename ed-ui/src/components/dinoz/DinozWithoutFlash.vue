@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dino } from '@eternaltwin/dinorpg_animations';
+import { loadDinorpgAnimations } from '../../utils/dinorpgAnimations.js';
 
 export default defineComponent({
 	name: 'DinozWithoutFlash',
@@ -20,7 +20,9 @@ export default defineComponent({
 		flip: { type: Boolean, default: false },
 		isFrozen: { type: Boolean, required: false }
 	},
-	mounted() {
+	async mounted() {
+		// Loaded on demand: a static import put the whole animation library in the entry chunk
+		const { dino } = await loadDinorpgAnimations();
 		const dinos = new dino({
 			data: this.display,
 			flip: this.flip,
