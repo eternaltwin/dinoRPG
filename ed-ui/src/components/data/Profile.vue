@@ -96,6 +96,7 @@
 				/>
 			</div>
 			<div class="buttonLand" v-if="isMyAccount()">
+				<DZButton @click="exportData()">{{ $t(`myAccount.options.export`) }}</DZButton>
 				<DZButton @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
 				<DZButton @click="option = false">{{ $t(`button.return`) }}</DZButton>
 			</div>
@@ -162,6 +163,19 @@ export default defineComponent({
 		},
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
+		},
+		async exportData() {
+			try {
+				const data = await PlayerService.exportData();
+				const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'dinorpg-data.json';
+				link.click();
+				URL.revokeObjectURL(url);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
 		},
 		async resetAccount() {
 			const res: boolean = await this.$confirm({

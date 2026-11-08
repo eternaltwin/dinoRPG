@@ -17,6 +17,7 @@ import {
 	getCanJoinClanRequest,
 	getCommonDataRequest,
 	getPlayerArchivedSiteId,
+	getPlayerExportData,
 	getPlayerDataRequest,
 	getPlayerRewardsRequest,
 	getToolTipInfos,
@@ -341,6 +342,19 @@ export async function resetAccount(req: Request) {
 	}
 
 	await resetUser(authed.id);
+}
+
+/**
+ * Export of the data of the authenticated player (right of access and portability): only their own data,
+ * read by their id, never another player's.
+ */
+export async function exportPlayerData(req: Request) {
+	const authed = await auth(req);
+	const data = await getPlayerExportData(authed.id);
+	if (!data) {
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
+	}
+	return { exportedAt: new Date().toISOString(), player: data };
 }
 
 export async function updatePlayerSettings(req: Request) {

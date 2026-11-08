@@ -363,6 +363,41 @@ export async function grantDailyLoginBonus(user: { id: string; name: string; mat
 	});
 }
 
+/**
+ * Everything the game stores about a player, for the export of their own data. Credentials (connection token,
+ * Eternaltwin token) are left out, and so is what identifies other players (who reported them, the targets of
+ * their reports).
+ */
+export async function getPlayerExportData(playerId: string) {
+	return withSpan(getPlayerExportData.name, async () => {
+		return prisma.player.findUnique({
+			where: { id: playerId },
+			omit: { connexionToken: true },
+			include: {
+				dinoz: { include: { skills: true, status: true, items: true, missions: true } },
+				items: true,
+				ingredients: true,
+				quests: true,
+				rewards: true,
+				ranking: true,
+				ClanMember: true,
+				usernameHistory: true,
+				ips: true,
+				notifications: true,
+				messages: true,
+				ClanMessage: true,
+				offers: true,
+				bids: true,
+				pollVotes: true,
+				playerTracking: true,
+				dinozBuilds: true,
+				reportedCases: { select: { id: true, reason: true, comment: true, createdAt: true, sorted: true } },
+				logs: { orderBy: { createdAt: 'desc' }, take: 5000 }
+			}
+		});
+	});
+}
+
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
 export async function resetUser(playerId: string) {
 	return withSpan(resetUser.name, async () => {
@@ -395,6 +430,13 @@ export async function getPlayerInfoToReport(playerId: string) {
 		});
 	});
 }
+/**
+ * Days during which an open report blocks the deletion of the reported account, the time for the moderation
+ * to decide. A closed report, or one left open longer, no longer blocks it: anyone could otherwise prevent the
+ * deletion of any account with a single report.
+ */
+export const ACCOUNT_DELETION_REPORT_GRACE_DAYS = 30;
+
 export async function checkBeforeDeletion(playerId: string, tournamentId?: string) {
 	return withSpan(checkBeforeDeletion.name, async () => {
 		const selectClause: Prisma.PlayerSelect = {
@@ -409,7 +451,13 @@ export async function checkBeforeDeletion(playerId: string, tournamentId?: strin
 				}
 			},
 			ClanMember: true,
-			targetedCases: true,
+			targetedCases: {
+				where: {
+					sorted: null,
+					createdAt: { gte: dayjs().subtract(ACCOUNT_DELETION_REPORT_GRACE_DAYS, 'day').toDate() }
+				},
+				select: { id: true }
+			},
 			createdDate: true
 		};
 		if (tournamentId) {

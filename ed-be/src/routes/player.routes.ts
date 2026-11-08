@@ -3,6 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import {
 	acceptTos,
 	canCreateClan,
+	exportPlayerData,
 	getAccountData,
 	getCommonData,
 	getDinozList,
@@ -181,6 +182,17 @@ routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
 	try {
 		const response = await checkLB(req);
 		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+// Export of the data of the authenticated player (declared before `/:id`, which would catch it)
+routes.get(`${commonPath}/export`, [], async (req: Request, res: Response) => {
+	try {
+		const response = await exportPlayerData(req);
+		res.setHeader('Content-Disposition', 'attachment; filename="dinorpg-data.json"');
+		return res.status(200).json(response);
 	} catch (err) {
 		sendError(res, err);
 	}
