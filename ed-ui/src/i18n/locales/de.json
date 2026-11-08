@@ -4675,7 +4675,7 @@
 			"defending": "Dein Dinoz verteidigt eure Klanburg.",
 			"selling": "Dein Dinoz wird verkauft.",
 			"superdom": "Dein Dinoz ist am SuperDom.",
-			"clanChampionship": "Votre Dinoz participe à un match du Championnat des Clans."
+			"clanChampionship": "Dein Dinoz nimmt an einer Partie der Meisterschaft der Klane teil."
 		}
 	},
 	"logs": {
@@ -5560,7 +5560,7 @@
 		"noNextMatch": "Es finden keine Partien mehr statt",
 		"standingsCol": {
 			"rank": "Rang",
-			"clan": "Clan",
+			"clan": "Klan",
 			"played": "P",
 			"won": "S",
 			"drawn": "U",
@@ -5589,7 +5589,7 @@
 			"finished": "Abgeschlossen"
 		},
 		"tabs": {
-			"clan": "Dinoz du clan",
+			"clan": "Klan-Dinoz",
 			"mine": "Meine Dinoz",
 			"selection": "Auswahl",
 			"journal": "Protokoll"
@@ -5606,7 +5606,7 @@
 		"noSelection": "Kein Dinoz ausgewählt.",
 		"won": "Sieg",
 		"lost": "Niederlage",
-		"journalEntry": "{clan} greift an: {outcome}, {count} Teilnehmer, {dead} Tote",
+		"journalEntry": "{clan} greift an. Resultat: {outcome}. {count} Teilnehmer, {dead} Tote",
 		"replay": "Ansehen",
 		"noFights": "Derzeit noch keine Kämpfe.",
 		"moreFights": "Mehr anzeigen",
