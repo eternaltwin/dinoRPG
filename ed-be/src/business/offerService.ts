@@ -1,18 +1,17 @@
 import { Request } from 'express';
 import {
-	addBid,
+	cancelOngoingOffer,
+	claimEndedOffer,
+	createOfferWithStock,
 	deleteOffer,
-	extendTimer,
+	endOngoingOffer,
 	getEndedOffers,
-	getEndedOffersType,
 	getOffer,
 	getOffers,
 	getOngoingOffers,
-	insertOffer,
-	claimEndedOffer,
+	placeBid,
 	prepareRefund,
-	updateOfferDinoz,
-	updateOfferStatus
+	updateOfferDinoz
 } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -24,12 +23,8 @@ import {
 	isDinozSelling,
 	updateDinoz
 } from '../dao/dinozDao.js';
-import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
-import {
-	decreaseIngredientQuantity,
-	getAllIngredientsDataRequest,
-	increaseIngredientQuantity
-} from '../dao/playerIngredientDao.js';
+import { getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { getAllIngredientsDataRequest, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { $Enums, Dinoz, LogType, Offer, OfferBid, OfferItem, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduledJobs, scheduleJob } from 'node-schedule';
 import { addMoney, auth, getPlayerDiscoveredSkills, ownsDinoz, setPlayer } from '../dao/playerDao.js';
@@ -236,29 +231,14 @@ export async function createOffer(req: Request) {
 		}
 	}
 
-	// Insert offer
-	const offer = await insertOffer(dinozId, total, itemsAndIngredients, authed.id);
-	await createLog(LogType.OfferNew, authed.id, undefined, offer.id, offer.total);
-
-	// Set Dinoz as selling
-	if (dinozId) {
-		updateDinoz(dinozId, { unavailableReason: UnavailableReason.selling });
+	// Remove the content and lock the dinoz by conditional writes, in the transaction that creates the offer:
+	// the checks above read the stock, a concurrent request may have spent it since
+	const created = await createOfferWithStock(dinozId, total, itemsAndIngredients, authed.id);
+	if ('refused' in created) {
+		throw new ExpectedError(translate(created.refused, authed));
 	}
-
-	const promises = [];
-
-	// Remove items and ingredients from inventory
-	promises.push(
-		...itemsAndIngredients.map(item => {
-			if (item.isIngredient) {
-				return decreaseIngredientQuantity(authed.id, item.itemId, item.quantity);
-			} else {
-				return decreaseItemQuantity(authed.id, item.itemId, item.quantity);
-			}
-		})
-	);
-
-	await Promise.all(promises);
+	const offer = created;
+	await createLog(LogType.OfferNew, authed.id, undefined, offer.id, offer.total);
 
 	// Schedule offer expiration
 	scheduleJob(`offer_${offer.id.toString()}`, offer.endDate, () => expireOffer(offer.id));
@@ -309,33 +289,14 @@ export async function cancelOffer(req: Request) {
 		throw new ExpectedError(translate(refund, authed));
 	}
 
-	// Set Dinoz as not selling
-	if (dinoz) {
-		updateDinoz(dinoz.id, { unavailableReason: null });
+	// Gives the content back and deletes the offer only if it is still ongoing and without bid: a bid or a
+	// second cancellation arriving meanwhile makes this one fail
+	if (!(await cancelOngoingOffer({ id: offerId, dinozId: dinoz?.id ?? null, items: itemsAndIngredients }, playerId))) {
+		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
-	const promises = [];
-
-	// Add items to inventory
-	promises.push(...items.map(item => increaseItemQuantity(playerId, item.itemId, item.quantity)));
-
-	// Add ingredients to inventory
-	promises.push(...ingredients.map(item => increaseIngredientQuantity(playerId, item.itemId, item.quantity)));
-
-	await Promise.all(promises);
-
-	// Reimburse bidders
-	if (offer.bids.length > 0) {
-		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
-		if (!max.userId) throw new ExpectedError(`No max.userId`);
-		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
-	}
-
-	// Delete offer
-	await deleteOffer(offerId);
 	await createLog(LogType.OfferCancelled, playerId, undefined, offerId);
-	const job = scheduledJobs[`offer_${offerId.toString()}`];
-	job.cancel();
+	scheduledJobs[`offer_${offerId.toString()}`]?.cancel();
 }
 
 /**
@@ -367,61 +328,37 @@ export async function bidOffer(req: Request) {
 		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
-	// Get previous own bid value if it is the leading one
-	let previousOwnBid = 0;
-	if (offer.bids.length && offer.bids[offer.bids.length - 1].userId === authed.id) {
-		previousOwnBid = offer.bids[offer.bids.length - 1].value;
-	}
-
-	// Cancel if bid is lower or equal to previous bid
-	if (value <= previousOwnBid) {
+	if (!Number.isInteger(value)) {
 		throw new ExpectedError(translate('bidIsLower', authed));
 	}
 
-	// Cancel if bid is lower than offer total
-	if (value < offer.total / 1000) {
-		throw new ExpectedError(translate('bidIsLower', authed));
+	// Checked again under the lock of the offer, with the bid that really leads at that moment
+	const placed = await placeBid(offerId, { id: authed.id, name: authed.name }, value);
+	if ('refused' in placed) {
+		throw new ExpectedError(translate(placed.refused, authed));
 	}
-
-	// Cancel if bid is lower than previous bid + 1
-	if (offer.bids.length && value < offer.bids[offer.bids.length - 1].value + 1) {
-		throw new ExpectedError(translate('bidIsLower', authed));
-	}
-
-	// Check if player has enough tickets
-	const playerItems = await getPlayerItems(authed.id, { itemId: itemList[Item.TREASURE_COUPON].itemId });
-	const playerTickets = playerItems[0]?.quantity || 0;
-
-	if (playerTickets < value - previousOwnBid) {
-		throw new ExpectedError(translate('notEnoughTickets', authed));
-	}
-
-	// Add bid
-	await addBid(offerId, authed.id, value, authed.name);
 	await createLog(LogType.OfferBid, authed.id, undefined, offer.id, value);
 
-	// Repay previous bidder
-	if (offer.bids.length > 0) {
-		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
-		if (!max.userId) throw new ExpectedError(`No max.userId`);
-		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
-	}
-
-	// Remove bid difference from inventory
-	await decreaseItemQuantity(authed.id, itemList[Item.TREASURE_COUPON].itemId, value);
-
-	// Add 30s to offer
-	const rescheduled = await extendTimer(offer);
+	// Each bid adds 30 seconds to the offer
 	const job = scheduledJobs[`offer_${offerId.toString()}`];
-	job.cancel();
-	job.schedule(rescheduled.endDate);
+	if (job) {
+		job.cancel();
+		job.schedule(placed.endDate);
+	} else {
+		scheduleJob(`offer_${offerId.toString()}`, placed.endDate, () => expireOffer(offerId));
+	}
 }
 
 /**
  * Expire an offer
  */
 export const expireOffer = async (offerId: number) => {
-	const offer = await getOffer(offerId, OfferStatus.ONGOING);
+	// Ends the offer first, by a conditional write: a bid that extended it meanwhile, or a second expiration,
+	// leaves it ongoing and this call stops
+	if (!(await endOngoingOffer(offerId))) {
+		return;
+	}
+	const offer = await getOffer(offerId, OfferStatus.ENDED);
 
 	if (!offer || !offer.seller) {
 		throw new ExpectedError('Offer not found');
@@ -455,8 +392,6 @@ export const expireOffer = async (offerId: number) => {
 	if (offer.dinoz) {
 		await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
 	}
-	// Update offer status
-	await updateOfferStatus(offerId, OfferStatus.ENDED);
 	scheduleUnclaimedOfferRefund(offer);
 };
 
@@ -508,7 +443,7 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		}
 		if (offer.dinoz && winnerBid.userId) {
 			// Change Dinoz owner and set as not selling
-			updateDinoz(offer.dinoz.id, {
+			await updateDinoz(offer.dinoz.id, {
 				player: { connect: { id: winnerBid.userId } },
 				unavailableReason: null
 			});
@@ -557,7 +492,7 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		}
 		// Set Dinoz as not selling
 		if (offer.dinoz) {
-			updateDinoz(offer.dinoz.id, { unavailableReason: null });
+			await updateDinoz(offer.dinoz.id, { unavailableReason: null });
 		}
 		// Add items to inventory
 		promises.push(...items.map(item => increaseItemQuantity(sellerId, item.itemId, item.quantity)));
