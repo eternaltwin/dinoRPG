@@ -29,6 +29,7 @@ vi.mock('../../prisma.js', () => ({
 			count: vi.fn(),
 			upsert: vi.fn(),
 			update: vi.fn(),
+			updateMany: vi.fn(),
 			deleteMany: vi.fn()
 		},
 		dinoz: { findUnique: vi.fn(), updateMany: vi.fn() },
@@ -378,6 +379,26 @@ describe('moveOnBoard', () => {
 		expect(p.clanChampionshipPiece.update).toHaveBeenCalledWith({
 			where: { id: 1 },
 			data: { x: 6, y: 5, actionPoints: { decrement: 1 } }
+		});
+	});
+	it('dinozDead: a piece whose dinoz lost its life off the board cannot move', async () => {
+		p.dinoz.findUnique.mockResolvedValue(dinozRow({ life: 0 }));
+		await expect(move(BoardDirection.E)).rejects.toThrow('clanChampionship.dinozDead');
+		expect(p.clanChampionshipPiece.update).not.toHaveBeenCalled();
+	});
+	it('takes the pieces at 0 HP off the board before moving, so they neither block nor score', async () => {
+		await move(BoardDirection.E);
+		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
+			where: { matchId: liveMatch().id, state: 'onBoard', dinoz: { life: { lte: 0 } } },
+			data: { state: 'dead', x: null, y: null, actionPoints: 0 }
+		});
+		expect(p.dinoz.updateMany).toHaveBeenCalledWith({
+			where: {
+				life: { lte: 0 },
+				unavailableReason: 'clanChampionship',
+				championshipPieces: { some: { matchId: liveMatch().id, state: 'onBoard' } }
+			},
+			data: { unavailableReason: null }
 		});
 	});
 	it('an enemy target reaches the attack resolution after paying the AP', async () => {

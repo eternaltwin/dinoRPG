@@ -154,6 +154,8 @@ function missionPlayer(
 				placeId: PLACE_ID,
 				canChangeName: false,
 				level: MISSION_LEVEL,
+				life: 100,
+				unavailableReason: null,
 				status: [],
 				missions: [{ missionId: MISSION_ID, step, isFinished: false, progress: 0, ...missionOverrides }],
 				...overrides
@@ -270,7 +272,9 @@ describe('startFightMission', () => {
 	it('runs the fight and advances the step on a launch-fight step', async () => {
 		mockGetMissionsInfo.mockResolvedValue(missionPlayer(1)); // step 1 is LAUNCH_FIGHT
 		mockGetFiche.mockResolvedValue({ dinoz: [{ id: DINOZ_ID, leaderId: null }] } as never);
-		mockGetFightData.mockResolvedValue({ dinoz: [{ id: DINOZ_ID, placeId: PLACE_ID }] } as never);
+		mockGetFightData.mockResolvedValue({
+			dinoz: [{ id: DINOZ_ID, placeId: PLACE_ID, life: 100, unavailableReason: null }]
+		} as never);
 		mockCalcFight.mockReturnValue({ rounds: [] } as never);
 		mockRewardFight.mockResolvedValue({ result: true } as never);
 
@@ -334,6 +338,36 @@ describe('endMission', () => {
 		await expect(endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }))).rejects.toThrow(
 			'not started'
 		);
+	});
+});
+
+describe('missions of an unavailable dinoz', () => {
+	it.each([['clanChampionship'], ['dungeon'], ['resting'], ['selling']])(
+		'refuses every mission route to a dinoz unavailable for %s',
+		async reason => {
+			mockGetMissionsInfo.mockResolvedValue(missionPlayer(1, { unavailableReason: reason }));
+			const missionReq = req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID });
+			await expect(startFightMission(missionReq)).rejects.toThrow(`UnavailableReason.${reason}`);
+			await expect(interactMission(missionReq)).rejects.toThrow(`UnavailableReason.${reason}`);
+			await expect(endMission(missionReq)).rejects.toThrow(`UnavailableReason.${reason}`);
+			expect(mockCalcFight).not.toHaveBeenCalled();
+			expect(mockRewarder).not.toHaveBeenCalled();
+		}
+	);
+
+	it('refuses a mission fight when a team member is on the championship board', async () => {
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(1));
+		mockGetFiche.mockResolvedValue({ dinoz: [{ id: DINOZ_ID, leaderId: null }] } as never);
+		mockGetFightData.mockResolvedValue({
+			dinoz: [
+				{ id: DINOZ_ID, placeId: PLACE_ID, life: 100, unavailableReason: null },
+				{ id: 7, placeId: PLACE_ID, life: 100, unavailableReason: 'clanChampionship' }
+			]
+		} as never);
+		await expect(startFightMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }))).rejects.toThrow(
+			'UnavailableReason.clanChampionship'
+		);
+		expect(mockCalcFight).not.toHaveBeenCalled();
 	});
 });
 
