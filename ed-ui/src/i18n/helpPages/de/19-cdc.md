@@ -10,25 +10,25 @@ Dann können Klane noch in der **Meisterschaft der Klane** gegeneinander antrete
 
 Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platziert werden oder seine Rangplatzierung verändern bis die Meisterschaft beendet ist.
 
-Tous les clans s'affrontent sur des batailles de 48 heures. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point. Une fois tous les clans affrontés, le championnat se termine.
+Klane treten in 48-Stunden Schlachten gegeneinander an. Ein Sieg beschert 3 Punkte, ein Unentschieden 1 und eine Niederlage 0 Punkte. Sobald die Klanenschlachten abgeschlossen sind, endet die Meisterschaft.
 
 # Das Schlachtfeld
 
 Eine Schlacht wird gestartet, wenn zwei Klane aufeinandertreffen. Sie dauert _2 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
-Eine Schlacht findet an einem bestimmten Austragungsort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Un Clan est limité à _100 Dinoz_ par bataille.
+Eine Schlacht findet an einem bestimmten Austragungsort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Ein Klan in einer Schlacht insgesamt bis zu _100 Dinoz_ einsetzen.
 
-Voici une vue de bataille simplifiée :
+Hier ist eine vereinfachte Darstellung der Kampfansicht:
 
-![Exemple de bataille simplifiée](@guide/battle_cdc)
+![Vereinfachte Darstellung einer Beispielschlacht](@guide/battle_cdc)
 
-En haut, vous pouvez voir le **score** actuel de la bataille et en bas le temps restant avant la fin de la bataille.
+Oben siehst du den aktuellen **Punktestand** der Schlacht und unten die verbleibende Zeit bis zu ihrer Beendigung.
 
-Les Dinoz qui ont rejoint la bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite.
+Dinoz, die sich der Schlacht angeschlossen haben, können sich um ein Feld bewegen und müssen daraufhin zunächst eine bestimmte Anzahl von Minuten warten, bevor sie sich erneut bewegen können. Es ist möglich, Aktionen anzusammeln, wenn man sie nicht sofort verwendet.
 
-Tous les Dinoz gagnent un point d'action toutes les 10 minute.
+Alle sich auf dem Schlachtfeld befindlichen Dinoz erhalten alle 10 Minuten eine Aktion.
 
-Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,  Seul le propriétaire d'un Dinoz peut le déplacer.
+Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,  Ein Dinoz kann nur von seinem Besitzer bewegt werden.
 
 _An dieser Stelle erinnern wir daran, dass die Weitergabe von Kontodaten zwischen Spielern verboten ist und dass im Falle eines Verstoßes gegen die Vorschriften alle betroffenen Konten permanent gesperrt werden._
 
@@ -38,13 +38,13 @@ Eine gute Organisation zwischen Klanmitgliedern ist notwendig, um einen Sieg zu 
 
 Wie in der Schlachtdarstellung zu sehen ist, hat jeder Klan eine **Punktelinie**: Blau für den Klan links und rot für den Klan rechts.
 
-Toutes les _10 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Im obigen Beispiel würde also der Klan auf der linken Seite (blaue Linie) 2 Punkte und der Klan auf der rechten Seite (rote Linie) 4 Punkte erhalten.
+Alle _10 Minuten_ erhalten die Klane Punkte, deren Menge auf dem Voranschreiten der Punktelinie basiert. Im obigen Beispiel würde also der Klan auf der linken Seite (blaue Linie) 2 Punkte und der Klan auf der rechten Seite (rote Linie) 4 Punkte erhalten.
 
 Die Punktelinie wird wie folgt positioniert: Sie zeigt die Position des ersten Dinoz des Klans an, dem kein Dinoz des gegnerischen Klans gegenübergetreten ist.
 
 **Achtung!** Einem gegnerischen Dinoz kann auf diese Weise ein Durchbruch gelingen, der die eigene Punktelinie nach hinten verschiebt und deinen Klan somit daran hindert, bei der nächsten Auswertung Punkte zu erzielen.
 
-Rappel : une bataille a une durée de _2 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+Zur Erinnerung: Eine Schlacht dauert _2 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
 # Kämpfe
 
@@ -56,6 +56,6 @@ Die Positionierung der Dinoz ist daher äußerst wichtig, wenn man im Kampf nich
 
 Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, denn der Gegner wird überrascht und kann keine Verstärkung herbeirufen. Der Kampf findet in diesem Fall eins gegen eins statt.
 
-Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Un Dinoz peut aussi quitter la bataille volontairement en retournant sur la ligne de touche de son Clan, il pourra alors retourner combattre.
+Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann auch freiwillig die Schlacht verlassen, indem er zur Startspalte seines Klans zurückkehrt. Danach kann er die Schlacht auch erneut betreten.
 
-Il est possible d'équiper et d'utiliser des objets sur votre Dinoz à n'importe quel moment durant la bataille.
+Gegenstände können von Dinoz während der Schlacht jederzeit angelegt, ausgetauscht und benutzt werden.
