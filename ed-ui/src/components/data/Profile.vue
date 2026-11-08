@@ -52,7 +52,7 @@
 				<dd>{{ accountData.completion.toFixed(2) }} %</dd>
 			</dl>
 			<div class="profilContent" v-if="!isEditOn">
-				<div v-html="customText" class="contentTexte" />
+				<div v-html="sanitizeHtml(customText)" class="contentTexte" />
 			</div>
 			<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
 			<div class="buttonLand" v-if="isMyAccount()">

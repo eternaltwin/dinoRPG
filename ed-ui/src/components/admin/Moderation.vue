@@ -29,6 +29,7 @@
 					<DZButton
 						v-tippy="{
 							content: mod.comment,
+							allowHTML: false,
 							theme: 'small'
 						}"
 						>Voir</DZButton

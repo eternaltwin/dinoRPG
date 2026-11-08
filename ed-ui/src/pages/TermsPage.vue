@@ -3,7 +3,7 @@
 	<div id="terms">
 		<DZDisclaimer round content="terms.intro" />
 		<ul class="clauses">
-			<li v-for="(clause, index) in clauses" :key="index" v-html="clause" />
+			<li v-for="(clause, index) in clauses" :key="index" v-html="sanitizeHtml(clause)" />
 		</ul>
 		<div class="end-content">
 			<a class="button" @click="accept()">{{ $t('terms.accept_button') }}</a>

@@ -27,7 +27,7 @@
 					<div
 						class="message mkt-content"
 						v-if="message.revisions.last.content"
-						v-html="message.revisions.last.content.html"
+						v-html="sanitizeHtml(message.revisions.last.content.html)"
 					/>
 					<div class="message moderated" v-else>{{ $t('forum.moderated') }}</div>
 					<div class="post-actions" v-if="message.self.canEdit">

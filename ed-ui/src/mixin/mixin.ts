@@ -1,5 +1,6 @@
 import type { ComponentPublicInstance } from 'vue';
 import { formatText } from '../utils/formatText.js';
+import { sanitizeHtml } from '../utils/sanitizeHtml.js';
 import { ConfirmOptions } from './confirmPlugin';
 import { PlayerService } from '../services';
 import { playerStore } from '../store';
@@ -36,6 +37,10 @@ export const mixin = {
 		},
 		formatContent(value: string): string {
 			return !value ? '' : formatText(value.toString());
+		},
+		/** For `v-html` bindings that do not go through `formatContent`. */
+		sanitizeHtml(html: string | null | undefined): string {
+			return sanitizeHtml(html);
 		},
 		getImgURL(path: string, imgName: string, pixel?: boolean): string {
 			return getImgURL(path, imgName, pixel);

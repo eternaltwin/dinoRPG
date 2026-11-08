@@ -121,7 +121,7 @@
 								<p v-html="formatContent($t(`status.description.${status}`))"></p>
 							</template>
 						</Tippy>
-						<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
+						<p v-if="!statusList.displayed[status]" v-html="sanitizeHtml(statusList.imgName[status])" />
 					</template>
 				</div>
 				<div class="statuses">

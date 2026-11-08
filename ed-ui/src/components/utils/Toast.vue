@@ -4,7 +4,7 @@
 			<template v-if="type === 'error'">{{ $t(`toast.${message}`, params) }}</template>
 			<template v-else-if="type === 'success'">{{ $t(`toast.${message}`, params) }}</template>
 			<p v-else-if="type === 'notif'" v-html="formatContent(message)" />
-			<p v-else-if="type === 'reward'" v-html="message" />
+			<p v-else-if="type === 'reward'" v-html="sanitizeHtml(message)" />
 		</div>
 	</Transition>
 </template>

@@ -4,7 +4,7 @@
 			<div class="debrief">
 				<p
 					:class="{ 'fight-history': true, 'drpg-scrollbar': true, visible: displayFightHistory }"
-					v-html="fightHistory"
+					v-html="sanitizeHtml(fightHistory)"
 				/>
 				<div class="debrief-stats">
 					<img

@@ -2,6 +2,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { mixin } from '../mixin/mixin.js';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { statusList } from '../constants/status.js';
+import { sanitizeHtml } from './sanitizeHtml.js';
 
 export const helpers = {
 	computeImageHtml(key: string): string {
@@ -77,18 +78,22 @@ export const helpers = {
 };
 
 /**
- * Formats text with custom markup into HTML.
+ * Formats text with custom markup into HTML, sanitized so it can be bound with `v-html`.
  * Note: This function only uses one regex pass per textual format to improve performance.
  */
 export function formatText(text: string): string {
+	return sanitizeHtml(formatMarkup(text));
+}
+
+function formatMarkup(text: string): string {
 	// Combined pattern for all text formatting tokens:
 	//                      **bold**         //italic//       _underline_   &&   :icon:
 	const pattern = /(?:\*\*([^*]+)\*\*)|(?:\/\/([^/]+)\/\/)|(?:_([^_]+)_)|(&&)|:(\w+):/g;
 
 	return text.replace(pattern, (match, boldContent, italicContent, emContent, lineBreak, iconKey) => {
-		if (boldContent) return `<strong>${formatText(boldContent)}</strong>`;
-		if (emContent) return `<em>${formatText(emContent)}</em>`;
-		if (italicContent) return `<i>${formatText(italicContent)}</i>`;
+		if (boldContent) return `<strong>${formatMarkup(boldContent)}</strong>`;
+		if (emContent) return `<em>${formatMarkup(emContent)}</em>`;
+		if (italicContent) return `<i>${formatMarkup(italicContent)}</i>`;
 		if (lineBreak) return '<br>';
 		if (iconKey) {
 			const validKeys = [

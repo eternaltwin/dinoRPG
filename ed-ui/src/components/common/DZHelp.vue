@@ -1,8 +1,8 @@
 <template>
 	<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 		<template #content>
-			<h1 v-html="title" />
-			<p v-html="content" />
+			<h1 v-html="sanitizeHtml(title)" />
+			<p v-html="sanitizeHtml(content)" />
 		</template>
 	</Tippy>
 </template>

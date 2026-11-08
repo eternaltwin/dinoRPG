@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router/index.js';
 import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
+import { safeTippy } from './directives/safeTippy.js';
 import { mixin } from './mixin/mixin.js';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
@@ -16,7 +17,8 @@ import { installMarktwinInteractions } from './utils/marktwin';
 import utc from 'dayjs/plugin/utc';
 
 const vueTippyProps = {
-	directive: 'tippy',
+	// The plugin's own directive is registered under another name: `v-tippy` is the sanitizing wrapper below
+	directive: 'tippy-unsafe',
 	component: 'Tippy',
 	defaultProps: {
 		placement: 'bottom-start',
@@ -39,6 +41,7 @@ app.use(router);
 app.use(ConfirmPlugin);
 app.mixin(mixin);
 app.use(VueTippy, vueTippyProps);
+app.directive('tippy', safeTippy);
 app.use(
 	createToastPlugin({
 		position: 'bottom',

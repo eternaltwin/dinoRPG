@@ -25,7 +25,7 @@
 		<span class="dashed"></span>
 		<div class="profil">
 			<div class="profil-info" v-if="loadedPlayer.customText">
-				<div class="player-desc" v-html="loadedPlayer.customText"></div>
+				<div class="player-desc" v-html="sanitizeHtml(loadedPlayer.customText)"></div>
 			</div>
 			<p class="contact">{{ $t('playerMenu.contact') }}</p>
 		</div>

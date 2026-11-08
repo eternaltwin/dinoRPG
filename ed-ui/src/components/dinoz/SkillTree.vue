@@ -212,8 +212,8 @@ watch(props, init, { deep: true });
 						<Tippy theme="normal" v-else>
 							???
 							<template #content>
-								<h1 v-html="$t('skill.unknown')" />
-								<p v-html="$t('skill.unknownDesc')" />
+								<h1 v-html="sanitizeHtml($t('skill.unknown'))" />
+								<p v-html="sanitizeHtml($t('skill.unknownDesc'))" />
 							</template>
 						</Tippy>
 					</td>
