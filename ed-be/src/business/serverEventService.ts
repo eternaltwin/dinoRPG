@@ -390,7 +390,7 @@ async function saveWsMessageInDatabase(
 async function deleteWsMessage(channel: ChannelInfos, wsId: string, msgId: number) {
 	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
 
-	deleteClanMessageRequest(msgId, wsData.playerId);
+	await deleteClanMessageRequest(msgId, wsData.playerId);
 }
 
 /**

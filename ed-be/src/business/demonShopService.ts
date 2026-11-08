@@ -35,7 +35,7 @@ import { createDinoz, getDinozFicheRequest, getDinozUnavailableReason, updateDin
 import { consumeItem, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { GLOBAL, LOGGER } from '../context.js';
 import { UNSACRIFICE_DURATION, UNSACRIFICE_DURATION_DEBUG } from '@drpg/core/constants';
 import { randomUUID } from 'crypto';

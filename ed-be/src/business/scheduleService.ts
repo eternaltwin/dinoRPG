@@ -1,6 +1,6 @@
 import { prisma } from '../prisma.js';
 import { ServerAction } from '@drpg/prisma';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import dayjs from 'dayjs';
 import { midnightReset } from '../cron/midnightReset.js';
 import { healRestingDinoz } from '../cron/healRestingDinoz.js';

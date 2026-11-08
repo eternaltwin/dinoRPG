@@ -98,23 +98,29 @@ export function main(cx: ServerContext) {
 		});*/
 	});
 
-	scheduleAtStart();
+	// Each startup task is awaited by its own catch: one that rejects is logged instead of stopping the server
+	const startupTask = (name: string, task: () => unknown) => {
+		Promise.resolve()
+			.then(task)
+			.catch((error: unknown) => cx.logger.error(`Startup task ${name} failed: ${error}`));
+	};
+	startupTask('scheduleAtStart', () => scheduleAtStart());
 	itinerantMerchant().start();
 	checkBans().start();
 
-	scheduleDinozEndOfUnavailability();
-	scheduleOffersExpiration();
-	scheduleEndedOffersExpiration();
-	schedulePollExpiration();
-	scheduleWarExpiration();
+	startupTask('scheduleDinozEndOfUnavailability', () => scheduleDinozEndOfUnavailability());
+	startupTask('scheduleOffersExpiration', () => scheduleOffersExpiration());
+	startupTask('scheduleEndedOffersExpiration', () => scheduleEndedOffersExpiration());
+	startupTask('schedulePollExpiration', () => schedulePollExpiration());
+	startupTask('scheduleWarExpiration', () => scheduleWarExpiration());
 	scheduleClanChampionship().catch((error: Error) => {
 		cx.discord.sendError(error);
 	});
 	startChampionshipTicker().start();
 	void runChampionshipJob('championshipTick', () => championshipTick())();
-	scheduleProspector();
-	TournamentManager.resume(prisma);
-	resumeTournaments();
+	startupTask('scheduleProspector', () => scheduleProspector());
+	startupTask('TournamentManager.resume', () => TournamentManager.resume(prisma));
+	startupTask('resumeTournaments', () => resumeTournaments());
 
 	initRoutes(app, cx.config);
 }

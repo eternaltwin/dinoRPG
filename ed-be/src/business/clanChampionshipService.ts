@@ -6,7 +6,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ClanEventType, Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import { DISCORD, LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { Auth, auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';

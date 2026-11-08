@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { prisma } from '../prisma.js';
 import { $Enums, ServerAction } from '@drpg/prisma';
 import { LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { SHARED_DINOZ_OPERATIONS_LOCK } from '../constants/index.js';
 

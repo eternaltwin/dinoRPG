@@ -1,7 +1,7 @@
 import { ServerAction } from '@drpg/prisma';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { prisma } from '../prisma.js';
 import { LOGGER } from '../context.js';
 import { eventState } from '../business/clanWar.js';

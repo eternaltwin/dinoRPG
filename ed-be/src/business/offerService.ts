@@ -26,7 +26,8 @@ import {
 import { getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getAllIngredientsDataRequest, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { $Enums, Dinoz, LogType, Offer, OfferBid, OfferItem, OfferStatus, UnavailableReason } from '@drpg/prisma';
-import { scheduledJobs, scheduleJob } from 'node-schedule';
+import { scheduledJobs } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { addMoney, auth, getPlayerDiscoveredSkills, ownsDinoz, setPlayer } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';

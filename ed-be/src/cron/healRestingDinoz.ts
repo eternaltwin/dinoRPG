@@ -2,7 +2,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { prisma } from '../prisma.js';
 import { LOGGER } from '../context.js';
 import dayjs from 'dayjs';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { ServerAction } from '@drpg/prisma';
 import { SHARED_DINOZ_OPERATIONS_LOCK } from '../constants/index.js';
 

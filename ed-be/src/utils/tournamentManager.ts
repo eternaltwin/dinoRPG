@@ -17,7 +17,8 @@ import {
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { LOGGER } from '../context.js';
-import { scheduleJob, scheduledJobs } from 'node-schedule';
+import { scheduledJobs } from 'node-schedule';
+import { scheduleJob } from './server/safeSchedule.js';
 import dayjs from 'dayjs';
 import { translateTarget } from './server/translate.js';
 import 'dayjs/locale/de.js';
