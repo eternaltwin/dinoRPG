@@ -1,6 +1,6 @@
 <template>
 	<div class="dinorpg" :class="{ cdc_bg: cdc }">
-		<div id="centerHeader" :class="{ war: war, cdc: cdc }" v-if="loaded">
+		<div id="centerHeader" :class="{ war: war, cdc: cdc, bg: !war && !cdc }" v-if="loaded">
 			<RouterLink to="/" class="linkHome"></RouterLink>
 			<LeftPanel />
 			<div id="centerContent">
