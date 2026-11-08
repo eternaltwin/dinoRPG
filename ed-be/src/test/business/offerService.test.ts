@@ -14,6 +14,7 @@ vi.mock('../../dao/offerDao.js', () => ({
 	getOngoingOffers: vi.fn(),
 	insertOffer: vi.fn(),
 	prepareRefund: vi.fn(),
+	claimEndedOffer: vi.fn(),
 	updateOfferDinoz: vi.fn(),
 	updateOfferStatus: vi.fn()
 }));
@@ -323,7 +324,7 @@ describe('bidOffer', () => {
 });
 
 describe('expireOffer', () => {
-	it('awards the winner', async () => {
+	it('notifies the winner without paying the seller, who is paid when the winner claims', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({
 			id: 5,
 			seller: { id: 's' },
@@ -332,7 +333,8 @@ describe('expireOffer', () => {
 		} as never);
 		await expireOffer(5);
 		expect(createNotification).toHaveBeenCalled();
-		expect(playerDao.addMoney).toHaveBeenCalledWith('s', 10000);
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+		expect(offerDao.updateOfferStatus).toHaveBeenCalledWith(5, OfferStatus.ENDED);
 	});
 	it('notifies seller when no bids', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue({ id: 5, seller: { id: 's' }, bids: [], dinoz: { id: 9 } } as never);
@@ -356,6 +358,23 @@ describe('expireOffer', () => {
 });
 
 describe('claimOffer', () => {
+	const soldOffer = (extra = {}) => ({
+		sellerId: 's',
+		sellerPaid: false,
+		seller: { id: 's' },
+		items: [
+			{ itemId: 9, quantity: 1, isIngredient: false },
+			{ itemId: 1, quantity: 2, isIngredient: true }
+		],
+		bids: [
+			{ userId: 'outbid', value: 8 },
+			{ userId: 'w', value: 10 }
+		],
+		dinoz: null,
+		...extra
+	});
+	const as = (id: string) => vi.mocked(playerDao.auth).mockResolvedValue({ id, name: id } as never);
+
 	beforeEach(() => {
 		vi.mocked(offerDao.prepareRefund).mockResolvedValue({
 			leader: false,
@@ -365,47 +384,79 @@ describe('claimOffer', () => {
 			ingredients: [],
 			items: []
 		} as never);
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
 	});
 	it('throws when offer missing', async () => {
 		vi.mocked(offerDao.getOffer).mockResolvedValue(null as never);
 		await expect(claimOffer(req({ offerId: '5' }))).rejects.toThrow('Offer not found');
 	});
-	it('gives items to the winner when there is no dinoz', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			sellerId: 's',
-			seller: { id: 's' },
-			items: [
-				{ itemId: 9, quantity: 1, isIngredient: false },
-				{ itemId: 1, quantity: 1, isIngredient: true }
-			],
-			bids: [{ userId: 'w', value: 10 }],
-			dinoz: null
-		} as never);
+	it('gives the content to the winner and pays the seller at that moment', async () => {
+		as('w');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer() as never);
 		await claimOffer(req({ offerId: '5' }));
-		expect(offerDao.updateOfferStatus).toHaveBeenCalledWith(5, OfferStatus.CLAIMED);
+		expect(offerDao.claimEndedOffer).toHaveBeenCalledWith(5);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('w', 9, 1);
+		expect(increaseIngredientQuantity).toHaveBeenCalledWith('w', 1, 2);
+		expect(playerDao.addMoney).toHaveBeenCalledTimes(1);
+		expect(playerDao.addMoney).toHaveBeenCalledWith('s', 10000);
+	});
+	it('does not pay again a seller already paid when the offer ended, before this rule', async () => {
+		as('w');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer({ sellerPaid: true }) as never);
+		await claimOffer(req({ offerId: '5' }));
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('w', 9, 1);
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it.each([
+		['the seller', 's'],
+		['an outbid player', 'outbid'],
+		['a stranger', 'p1']
+	])('refuses a sold offer claimed by %s', async (_label, caller) => {
+		as(caller);
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer() as never);
+		await expect(claimOffer(req({ offerId: '5' }))).rejects.toThrow('invalidOffer');
+		expect(offerDao.claimEndedOffer).not.toHaveBeenCalled();
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it('delivers and pays nothing when a concurrent call already claimed the offer', async () => {
+		as('w');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer() as never);
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(false as never);
+		await expect(claimOffer(req({ offerId: '5' }))).rejects.toThrow('invalidOffer');
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
 	});
 	it('transfers a dinoz to the winner', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			sellerId: 's',
-			seller: { id: 's' },
-			items: [],
-			bids: [{ userId: 'w', value: 10 }],
-			dinoz: { id: 9, level: 5, skills: [{ skillId: 1 }] }
-		} as never);
+		as('w');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(
+			soldOffer({ items: [], dinoz: { id: 9, level: 5, skills: [{ skillId: 1 }] } }) as never
+		);
 		vi.mocked(playerDao.getPlayerDiscoveredSkills).mockResolvedValue({ discoveredSkills: [] } as never);
 		const result = await claimOffer(req({ offerId: '5' }));
 		expect(result.discoveredSkills).toContain(1);
 	});
-	it('refunds the seller when no bids', async () => {
-		vi.mocked(offerDao.getOffer).mockResolvedValue({
-			sellerId: 's',
-			seller: { id: 's' },
-			items: [],
-			bids: [],
-			dinoz: { id: 9 }
-		} as never);
+	it('gives an unsold offer back to its seller, without gold', async () => {
+		as('s');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer({ bids: [], dinoz: { id: 9 } }) as never);
 		await claimOffer(req({ offerId: '5' }));
-		expect(offerDao.updateOfferStatus).toHaveBeenCalledWith(5, OfferStatus.CLAIMED);
+		expect(offerDao.claimEndedOffer).toHaveBeenCalledWith(5);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
+		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(9, { unavailableReason: null });
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it('gives the offer back to its seller, without gold, when the winner deleted their account', async () => {
+		as('s');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer({ bids: [{ userId: null, value: 10 }] }) as never);
+		await claimOffer(req({ offerId: '5' }));
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+	});
+	it('refuses an unsold offer claimed by someone else than its seller', async () => {
+		as('p1');
+		vi.mocked(offerDao.getOffer).mockResolvedValue(soldOffer({ bids: [] }) as never);
+		await expect(claimOffer(req({ offerId: '5' }))).rejects.toThrow('invalidOffer');
+		expect(offerDao.claimEndedOffer).not.toHaveBeenCalled();
 	});
 });
 
@@ -541,54 +592,60 @@ describe('scheduling helpers', () => {
 		await scheduleEndedOffersExpiration();
 		expect(scheduleJob).toHaveBeenCalled();
 	});
-	it('refundEndedOffers leaves a sold offer untouched so its winner can still claim it', async () => {
-		await refundEndedOffers({
-			id: 1,
-			sellerId: 's',
-			dinozId: 9,
-			endDate: new Date(),
-			items: [
-				{ itemId: 9, quantity: 1, isIngredient: false },
-				{ itemId: 3, quantity: 2, isIngredient: true }
-			],
-			bids: [
-				{ userId: 'outbid', value: 4 },
-				{ userId: 'w', value: 5 }
-			]
-		} as never);
-		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
-		expect(increaseIngredientQuantity).not.toHaveBeenCalled();
-		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
-		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
+	const endedOffer = (extra = {}) => ({
+		id: 1,
+		sellerId: 's',
+		sellerPaid: false,
+		dinozId: 9,
+		endDate: new Date(),
+		items: [
+			{ itemId: 9, quantity: 1, isIngredient: false },
+			{ itemId: 3, quantity: 2, isIngredient: true }
+		],
+		bids: [
+			{ userId: 'outbid', value: 4 },
+			{ userId: 'w', value: 5 }
+		],
+		...extra
 	});
-	it('refundEndedOffers gives an unsold offer back to its seller', async () => {
-		await refundEndedOffers({
-			id: 1,
-			sellerId: 's',
-			dinozId: 9,
-			endDate: new Date(),
-			items: [
-				{ itemId: 9, quantity: 1, isIngredient: false },
-				{ itemId: 3, quantity: 2, isIngredient: true }
-			],
-			bids: []
-		} as never);
+	it('refundEndedOffers cancels an unclaimed sale: content to the seller, coupons back to the winner, no gold', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
+		await refundEndedOffers(endedOffer() as never);
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
 		expect(increaseIngredientQuantity).toHaveBeenCalledWith('s', 3, 2);
 		expect(dinozDao.updateDinoz).toHaveBeenCalledWith(9, { unavailableReason: null });
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('w', Item.TREASURE_COUPON, 5);
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalledWith('outbid', expect.anything(), expect.anything());
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
 		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
 	});
-	it('refundEndedOffers gives the offer back to its seller when the winning bidder no longer exists', async () => {
-		await refundEndedOffers({
-			id: 1,
-			sellerId: 's',
-			dinozId: null,
-			endDate: new Date(),
-			items: [{ itemId: 9, quantity: 1, isIngredient: false }],
-			bids: [{ userId: null, value: 5 }]
-		} as never);
+	it('refundEndedOffers gives an unsold offer back to its seller', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
+		await refundEndedOffers(endedOffer({ bids: [] }) as never);
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledTimes(1);
 		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
 		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
+	});
+	it('refundEndedOffers gives the offer back to its seller, without gold, when the winner deleted their account', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
+		await refundEndedOffers(endedOffer({ dinozId: null, bids: [{ userId: null, value: 5 }] }) as never);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledTimes(1);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
+		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
+	});
+	it('refundEndedOffers leaves claimable a sale whose seller was already paid before this rule', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
+		await refundEndedOffers(endedOffer({ sellerPaid: true }) as never);
+		expect(offerDao.claimEndedOffer).not.toHaveBeenCalled();
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
+	});
+	it('refundEndedOffers does nothing when the winner claimed the offer at the same moment', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(false as never);
+		await refundEndedOffers(endedOffer() as never);
+		expect(playerItemDao.increaseItemQuantity).not.toHaveBeenCalled();
+		expect(increaseIngredientQuantity).not.toHaveBeenCalled();
+		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
 	});
 });

@@ -9,6 +9,7 @@ import {
 	getOffers,
 	getOngoingOffers,
 	insertOffer,
+	claimEndedOffer,
 	prepareRefund,
 	updateOfferDinoz,
 	updateOfferStatus
@@ -437,7 +438,7 @@ export const expireOffer = async (offerId: number) => {
 			JSON.stringify({ offer: offerId, value: winnerBid.value }),
 			NotificationSeverity.offerWon
 		);
-		await addMoney(offer.seller.id, winnerBid.value * 1000);
+		// The seller is paid when the winner claims the offer
 		// Send seller notification for ended offer
 		await createNotification(
 			offer.seller.id,
@@ -486,11 +487,23 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 	const winnerBid = offer.bids[offer.bids.length - 1];
 	const promises = [];
 
+	// A sold offer is claimed by its winner; an unsold one, or one whose winner deleted their account, by its seller
+	const claimantId = offer.bids.length && winnerBid.userId ? winnerBid.userId : sellerId;
+	if (authed.id !== claimantId) {
+		throw new ExpectedError(translate('invalidOffer', authed));
+	}
+
 	if (offer.bids.length && winnerBid.userId) {
 		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz, offerId);
 
 		if (typeof winner === 'string') {
 			throw new ExpectedError(translate(winner, authed));
+		}
+		if (!(await claimEndedOffer(offerId))) {
+			throw new ExpectedError(translate('invalidOffer', authed));
+		}
+		if (!offer.sellerPaid) {
+			await addMoney(sellerId, winnerBid.value * 1000);
 		}
 		if (offer.dinoz && winnerBid.userId) {
 			// Change Dinoz owner and set as not selling
@@ -538,6 +551,9 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		if (typeof refund === 'string') {
 			throw new ExpectedError(translate(refund, authed));
 		}
+		if (!(await claimEndedOffer(offerId))) {
+			throw new ExpectedError(translate('invalidOffer', authed));
+		}
 		// Set Dinoz as not selling
 		if (offer.dinoz) {
 			updateDinoz(offer.dinoz.id, { unavailableReason: null });
@@ -552,9 +568,6 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		// LOGGER.log(`Offer ${offerId} expired`);
 		await createLog(LogType.OfferExpired, sellerId, undefined, offer.id);
 	}
-
-	// Update offer status
-	await updateOfferStatus(offerId, OfferStatus.CLAIMED);
 
 	await Promise.all(promises);
 
@@ -686,12 +699,18 @@ export const scheduleEndedOffersExpiration = async () => {
 };
 
 export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bids: OfferBid[] }) => {
-	// A sold offer was paid to the seller when it ended: its content belongs to the winner, who can still claim it
+	// An unclaimed sale is cancelled: the seller gets the content back and the winner their coupons.
+	// The seller was never paid, since payment happens when the winner claims.
 	const winningBid = offer.bids.reduce<OfferBid | null>(
 		(highest, bid) => (highest && highest.value > bid.value ? highest : bid),
 		null
 	);
-	if (winningBid?.userId) {
+	// Sales ended before this rule already paid their seller: they stay claimable by their winner
+	if (offer.sellerPaid && winningBid?.userId) {
+		return;
+	}
+	// Fails when the winner or the seller claimed it meanwhile
+	if (!(await claimEndedOffer(offer.id))) {
 		return;
 	}
 
@@ -707,6 +726,11 @@ export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bid
 		if (offer.dinozId) {
 			refundPromises.push(updateDinoz(offer.dinozId, { unavailableReason: null }));
 		}
+	}
+	if (winningBid?.userId) {
+		refundPromises.push(
+			increaseItemQuantity(winningBid.userId, itemList[Item.TREASURE_COUPON].itemId, winningBid.value)
+		);
 	}
 	refundPromises.push(deleteOffer(offer.id));
 
