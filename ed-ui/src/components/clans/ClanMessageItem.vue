@@ -25,7 +25,7 @@
 		</header>
 
 		<div class="msg-card__content">
-			<div class="mkt-content" v-html="contentHtml"></div>
+			<div class="mkt-content" v-html="sanitizeHtml(contentHtml)"></div>
 			<div class="actions divide-x">
 				<button class="btn" @click="emit('reply')">{{ t('messagerie.responseConv') }}</button>
 				<button v-if="canDelete" class="btn btn--danger" @click="emit('delete')">

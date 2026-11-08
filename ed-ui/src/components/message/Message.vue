@@ -4,7 +4,7 @@
 			<DZUser :user="message.sender" />
 			<div class="date">{{ formatDate(message.createdAt.toString()) }}</div>
 		</div>
-		<div class="message msg-content mkt-content mkt-content--clay" v-html="message.content" />
+		<div class="message msg-content mkt-content mkt-content--clay" v-html="sanitizeHtml(message.content)" />
 	</div>
 </template>
 

@@ -1,12 +1,13 @@
 <template>
 	<div class="section" v-if="header">
-		<h2 class="titlePage" v-html="header"></h2>
-		<h3 class="subTitlePage" width="520" height="27" v-html="subHeader" />
+		<h2 class="titlePage" v-html="safeHeader"></h2>
+		<h3 class="subTitlePage" width="520" height="27" v-html="safeSubHeader" />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { sanitizeHtml } from '../../utils/sanitizeHtml.js';
 
 export default defineComponent({
 	name: 'TitleHeader',
@@ -14,6 +15,15 @@ export default defineComponent({
 		title: String,
 		header: String,
 		subHeader: String
+	},
+	computed: {
+		// Headers carry game markup (icons) but also player values: clan names, forum titles, URL parameters
+		safeHeader(): string {
+			return sanitizeHtml(this.header);
+		},
+		safeSubHeader(): string {
+			return sanitizeHtml(this.subHeader);
+		}
 	},
 	watch: {
 		title: {

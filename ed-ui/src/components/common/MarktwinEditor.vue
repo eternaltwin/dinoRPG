@@ -66,7 +66,7 @@
 		>
 			<p v-if="previewError" class="preview-note">{{ $t('editor.previewError') }}</p>
 			<p v-else-if="modelValue.trim().length === 0" class="preview-note">{{ $t('editor.previewEmpty') }}</p>
-			<div v-else class="mkt-content" v-html="previewHtml" />
+			<div v-else class="mkt-content" v-html="sanitizeHtml(previewHtml)" />
 		</div>
 
 		<div class="foot">

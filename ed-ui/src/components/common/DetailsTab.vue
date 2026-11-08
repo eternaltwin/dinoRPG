@@ -95,7 +95,7 @@
 				<span>{{ $t('details.assaults') }}</span>
 				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 					<template #content>
-						<h1 v-html="$t('details.assaults')" />
+						<h1 v-html="sanitizeHtml($t('details.assaults'))" />
 						<p v-html="'TODO'" />
 					</template>
 				</Tippy>
@@ -141,7 +141,7 @@
 				<span>{{ $t('details.defenses') }}</span>
 				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 					<template #content>
-						<h1 v-html="$t('details.defenses')" />
+						<h1 v-html="sanitizeHtml($t('details.defenses'))" />
 						<p v-html="'TODO'" />
 					</template>
 				</Tippy>

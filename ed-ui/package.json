@@ -27,6 +27,7 @@
     "@vueuse/core": "^14.2.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
+    "dompurify": "^3.2.6",
     "kryo": "^0.16.1",
     "kryo-json": "^0.16.1",
     "mitt": "^3.0.1",

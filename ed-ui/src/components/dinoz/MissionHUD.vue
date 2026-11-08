@@ -57,7 +57,7 @@
 			<p v-html="formatContent($t(`missions.description.${missionName}`))" />
 			<div v-if="previousDialog" class="previous-step">
 				<h2>{{ $t('missions.lastDialog') }}</h2>
-				<p v-html="$t(`missions.dialog.${missionName}.${previousDialog}`)" />
+				<p v-html="sanitizeHtml($t(`missions.dialog.${missionName}.${previousDialog}`))" />
 			</div>
 		</template>
 	</Tippy>

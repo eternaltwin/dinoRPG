@@ -16,7 +16,7 @@
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
 						<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" />
-						<p v-html="$t(`item.name.${item.name}`)" />
+						<p v-html="sanitizeHtml($t(`item.name.${item.name}`))" />
 						<template #content>
 							<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
 							<h2>{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}</h2>

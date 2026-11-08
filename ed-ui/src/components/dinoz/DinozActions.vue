@@ -124,7 +124,6 @@ import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, shopNameList } from '../../constants/index.js';
-import { mixin } from '../../mixin/mixin.js';
 import { ClanService, DinozService, DungeonService, FightService, MissionService } from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -419,7 +418,7 @@ export default defineComponent({
 							} else if (reward.rewardType === RewardEnum.STATUS) {
 								this.$toast.open({
 									message: this.$t(`dig.status`, {
-										item: mixin.methods.formatContent(this.$t(`status.name.${reward.value}`))
+										item: this.$t(`status.name.${reward.value}`)
 									}),
 									type: 'success'
 								});

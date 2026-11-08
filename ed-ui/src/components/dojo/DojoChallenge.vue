@@ -6,7 +6,9 @@
 			<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
 		</template>
 		<div class="challenge" v-if="!fightTransformed && activeChallenge">
-			<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
+			<p
+				v-html="sanitizeHtml($t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal }))"
+			/>
 		</div>
 		<div v-if="fightTransformed && activeChallenge" class="recap">
 			<div
@@ -18,16 +20,20 @@
 					}
 				]"
 			>
-				<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
+				<p
+					v-html="sanitizeHtml($t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal }))"
+				/>
 			</div>
 			<div v-if="!challengeWon && fightAnimationEnded" class="debrief">
-				<p v-if="!victory" v-html="$t(`dojo.challenge.challengeExplanation.looseFight`)" />
+				<p v-if="!victory" v-html="sanitizeHtml($t(`dojo.challenge.challengeExplanation.looseFight`))" />
 				<p
 					v-if="victory && !challengeWon"
 					v-html="
-						$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
-							goal: formattedGoal
-						})
+						sanitizeHtml(
+							$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
+								goal: formattedGoal
+							})
+						)
 					"
 				/>
 			</div>
@@ -53,7 +59,7 @@
 				<div
 					class="fight"
 					:class="opponent.id && myFighter.id ? 'show' : 'hidden'"
-					v-html="$t('dojo.challenge.launch')"
+					v-html="sanitizeHtml($t('dojo.challenge.launch'))"
 					@click="launchChallenge()"
 				/>
 

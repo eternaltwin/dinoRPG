@@ -27,7 +27,7 @@
 								:src="getImgURL('ingredients', ingredient.name)"
 								:alt="$t(`ingredients.name.${ingredient.name}`)"
 							>
-								<p v-html="$t(`ingredients.name.${ingredient.name}`)" />
+								<p v-html="sanitizeHtml($t(`ingredients.name.${ingredient.name}`))" />
 								<template #content>
 									<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
 									<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
@@ -64,7 +64,7 @@
 								:src="getImgURL('item', `item_${item.name}`)"
 								:alt="$t(`item.name.${item.name}`)"
 							>
-								<p v-html="$t(`item.name.${item.name}`)" />
+								<p v-html="sanitizeHtml($t(`item.name.${item.name}`))" />
 								<template #content>
 									<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
 									<p v-html="formatContent($t(`item.description.${item.name}`))" />

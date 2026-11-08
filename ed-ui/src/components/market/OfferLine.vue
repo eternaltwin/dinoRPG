@@ -25,7 +25,7 @@
 							getImgURL(item.isIngredient ? 'ingredients' : 'item', item.isIngredient ? item.name : 'item_' + item.name)
 						"
 					>
-						<p v-html="$t(`${item.isIngredient ? 'ingredients' : 'item'}.name.${item.name}`)" />
+						<p v-html="sanitizeHtml($t(`${item.isIngredient ? 'ingredients' : 'item'}.name.${item.name}`))" />
 						<template #content>
 							<h1 v-html="formatContent($t(`${item.isIngredient ? 'ingredients' : 'item'}.name.${item.name}`))" />
 							<p v-html="formatContent($t(`${item.isIngredient ? 'ingredients' : 'item'}.description.${item.name}`))" />
@@ -90,7 +90,7 @@
 	</tr>
 	<tr v-if="details && offer.dinoz" class="dinoz-details">
 		<td class="dinoz-name-race">
-			<h2 v-html="offer.dinoz.name" />
+			<h2 v-html="sanitizeHtml(offer.dinoz.name)" />
 			<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }}</p>
 		</td>
 		<td>
