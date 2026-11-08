@@ -48,7 +48,7 @@ function trimToContent(source: string): Promise<string> {
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { dino } from '@eternaltwin/dinorpg_animations';
+import { loadDinorpgAnimations } from '../../../utils/dinorpgAnimations.js';
 
 const props = defineProps<{ display: string; size: number; flip?: boolean }>();
 const src = ref<string | undefined>();
@@ -56,31 +56,37 @@ const src = ref<string | undefined>();
 function renderImage(display: string, flip: boolean): Promise<string | null> {
 	let promise = inFlight.get(display);
 	if (!promise) {
-		promise = new Promise<string | null>(resolve => {
-			try {
-				const d = new dino({
-					data: display,
-					flip: flip,
-					damages: 0,
-					dark: false,
-					scale: 1,
-					shadow: false,
-					congel: false
-				});
-				d.toRawImage(
-					value => {
-						void trimToContent(value).then(trimmed => {
-							cache.set(display, trimmed);
-							resolve(trimmed);
+		// Loaded on demand: a static import put the whole animation library in the entry chunk
+		promise = loadDinorpgAnimations().then(
+			({ dino }) =>
+				new Promise<string | null>(resolve => {
+					try {
+						const d = new dino({
+							data: display,
+							flip: flip,
+							damages: 0,
+							dark: false,
+							scale: 1,
+							shadow: false,
+							congel: false
 						});
-					},
-					RENDER_WIDTH,
-					RENDER_HEIGHT
-				);
-			} catch {
-				resolve(null);
-			}
-		}).finally(() => inFlight.delete(display));
+						d.toRawImage(
+							value => {
+								void trimToContent(value).then(trimmed => {
+									cache.set(display, trimmed);
+									resolve(trimmed);
+								});
+							},
+							RENDER_WIDTH,
+							RENDER_HEIGHT
+						);
+					} catch {
+						resolve(null);
+					}
+				})
+		);
+		// A failed load of the library shows no image, like a failed render
+		promise = promise.catch(() => null).finally(() => inFlight.delete(display));
 		inFlight.set(display, promise);
 	}
 	return promise;
