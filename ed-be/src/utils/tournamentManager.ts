@@ -694,7 +694,9 @@ class TournamentManager {
 			data: {
 				reputation: 0,
 				tournamentTeamId: null,
-				dailyReset: 0
+				dailyReset: 0,
+				// Teams were just deleted: everyone can select one for the new tournament
+				teamUpdate: null
 			}
 		});
 		await prisma.ranking.updateMany({

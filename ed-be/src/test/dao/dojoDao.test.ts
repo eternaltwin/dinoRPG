@@ -20,14 +20,14 @@ const startOfDay = new Date('2026-11-08T00:00:00');
 describe('replaceMyTeamDao', () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	it('replaces the team only while waves are left and once a day when a team exists', async () => {
+	it('replaces the team only while waves are left and when no team was selected today, even if the team is empty', async () => {
 		tx.dojo.updateMany.mockResolvedValue({ count: 1 });
 		await expect(replaceMyTeamDao([1], [2], 'd1', 5, startOfDay)).resolves.toEqual({ id: 'd1' });
 		expect(tx.dojo.updateMany).toHaveBeenCalledWith({
 			where: {
 				id: 'd1',
 				dailyReset: { lt: 5 },
-				OR: [{ team: { none: {} } }, { teamUpdate: null }, { teamUpdate: { lt: startOfDay } }]
+				OR: [{ teamUpdate: null }, { teamUpdate: { lt: startOfDay } }]
 			},
 			data: { teamUpdate: expect.any(Date) }
 		});

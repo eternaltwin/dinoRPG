@@ -137,8 +137,9 @@ export async function createMyDojo(playerId: string, challenge: Challenge) {
 
 /**
  * Replaces the team and its opponents, which resets the fights of the current wave. Allowed while waves are
- * left today, and once a day when a team already exists (the first team is always allowed): the condition and
- * the stamp of `teamUpdate` are one write, so concurrent requests can't replace the team twice.
+ * left today and only when no team was selected today: once selected, the team stays until the day is over,
+ * even if its dinoz disappear. The condition and the stamp of `teamUpdate` are one write, so concurrent
+ * requests can't select two teams.
  * @returns `null` when the replacement is refused
  */
 export async function replaceMyTeamDao(
@@ -153,7 +154,7 @@ export async function replaceMyTeamDao(
 			where: {
 				id: dojoId,
 				dailyReset: { lt: maxSeries },
-				OR: [{ team: { none: {} } }, { teamUpdate: null }, { teamUpdate: { lt: startOfDay } }]
+				OR: [{ teamUpdate: null }, { teamUpdate: { lt: startOfDay } }]
 			},
 			data: { teamUpdate: new Date() }
 		});
