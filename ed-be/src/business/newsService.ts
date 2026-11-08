@@ -18,7 +18,7 @@ import { CreatePollOption } from '@drpg/core/models/news/Polls';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { prisma } from '../prisma.js';
 import dayjs from 'dayjs';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { LOGGER } from '../context.js';
 import { returnCode } from '@drpg/core/models/enums/returnCode';
 import { Lang, NewsType } from '@drpg/prisma';

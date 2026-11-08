@@ -55,7 +55,7 @@
 		"i18next-fs-backend": "^2.3.1",
 		"kryo": "^0.16.1",
 		"kryo-json": "^0.16.1",
-		"multer": "^1.4.5-lts.1",
+		"multer": "^2.5.0",
 		"node-fetch": "^3.3.2",
 		"node-schedule": "^2.1.1",
 		"reflect-metadata": "^0.1.13",
@@ -64,14 +64,14 @@
 		"swagger-ui-express": "^5.0.0",
 		"toml": "^5.0.0",
 		"url": "^0.11.3",
-		"ws": "^8.15.1"
+		"ws": "^8.18.0"
 	},
 	"devDependencies": {
 		"@stylistic/eslint-plugin-ts": "^1.4.0",
 		"@types/cors": "^2.8.17",
 		"@types/cron": "^2.4.3",
 		"@types/express": "^4.17.21",
-		"@types/multer": "^1.4.12",
+		"@types/multer": "^2.0.0",
 		"@types/node": "^26.6.5",
 		"@types/node-fetch": "^2.6.12",
 		"@types/node-schedule": "^2.1.7",

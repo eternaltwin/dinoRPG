@@ -1143,7 +1143,8 @@ export async function createClanMessageRequest(
 
 export async function deleteClanMessageRequest(id: number, playerId: string): Promise<void> {
 	return withSpan(deleteClanMessageRequest.name, async () => {
-		await prisma.clanMessage.delete({
+		// deleteMany: a message already deleted by a concurrent request is not an error
+		await prisma.clanMessage.deleteMany({
 			where: {
 				id,
 				OR: [

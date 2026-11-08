@@ -109,7 +109,7 @@ import { calculateFightVsMonsters, fightMonstersAtPlace, rewardFightVsMonsters }
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
 import { LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { finishDinozUnsacrifice } from './demonShopService.js';
 
 /**

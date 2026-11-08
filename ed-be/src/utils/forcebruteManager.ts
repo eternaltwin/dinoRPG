@@ -5,7 +5,7 @@ import { shuffle } from './tools.js';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { FBDetails, FBMetaData, FBPool, FBPools, RawMatch } from '@drpg/core/models/dojo/ForceBrute';
 import { LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob } from './server/safeSchedule.js';
 import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
