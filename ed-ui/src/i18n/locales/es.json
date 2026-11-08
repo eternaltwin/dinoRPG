@@ -5640,7 +5640,7 @@
 		"elsewhere": "{count} dinoz en otro lugar",
 		"onBoard": "En el tablero",
 		"noneOnBoard": "Ningún dinoz en el tablero.",
-		"hp": ":pv:",
+		"hp": "PV",
 		"ap": "PA",
 		"noSelection": "Ningún dinoz seleccionado.",
 		"won": "victoria",
