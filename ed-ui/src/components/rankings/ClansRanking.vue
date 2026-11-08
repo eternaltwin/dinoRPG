@@ -134,11 +134,15 @@
 		<WarHistory />
 	</div>
 	<div v-else-if="rankingType === ClanRankingType.CHAMPIONSHIP && championship">
-		<div v-if="new Date(championship.registrationEnd).getDate() < new Date().getDate()">
+		<div v-if="championship.phase === 'registration'">
 			<h3>{{ $t('clanChampionship.registeredClans', { count: championship.registrations.length }) }}</h3>
 			<p v-if="championship.registrations.length === 0">{{ $t('clanChampionship.noRegistration') }}</p>
 			<ul v-else class="registrations">
-				<li v-for="(r, i) in championship.registrations" :key="i" :class="{ mine: r.clanId === 1 }">
+				<li
+					v-for="(r, i) in championship.registrations"
+					:key="i"
+					:class="{ mine: r.clanId !== null && r.clanId === myClanId }"
+				>
 					<RouterLink v-if="r.clanId !== null" :to="{ name: 'Clan', params: { id: r.clanId } }">{{
 						r.clanName
 					}}</RouterLink>
@@ -248,6 +252,9 @@ export default defineComponent({
 		},
 		warInProgress() {
 			return !!clanStore().clanEvent;
+		},
+		myClanId(): number {
+			return clanStore().getClanId;
 		}
 	}
 });

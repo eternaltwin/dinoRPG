@@ -297,7 +297,12 @@ test('the board page lets the player navigate to another view', async ({ page, p
 	}
 });
 
-test('the championship page shows the standings and the next match', async ({ page, player, createPlayer, db }) => {
+test('the championship shows the next match on the clan page and the standings in the clan ranking', async ({
+	page,
+	player,
+	createPlayer,
+	db
+}) => {
 	const suffix = player.id.slice(0, 8);
 	const rival = await createPlayer();
 	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
@@ -352,16 +357,18 @@ test('the championship page shows the standings and the next match', async ({ pa
 	try {
 		await page.goto(`/clan/${clanA.id}/championship`);
 
-		const standings = page.getByTestId('standings');
-		await expect(standings.getByRole('row').filter({ hasText: clanA.name }).getByRole('cell').last()).toHaveText('3');
-		await expect(standings.getByRole('row').filter({ hasText: clanB.name }).getByRole('cell').last()).toHaveText('0');
-
 		const next = page.getByTestId('next-match');
 		await expect(next).toContainText(clanB.name);
 		await expect(next).toContainText('Lieu du match : Dinoville');
 
 		await expect(page.getByText('Terminé', { exact: true })).toBeVisible();
 		await expect(page.getByText('12 – 3')).toBeVisible();
+
+		// The standings moved to the clan ranking, championship tab
+		await page.goto('/ranking/clans?type=championship');
+		const standings = page.getByTestId('standings');
+		await expect(standings.getByRole('row').filter({ hasText: clanA.name }).getByRole('cell').last()).toHaveText('3');
+		await expect(standings.getByRole('row').filter({ hasText: clanB.name }).getByRole('cell').last()).toHaveText('0');
 	} finally {
 		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
