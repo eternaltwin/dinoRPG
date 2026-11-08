@@ -144,7 +144,12 @@ routes.get(
 
 routes.post(
 	`${commonPath}`,
-	[body('name').exists().isString(), body('description').exists().isString(), body('languages').exists().isArray()],
+	[
+		// The name is shown on many pages: no markup characters
+		body('name').exists().isString().trim().isLength({ min: 1, max: 50 }).not().matches(/[<>]/),
+		body('description').exists().isString(),
+		body('languages').exists().isArray()
+	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
