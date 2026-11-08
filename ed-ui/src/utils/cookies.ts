@@ -8,10 +8,13 @@ export const getCookie = (name: string) => {
 	return null;
 };
 
+// Not sent to other sites, and only over HTTPS when the game is served over HTTPS (local dev runs on plain HTTP)
+const flags = `SameSite=Lax${window.location.protocol === 'https:' ? '; Secure' : ''}`;
+
 export const setCookie = (name: string, value: string, days: number) => {
-	document.cookie = `${name}=${value}; path=/; domain=${mainDomain}; max-age=${days * 24 * 60 * 60}`;
+	document.cookie = `${name}=${value}; path=/; domain=${mainDomain}; max-age=${days * 24 * 60 * 60}; ${flags}`;
 };
 
 export const deleteCookie = (name: string) => {
-	document.cookie = `${name}=; path=/; domain=${mainDomain}; max-age=0`;
+	document.cookie = `${name}=; path=/; domain=${mainDomain}; max-age=0; ${flags}`;
 };

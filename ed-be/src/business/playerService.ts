@@ -7,6 +7,7 @@ import { convertToPlayerStats } from '@drpg/core/utils/twinoidGoals';
 import { LogType, OfferStatus } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
 import { Request } from 'express';
+import { randomUUID } from 'node:crypto';
 import sanitizeHtml from 'sanitize-html';
 import { getAllDinozFicheLite } from '../dao/dinozDao.js';
 import {
@@ -100,6 +101,16 @@ export async function acceptTos(req: Request) {
 	// tosByPass: this is the endpoint used to accept the ToS in the first place
 	const authed = await auth(req, false, true);
 	await setPlayer(authed.id, { tosAccepted: true });
+}
+
+/**
+ * @summary Log out: a new connexion token revokes every session of the player, on every device,
+ * including a token stolen before. The next Eternaltwin login returns the new token.
+ */
+export async function logout(req: Request) {
+	// A banned player or one who has not accepted the ToS can log out too
+	const authed = await auth(req, true, true);
+	await setPlayer(authed.id, { connexionToken: randomUUID() });
 }
 
 /**
