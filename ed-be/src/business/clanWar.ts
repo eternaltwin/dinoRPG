@@ -8,8 +8,8 @@ import {
 	consumeRepairCost,
 	consumeWarCost,
 	getWarForResolve,
-	playerHasRightRequest,
-	updateWarRankings
+	type LocalTransactionClient,
+	playerHasRightRequest
 } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { auth } from '../dao/playerDao.js';
@@ -130,22 +130,11 @@ export async function buildClanCastle(req: Request) {
 				data: {
 					treasureValue: 0
 				}
-			}),
-			prisma.clanWarRanking.upsert({
-				where: {
-					clanId_eventId: {
-						clanId: authed.clanId,
-						eventId: war.id
-					}
-				},
-				create: {
-					clanId: authed.clanId,
-					eventId: war.id
-				},
-				update: {}
 			})
 		]);
 	}
+	// The ranking belongs to the event: a castle kept or rebuilt from a previous event needs one too
+	await ensureWarRanking(prisma, authed.clanId, war.id);
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: authed.clanId } },
@@ -236,6 +225,9 @@ export async function declareWar(req: Request) {
 				}
 
 				await consumeWarCost(clanId, cost, tx);
+				// Both clans get their ranking of this event, which the resolution of the war updates
+				await ensureWarRanking(tx, clanId, war.id);
+				await ensureWarRanking(tx, defender.id, war.id);
 
 				const attack = await tx.clanWar.create({
 					data: {
@@ -320,16 +312,42 @@ export async function declareWar(req: Request) {
 
 	await Promise.all(notifications);
 
-	scheduleJob(`war_${attack.id}`, endWar, () => {
-		resolveClanWar(attack.id);
+	scheduleWarResolution(attack.id, endWar);
+}
+
+/** Creates the ranking of a clan for a war event if it does not exist yet. */
+async function ensureWarRanking(client: LocalTransactionClient, clanId: number, eventId: string) {
+	return client.clanWarRanking.upsert({
+		where: { clanId_eventId: { clanId, eventId } },
+		create: { clanId, eventId },
+		update: {}
 	});
 }
 
+/** Resolves a war when it expires. A failure is logged: a rejected job would stop the server. */
+function scheduleWarResolution(warId: string, endsAt: Date) {
+	scheduleJob(`war_${warId}`, endsAt, () => resolveClanWarSafely(warId));
+}
+
+async function resolveClanWarSafely(warId: string) {
+	try {
+		await resolveClanWar(warId);
+	} catch (err) {
+		LOGGER.error(`Cannot resolve war ${warId}: ${err}`);
+	}
+}
+
+/**
+ * Resolves a war once: the winner, the rankings of the event and the annexed wars are written in one
+ * transaction, which starts by a conditional write of the winner. A second call (job and castle destruction,
+ * restart) finds the war resolved and stops, so nothing is counted twice; a failure leaves the war unresolved.
+ */
 async function resolveClanWar(warId: string, forfeit?: boolean) {
 	const war = await getWarForResolve(warId);
 
 	if (!war) {
-		throw new ExpectedError(`War ${warId} not found`);
+		LOGGER.log(`War ${warId} is already resolved.`);
+		return;
 	}
 
 	let winnerClanId = war.isCastleDestroyed ? war.attacker.id : war.defender.id;
@@ -340,19 +358,38 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 	const attackerWon = winnerClanId === war.attacker.id;
 	const isCastleDestroyed = forfeit ? false : war.isCastleDestroyed;
 
-	await prisma.clanWar.update({
-		where: { id: war.id },
-		data: {
-			winnerClanId,
-			isCastleDestroyed
+	const annexWars = await prisma.$transaction(async tx => {
+		const resolved = await tx.clanWar.updateMany({
+			where: { id: war.id, winnerClanId: null },
+			data: { winnerClanId, isCastleDestroyed }
+		});
+		if (resolved.count !== 1) {
+			return null;
 		}
-	});
 
-	const rankingUpdates = computeWarRankingUpdates(war, attackerWon, isCastleDestroyed);
-	await updateWarRankings(war.eventId, rankingUpdates);
+		// The rankings of the event of this war (not those of an older event), created when missing
+		const attackerRanking = await ensureWarRanking(tx, war.attacker.id, war.eventId);
+		const defenderRanking = await ensureWarRanking(tx, war.defender.id, war.eventId);
+		const rankingUpdates = computeWarRankingUpdates(
+			{
+				...war,
+				attacker: { ...war.attacker, clanWarRanking: [attackerRanking] },
+				defender: { ...war.defender, clanWarRanking: [defenderRanking] }
+			},
+			attackerWon,
+			isCastleDestroyed
+		);
+		for (const { clanId, totalPWin, totalPLost, downtimeCount, reputation } of rankingUpdates) {
+			await tx.clanWarRanking.update({
+				where: { clanId_eventId: { clanId, eventId: war.eventId } },
+				data: { totalPWin, totalPLost, downtimeCount, reputation }
+			});
+		}
 
-	if (isCastleDestroyed) {
-		const annexWars = await prisma.clanWar.findMany({
+		if (!isCastleDestroyed) {
+			return [];
+		}
+		const annexed = await tx.clanWar.findMany({
 			where: {
 				defenderClanId: war.defender.id,
 				winnerClanId: null,
@@ -369,20 +406,23 @@ async function resolveClanWar(warId: string, forfeit?: boolean) {
 				}
 			}
 		});
+		await tx.clanWar.updateMany({
+			where: { id: { in: annexed.map(annexWar => annexWar.id) }, winnerClanId: null },
+			data: {
+				winnerClanId: war.defender.id, // défenseur gagne par défaut
+				endsAt: new Date(),
+				isCastleDestroyed: false
+			}
+		});
+		return annexed;
+	});
 
-		await prisma.$transaction(
-			annexWars.map(annexWar =>
-				prisma.clanWar.update({
-					where: { id: annexWar.id },
-					data: {
-						winnerClanId: war.defender.id, // défenseur gagne par défaut
-						endsAt: new Date(),
-						isCastleDestroyed: false
-					}
-				})
-			)
-		);
+	if (annexWars === null) {
+		LOGGER.log(`War ${warId} was resolved meanwhile.`);
+		return;
+	}
 
+	if (isCastleDestroyed) {
 		// Cancel the expiration jobs of the annex wars, otherwise they fire later on an already resolved war.
 		for (const annexWar of annexWars) {
 			const annexJob = scheduledJobs[`war_${annexWar.id}`];
@@ -571,24 +611,30 @@ async function notifyWarResults(
 }
 
 export async function scheduleWarExpiration() {
-	const currentWar = await findActiveWarEvent();
-	if (!currentWar || currentWar.endDate < new Date()) {
-		LOGGER.log('No war event ongoing.');
-		return;
-	}
-
-	const oingoingWar = await prisma.clanWar.findMany({
+	// Unresolved wars are handled first, even when no event is active any more: a war that expired while the
+	// server was down is resolved now (node-schedule never fires a date already passed), the others are planned
+	const unresolvedWars = await prisma.clanWar.findMany({
 		where: {
 			winnerClanId: null
 		}
 	});
 
-	oingoingWar.forEach(war => {
-		scheduleJob(`war_${war.id}`, war.endsAt, () => {
-			resolveClanWar(war.id);
-		});
-		LOGGER.log(`Scheduling war ${war.id} expiration at ${war.endsAt}`);
-	});
+	const now = new Date();
+	for (const war of unresolvedWars) {
+		if (war.endsAt <= now) {
+			LOGGER.log(`War ${war.id} expired at ${war.endsAt}, resolving it now.`);
+			await resolveClanWarSafely(war.id);
+		} else {
+			scheduleWarResolution(war.id, war.endsAt);
+			LOGGER.log(`Scheduling war ${war.id} expiration at ${war.endsAt}`);
+		}
+	}
+
+	const currentWar = await findActiveWarEvent();
+	if (!currentWar || currentWar.endDate < new Date()) {
+		LOGGER.log('No war event ongoing.');
+		return;
+	}
 
 	const dinozResting = await prisma.dinoz.updateMany({
 		where: {

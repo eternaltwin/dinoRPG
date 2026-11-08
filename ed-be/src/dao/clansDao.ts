@@ -11,7 +11,7 @@ import { Lang, NotificationSeverity, EventType, $Enums, Prisma, LogType } from '
 import { setSpecificStat } from './trackingDao.js';
 import { createNotification } from './notificationDao.js';
 import { withSpan } from '../utils/server/tracing.js';
-import { ProspectorUpdate, WarRankingUpdate } from '../utils/warCalculation.js';
+import { ProspectorUpdate } from '../utils/warCalculation.js';
 import ClanEventType = $Enums.ClanEventType;
 import { WarCost } from '@drpg/core/models/clan/clanWar';
 
@@ -1383,23 +1383,6 @@ export async function getWarForResolve(warId: string) {
 	});
 }
 
-export async function updateWarRankings(eventId: string, updates: WarRankingUpdate[]) {
-	return withSpan(updateWarRankings.name, async () => {
-		if (updates.length === 0) {
-			return;
-		}
-
-		await prisma.$transaction(
-			updates.map(({ clanId, totalPWin, totalPLost, downtimeCount, reputation }) =>
-				prisma.clanWarRanking.update({
-					where: { clanId_eventId: { clanId, eventId } },
-					data: { totalPWin, totalPLost, downtimeCount, reputation }
-				})
-			)
-		);
-	});
-}
-
 /**
  * Fetches every war-ranking row of an event together with its clan's castle life (to decide the
  * standing/destroyed state) and member ids (to target the Prospector SSE notification).
@@ -1430,7 +1413,7 @@ export async function getProspectorRankings(eventId: string) {
 /**
  * Persists a batch of Prospector updates. Writes only the fields the Prospector owns —
  * `downtimeCount` is intentionally left untouched (owned by war resolution) to avoid clobbering a
- * concurrent `updateWarRankings`.
+ * concurrent war resolution.
  */
 export async function applyProspectorUpdates(eventId: string, updates: ProspectorUpdate[]) {
 	return withSpan(applyProspectorUpdates.name, async () => {
