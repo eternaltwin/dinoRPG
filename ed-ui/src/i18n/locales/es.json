@@ -3581,6 +3581,7 @@
 			"title": "Opciones de Mi Cuenta",
 			"fight": "Mostrar combates",
 			"todo": "No disponible",
+			"export": "Descargar mis datos",
 			"reset": "Eliminar la cuenta"
 		},
 		"twinoidgoals": {
@@ -5601,7 +5602,7 @@
 		"elsewhere": "{count} dinoz en otro lugar",
 		"onBoard": "En el tablero",
 		"noneOnBoard": "Ningún dinoz en el tablero.",
-		"hp": ":pv:",
+		"hp": "PV",
 		"ap": "PA",
 		"noSelection": "Ningún dinoz seleccionado.",
 		"won": "victoria",
