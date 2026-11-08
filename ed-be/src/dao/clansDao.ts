@@ -764,7 +764,8 @@ export async function updateClanMemberRequest(id: number, clanId: number, rights
 	});
 }
 
-export async function excludeClanMemberRequest(clanMemberId: number, acceptorId: string) {
+/** Excludes a member of `clanId` only: the right of the caller is checked on that clan. */
+export async function excludeClanMemberRequest(clanMemberId: number, clanId: number, acceptorId: string) {
 	return withSpan(excludeClanMemberRequest.name, async () => {
 		const creator = await prisma.player.findUnique({
 			where: { id: acceptorId },
@@ -774,19 +775,23 @@ export async function excludeClanMemberRequest(clanMemberId: number, acceptorId:
 		if (!creator) {
 			throw new ExpectedError('Creator not found');
 		}
-		let member = await prisma.clanMember.findUnique({
+		let member = await prisma.clanMember.findFirst({
 			where: {
-				id: clanMemberId
+				id: clanMemberId,
+				clanId
 			}
 		});
+		if (!member) {
+			throw new ExpectedError('Member not found in this clan');
+		}
 
 		const clan = await prisma.clan.findUnique({
 			where: {
-				id: member?.clanId
+				id: clanId
 			}
 		});
 
-		if (clan?.leaderId != member?.playerId) {
+		if (clan && clan.leaderId !== member.playerId) {
 			member = await prisma.clanMember.delete({
 				where: {
 					id: clanMemberId
@@ -981,25 +986,37 @@ export async function createClanPageRequest(clanId: number, name: string, conten
 	});
 }
 
-export async function deleteClanPageRequest(id: number) {
+/** Deletes a page of `clanId` only (never its home page): the right of the caller is checked on that clan. */
+export async function deleteClanPageRequest(id: number, clanId: number) {
 	return withSpan(deleteClanPageRequest.name, async () => {
-		const page = await prisma.clanPage.delete({
+		const { count } = await prisma.clanPage.deleteMany({
 			where: {
 				id,
+				clanId,
 				home: false
-			},
-			select: { id: true }
+			}
 		});
+		if (count !== 1) {
+			throw new ExpectedError('Page not found in this clan');
+		}
 
-		return page;
+		return { id };
 	});
 }
 
-export async function updateClanPageRequest(id: number, name: string, content: string, isPublic: boolean) {
+/** Updates a page of `clanId` only: the right of the caller is checked on that clan. */
+export async function updateClanPageRequest(
+	id: number,
+	clanId: number,
+	name: string,
+	content: string,
+	isPublic: boolean
+) {
 	return withSpan(updateClanPageRequest.name, async () => {
-		const page = await prisma.clanPage.update({
+		const { count } = await prisma.clanPage.updateMany({
 			where: {
-				id
+				id,
+				clanId
 			},
 			data: {
 				name,
@@ -1007,8 +1024,11 @@ export async function updateClanPageRequest(id: number, name: string, content: s
 				public: isPublic
 			}
 		});
+		if (count !== 1) {
+			throw new ExpectedError('Page not found in this clan');
+		}
 
-		return page;
+		return prisma.clanPage.findUniqueOrThrow({ where: { id } });
 	});
 }
 

@@ -230,6 +230,8 @@ describe('reincarnate', () => {
 		level: 45,
 		display: 'd',
 		seed: 's',
+		life: 0,
+		unavailableReason: null,
 		skills: [{ skillId: Skill.REINCARNATION }],
 		status: [],
 		items: [],
@@ -242,9 +244,18 @@ describe('reincarnate', () => {
 		await reincarnate(req({ id: '1' }));
 		expect(addStatusToDinoz).toHaveBeenCalledWith(1, DinozStatusId.REINCARNATION);
 	});
-	it('throws when dinoz not found', async () => {
+	it('looks the dinoz up among the dinoz of the caller only', async () => {
 		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(null as never);
+		// Another player's dinoz is not found: their points can't be taken from the caller
 		await expect(reincarnate(req({ id: '1' }))).rejects.toThrow('dinozNotFound');
+		expect(dinozDao.getDinozToReincarnate).toHaveBeenCalledWith(1, 'p1');
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
+	});
+	it('refuses a dinoz on sale or in a dungeon', async () => {
+		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(
+			reincarnatable({ unavailableReason: 'selling' }) as never
+		);
+		await expect(reincarnate(req({ id: '1' }))).rejects.toThrow('UnavailableReason.selling');
 	});
 	it('throws when not eligible', async () => {
 		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(reincarnatable({ level: 10 }) as never);

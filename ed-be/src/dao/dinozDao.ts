@@ -1167,6 +1167,7 @@ export async function getFollowingDinoz(dinozId: number) {
 			},
 			select: {
 				id: true,
+				playerId: true,
 				placeId: true,
 				fight: true,
 				life: true,
@@ -1386,11 +1387,13 @@ export async function getAllUnavailableUntil() {
 	});
 }
 
-export async function getDinozToReincarnate(dinozId: number) {
+/** The dinoz of `playerId` only: another player's dinoz is not found. */
+export async function getDinozToReincarnate(dinozId: number, playerId: string) {
 	return withSpan(getDinozToReincarnate.name, async () => {
-		return await prisma.dinoz.findUnique({
+		return await prisma.dinoz.findFirst({
 			where: {
-				id: dinozId
+				id: dinozId,
+				playerId
 			},
 			select: {
 				skills: {
@@ -1405,6 +1408,7 @@ export async function getDinozToReincarnate(dinozId: number) {
 				display: true,
 				id: true,
 				seed: true,
+				unavailableReason: true,
 				raceId: true,
 				life: true,
 				level: true,
