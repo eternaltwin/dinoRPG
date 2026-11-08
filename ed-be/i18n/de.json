@@ -279,6 +279,8 @@
 		"inexistantOpponent": "Gegner nicht gefunden",
 		"notFightedOpponent": "Dieser Gegner wurde bereits bezwungen",
 		"qualificationOver": "Die Qualifikationsphase ist vorbei.",
+		"dailySeriesOver": "Vous avez terminé toutes les vagues du jour : votre équipe ne peut plus être modifiée avant demain.",
+		"teamAlreadyChanged": "Vous avez déjà choisi votre équipe aujourd'hui : elle ne pourra être changée qu'à partir de demain.",
 		"dinozTooLowLevel": "Ein Dinoz hat nicht die erforderliche Mindeststufe (mindestens 10).",
 		"dinozTooHighLevel": "Ein Dinoz überschreitet die zugelassene Höchststufe.",
 		"wrongRace": "Eine Rasse innerhalb deiner Mannschaft ist zu diesem Turnier nicht zugelassen.",
