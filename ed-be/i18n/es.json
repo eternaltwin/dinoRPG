@@ -279,6 +279,8 @@
 		"inexistantOpponent": "Adversario no encontrado",
 		"notFightedOpponent": "Adversario ya derrotado",
 		"qualificationOver": "La fase de clasificación ha finalizado.",
+		"dailySeriesOver": "Vous avez terminé toutes les vagues du jour : votre équipe ne peut plus être modifiée avant demain.",
+		"teamAlreadyChanged": "Vous avez déjà choisi votre équipe aujourd'hui : elle ne pourra être changée qu'à partir de demain.",
 		"dinozTooLowLevel": "Un Dino no tiene el nivel requerido (10 como mínimo).",
 		"dinozTooHighLevel": "Un Dino supera el nivel máximo permitido.",
 		"wrongRace": "Una raza de tu equipo no está permitida en este torneo.",
