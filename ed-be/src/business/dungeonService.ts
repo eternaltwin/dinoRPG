@@ -323,9 +323,10 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (!dungeon.isActive) {
 		throw new ExpectedError(translate('dungeon.notFound', authed));
 	}
-	const dinozId = req.body.dinozId;
+	const dinozId = +req.body.dinozId;
 	let dinoz = await getFollowingDinoz(dinozId);
-	if (!dinoz) {
+	// Another player's dinoz is not found: entering would lock it in a dungeon
+	if (!dinoz || dinoz.playerId !== authed.id) {
 		throw new ExpectedError(translate('dinozNotFound', authed));
 	}
 	// A party member that died or left since is cleared out first: a survivor whose leader
@@ -333,7 +334,7 @@ export async function startRun(req: Request): Promise<StartRunResult> {
 	if (dinoz.unavailableReason === UnavailableReason.dungeon) {
 		await settleDungeonParty(dinoz);
 		dinoz = await getFollowingDinoz(dinozId);
-		if (!dinoz) {
+		if (!dinoz || dinoz.playerId !== authed.id) {
 			throw new ExpectedError(translate('dinozNotFound', authed));
 		}
 	}
@@ -460,9 +461,9 @@ export async function exitRun(req: Request) {
 			throw new ExpectedError(translate('dungeon.notFound', authed));
 		}
 	}
-	const dinozId = req.body.dinozId;
+	const dinozId = +req.body.dinozId;
 	const dinoz = await getFollowingDinoz(dinozId);
-	if (!dinoz) {
+	if (!dinoz || dinoz.playerId !== authed.id) {
 		throw new ExpectedError(translate('dinozNotFound', authed));
 	}
 

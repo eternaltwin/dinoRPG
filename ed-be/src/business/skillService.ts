@@ -64,6 +64,7 @@ import translate from '../utils/server/translate.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { gameConfig } from '../utils/gameConfig.js';
+import { assertDinozCanAct } from '../utils/dinozGuards.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -543,7 +544,7 @@ export async function reincarnate(req: Request) {
 	const dinozId: number = +req.params.id;
 	const authed = await auth(req);
 
-	const dinoz = await getDinozToReincarnate(dinozId);
+	const dinoz = await getDinozToReincarnate(dinozId, authed.id);
 
 	if (!dinoz) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
@@ -556,6 +557,8 @@ export async function reincarnate(req: Request) {
 	) {
 		throw new ExpectedError(translate('reincarnationNotPossible', authed, { id: dinozId }));
 	}
+	// Reincarnation is open to a dead dinoz, but not to one on sale, frozen, in a dungeon…
+	assertDinozCanAct(dinoz, authed, { allowDead: true });
 
 	// 🔎 Check if the dinoz has any equipped items before reincarnation and prevent reincarnation if it has any
 	const equippedItems = dinoz.items.filter(i => i.itemId);

@@ -47,7 +47,13 @@ import {
 	dinozExitRun
 } from '../../dao/dungeonRunDao.js';
 import { auth } from '../../dao/playerDao.js';
-import { getDinozFightDataRequest, getDungeonParty, getFollowingDinoz, updateDinoz } from '../../dao/dinozDao.js';
+import {
+	getDinozFightDataRequest,
+	getDungeonParty,
+	getFollowingDinoz,
+	updateDinoz,
+	updateMultipleDinoz
+} from '../../dao/dinozDao.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../business/fightService.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -76,6 +82,7 @@ const mockAuthed: any = { id: 'player1', lang: 'en' };
 function makeDinoz(overrides: Record<string, any> = {}): any {
 	return {
 		id: DEFAULT_DINOZ_ID,
+		playerId: 'player1',
 		placeId: TEST_PLACE_ID,
 		life: 10,
 		unavailableReason: null,
@@ -142,6 +149,14 @@ describe('dungeonService - startRun', () => {
 		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
 			'dinozNotFound'
 		);
+	});
+
+	it("refuses another player's dinoz, which would stay locked in the dungeon", async () => {
+		vi.mocked(getFollowingDinoz).mockResolvedValue(makeDinoz({ playerId: 'someone-else' }));
+		await expect(startRun(makeRequest({ params: { id: 'unit-test-dungeon' }, body: { dinozId: 1 } }))).rejects.toThrow(
+			'dinozNotFound'
+		);
+		expect(updateMultipleDinoz).not.toHaveBeenCalled();
 	});
 
 	it('throws if Dinoz not leader', async () => {

@@ -486,7 +486,7 @@ export async function excludeClanMember(req: Request) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.MEMBER_EXCLUDE}`);
 	}
 
-	const member = await excludeClanMemberRequest(+req.params.id, authed.id);
+	const member = await excludeClanMemberRequest(+req.params.id, Number(req.params.clanId), authed.id);
 	await removeFromBoardsIfLeft(member);
 
 	return member;
@@ -572,7 +572,7 @@ export async function deleteClanPage(req: Request) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.PAGE_MANAGE}`);
 	}
 
-	const page = await deleteClanPageRequest(Number(req.params.pageId));
+	const page = await deleteClanPageRequest(Number(req.params.pageId), Number(req.params.clanId));
 
 	return page;
 }
@@ -594,7 +594,13 @@ export async function updateClanPage(req: Request) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.PAGE_MANAGE}`);
 	}
 
-	const page = await updateClanPageRequest(Number(req.params.id), req.body.name, req.body.content, req.body.isPublic);
+	const page = await updateClanPageRequest(
+		Number(req.params.id),
+		Number(req.params.clanId),
+		req.body.name,
+		req.body.content,
+		req.body.isPublic
+	);
 
 	return page;
 }

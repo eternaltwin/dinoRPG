@@ -82,6 +82,7 @@ describe('dungeon team lock', () => {
 		vi.mocked(findRun).mockResolvedValue(null);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
+			playerId: 'player1',
 			placeId: 1,
 			unavailableReason: 'resting', // busy for a reason other than being in a dungeon
 			fight: true,
@@ -100,6 +101,7 @@ describe('dungeon team lock', () => {
 		vi.mocked(findRun).mockResolvedValue(null);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
+			playerId: 'player1',
 			placeId: 1,
 			life: 10,
 			unavailableReason: null,
@@ -132,6 +134,7 @@ describe('dungeon team lock', () => {
 		} as never);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
+			playerId: 'player1',
 			placeId: 1,
 			life: 10,
 			unavailableReason: null,
@@ -160,6 +163,7 @@ describe('dungeon team lock', () => {
 		} as never);
 		vi.mocked(getFollowingDinoz).mockResolvedValue({
 			id: 1,
+			playerId: 'player1',
 			placeId: 1,
 			unavailableReason: 'dungeon',
 			followers: [],

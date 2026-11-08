@@ -295,6 +295,17 @@ describe('right-guarded updates', () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
 		await expect(svc.excludeClanMember(req({ clanId: '1', id: '2' }))).rejects.toThrow('right');
 	});
+	it('excludeClanMember scopes the member to the clan the right was checked on', async () => {
+		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue({ id: 'm' } as never);
+		await svc.excludeClanMember(req({ clanId: '1', id: '2' }));
+		expect(clansDao.playerHasRightRequest).toHaveBeenCalledWith(1, 'p1', expect.anything());
+		expect(clansDao.excludeClanMemberRequest).toHaveBeenCalledWith(2, 1, 'p1');
+	});
+	it('excludeClanMember refuses an anonymous caller before any write', async () => {
+		vi.mocked(playerDao.auth).mockRejectedValueOnce(new Error('Missing authorization header'));
+		await expect(svc.excludeClanMember(req({ clanId: '1', id: '2' }))).rejects.toThrow('authorization');
+		expect(clansDao.excludeClanMemberRequest).not.toHaveBeenCalled();
+	});
 });
 
 describe('pages, leave, banner, messages, history', () => {
@@ -319,6 +330,12 @@ describe('pages, leave, banner, messages, history', () => {
 		expect(
 			await svc.updateClanPage(req({ clanId: '1', id: '2' }, { name: 'n', content: 'c', isPublic: false }))
 		).toEqual({ id: 1 });
+	});
+	it('deleteClanPage / updateClanPage scope the page to the clan the right was checked on', async () => {
+		await svc.deleteClanPage(req({ clanId: '1', pageId: '2' }));
+		expect(clansDao.deleteClanPageRequest).toHaveBeenCalledWith(2, 1);
+		await svc.updateClanPage(req({ clanId: '1', id: '2' }, { name: 'n', content: 'c', isPublic: false }));
+		expect(clansDao.updateClanPageRequest).toHaveBeenCalledWith(2, 1, 'n', 'c', false);
 	});
 	it('createClanPage throws without right', async () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
