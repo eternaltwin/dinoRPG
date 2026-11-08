@@ -12,6 +12,23 @@ function deleteLock(key: string) {
 	}
 }
 
+/**
+ * Key of the anti-burst lock. Built from what identifies the action, not from how the request spells it:
+ * Express routes ignore the case of the path and accept `01` for `1` in numeric parameters, Postgres compares
+ * UUIDs without case and HEAD runs the GET handler. Without this, each spelling got its own lock.
+ * This lock only blunts bursts; concurrent requests are settled by the conditional writes of each action.
+ */
+export function lockKey(method: string, path: string, playerId: string) {
+	const normalizedMethod = method.toUpperCase() === 'HEAD' ? 'GET' : method.toUpperCase();
+	const normalizedPath = path
+		.toLowerCase()
+		.split('/')
+		.filter(segment => segment.length > 0)
+		.map(segment => (/^\d+$/.test(segment) ? String(Number(segment)) : segment))
+		.join('/');
+	return `${normalizedMethod}:${normalizedPath}:${playerId.trim().toLowerCase()}`;
+}
+
 export default function lockMiddleware(req: Request, res: Response, next: NextFunction) {
 	const { method, path } = req;
 
@@ -34,7 +51,7 @@ export default function lockMiddleware(req: Request, res: Response, next: NextFu
 			return sendError(res, new ExpectedError('Invalid authorization header content'));
 		}
 
-		const key = `${method}:${path.toLowerCase().replace(/\//g, '')}:${id}`;
+		const key = lockKey(method, path, id);
 
 		if (locks.has(key)) {
 			return sendError(res, new ExpectedError('Too many requests'));
