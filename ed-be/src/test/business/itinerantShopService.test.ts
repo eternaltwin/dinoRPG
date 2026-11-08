@@ -2,11 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
-vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn() }));
-vi.mock('../../dao/playerIngredientDao.js', () => ({
-	decreaseIngredientQuantity: vi.fn(),
-	getAllIngredientsDataRequest: vi.fn()
-}));
+vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
+vi.mock('../../dao/playerIngredientDao.js', () => ({ sellIngredients: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozItinerantShop: vi.fn() }));
 vi.mock('../../dao/secretDao.js', () => ({ getSpecificSecret: vi.fn() }));
 vi.mock('../../utils/server/translate.js', () => ({ default: (k: string) => k }));
@@ -19,8 +16,8 @@ vi.mock('@drpg/core/models/shop/ShopList', () => ({
 	}
 }));
 
-import { addMoney, auth } from '../../dao/playerDao.js';
-import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../../dao/playerIngredientDao.js';
+import { auth } from '../../dao/playerDao.js';
+import { sellIngredients } from '../../dao/playerIngredientDao.js';
 import { getDinozItinerantShop } from '../../dao/dinozDao.js';
 import { getSpecificSecret } from '../../dao/secretDao.js';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
@@ -73,25 +70,43 @@ describe('getIngredientsFromItinerantShop', () => {
 });
 
 describe('sellIngredient', () => {
-	it('sells ingredients and credits gold', async () => {
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({
-			ingredients: [{ ingredientId: 1, quantity: 10 }]
-		} as never);
+	it('sells ingredients and credits gold in one transaction', async () => {
+		vi.mocked(sellIngredients).mockResolvedValue(true);
 		const result = await sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 2 }] }));
-		expect(decreaseIngredientQuantity).toHaveBeenCalled();
-		expect(addMoney).toHaveBeenCalledWith('p1', 20);
+		expect(sellIngredients).toHaveBeenCalledWith('p1', [{ ingredientId: 1, quantity: 2 }], 20);
 		expect(result.gold).toBe(20);
 	});
-	it('throws on negative quantity', async () => {
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({ ingredients: [] } as never);
-		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 0 }] }))).rejects.toThrow(
-			'wrongQuantity'
+	it('pays a repeated line once, against the whole stock', async () => {
+		vi.mocked(sellIngredients).mockResolvedValue(true);
+		await expect(
+			sellIngredient(
+				req(
+					{ dinozId: '1' },
+					{
+						ingredients: [
+							{ itemId: 1, quantity: 6 },
+							{ itemId: 1, quantity: 6 }
+						]
+					}
+				)
+			)
+		).rejects.toThrow('less than 0');
+		expect(sellIngredients).not.toHaveBeenCalled();
+	});
+	it('credits nothing when the ingredients were spent meanwhile', async () => {
+		vi.mocked(sellIngredients).mockResolvedValue(false);
+		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 2 }] }))).rejects.toThrow(
+			'less than 0'
 		);
 	});
-	it('throws when player has no ingredients data', async () => {
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue(null as never);
-		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity: 1 }] }))).rejects.toThrow(
-			'playerNotFound'
+	it.each([
+		['zero', 0],
+		['string', '2'],
+		['fractional', 0.5]
+	])('throws on a %s quantity', async (_label, quantity) => {
+		await expect(sellIngredient(req({ dinozId: '1' }, { ingredients: [{ itemId: 1, quantity }] }))).rejects.toThrow(
+			'wrongQuantity'
 		);
+		expect(sellIngredients).not.toHaveBeenCalled();
 	});
 });

@@ -125,19 +125,43 @@ export const consumeIngredient = async (
 	return true;
 };
 
+/** Thrown by `consumeIngredientLines` to roll its transaction back when a line is missing. */
+export class NotEnoughIngredients extends ExpectedError {}
+
 /**
- * Removes several ingredient lines at once, inside the caller's transaction. Throws when one line is missing, so
- * the transaction is rolled back and nothing the caller planned to grant in exchange is written.
+ * Removes several ingredient lines at once, inside the caller's transaction. Throws `NotEnoughIngredients` when
+ * one line is missing, so the transaction is rolled back and nothing the caller grants in exchange is written.
  */
 export async function consumeIngredientLines(
 	playerId: string,
 	lines: { ingredientId: number; quantity: number }[],
-	tx: TxClient,
-	notEnoughMessage = 'notEnoughIngredients'
+	tx: TxClient
 ) {
 	for (const line of lines) {
 		if (!(await consumeIngredient(playerId, line.ingredientId, line.quantity, tx))) {
-			throw new ExpectedError(notEnoughMessage);
+			throw new NotEnoughIngredients('notEnoughIngredients');
 		}
+	}
+}
+
+/**
+ * Sells ingredients to a merchant in one transaction: the ingredients are removed by conditional writes before
+ * the gold is credited, so a missing line credits nothing.
+ * @returns `false` if the player no longer has one of the lines
+ */
+export async function sellIngredients(
+	playerId: string,
+	lines: { ingredientId: number; quantity: number }[],
+	gold: number
+): Promise<boolean> {
+	try {
+		await prisma.$transaction(async tx => {
+			await consumeIngredientLines(playerId, lines, tx);
+			await tx.player.update({ where: { id: playerId }, data: { money: { increment: gold } } });
+		});
+		return true;
+	} catch (err) {
+		if (err instanceof NotEnoughIngredients) return false;
+		throw err;
 	}
 }

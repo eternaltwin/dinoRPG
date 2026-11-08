@@ -2,7 +2,6 @@ import { CLAN_CREATE_MONEY, CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@dr
 import { ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
-import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
@@ -41,16 +40,14 @@ import {
 	searchClansByName,
 	searchClansByNameRequest,
 	updateClanBannerRequest,
-	updateClanContribution,
+	donateIngredientsToClan,
 	updateClanLanguagesRequest,
 	updateClanMemberRequest,
-	updateClanPageRequest,
-	updateClanTreasure,
-	upsertClanIngredients
+	updateClanPageRequest
 } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
-import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import { parseQuantityLines } from '../utils/quantityLines.js';
 import translate from '../utils/server/translate.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
@@ -694,53 +691,23 @@ export async function giveClanIngredients(req: Request) {
 		throw new ExpectedError(`Player is not in the clan`);
 	}
 
-	const ingredients = req.body.ingredients as ShopDTO[];
-	const player = await getAllIngredientsDataRequest(authed.id);
-	// Throw an exception if the player doesn't exist
-	if (!player) {
-		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-	}
-
-	// Lock negative quantities
-	if (ingredients.some(i => i.quantity <= 0)) {
-		throw new ExpectedError(translate(`wrongQuantity`));
-	}
-
-	const ingredientToGive = player.ingredients
-		.filter(i => ingredients.some(a => a.itemId === i.ingredientId))
-		.filter(i => {
-			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
-			if (!givenIngredient) {
-				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donation.`);
-				throw new ExpectedError('Error');
-			}
-			return i.quantity >= givenIngredient.quantity;
-		})
-		.map(i => {
-			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
-			const ingredientReference = Object.values(ingredientList).find(a => a.ingredientId === i.ingredientId);
-			if (!givenIngredient || !ingredientReference) {
-				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donation.`);
-				throw new ExpectedError('Error');
-			}
-			return {
-				ingredientId: i.ingredientId,
-				quantity: givenIngredient.quantity,
-				gold: givenIngredient.quantity * ingredientReference.price
-			};
-		});
+	// Integer ids and positive integer quantities, lines of a same ingredient merged
+	const ingredients = parseQuantityLines(req.body.ingredients, translate(`wrongQuantity`, authed));
 
 	let totalGold = 0;
-	const promises = [];
-	for (const ingredient of ingredientToGive) {
-		totalGold += ingredient.gold;
-		promises.push(decreaseIngredientQuantity(authed.id, ingredient.ingredientId, ingredient.quantity));
-		promises.push(upsertClanIngredients(clanId, ingredient.ingredientId, ingredient.quantity));
-	}
-	promises.push(updateClanTreasure(clanId, totalGold));
-	promises.push(updateClanContribution(authed.id, totalGold));
+	const lines = ingredients.map(given => {
+		const ingredientReference = Object.values(ingredientList).find(a => a.ingredientId === given.itemId);
+		if (!ingredientReference) {
+			throw new ExpectedError(translate('wrongQuantity', authed));
+		}
+		totalGold += given.quantity * ingredientReference.price;
+		return { ingredientId: given.itemId, quantity: given.quantity };
+	});
 
-	await Promise.all(promises);
+	// One transaction: the ingredients leave the player before the treasure and the contribution are credited
+	if (!(await donateIngredientsToClan(authed.id, clanId, lines, totalGold))) {
+		throw new ExpectedError(translate('notEnoughIngredients', authed));
+	}
 	return;
 }
 

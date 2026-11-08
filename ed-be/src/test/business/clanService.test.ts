@@ -12,6 +12,7 @@ vi.mock('../../dao/clansDao.js', () =>
 			'createClanPageRequest',
 			'createClanRequest',
 			'deleteClanPageRequest',
+			'donateIngredientsToClan',
 			'deleteClanRequest',
 			'denyPlayerJoinRequest',
 			'excludeClanMemberRequest',
@@ -362,24 +363,55 @@ describe('pages, leave, banner, messages, history', () => {
 });
 
 describe('ingredients & treasure', () => {
-	it('giveClanIngredients donates valid ingredients', async () => {
+	it('giveClanIngredients donates valid ingredients in one transaction', async () => {
 		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({
-			ingredients: [{ ingredientId: 1, quantity: 10 }]
-		} as never);
+		vi.mocked(clansDao.donateIngredientsToClan).mockResolvedValue(true);
 		await svc.giveClanIngredients(req({ id: '1' }, { ingredients: [{ itemId: 1, quantity: 5 }] }));
-		expect(clansDao.updateClanTreasure).toHaveBeenCalled();
+		expect(clansDao.donateIngredientsToClan).toHaveBeenCalledWith(
+			'p1',
+			1,
+			[{ ingredientId: 1, quantity: 5 }],
+			expect.any(Number)
+		);
+	});
+	it('giveClanIngredients merges the lines of a same ingredient', async () => {
+		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
+		vi.mocked(clansDao.donateIngredientsToClan).mockResolvedValue(true);
+		await svc.giveClanIngredients(
+			req(
+				{ id: '1' },
+				{
+					ingredients: [
+						{ itemId: 1, quantity: 5 },
+						{ itemId: 1, quantity: 5 }
+					]
+				}
+			)
+		);
+		expect(vi.mocked(clansDao.donateIngredientsToClan).mock.calls[0][2]).toEqual([{ ingredientId: 1, quantity: 10 }]);
+	});
+	it('giveClanIngredients credits nothing when an ingredient is missing at write time', async () => {
+		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
+		vi.mocked(clansDao.donateIngredientsToClan).mockResolvedValue(false);
+		await expect(
+			svc.giveClanIngredients(req({ id: '1' }, { ingredients: [{ itemId: 1, quantity: 5 }] }))
+		).rejects.toThrow('notEnoughIngredients');
 	});
 	it('giveClanIngredients throws when not in clan', async () => {
 		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'other' } }] as never);
 		await expect(svc.giveClanIngredients(req({ id: '1' }, { ingredients: [] }))).rejects.toThrow('not in the clan');
 	});
-	it('giveClanIngredients throws on negative quantity', async () => {
+	it.each([
+		['zero', 0],
+		['negative', -3],
+		['string', '5'],
+		['fractional', 1.5]
+	])('giveClanIngredients refuses a %s quantity before any write', async (_label, quantity) => {
 		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
-		vi.mocked(getAllIngredientsDataRequest).mockResolvedValue({ ingredients: [] } as never);
-		await expect(
-			svc.giveClanIngredients(req({ id: '1' }, { ingredients: [{ itemId: 1, quantity: 0 }] }))
-		).rejects.toThrow('wrongQuantity');
+		await expect(svc.giveClanIngredients(req({ id: '1' }, { ingredients: [{ itemId: 1, quantity }] }))).rejects.toThrow(
+			'wrongQuantity'
+		);
+		expect(clansDao.donateIngredientsToClan).not.toHaveBeenCalled();
 	});
 	it('getClanTreasureDetails', async () => {
 		vi.mocked(clansDao.getClanMembersListRequest).mockResolvedValue([{ player: { id: 'p1' } }] as never);
