@@ -62,6 +62,7 @@ import { getAllIngredientsDataRequest, increaseIngredientQuantity } from '../../
 import * as playerDao from '../../dao/playerDao.js';
 import { createNotification } from '../../dao/notificationDao.js';
 import { scheduleJob } from 'node-schedule';
+import { LOGGER } from '../../context.js';
 import {
 	getOfferList,
 	createOffer,
@@ -577,20 +578,96 @@ describe('scheduling helpers', () => {
 		await scheduleOffersExpiration();
 		expect(scheduleJob).toHaveBeenCalled();
 	});
-	it('scheduleEndedOffersExpiration refunds old and schedules others', async () => {
+	const DAY = 24 * 3600 * 1000;
+	const scheduledRefund = () => {
+		const call = vi.mocked(scheduleJob).mock.calls.find(c => String(c[0]).startsWith('offerEnded_'));
+		if (!call) throw new Error('no refund job scheduled');
+		return { name: call[0], date: call[1] as unknown as Date, run: call[2] as unknown as () => Promise<void> };
+	};
+	it('scheduleEndedOffersExpiration refunds at once an offer whose week ran out while the server was down', async () => {
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
 		vi.mocked(offerDao.getEndedOffers).mockResolvedValue([
-			{
-				id: 1,
-				endDate: new Date(Date.now() - 14 * 24 * 3600 * 1000),
-				items: [],
-				bids: [],
-				sellerId: 's',
-				dinozId: null
-			},
-			{ id: 2, endDate: new Date(Date.now() + 14 * 24 * 3600 * 1000), items: [], bids: [] }
+			{ id: 1, endDate: new Date(Date.now() - 10 * DAY), items: [], bids: [], sellerId: 's', dinozId: null }
 		] as never);
 		await scheduleEndedOffersExpiration();
-		expect(scheduleJob).toHaveBeenCalled();
+		expect(offerDao.deleteOffer).toHaveBeenCalledWith(1);
+		expect(scheduleJob).not.toHaveBeenCalled();
+	});
+	it('scheduleEndedOffersExpiration schedules the refund one week after the end of a recent offer', async () => {
+		const endDate = new Date(Date.now() - 2 * DAY);
+		vi.mocked(offerDao.getEndedOffers).mockResolvedValue([
+			{ id: 2, endDate, items: [], bids: [], sellerId: 's', dinozId: null }
+		] as never);
+		await scheduleEndedOffersExpiration();
+		const job = scheduledRefund();
+		expect(job.name).toBe('offerEnded_2');
+		expect(job.date.getTime()).toBe(endDate.getTime() + 7 * DAY);
+		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
+	});
+	it('expireOffer schedules the refund one week after the end of the offer', async () => {
+		const endDate = new Date();
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			endDate,
+			seller: { id: 's' },
+			bids: [{ userId: 'w', value: 10 }],
+			dinoz: null
+		} as never);
+		await expireOffer(5);
+		const job = scheduledRefund();
+		expect(job.name).toBe('offerEnded_5');
+		expect(job.date.getTime()).toBe(endDate.getTime() + 7 * DAY);
+	});
+	it('the scheduled refund reads the offer again and cancels it if it is still unclaimed', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			endDate: new Date(),
+			seller: { id: 's' },
+			bids: [],
+			dinoz: null
+		} as never);
+		await expireOffer(5);
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			sellerId: 's',
+			sellerPaid: false,
+			dinozId: null,
+			endDate: new Date(),
+			items: [{ itemId: 9, quantity: 1, isIngredient: false }],
+			bids: [{ userId: 'w', value: 10 }]
+		} as never);
+		vi.mocked(offerDao.claimEndedOffer).mockResolvedValue(true as never);
+		await scheduledRefund().run();
+		expect(offerDao.getOffer).toHaveBeenLastCalledWith(5, OfferStatus.ENDED);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('s', 9, 1);
+		expect(playerItemDao.increaseItemQuantity).toHaveBeenCalledWith('w', Item.TREASURE_COUPON, 10);
+		expect(offerDao.deleteOffer).toHaveBeenCalledWith(5);
+	});
+	it('the scheduled refund does nothing for an offer claimed in the meantime', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			endDate: new Date(),
+			seller: { id: 's' },
+			bids: [],
+			dinoz: null
+		} as never);
+		await expireOffer(5);
+		vi.mocked(offerDao.getOffer).mockResolvedValue(null as never);
+		await expect(scheduledRefund().run()).resolves.toBeUndefined();
+		expect(offerDao.deleteOffer).not.toHaveBeenCalled();
+	});
+	it('the scheduled refund logs its errors instead of letting them stop the server', async () => {
+		vi.mocked(offerDao.getOffer).mockResolvedValue({
+			id: 5,
+			endDate: new Date(),
+			seller: { id: 's' },
+			bids: [],
+			dinoz: null
+		} as never);
+		await expireOffer(5);
+		vi.mocked(offerDao.getOffer).mockRejectedValue(new Error('database down'));
+		await expect(scheduledRefund().run()).resolves.toBeUndefined();
+		expect(LOGGER.error).toHaveBeenCalled();
 	});
 	const endedOffer = (extra = {}) => ({
 		id: 1,
