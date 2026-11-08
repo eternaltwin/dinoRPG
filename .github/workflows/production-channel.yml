@@ -10,6 +10,13 @@ on:
       tag:
         required: true
         type: string
+    secrets:
+      # Optional: a secret of the `production` environment takes precedence over the one passed by the caller
+      CONFIG_REPO_TOKEN:
+        required: false
+
+permissions:
+  contents: read
 
 jobs:
   # The Tag workflow runs the e2e tests before calling this one; a release published by hand has not.
@@ -21,12 +28,15 @@ jobs:
     needs: e2e
     if: ${{ !cancelled() && (needs.e2e.result == 'success' || needs.e2e.result == 'skipped') }}
     runs-on: ubuntu-latest
+    # Deployment secrets live in this environment, guarded by its required reviewers
+    environment: production
     env:
       TAG: ${{ inputs.tag || github.event.release.tag_name }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ env.TAG }}
+          persist-credentials: false
       - name: Update production.json
         env:
           CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}

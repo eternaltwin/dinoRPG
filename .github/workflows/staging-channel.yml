@@ -5,11 +5,18 @@ on:
   push:
     branches: [staging]
 
+permissions:
+  contents: read
+
 jobs:
   update-staging:
     runs-on: ubuntu-latest
+    # Lets the token of the staging channel be an environment secret, apart from the production one
+    environment: staging
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Update staging.json
         env:
           CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}

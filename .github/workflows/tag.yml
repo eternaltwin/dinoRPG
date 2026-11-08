@@ -1,16 +1,20 @@
 name: Tag
 
-# On every pushed tag:
+# On every pushed version tag (X.Y.Z):
 # 0. run the e2e tests on the tagged commit; nothing below happens if they fail;
 # 1. if the tag is on staging, merge staging into develop;
 # 2. if the tag is (then) on develop, create the GitHub release;
 # 3. point the server-config production channel to the released commit.
+#
+# GitHub runs this file as it is in the tagged commit: the jobs that use deployment secrets run in the
+# `production` environment, whose required reviewers and tag rules (repository settings) guard those
+# secrets even when a tag points to a modified workflow.
 on:
   push:
-    tags: ['*']
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: tag-release
@@ -18,21 +22,27 @@ concurrency:
 
 jobs:
   e2e:
+    permissions:
+      contents: read
     uses: ./.github/workflows/e2e.yml
 
   merge-staging:
     needs: e2e
     runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
     outputs:
       on-develop: ${{ steps.check.outputs.on-develop }}
       commit: ${{ steps.check.outputs.commit }}
     steps:
       # GITHUB_TOKEN cannot push commits that touch .github/workflows/, so the push
       # goes through DEPLOY_KEY (repository deploy key with write access).
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
+          persist-credentials: true
       - name: Merge staging into develop
         run: |
           TAG_COMMIT=$(git rev-parse "${GITHUB_REF_NAME}^{commit}")
@@ -62,6 +72,8 @@ jobs:
     needs: merge-staging
     if: needs.merge-staging.outputs.on-develop == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Create GitHub release
         env:
@@ -78,7 +90,12 @@ jobs:
   # so the production channel is updated from here.
   production:
     needs: [merge-staging, release]
+    permissions:
+      contents: read
     uses: ./.github/workflows/production-channel.yml
     with:
       tag: ${{ github.ref_name }}
-    secrets: inherit
+    # Only the secret it needs. Once CONFIG_REPO_TOKEN is a secret of the `production` environment (and removed
+    # from the repository secrets), this passes nothing and the called job reads the environment secret.
+    secrets:
+      CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
