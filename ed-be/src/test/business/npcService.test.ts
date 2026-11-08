@@ -92,6 +92,7 @@ function buildPlayer(overrides: Partial<Record<string, unknown>> = {}, npcs: { n
 				canChangeName: false,
 				placeId: PLACE_ID,
 				life: 1,
+				unavailableReason: null,
 				npcs,
 				...overrides
 			}
@@ -138,6 +139,11 @@ describe('getNpcSpeech - 1st guard clauses', () => {
 	it('throws when the dinoz is dead', async () => {
 		mockGetNPC.mockResolvedValue(buildPlayer({ life: 0 }) as never);
 		await expect(getNpcSpeech(req())).rejects.toThrow('Dinoz is dead');
+	});
+
+	it('refuses a dinoz locked on the clan championship board (no NPC fight can bring it to 0 HP)', async () => {
+		mockGetNPC.mockResolvedValue(buildPlayer({ unavailableReason: 'clanChampionship' }) as never);
+		await expect(getNpcSpeech(req())).rejects.toThrow('UnavailableReason.clanChampionship');
 	});
 
 	it('throws when the place does not exist', async () => {

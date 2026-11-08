@@ -375,6 +375,7 @@ export async function getDinozMissionsInfo(dinozId: number, playerId: string) {
 						experience: true,
 						life: true,
 						canChangeName: true,
+						unavailableReason: true,
 						items: { select: { itemId: true } },
 						status: { select: { statusId: true } },
 						skills: { select: { skillId: true } },
@@ -654,7 +655,8 @@ export async function getDinozNPCRequest(dinozId: number, playerId: string) {
 						items: { select: { itemId: true } },
 						status: { select: { statusId: true } },
 						npcs: { select: { npcId: true, step: true } },
-						missions: true
+						missions: true,
+						unavailableReason: true
 					}
 				},
 				id: true,

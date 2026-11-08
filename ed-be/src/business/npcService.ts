@@ -16,6 +16,7 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Item } from '@drpg/core/models/item/ItemList';
 import translate from '../utils/server/translate.js';
+import { assertDinozCanAct } from '../utils/dinozGuards.js';
 
 /**
  * The requested step is either 'undefined' or a string. If undefined, it defaults to a valid initial step. Else, it tries to find the step.
@@ -48,6 +49,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (!isAlive(dinozBase)) {
 		throw new ExpectedError(`Dinoz is dead.`);
 	}
+	// A dinoz on sale, resting, in a dungeon or on a championship board can't talk (nor fight) with an NPC
+	assertDinozCanAct(dinozBase, authed);
 
 	const dinozCurrentPlace = Object.values(placeList).find(place => place.placeId === dinozBase.placeId);
 	if (!dinozCurrentPlace) {

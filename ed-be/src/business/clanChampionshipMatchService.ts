@@ -132,6 +132,8 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 				const expected = Math.min(MAX_TICKS, Math.floor(elapsed / TICK_MS));
 				const missed = expected - ticksApplied;
 				if (missed > 0) {
+					// A piece whose dinoz lost its life elsewhere neither scores nor earns action points
+					await retireDeadPieces(tx, matchId);
 					const pieces = await tx.clanChampionshipPiece.findMany({
 						where: { matchId, state: ClanChampionshipPieceState.onBoard }
 					});
@@ -298,6 +300,27 @@ type Fought = {
 	piece: PieceEntity;
 	dinoz: Awaited<ReturnType<typeof getDinozForChampionshipFight>>[number];
 };
+
+/**
+ * Takes off the board the pieces whose dinoz has no life left: hurt off the board, they would otherwise stay
+ * there, untouchable (fights skip dead dinoz) and still scoring. Runs under the match lock.
+ */
+export async function retireDeadPieces(tx: LocalTransactionClient, matchId: string): Promise<void> {
+	const onBoard = { matchId, state: ClanChampionshipPieceState.onBoard };
+	// The dinoz first: once the pieces are retired, they no longer designate it
+	await tx.dinoz.updateMany({
+		where: {
+			life: { lte: 0 },
+			unavailableReason: UnavailableReason.clanChampionship,
+			championshipPieces: { some: onBoard }
+		},
+		data: { unavailableReason: null }
+	});
+	await tx.clanChampionshipPiece.updateMany({
+		where: { ...onBoard, dinoz: { life: { lte: 0 } } },
+		data: { state: ClanChampionshipPieceState.dead, x: null, y: null, actionPoints: 0 }
+	});
+}
 
 /**
  * Plays the fight of a board attack (the attacker stays in place): 1v1 from behind, otherwise every piece
@@ -574,6 +597,10 @@ export async function moveOnBoard(authed: Auth, dinozId: number, direction: Boar
 		}
 		if (own.playerId !== authed.id || own.clanId !== clanId) throw fail('notYourDinoz');
 		if (own.actionPoints < 1) throw fail('noActionPoints');
+		const mover = await tx.dinoz.findUnique({ where: { id: dinozId }, select: { life: true } });
+		if (!mover || mover.life <= 0) throw fail('dinozDead');
+		// An enemy at 0 HP (hurt off the board) is no longer an obstacle nor a target
+		await retireDeadPieces(tx, match.id);
 
 		const target = step(own.x, own.y, direction);
 		if (!isInBounds(target.x, target.y)) throw fail('outOfBoard');

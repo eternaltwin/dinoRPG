@@ -37,6 +37,7 @@ import { auth } from '../dao/playerDao.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fightService.js';
 import { decreaseItemQuantity, getPlayerItems } from '../dao/playerItemDao.js';
 import translate from '../utils/server/translate.js';
+import { assertDinozCanAct } from '../utils/dinozGuards.js';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 export async function getMissionsList(req: Request) {
@@ -105,6 +106,7 @@ export async function updateMission(req: Request) {
 
 	switch (status) {
 		case 'start':
+			assertDinozCanAct(dinoz, authed);
 			if (actualPlace.placeId !== npc.placeId) {
 				throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.FINISHED) {
@@ -168,6 +170,8 @@ export async function startFightMission(req: Request) {
 		throw new ExpectedError(`No player ${authed.id} found`);
 	}
 	const team = player.dinoz;
+	// The whole team fights: every member must be available and alive
+	team.forEach(member => assertDinozCanAct(member, authed));
 	const ennemi_team = mission.actualStep.requirement.mobList;
 
 	const fightResult = calculateFightVsMonsters(team, player, mission.actualStep.place, ennemi_team);
@@ -268,6 +272,8 @@ async function checkMission(req: Request) {
 	if (!dinoz) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
+	// Missions are played by an available, living dinoz only (not one on a championship board, in a dungeon…)
+	assertDinozCanAct(dinoz, authed);
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
 
 	if (!dinozMission) {

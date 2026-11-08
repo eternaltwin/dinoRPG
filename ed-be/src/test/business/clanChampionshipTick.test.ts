@@ -157,6 +157,16 @@ describe('championshipTick', () => {
 		});
 	});
 
+	it('takes the pieces at 0 HP off the board before scoring the missed ticks', async () => {
+		setup(live(), [piece(1, HOME, 5)]);
+		await championshipTick(min(25));
+		const calls = p.clanChampionshipPiece.updateMany.mock.calls.map((c: any[]) => c[0]);
+		const retire = calls.findIndex((c: any) => c.data.state === 'dead');
+		const credit = calls.findIndex((c: any) => c.data.actionPoints?.increment !== undefined);
+		expect(calls[retire].where).toEqual({ matchId: expect.any(String), state: 'onBoard', dinoz: { life: { lte: 0 } } });
+		expect(retire).toBeLessThan(credit);
+	});
+
 	it('caps stored AP at 20 once the missed ticks are credited', async () => {
 		setup(live(), [piece(1, HOME, 5), piece(2, AWAY, 15)]);
 		await championshipTick(min(25));
