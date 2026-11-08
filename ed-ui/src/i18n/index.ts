@@ -42,6 +42,15 @@ export const Locales: Record<string, LangInfos> = {
 
 export const defaultLocale = LocalesEnum.FR;
 
+const HTML_ESCAPES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+/**
+ * A missing key is displayed as the key itself, and some keys are built from the URL (gather type, NPC name):
+ * escaped, such a key can't carry markup to a `v-html` binding.
+ */
+export const escapeMissingKey = <T>(translated: T, key: string): T =>
+	translated === key ? (key.replace(/[&<>"']/g, char => HTML_ESCAPES[char]) as T) : translated;
+
 /** For code outside a component (once initI18n is done). */
 export const translate = (key: string): string => (i18n.global.t as (key: string) => string)(key);
 
@@ -51,6 +60,7 @@ export const initI18n = async () => {
 		fallbackLocale: defaultLocale,
 		silentFallbackWarn: true,
 		silentTranslationWarn: true,
+		postTranslation: escapeMissingKey,
 		messages: { fr: {}, en: {}, es: {}, de: {} },
 		datetimeFormats: {
 			fr: {
