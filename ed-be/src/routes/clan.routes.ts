@@ -5,7 +5,6 @@ import {
 } from '@drpg/core/returnTypes/Clan';
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import multer from 'multer';
 import {
 	acceptJoinRequest,
 	createClan,
@@ -42,6 +41,7 @@ import {
 } from '../business/clanService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/server/sendErrors.js';
+import { BANNER_MAX_BYTES, imageUpload, requireAuth } from '../utils/server/upload.js';
 import { ErrorResponse } from './index.js';
 
 const routes: Router = Router();
@@ -209,7 +209,10 @@ routes.delete(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], a
 
 routes.put(
 	`${commonPath}/:id/edit/banner`,
-	[multer().single('file'), param('id').exists().toInt().isNumeric()],
+	// Authenticated before multer reads the body into memory, within the size of a banner, images only
+	requireAuth,
+	...imageUpload(BANNER_MAX_BYTES),
+	[param('id').exists().toInt().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
