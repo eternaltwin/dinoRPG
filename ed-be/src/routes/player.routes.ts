@@ -6,6 +6,7 @@ import {
 	getAccountData,
 	getCommonData,
 	getDinozList,
+	logout,
 	playerToolTip,
 	resetAccount,
 	searchPlayers,
@@ -75,6 +76,15 @@ routes.patch(`${commonPath}/tos`, [], async (req: Request, res: Response) => {
 
 	try {
 		await acceptTos(req);
+		return res.status(200).send();
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.post(`${commonPath}/logout`, [], async (req: Request, res: Response) => {
+	try {
+		await logout(req);
 		return res.status(200).send();
 	} catch (err) {
 		sendError(res, err);

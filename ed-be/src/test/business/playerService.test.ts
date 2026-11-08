@@ -51,6 +51,7 @@ import {
 	canJoinClan,
 	isPlayerLeaderOfClan,
 	playerToolTip,
+	logout,
 	resetAccount,
 	updatePlayerSettings
 } from '../../business/playerService.js';
@@ -219,6 +220,23 @@ describe('simple delegating endpoints', () => {
 		expect(await playerToolTip(req({ id: 'p' }))).toEqual({ id: 'p' });
 		vi.mocked(playerDao.getToolTipInfos).mockResolvedValue(null as never);
 		await expect(playerToolTip(req({ id: 'p' }))).rejects.toThrow('Missing player');
+	});
+});
+
+describe('logout', () => {
+	it('replaces the connexion token, so the old one stops working', async () => {
+		await logout(req());
+		// Banned players and players who have not accepted the ToS can log out too
+		expect(playerDao.auth).toHaveBeenCalledWith(expect.anything(), true, true);
+		const [playerId, data] = vi.mocked(playerDao.setPlayer).mock.calls[0];
+		expect(playerId).toBe('p1');
+		expect(data.connexionToken).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+	});
+
+	it('does not change anything when the caller is not authenticated', async () => {
+		vi.mocked(playerDao.auth).mockRejectedValue(new Error('Invalid user token'));
+		await expect(logout(req())).rejects.toThrow('Invalid user token');
+		expect(playerDao.setPlayer).not.toHaveBeenCalled();
 	});
 });
 

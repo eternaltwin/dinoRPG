@@ -213,14 +213,14 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { localStore, playerStore, useDinozStore, useMenuStore } from '../../store';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
-import { NotificationService } from '../../services';
+import { NotificationService, PlayerService } from '../../services';
 import { errorHandler } from '../../utils';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
-import { deleteCookie } from '../../utils/cookies.js';
+import { deleteCookie, getCookie } from '../../utils/cookies.js';
 import PlayerOptions from './PlayerOptions.vue';
 import { CINEMA_LINK } from '../../utils/goTo.js';
 import LiveStats from './LiveStats.vue';
@@ -249,6 +249,12 @@ export default defineComponent({
 	methods: {
 		logOff(): void {
 			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+			const user = getCookie(`x-drpg-${channel}-user`);
+			const token = getCookie(`x-drpg-${channel}-token`);
+			if (user && token) {
+				// Revokes the token server side, so a copy of it stops working too. Logged out locally either way.
+				PlayerService.logout(user, token).catch(() => undefined);
+			}
 			deleteCookie(`x-drpg-${channel}-token`);
 			deleteCookie(`x-drpg-${channel}-user`);
 			useDinozStore().resetStore();

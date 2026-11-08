@@ -97,6 +97,13 @@ export const PlayerService = {
 		const res = await http().delete(`/player`);
 		return res.data;
 	},
+	/** Takes the credentials explicitly: the caller clears the cookies without waiting for the answer. */
+	async logout(user: string, token: string): Promise<void> {
+		await http().post('/player/logout', undefined, {
+			silent: true,
+			headers: { Authorization: `Basic ${btoa(`${user}:${token}`)}` }
+		});
+	},
 	async acceptTos(): Promise<void> {
 		const res = await http().patch('/player/tos');
 		return res.data;
