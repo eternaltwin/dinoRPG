@@ -12,11 +12,11 @@ Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platzier
 
 Tous les clans s'affrontent sur des batailles de 48 heures. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point. Une fois tous les clans affrontés, le championnat se termine.
 
-# Bataille
+# Das Schlachtfeld
 
-Une bataille est lancée lorsque deux clans s'affrontent. Une bataille a une durée de _2 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.
+Eine Schlacht wird gestartet, wenn zwei Klane aufeinandertreffen. Sie dauert _2 Tage_ an und am Ende gewinnt der Klan mit der höchsten **Punktzahl**.
 
-Une bataille se déroule dans un lieu donné. Vous devrez déplacer vos Dinoz à ce lieu pour qu'ils puissent y participer. Un Clan est limité à _100 Dinoz_ par bataille.
+Eine Schlacht findet an einem bestimmten Austragungsort statt  und Klanmitglieder müssen ihre Dinoz zu diesem Ort bewegen, damit sie daran teilnehmen können. Un Clan est limité à _100 Dinoz_ par bataille.
 
 Voici une vue de bataille simplifiée :
 
