@@ -357,8 +357,7 @@ export async function updateClanBanner(req: Request) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.CLAN_EDIT_BANNER}`);
 	}
 
-	//TODO : set file size limit ?
-
+	// Size and type of the file are checked by the upload middleware of the route (imageUpload)
 	await updateClanBannerRequest(clanId, req.file.buffer);
 
 	return 'clan';

@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import multer from 'multer';
 import {
 	createPoll,
 	getNews,
@@ -15,6 +14,7 @@ import {
 } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkRole } from '../utils/server/jwt.js';
+import { imageUpload, NEWS_IMAGE_MAX_BYTES } from '../utils/server/upload.js';
 import sendError from '../utils/server/sendErrors.js';
 import { AdminRole } from '@drpg/prisma';
 
@@ -24,8 +24,10 @@ const commonPath: string = apiRoutes.newsRoute;
 
 routes.put(
 	`${commonPath}/create/:title`,
+	// The role is checked before multer reads the multipart body into memory
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
+	...imageUpload(NEWS_IMAGE_MAX_BYTES),
 	[
-		multer().single('file'),
 		param('title').exists().isString(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
@@ -36,7 +38,6 @@ routes.put(
 		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('germanTitle').default(null).optional({ nullable: true }).exists().isString()
 	],
-	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -53,8 +54,10 @@ routes.put(
 
 routes.put(
 	`${commonPath}/createPoll/:title`,
+	// The role is checked before multer reads the multipart body into memory
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
+	...imageUpload(NEWS_IMAGE_MAX_BYTES),
 	[
-		multer().single('file'),
 		param('title').exists().isString(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
@@ -67,7 +70,6 @@ routes.put(
 		body('options').exists(),
 		body('endDate').default(null).optional({ nullable: true }).exists().isDate()
 	],
-	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -124,8 +126,10 @@ routes.get(
 
 routes.put(
 	`${commonPath}/update/:id`,
+	// The role is checked before multer reads the multipart body into memory
+	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
+	...imageUpload(NEWS_IMAGE_MAX_BYTES),
 	[
-		multer().single('file'),
 		param('id').exists().toInt().isInt(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
@@ -136,7 +140,6 @@ routes.put(
 		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('germanTitle').default(null).optional({ nullable: true }).exists().isString()
 	],
-	checkRole([AdminRole.ADMIN, AdminRole.AMPHI]),
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
