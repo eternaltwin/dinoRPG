@@ -3,14 +3,14 @@ import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { LogType } from '@drpg/prisma';
 import { Request } from 'express';
 import { createLog } from '../dao/logDao.js';
-import { addMoney, auth } from '../dao/playerDao.js';
-import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import { auth } from '../dao/playerDao.js';
+import { sellIngredients } from '../dao/playerIngredientDao.js';
+import { parseQuantityLines } from '../utils/quantityLines.js';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { getDinozItinerantShop } from '../dao/dinozDao.js';
 import { getSpecificSecret } from '../dao/secretDao.js';
-import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/server/translate.js';
 
@@ -87,19 +87,9 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 export async function sellIngredient(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.dinozId;
-	const ingredients = req.body.ingredients as ShopDTO[];
-
-	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
-
-	// Throw an exception if the player doesn't exist
-	if (!playerIngredients) {
-		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
-	}
-
-	// Lock negative quantities
-	if (ingredients.filter(i => i.quantity <= 0 || !Number.isInteger(i.quantity)).length > 0) {
-		throw new ExpectedError(translate(`wrongQuantity`, authed));
-	}
+	// Integer ids and positive integer quantities, lines of a same ingredient merged: a repeated line used to be
+	// checked against the same stock and paid each time
+	const ingredients = parseQuantityLines(req.body.ingredients, translate(`wrongQuantity`, authed));
 
 	const player = await getDinozItinerantShop(dinozId, authed.id);
 
@@ -145,11 +135,20 @@ export async function sellIngredient(req: Request) {
 		if (!ingre.id || !ingre.price) throw new ExpectedError(`Undefined ingredient`);
 		if (ingre.playerQuantity - ingre.quantity < 0) throw new ExpectedError(`You cannot have less than 0 of this item.`);
 		gold += ingre.price * ingre.quantity;
-		await decreaseIngredientQuantity(authed.id, ingre.id, ingre.quantity);
-		await createLog(LogType.IngredientSold, authed.id, undefined, ingre.id, ingre.quantity.toString());
 	}
 
-	await addMoney(authed.id, gold);
+	// One transaction: the ingredients are removed by conditional writes before the gold is credited
+	const sold = await sellIngredients(
+		authed.id,
+		mappedIngredient.map(ingre => ({ ingredientId: ingre.id, quantity: ingre.quantity })),
+		gold
+	);
+	if (!sold) {
+		throw new ExpectedError(`You cannot have less than 0 of this item.`);
+	}
+	for (const ingre of mappedIngredient) {
+		await createLog(LogType.IngredientSold, authed.id, undefined, ingre.id, ingre.quantity.toString());
+	}
 
 	return { gold: gold };
 }

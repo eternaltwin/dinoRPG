@@ -540,7 +540,7 @@ routes.get(
 
 routes.put(
 	`${commonPath}/:id/give`,
-	[param('id').exists().toInt().isNumeric(), body('ingredients').exists()],
+	[param('id').exists().toInt().isNumeric(), body('ingredients').isArray({ min: 1 })],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

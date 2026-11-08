@@ -1,4 +1,5 @@
 import { prisma } from '../prisma.js';
+import { consumeIngredientLines, NotEnoughIngredients } from './playerIngredientDao.js';
 
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
@@ -1230,6 +1231,44 @@ export async function upsertClanIngredients(clanId: number, ingredientId: number
 				clanId: clanId
 			}
 		});
+	});
+}
+
+/**
+ * Gives ingredients to the clan treasure in one transaction: the ingredients are removed from the member by
+ * conditional writes before the treasure and the contribution are credited, and the donor must still be a
+ * member of the clan. Any missing part rolls everything back.
+ * @returns `false` if an ingredient is missing or the player left the clan
+ */
+export async function donateIngredientsToClan(
+	playerId: string,
+	clanId: number,
+	lines: { ingredientId: number; quantity: number }[],
+	totalGold: number
+): Promise<boolean> {
+	return withSpan(donateIngredientsToClan.name, async () => {
+		try {
+			await prisma.$transaction(async tx => {
+				await consumeIngredientLines(playerId, lines, tx);
+				for (const { ingredientId, quantity } of lines) {
+					await tx.clanIngredient.upsert({
+						where: { ingredientId_clanId: { ingredientId, clanId } },
+						update: { quantity: { increment: quantity } },
+						create: { ingredientId, quantity, clanId }
+					});
+				}
+				const member = await tx.clanMember.updateMany({
+					where: { playerId, clanId },
+					data: { donation: { increment: totalGold } }
+				});
+				if (member.count !== 1) throw new NotEnoughIngredients('notInClan');
+				await tx.clan.update({ where: { id: clanId }, data: { treasureValue: { increment: totalGold } } });
+			});
+			return true;
+		} catch (err) {
+			if (err instanceof NotEnoughIngredients) return false;
+			throw err;
+		}
 	});
 }
 
