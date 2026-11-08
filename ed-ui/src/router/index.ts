@@ -53,7 +53,8 @@ const router = createRouter({
 					component: () => import('../pages/DinozPage.vue')
 				},
 				{
-					path: '/dino/:id/:npc',
+					// Parameters limited to what an NPC name can be: they are used to build translation keys
+					path: '/dino/:id(\\d+)/:npc([A-Za-z0-9_]+)',
 					name: 'NPC',
 					component: () => import('../pages/NPC.vue'),
 					props: route => ({
@@ -61,7 +62,7 @@ const router = createRouter({
 					})
 				},
 				{
-					path: '/dino/:id/missions/:npc',
+					path: '/dino/:id(\\d+)/missions/:npc([A-Za-z0-9_]+)',
 					name: 'Missions',
 					component: () => import('../pages/Missions.vue')
 				},
@@ -301,7 +302,8 @@ const router = createRouter({
 					component: () => import('../pages/Ingredients.vue')
 				},
 				{
-					path: '/gather/:dinozId/:type',
+					// Parameters limited to what a gather type can be: the type is used to build translation keys
+					path: '/gather/:dinozId(\\d+)/:type([a-z0-9_]+)',
 					name: 'Gather',
 					component: () => import('../pages/GatherPage.vue')
 				},
