@@ -1,12 +1,18 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import type { TxClient } from './transaction.js';
 
-export const increaseItemQuantity = async (playerId: string | null, itemId: number, quantity: number) => {
+export const increaseItemQuantity = async (
+	playerId: string | null,
+	itemId: number,
+	quantity: number,
+	tx: TxClient = prisma
+) => {
 	if (!playerId) {
 		throw new ExpectedError(`No playerId for increaseItemQuantity`);
 	}
-	const item = await prisma.playerItem.upsert({
+	const item = await tx.playerItem.upsert({
 		where: {
 			itemId_playerId: {
 				itemId,
@@ -61,8 +67,16 @@ export const decreaseItemQuantity = async (playerId: string, itemId: number, qua
  * statement, so concurrent requests can't spend the same items twice.
  * @returns `true` if the items were removed, `false` if the player does not have enough
  */
-export const consumeItem = async (playerId: string, itemId: number, quantity: number): Promise<boolean> => {
-	const updated = await prisma.playerItem.updateMany({
+export const consumeItem = async (
+	playerId: string,
+	itemId: number,
+	quantity: number,
+	tx: TxClient = prisma
+): Promise<boolean> => {
+	if (!Number.isInteger(quantity) || quantity <= 0) {
+		return false;
+	}
+	const updated = await tx.playerItem.updateMany({
 		where: { itemId, playerId, quantity: { gte: quantity } },
 		data: { quantity: { decrement: quantity } }
 	});
@@ -71,7 +85,7 @@ export const consumeItem = async (playerId: string, itemId: number, quantity: nu
 		return false;
 	}
 
-	await prisma.playerItem.deleteMany({ where: { itemId, playerId, quantity: { lte: 0 } } });
+	await tx.playerItem.deleteMany({ where: { itemId, playerId, quantity: { lte: 0 } } });
 
 	return true;
 };

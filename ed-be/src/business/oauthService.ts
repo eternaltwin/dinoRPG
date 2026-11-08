@@ -1,6 +1,3 @@
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData, PlayerLoginData } from '@drpg/core/models/player/PlayerCommonData';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -16,16 +13,12 @@ import dayjs from 'dayjs';
 import { Request, Response } from 'express';
 import urlJoin from 'url-join';
 import { Config } from '../config/config.js';
-import { LOGGER } from '../context.js';
-import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import { createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
+import { createPlayer, getCommonDataRequest, grantDailyLoginBonus } from '../dao/playerDao.js';
 import { upsertToken } from '../dao/eternaltwinTokenDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
-import { setSpecificStat } from '../dao/trackingDao.js';
+import { addPlayerInRanking } from '../dao/rankingDao.js';
 import { PismaClientLocal, prisma } from '../prisma.js';
-import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import { createState, verifyState } from '../utils/server/oauthState.js';
 import sendError from '../utils/server/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
@@ -183,54 +176,9 @@ export class OAuth {
 				throw new Error(translate('bannedAccount', user, { reason: translate(`banReason.${user.banReason || ''}`, user) }));
 			}*/
 
+			// First login of the day: the bonus is granted once, even to concurrent requests
 			if (!dayjs().isSame(player.lastLogin, 'day')) {
-				// Add 1 daily ticket
-				await increaseItemQuantity(player.id, Item.DAILY_TICKET, 1);
-
-				// Update completion
-				const completion = await calculatePlayerCompletion(player.id);
-				try {
-					await updateCompletion(player.id, completion);
-				} catch (e) {
-					LOGGER.error(`UpdateCompletion crash with id: ${player.id} and completion score of ${completion}`);
-				}
-
-				// Update last login: refresh Labrute flag and daily grid reward limit
-				await setPlayer(player.id, {
-					lastLogin: new Date(),
-					labruteDone: false,
-					dailyGridRewards: gameConfig().general.dailyGridRewards
-				});
-
-				// Tik bracelet regen (& alive)
-				const dinozWithTikBracelet = player.dinoz.filter(
-					dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
-				);
-
-				for (const dinoz of dinozWithTikBracelet) {
-					// Regen 10 HP
-					const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
-					await updateDinoz(dinoz.id, { life: newHp });
-				}
-
-				const event = currentEvents()[0];
-				if (event && event.name === GameEvent.CHRISTMAS) {
-					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
-				}
-
-				// Give 2 action for active dinoz
-				const leaderWithVeilleuse = player.dinoz.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));
-				for (const dinoz of player.dinoz) {
-					let remaning = 2;
-					if (player.matelasseur) remaning++;
-					if (dinoz.skills.some(s => s.skillId === Skill.GROS_DORMEUR)) remaning++;
-					if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
-					await updateDinoz(dinoz.id, { remaining: remaning });
-				}
-
-				// Update stat
-				await setSpecificStat(StatTracking.P_DAYS, player.id, 1);
-				await createLog(LogType.PlayerConnected, player.id, undefined, player.name.toString());
+				await grantDailyLoginBonus(player);
 			}
 
 			const dinoz = player.dinoz.map(d => {

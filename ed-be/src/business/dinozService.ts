@@ -52,6 +52,7 @@ import { digTreasures } from '../constants/digTreasures.js';
 import { TemporaryStatus } from '../constants/index.js';
 import {
 	checkFrozenDinoz,
+	claimDinozActions,
 	checkRestDinoz,
 	consumeRemainingAction,
 	createDinoz,
@@ -814,6 +815,17 @@ export async function betaMove(req: Request) {
 		throw new ExpectedError(translate('noMovement', authed));
 	}
 
+	// Spend the fight action of the whole team before the fight is rewarded
+	if (
+		!(await claimDinozActions(
+			team.map(d => d.id),
+			authed.id,
+			'fight'
+		))
+	) {
+		throw new ExpectedError(translate('missingIrma', authed));
+	}
+
 	// Look for a special action that happens on the fight.
 	let fight = await movementListener(player, team, finalPlace, dinozId);
 	if (!fight) {
@@ -833,12 +845,8 @@ export async function betaMove(req: Request) {
 		}
 	}
 
-	// Consume fight action
+	// The fight action was spent by claimDinozActions
 	for (const dino of team) {
-		await updateDinoz(dino.id, {
-			fight: false
-		});
-
 		// Remove temporary status
 		const tempStatus = dino.status.filter(r => r.statusId in TemporaryStatus);
 		if (tempStatus.length > 0) {
@@ -1141,6 +1149,11 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ExpectedError(`You have selected too many square`);
 	}
 
+	// A normal gather spends the dinoz action before any reward, so concurrent requests can't both be paid
+	if (!gatherPlace.special && !(await claimDinozActions([dinozId], authed.id, 'gather'))) {
+		throw new ExpectedError(`Dinoz don't have action to gather`);
+	}
+
 	// Consume token if it's a special gather. Done after every input check so an invalid
 	// request can never burn the token without gathering.
 	if (gatherPlace.special) {
@@ -1230,10 +1243,6 @@ export async function gatherWithDinoz(req: Request) {
 	}
 
 	if (!gatherPlace.special) {
-		await updateDinoz(dinozId, {
-			gather: false
-		});
-
 		// Check if the grid was finished and award the player if it has not exhausted its daily grid rewards
 		if (myGrid.grid.every(box => box === -1)) {
 			returnGrid.isGridComplete = true;

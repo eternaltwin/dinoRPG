@@ -11,7 +11,11 @@ vi.mock('../../context.js', () => ({
 	LOGGER: { error: vi.fn(), log: vi.fn(), warn: vi.fn() },
 	GLOBAL: { config: {} }
 }));
-vi.mock('../../dao/dinozDao.js', () => ({ getDinozFightDataRequest: vi.fn(), updateDinoz: vi.fn() }));
+vi.mock('../../dao/dinozDao.js', () => ({
+	claimDinozActions: vi.fn(),
+	getDinozFightDataRequest: vi.fn(),
+	updateDinoz: vi.fn()
+}));
 vi.mock('../../dao/dinozStatusDao.js', () => ({ addStatusToDinoz: vi.fn(), removeStatusFromDinoz: vi.fn() }));
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), removeMoney: vi.fn() }));
@@ -366,8 +370,30 @@ describe('processFight', () => {
 			dinoz: [dinoz]
 		} as never);
 		vi.mocked(movementListener).mockResolvedValue(false as never);
+		vi.mocked(dinozDao.claimDinozActions).mockResolvedValue(true);
 		const result = await processFight(req({}, { dinozId: 1 }));
 		expect(result).toBeDefined();
+		expect(dinozDao.claimDinozActions).toHaveBeenCalledWith([1], 'p1', 'fight');
+	});
+	it('does not fight when a concurrent request already spent the fight action', async () => {
+		const dinoz = {
+			...makeDinoz({ id: 1 }),
+			fight: true,
+			gather: true,
+			unavailableReason: null,
+			canChangeName: false,
+			concentration: null,
+			missions: []
+		};
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue({
+			id: 'p1',
+			teacher: false,
+			cooker: false,
+			dinoz: [dinoz]
+		} as never);
+		vi.mocked(dinozDao.claimDinozActions).mockResolvedValue(false);
+		await expect(processFight(req({}, { dinozId: 1 }))).rejects.toThrow('missingIrma');
+		expect(movementListener).not.toHaveBeenCalled();
 	});
 	it('throws when dinoz is unavailable', async () => {
 		const dinoz = { ...makeDinoz({ id: 1 }), unavailableReason: 'frozen', canChangeName: false };

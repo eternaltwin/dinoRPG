@@ -7,6 +7,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 vi.mock('../../config/game.config.js', () => ({ default: { dinoz: { maxQuantity: 5 } } }));
 vi.mock('../../context.js', () => ({ GLOBAL: { config: {} } }));
 vi.mock('../../dao/dinozDao.js', () => ({
+	claimLevelUp: vi.fn(),
 	getAllDinozWithSkills: vi.fn(),
 	getDinozForLevelUp: vi.fn(),
 	getDinozSkillsLearnableAndUnlockable: vi.fn(),
@@ -74,6 +75,7 @@ beforeEach(() => {
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
 	vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(null as never);
 	vi.mocked(dinozDao.isDinozInTournament).mockResolvedValue(false as never);
+	vi.mocked(dinozDao.claimLevelUp).mockResolvedValue(true);
 });
 
 describe('getLearnableAndUnlockableSkills', () => {
@@ -139,6 +141,18 @@ describe('learnSkill', () => {
 		const result = await learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }));
 		expect(dinozDao.updateDinoz).toHaveBeenCalled();
 		expect(result.newMaxExperience).toBeGreaterThanOrEqual(0);
+		expect(dinozDao.claimLevelUp).toHaveBeenCalledWith(1, 1, expect.any(Number), false);
+		// The level and the experience were moved by the conditional claim, not by the full update
+		const data = vi.mocked(dinozDao.updateDinoz).mock.calls[0][1] as Record<string, unknown>;
+		expect(data.level).toBeUndefined();
+		expect(data.experience).toBeUndefined();
+	});
+
+	it('grants no skill when a concurrent request already took the level', async () => {
+		vi.mocked(dinozDao.getDinozForLevelUp).mockResolvedValue(levelUpDinoz() as never);
+		vi.mocked(dinozDao.claimLevelUp).mockResolvedValue(false);
+		await expect(learnSkill(req({ id: '1' }, { skillIdList: [], tryNumber: '1' }))).rejects.toThrow('dinozCannotLvlUp');
+		expect(dinozDao.updateDinoz).not.toHaveBeenCalled();
 	});
 
 	it('throws when dinoz is not found', async () => {

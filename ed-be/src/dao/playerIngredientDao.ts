@@ -1,6 +1,7 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import type { TxClient } from './transaction.js';
 
 export const getAllIngredientsDataRequest = async (playerId: string) => {
 	const ingredients = await prisma.player.findFirst({
@@ -25,11 +26,16 @@ export const getIngredientsDataRequest = async (playerId: string, ingredientId: 
 	return ingredients;
 };
 
-export const increaseIngredientQuantity = async (playerId: string | null, ingredientId: number, quantity: number) => {
+export const increaseIngredientQuantity = async (
+	playerId: string | null,
+	ingredientId: number,
+	quantity: number,
+	tx: TxClient = prisma
+) => {
 	if (!playerId) {
 		throw new ExpectedError(`No playerId for increaseIngredientQuantity`);
 	}
-	const ingredient = await prisma.playerIngredient.upsert({
+	const ingredient = await tx.playerIngredient.upsert({
 		where: {
 			ingredientId_playerId: {
 				ingredientId,
@@ -96,8 +102,16 @@ export async function setMultipleIngredient(ingredientList: Prisma.PlayerIngredi
  * statement, so concurrent requests can't spend the same ingredients twice.
  * @returns `true` if the ingredients were removed, `false` if the player does not have enough
  */
-export const consumeIngredient = async (playerId: string, ingredientId: number, quantity: number): Promise<boolean> => {
-	const updated = await prisma.playerIngredient.updateMany({
+export const consumeIngredient = async (
+	playerId: string,
+	ingredientId: number,
+	quantity: number,
+	tx: TxClient = prisma
+): Promise<boolean> => {
+	if (!Number.isInteger(quantity) || quantity <= 0) {
+		return false;
+	}
+	const updated = await tx.playerIngredient.updateMany({
 		where: { ingredientId, playerId, quantity: { gte: quantity } },
 		data: { quantity: { decrement: quantity } }
 	});
@@ -106,7 +120,24 @@ export const consumeIngredient = async (playerId: string, ingredientId: number, 
 		return false;
 	}
 
-	await prisma.playerIngredient.deleteMany({ where: { ingredientId, playerId, quantity: { lte: 0 } } });
+	await tx.playerIngredient.deleteMany({ where: { ingredientId, playerId, quantity: { lte: 0 } } });
 
 	return true;
 };
+
+/**
+ * Removes several ingredient lines at once, inside the caller's transaction. Throws when one line is missing, so
+ * the transaction is rolled back and nothing the caller planned to grant in exchange is written.
+ */
+export async function consumeIngredientLines(
+	playerId: string,
+	lines: { ingredientId: number; quantity: number }[],
+	tx: TxClient,
+	notEnoughMessage = 'notEnoughIngredients'
+) {
+	for (const line of lines) {
+		if (!(await consumeIngredient(playerId, line.ingredientId, line.quantity, tx))) {
+			throw new ExpectedError(notEnoughMessage);
+		}
+	}
+}

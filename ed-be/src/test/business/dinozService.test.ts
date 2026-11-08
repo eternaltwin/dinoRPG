@@ -10,6 +10,7 @@ vi.mock('../../dao/dinozDao.js', () =>
 		[
 			'checkFrozenDinoz',
 			'checkRestDinoz',
+			'claimDinozActions',
 			'consumeRemainingAction',
 			'createDinoz',
 			'getActiveDinoz',
@@ -205,6 +206,7 @@ const player = (overrides = {}) => ({ id: 'p1', clan: null, ...overrides }) as n
 
 beforeEach(() => {
 	vi.clearAllMocks();
+	vi.mocked(dinozDao.claimDinozActions).mockResolvedValue(true);
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
 	vi.mocked(prisma.clanEvent.findFirst).mockResolvedValue(null as never);
 	vi.mocked(getSpecificSecret).mockResolvedValue({ value: '999' } as never);
@@ -852,6 +854,14 @@ describe('betaMove', () => {
 		expect(dinozDao.updateMultipleDinoz).toHaveBeenCalled();
 	});
 
+	it('does not move nor fight when a concurrent request already spent the fight action', async () => {
+		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(fightablePlayer() as never);
+		vi.mocked(dinozDao.claimDinozActions).mockResolvedValue(false);
+		await expect(betaMove(req({}, { dinozId: 1, placeId: 2 }))).rejects.toThrow('missingIrma');
+		expect(fightService.fightMonstersAtPlace).not.toHaveBeenCalled();
+		expect(dinozDao.updateMultipleDinoz).not.toHaveBeenCalled();
+	});
+
 	it('throws when the dinoz is unavailable', async () => {
 		vi.mocked(dinozDao.getDinozFightDataRequest).mockResolvedValue(
 			fightablePlayer({ unavailableReason: 'frozen' }) as never
@@ -996,6 +1006,23 @@ describe('gather', () => {
 		expect(result).toBeDefined();
 		expect(updateGrid).toHaveBeenCalled();
 		expect(vi.mocked(createLog).mock.calls.filter(c => c[0] === LogType.Gather)).toEqual([[LogType.Gather, 'p1', 1]]);
+	});
+
+	it('gatherWithDinoz spends the gather action before any reward', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 }] as never);
+		await gatherWithDinoz(makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } }));
+		expect(dinozDao.claimDinozActions).toHaveBeenCalledWith([1], 'p1', 'gather');
+	});
+
+	it('gatherWithDinoz grants nothing when a concurrent request already spent the action', async () => {
+		vi.mocked(getCommonGatherInfo).mockResolvedValue([{ id: 'g1', grid: [1, 2, 3, 4, 5], place: 1, type: 0 }] as never);
+		vi.mocked(dinozDao.claimDinozActions).mockResolvedValue(false);
+		vi.mocked(updateGrid).mockClear();
+		await expect(
+			gatherWithDinoz(makeRequest({ params: { id: '1' }, body: { type: 'fish', box: [0] } }))
+		).rejects.toThrow("don't have action to gather");
+		expect(updateGrid).not.toHaveBeenCalled();
+		expect(increaseIngredientQuantity).not.toHaveBeenCalled();
 	});
 
 	it('gatherWithDinoz grants item and ingredient rewards', async () => {
