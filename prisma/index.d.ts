@@ -53516,6 +53516,7 @@ export namespace Prisma {
     dinozDetails: string | null
     sellerId: string | null
     sellerName: string | null
+    sellerPaid: boolean | null
   }
 
   export type OfferMaxAggregateOutputType = {
@@ -53527,6 +53528,7 @@ export namespace Prisma {
     dinozDetails: string | null
     sellerId: string | null
     sellerName: string | null
+    sellerPaid: boolean | null
   }
 
   export type OfferCountAggregateOutputType = {
@@ -53538,6 +53540,7 @@ export namespace Prisma {
     dinozDetails: number
     sellerId: number
     sellerName: number
+    sellerPaid: number
     _all: number
   }
 
@@ -53563,6 +53566,7 @@ export namespace Prisma {
     dinozDetails?: true
     sellerId?: true
     sellerName?: true
+    sellerPaid?: true
   }
 
   export type OfferMaxAggregateInputType = {
@@ -53574,6 +53578,7 @@ export namespace Prisma {
     dinozDetails?: true
     sellerId?: true
     sellerName?: true
+    sellerPaid?: true
   }
 
   export type OfferCountAggregateInputType = {
@@ -53585,6 +53590,7 @@ export namespace Prisma {
     dinozDetails?: true
     sellerId?: true
     sellerName?: true
+    sellerPaid?: true
     _all?: true
   }
 
@@ -53683,6 +53689,7 @@ export namespace Prisma {
     dinozDetails: string | null
     sellerId: string | null
     sellerName: string
+    sellerPaid: boolean
     _count: OfferCountAggregateOutputType | null
     _avg: OfferAvgAggregateOutputType | null
     _sum: OfferSumAggregateOutputType | null
@@ -53713,6 +53720,7 @@ export namespace Prisma {
     dinozDetails?: boolean
     sellerId?: boolean
     sellerName?: boolean
+    sellerPaid?: boolean
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
     seller?: boolean | Offer$sellerArgs<ExtArgs>
     bids?: boolean | Offer$bidsArgs<ExtArgs>
@@ -53729,6 +53737,7 @@ export namespace Prisma {
     dinozDetails?: boolean
     sellerId?: boolean
     sellerName?: boolean
+    sellerPaid?: boolean
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
     seller?: boolean | Offer$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["offer"]>
@@ -53742,6 +53751,7 @@ export namespace Prisma {
     dinozDetails?: boolean
     sellerId?: boolean
     sellerName?: boolean
+    sellerPaid?: boolean
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
     seller?: boolean | Offer$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["offer"]>
@@ -53755,9 +53765,10 @@ export namespace Prisma {
     dinozDetails?: boolean
     sellerId?: boolean
     sellerName?: boolean
+    sellerPaid?: boolean
   }
 
-  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "endDate" | "dinozId" | "total" | "status" | "dinozDetails" | "sellerId" | "sellerName", ExtArgs["result"]["offer"]>
+  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "endDate" | "dinozId" | "total" | "status" | "dinozDetails" | "sellerId" | "sellerName" | "sellerPaid", ExtArgs["result"]["offer"]>
   export type OfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
     seller?: boolean | Offer$sellerArgs<ExtArgs>
@@ -53791,6 +53802,10 @@ export namespace Prisma {
       dinozDetails: string | null
       sellerId: string | null
       sellerName: string
+      /**
+       * Offers ended before the seller was paid at claim time were already paid when they ended
+       */
+      sellerPaid: boolean
     }, ExtArgs["result"]["offer"]>
     composites: {}
   }
@@ -54226,6 +54241,7 @@ export namespace Prisma {
     readonly dinozDetails: FieldRef<"Offer", 'String'>
     readonly sellerId: FieldRef<"Offer", 'String'>
     readonly sellerName: FieldRef<"Offer", 'String'>
+    readonly sellerPaid: FieldRef<"Offer", 'Boolean'>
   }
     
 
@@ -97469,7 +97485,8 @@ export namespace Prisma {
     status: 'status',
     dinozDetails: 'dinozDetails',
     sellerId: 'sellerId',
-    sellerName: 'sellerName'
+    sellerName: 'sellerName',
+    sellerPaid: 'sellerPaid'
   };
 
   export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
@@ -100984,6 +101001,7 @@ export namespace Prisma {
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
     sellerId?: UuidNullableFilter<"Offer"> | string | null
     sellerName?: StringFilter<"Offer"> | string
+    sellerPaid?: BoolFilter<"Offer"> | boolean
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     seller?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     bids?: OfferBidListRelationFilter
@@ -100999,6 +101017,7 @@ export namespace Prisma {
     dinozDetails?: SortOrderInput | SortOrder
     sellerId?: SortOrderInput | SortOrder
     sellerName?: SortOrder
+    sellerPaid?: SortOrder
     dinoz?: DinozOrderByWithRelationInput
     seller?: PlayerOrderByWithRelationInput
     bids?: OfferBidOrderByRelationAggregateInput
@@ -101017,6 +101036,7 @@ export namespace Prisma {
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
     sellerId?: UuidNullableFilter<"Offer"> | string | null
     sellerName?: StringFilter<"Offer"> | string
+    sellerPaid?: BoolFilter<"Offer"> | boolean
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     seller?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     bids?: OfferBidListRelationFilter
@@ -101032,6 +101052,7 @@ export namespace Prisma {
     dinozDetails?: SortOrderInput | SortOrder
     sellerId?: SortOrderInput | SortOrder
     sellerName?: SortOrder
+    sellerPaid?: SortOrder
     _count?: OfferCountOrderByAggregateInput
     _avg?: OfferAvgOrderByAggregateInput
     _max?: OfferMaxOrderByAggregateInput
@@ -101051,6 +101072,7 @@ export namespace Prisma {
     dinozDetails?: StringNullableWithAggregatesFilter<"Offer"> | string | null
     sellerId?: UuidNullableWithAggregatesFilter<"Offer"> | string | null
     sellerName?: StringWithAggregatesFilter<"Offer"> | string
+    sellerPaid?: BoolWithAggregatesFilter<"Offer"> | boolean
   }
 
   export type LogWhereInput = {
@@ -106371,6 +106393,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
@@ -106386,6 +106409,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -106396,6 +106420,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
@@ -106411,6 +106436,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -106424,6 +106450,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
   }
 
   export type OfferUpdateManyMutationInput = {
@@ -106432,6 +106459,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OfferUncheckedUpdateManyInput = {
@@ -106443,6 +106471,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LogCreateInput = {
@@ -111799,6 +111828,7 @@ export namespace Prisma {
     dinozDetails?: SortOrder
     sellerId?: SortOrder
     sellerName?: SortOrder
+    sellerPaid?: SortOrder
   }
 
   export type OfferAvgOrderByAggregateInput = {
@@ -111816,6 +111846,7 @@ export namespace Prisma {
     dinozDetails?: SortOrder
     sellerId?: SortOrder
     sellerName?: SortOrder
+    sellerPaid?: SortOrder
   }
 
   export type OfferMinOrderByAggregateInput = {
@@ -111827,6 +111858,7 @@ export namespace Prisma {
     dinozDetails?: SortOrder
     sellerId?: SortOrder
     sellerName?: SortOrder
+    sellerPaid?: SortOrder
   }
 
   export type OfferSumOrderByAggregateInput = {
@@ -121653,6 +121685,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -121666,6 +121699,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -122573,6 +122607,7 @@ export namespace Prisma {
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
     sellerId?: UuidNullableFilter<"Offer"> | string | null
     sellerName?: StringFilter<"Offer"> | string
+    sellerPaid?: BoolFilter<"Offer"> | boolean
   }
 
   export type PantheonUpsertWithWhereUniqueWithoutDinozInput = {
@@ -127192,6 +127227,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -127205,6 +127241,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -134114,6 +134151,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
@@ -134128,6 +134166,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -134153,6 +134192,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
@@ -134167,6 +134207,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -134176,6 +134217,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     seller?: PlayerCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -134190,6 +134232,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -134370,6 +134413,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     seller?: PlayerUpdateOneWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -134384,6 +134428,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -149931,6 +149976,7 @@ export namespace Prisma {
     dinozDetails?: string | null
     sellerId?: string | null
     sellerName: string
+    sellerPaid?: boolean
   }
 
   export type PantheonCreateManyDinozInput = {
@@ -150152,6 +150198,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -150165,6 +150212,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -150177,6 +150225,7 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PantheonUpdateWithoutDinozInput = {
@@ -150919,6 +150968,7 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
     sellerName: string
+    sellerPaid?: boolean
   }
 
   export type OfferBidCreateManyUserInput = {
@@ -151430,6 +151480,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -151443,6 +151494,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -151455,6 +151507,7 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPaid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OfferBidUpdateWithoutUserInput = {

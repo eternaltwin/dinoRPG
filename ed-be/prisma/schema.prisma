@@ -597,6 +597,8 @@ model Offer {
   dinozDetails String?
   sellerId     String?     @db.Uuid
   sellerName   String
+  /// Offers ended before the seller was paid at claim time were already paid when they ended
+  sellerPaid   Boolean     @default(false)
   dinoz        Dinoz?      @relation(fields: [dinozId], references: [id])
   seller       Player?     @relation(fields: [sellerId], references: [id], onDelete: SetNull)
   bids         OfferBid[]

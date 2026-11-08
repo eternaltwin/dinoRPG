@@ -232,6 +232,15 @@ export async function addBid(offerId: number, userId: string, value: number, use
 	});
 }
 
+/** Moves an ENDED offer to CLAIMED; false when another call already did, so it is settled only once. */
+export async function claimEndedOffer(offerId: number) {
+	const { count } = await prisma.offer.updateMany({
+		where: { id: offerId, status: OfferStatus.ENDED },
+		data: { status: OfferStatus.CLAIMED }
+	});
+	return count === 1;
+}
+
 export async function updateOfferStatus(offerId: number, status: OfferStatus) {
 	await prisma.offer.update({
 		where: {
