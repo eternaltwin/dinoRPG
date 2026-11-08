@@ -10,7 +10,7 @@ Dann können Klane noch in der **Meisterschaft der Klane** gegeneinander antrete
 
 Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platziert werden oder seine Rangplatzierung verändern bis die Meisterschaft beendet ist.
 
-Tous les clans s'affrontent sur des batailles de 48 heures. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point. Une fois tous les clans affrontés, le championnat se termine.
+Klane treten in 48-Stunden Schlachten gegeneinander an. Ein Sieg beschert 3 Punkte, ein Unentschieden 1 und eine Niederlage 0 Punkte. Sobald die Klanenschlachten abgeschlossen sind, endet die Meisterschaft.
 
 # Das Schlachtfeld
 
