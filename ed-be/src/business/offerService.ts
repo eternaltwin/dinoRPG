@@ -457,6 +457,7 @@ export const expireOffer = async (offerId: number) => {
 	}
 	// Update offer status
 	await updateOfferStatus(offerId, OfferStatus.ENDED);
+	scheduleUnclaimedOfferRefund(offer);
 };
 
 /**
@@ -676,32 +677,59 @@ export const scheduleOffersExpiration = async () => {
 	});
 };
 
-export const scheduleEndedOffersExpiration = async () => {
-	const endedOffers = await getEndedOffers();
-
-	const today = dayjs();
-	// Process outdated ended offers immediately
-	const offersToRefund = endedOffers.filter(offer => offer.endDate <= today.subtract(1, 'week').toDate());
-	const promises = offersToRefund.map(offer => refundEndedOffers(offer));
-
-	await Promise.all(promises);
-
-	// Schedule expiration for remaining offers
-	const remainingOffers = endedOffers.filter(offer => offer.endDate > today.add(1, 'week').toDate());
-
-	remainingOffers.forEach(offer => {
-		LOGGER.log(`Scheduling offer ${offer.id} cancellation at ${offer.endDate}`);
-
-		scheduleJob(`offerEnded_${offer.id.toString()}`, dayjs(offer.endDate).add(1, 'week').toDate(), () =>
-			expireOffer(offer.id)
-		);
-	});
+type RefundableOffer = Pick<Offer, 'id' | 'sellerId' | 'sellerPaid' | 'dinozId' | 'endDate'> & {
+	items: Pick<OfferItem, 'itemId' | 'quantity' | 'isIngredient'>[];
+	bids: Pick<OfferBid, 'userId' | 'value'>[];
 };
 
-export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bids: OfferBid[] }) => {
+/** The winner, or the seller of an unsold offer, has one week after the end of the offer to claim it. */
+const unclaimedOfferRefundDate = (endDate: Date) => dayjs(endDate).add(1, 'week').toDate();
+
+/**
+ * Cancels an offer still unclaimed. Never rejects: node-schedule would emit the error without a listener,
+ * which stops the server.
+ * @param offer the offer when already loaded, otherwise it is read again since it may have been claimed meanwhile
+ */
+async function refundUnclaimedOffer(offerId: number, offer?: RefundableOffer) {
+	try {
+		const current = offer ?? (await getOffer(offerId, OfferStatus.ENDED));
+		if (current) {
+			await refundEndedOffers(current);
+		}
+	} catch (err) {
+		LOGGER.error(`Cannot refund unclaimed offer ${offerId}: ${err}`);
+	}
+}
+
+function scheduleUnclaimedOfferRefund(offer: Pick<Offer, 'id' | 'endDate'>) {
+	scheduleJob(`offerEnded_${offer.id.toString()}`, unclaimedOfferRefundDate(offer.endDate), () =>
+		refundUnclaimedOffer(offer.id)
+	);
+}
+
+/**
+ * Plans again, at startup, the refund of the ended offers. The refund date of an offer is set when it ends:
+ * those reached while the server was down are refunded at once.
+ */
+export const scheduleEndedOffersExpiration = async () => {
+	const endedOffers = await getEndedOffers();
+	const now = new Date();
+
+	const overdueOffers = endedOffers.filter(offer => unclaimedOfferRefundDate(offer.endDate) <= now);
+	await Promise.all(overdueOffers.map(offer => refundUnclaimedOffer(offer.id, offer)));
+
+	endedOffers
+		.filter(offer => unclaimedOfferRefundDate(offer.endDate) > now)
+		.forEach(offer => {
+			LOGGER.log(`Scheduling refund of unclaimed offer ${offer.id} at ${unclaimedOfferRefundDate(offer.endDate)}`);
+			scheduleUnclaimedOfferRefund(offer);
+		});
+};
+
+export const refundEndedOffers = async (offer: RefundableOffer) => {
 	// An unclaimed sale is cancelled: the seller gets the content back and the winner their coupons.
 	// The seller was never paid, since payment happens when the winner claims.
-	const winningBid = offer.bids.reduce<OfferBid | null>(
+	const winningBid = offer.bids.reduce<RefundableOffer['bids'][number] | null>(
 		(highest, bid) => (highest && highest.value > bid.value ? highest : bid),
 		null
 	);
