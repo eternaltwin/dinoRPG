@@ -39,13 +39,21 @@ export const updateMissionProgression = async (
 	});
 };
 
-export const finishMission = async (playerId: string, dinozId: number, missionId: number) => {
-	await prisma.dinozMission.update({
-		where: { missionId_dinozId: { dinozId, missionId } },
+/**
+ * Marks a mission finished, only if it was not yet: the caller pays the reward only when this returns `true`,
+ * so concurrent requests can't each be rewarded.
+ */
+export const finishMission = async (playerId: string, dinozId: number, missionId: number): Promise<boolean> => {
+	const { count } = await prisma.dinozMission.updateMany({
+		where: { dinozId, missionId, isFinished: false },
 		data: { isFinished: true }
 	});
+	if (count !== 1) {
+		return false;
+	}
 
 	await createLog(LogType.MissionFinished, playerId, dinozId, missionId.toString());
+	return true;
 };
 
 export const removeMissionFromDinoz = async (playerId: string, dinozId: number, missionId: number) => {

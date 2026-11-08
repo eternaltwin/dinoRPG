@@ -1321,9 +1321,30 @@ export async function checkRestDinoz(dinozId: number) {
 			},
 			select: {
 				id: true,
+				life: true,
 				unavailableReason: true
 			}
 		});
+	});
+}
+
+/**
+ * Starts or stops the rest of a dinoz by a conditional write: only an available living dinoz starts resting,
+ * only a resting one stops. A change of state in between (death, dungeon, sale…) makes it match nothing.
+ * @returns `true` if the state changed
+ */
+export async function setRestingState(dinozId: number, playerId: string, start: boolean): Promise<boolean> {
+	return withSpan(setRestingState.name, async () => {
+		const { count } = start
+			? await prisma.dinoz.updateMany({
+					where: { id: dinozId, playerId, unavailableReason: null, life: { gt: 0 } },
+					data: { unavailableReason: UnavailableReason.resting }
+				})
+			: await prisma.dinoz.updateMany({
+					where: { id: dinozId, playerId, unavailableReason: UnavailableReason.resting },
+					data: { unavailableReason: null }
+				});
+		return count === 1;
 	});
 }
 

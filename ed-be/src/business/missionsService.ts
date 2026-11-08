@@ -232,9 +232,17 @@ export async function endMission(req: Request): Promise<Rewarder[]> {
 
 	const authed = await auth(req);
 
+	// The reward is only given at the last step, once every step before it was done
+	if (mission.actualStep.requirement.actionType !== ConditionEnum.FINISH_MISSION) {
+		throw new ExpectedError('This mission is not over yet');
+	}
+	// Finish first: of two concurrent requests, only the one that finishes the mission is rewarded
+	if (!(await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId))) {
+		throw new ExpectedError('This mission is already over');
+	}
+
 	const { rewards, level } = mission.missionReference;
 	await rewarder(rewards, [mission.dinoz], authed.id, [], level);
-	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
 
 	// Resolve percentages into the xp actually granted, so the client shows a real number.
 	return rewards.map(reward =>

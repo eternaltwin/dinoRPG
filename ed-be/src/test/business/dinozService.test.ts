@@ -10,6 +10,7 @@ vi.mock('../../dao/dinozDao.js', () =>
 		[
 			'checkFrozenDinoz',
 			'checkRestDinoz',
+			'setRestingState',
 			'claimDinozActions',
 			'consumeRemainingAction',
 			'createDinoz',
@@ -1281,13 +1282,29 @@ describe('restDinoz', () => {
 		it('restDinoz starts and stops resting', async () => {
 			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
 			// Start rest works if available
-			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null } as never);
+			vi.mocked(dinozDao.setRestingState).mockResolvedValue(true);
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null, life: 10 } as never);
 			await restDinoz(req({ id: '1' }, { start: true }));
-			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: UnavailableReason.resting });
+			expect(dinozDao.setRestingState).toHaveBeenCalledWith(1, 'p1', true);
 			// Stop rest works if resting
 			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: UnavailableReason.resting } as never);
 			await restDinoz(req({ id: '1' }, { start: false }));
-			expect(dinozDao.updateDinoz).toHaveBeenCalledWith(1, { unavailableReason: null });
+			expect(dinozDao.setRestingState).toHaveBeenCalledWith(1, 'p1', false);
+		});
+
+		it('restDinoz refuses to start resting a dead dinoz', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null, life: 0 } as never);
+			vi.mocked(DinozUtils.isAlive).mockReturnValue(false as never);
+			await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('dead');
+			expect(dinozDao.setRestingState).not.toHaveBeenCalled();
+		});
+
+		it('restDinoz fails when the state changed since it was read', async () => {
+			vi.mocked(playerDao.ownsDinoz).mockResolvedValue(true as never);
+			vi.mocked(dinozDao.checkRestDinoz).mockResolvedValue({ unavailableReason: null, life: 10 } as never);
+			vi.mocked(dinozDao.setRestingState).mockResolvedValue(false);
+			await expect(restDinoz(req({ id: '1' }, { start: true }))).rejects.toThrow('error.dinozNotAvailable');
 		});
 	});
 });

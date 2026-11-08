@@ -54,6 +54,7 @@ import {
 	checkFrozenDinoz,
 	claimDinozActions,
 	checkRestDinoz,
+	setRestingState,
 	consumeRemainingAction,
 	createDinoz,
 	getAllUnavailableUntil,
@@ -1652,15 +1653,20 @@ export async function restDinoz(req: Request) {
 		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
-	if (dinoz.unavailableReason !== null && start) {
+	if (start && dinoz.unavailableReason !== null) {
+		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
+	}
+	if (start && !isAlive(dinoz)) {
+		// Resting heals: a dead dinoz would skip the cost of its death
+		throw new ExpectedError(translate('dead', authed));
+	}
+	if (!start && dinoz.unavailableReason !== UnavailableReason.resting) {
 		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
 
-	if (dinoz.unavailableReason !== UnavailableReason.resting && !start) {
+	if (!(await setRestingState(dinozId, authed.id, start))) {
 		throw new ExpectedError(translate('error.dinozNotAvailable', authed));
 	}
-
-	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });
 }
 
 export async function scheduleDinozEndOfUnavailability() {

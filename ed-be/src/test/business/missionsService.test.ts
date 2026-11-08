@@ -98,7 +98,7 @@ const MISSION_ID = 100;
 const REWARDS = [{ rewardType: 'item', value: 7, quantity: 1 }];
 const MISSION_LEVEL = 10;
 
-// A single NPC offering one mission with three steps (talk -> fight -> give item).
+// A single NPC offering one mission with four steps (talk -> fight -> give item -> finish).
 const baseNpc = {
 	name: NPC_NAME,
 	placeId: PLACE_ID,
@@ -128,6 +128,12 @@ const baseNpc = {
 					displayedAction: 'give',
 					displayedText: 'gimme',
 					requirement: { actionType: ConditionEnum.GIVE_ITEM, item: { itemId: 50 }, itemQuantity: 2, target: 'x' }
+				},
+				{
+					stepId: 3,
+					place: PLACE_ID,
+					displayedAction: 'finish',
+					requirement: { actionType: ConditionEnum.FINISH_MISSION, target: 'x' }
 				}
 			]
 		}
@@ -277,8 +283,12 @@ describe('startFightMission', () => {
 });
 
 describe('endMission', () => {
+	beforeEach(() => {
+		mockFinishMission.mockResolvedValue(true);
+	});
+
 	it('grants the mission rewards and finishes the mission', async () => {
-		mockGetMissionsInfo.mockResolvedValue(missionPlayer(0));
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(3));
 		mockRewarder.mockResolvedValue([] as never);
 
 		const result = await endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }));
@@ -292,13 +302,31 @@ describe('endMission', () => {
 	it('resolves a percentage xp reward into the xp actually granted', async () => {
 		const npc = npcList as Record<string, { missions: { rewards: unknown[] }[] }>;
 		npc[NPC_NAME].missions[0].rewards = [{ rewardType: RewardEnum.EXPERIENCE_PERCENT, value: 20 }];
-		mockGetMissionsInfo.mockResolvedValue(missionPlayer(0));
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(3));
 		mockRewarder.mockResolvedValue([] as never);
 
 		const result = await endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }));
 
 		// Dinoz at the mission level: no bonus, no malus, so a plain 20% of maxXp(10) = 191.
 		expect(result).toEqual([{ rewardType: RewardEnum.EXPERIENCE, value: Math.round(191 * 0.2) }]);
+	});
+
+	it('refuses the reward before the last step is reached', async () => {
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(0));
+		await expect(endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }))).rejects.toThrow(
+			'not over yet'
+		);
+		expect(mockFinishMission).not.toHaveBeenCalled();
+		expect(mockRewarder).not.toHaveBeenCalled();
+	});
+
+	it('rewards only the request that finishes the mission', async () => {
+		mockGetMissionsInfo.mockResolvedValue(missionPlayer(3));
+		mockFinishMission.mockResolvedValue(false);
+		await expect(endMission(req({ dinozId: String(DINOZ_ID) }, { missionId: MISSION_ID }))).rejects.toThrow(
+			'already over'
+		);
+		expect(mockRewarder).not.toHaveBeenCalled();
 	});
 
 	it('throws when the mission was never started', async () => {

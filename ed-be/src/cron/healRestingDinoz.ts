@@ -82,6 +82,8 @@ const healRestingDinoz = async () => {
 					WHERE
 						d.id = du.id
 						AND d."unavailableReason" = 'resting'
+						-- A dead dinoz is not healed by resting: it has to be resurrected
+						AND d.life > 0
 						AND
 							(
 						d.life
