@@ -2637,7 +2637,7 @@
 		"pantheon": "Ruhmeshalle",
 		"stats": "Statistiken",
 		"wars": "Kriege",
-		"championship": "Championnat"
+		"championship": "Meisterschaft"
 	},
 	"layout": {
 		"fx": "Status",
@@ -5538,7 +5538,7 @@
 		}
 	},
 	"clanChampionship": {
-		"connectionLost": "Verbindung zum Clan verloren, versuche es gleich noch einmal.",
+		"connectionLost": "Verbindung zum Klan verloren. Es wird gleich nochmal versucht.",
 		"phase": {
 			"registration": "Anmeldung geöffnet",
 			"running": "Meisterschaft läuft",
