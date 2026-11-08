@@ -24,6 +24,7 @@ import {
 import { Request } from 'express';
 import { GLOBAL } from '../context.js';
 import {
+	claimLevelUp,
 	getAllDinozWithSkills,
 	getDinozForLevelUp,
 	getDinozSkillsLearnableAndUnlockable,
@@ -189,6 +190,11 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		throw new ExpectedError(`Dinoz ${dinozId} can't learn this`);
 	}
 
+	// Take the level first: of two concurrent requests for the same level, only one grants a skill
+	if (!(await claimLevelUp(dinozId, dinozSkills.level, getMaxXp(dinozSkills, gameConfig()), !!event))) {
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed));
+	}
+
 	if (isUnlockableSkills) {
 		await removeUnlockableSkillsFromDinoz(dinozId, skillIdList, event);
 	} else {
@@ -244,13 +250,16 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 	}
 
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, parseInt(req.body.tryNumber), dinozSkills, dinozRace);
+	// The level and the experience were already moved by claimLevelUp: writing them again would undo the
+	// experience earned in between
+	const { level: _level, experience: _experience, ...levelUpData } = newDinozData;
 
 	if (event) {
-		await updateEventDinoz(newDinozData.id, newDinozData);
+		await updateEventDinoz(newDinozData.id, levelUpData);
 		result.newMaxExperience = 1;
 		return result;
 	}
-	await updateDinoz(newDinozData.id, newDinozData);
+	await updateDinoz(newDinozData.id, levelUpData);
 
 	if (newDinozData.level % 10 === 0) {
 		await checkAnnounce(PantheonMotif.race, newDinozData.id.toString(), newDinozData.display);

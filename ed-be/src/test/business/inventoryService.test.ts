@@ -22,6 +22,7 @@ vi.mock('../../dao/dinozStatusDao.js', () => ({ removeStatusFromDinoz: vi.fn() }
 vi.mock('../../dao/logDao.js', () => ({ createLog: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), getPlayerInventoryDataRequest: vi.fn() }));
 vi.mock('../../dao/playerItemDao.js', () => ({
+	consumeItem: vi.fn(),
 	decreaseItemQuantity: vi.fn(),
 	increaseItemQuantity: vi.fn(),
 	insertItem: vi.fn()
@@ -49,7 +50,7 @@ vi.mock('@drpg/core/utils/DinozUtils', async orig => {
 import { updateDinozCount } from '../../dao/rankingDao.js';
 import * as dinozDao from '../../dao/dinozDao.js';
 import * as playerDao from '../../dao/playerDao.js';
-import { decreaseItemQuantity } from '../../dao/playerItemDao.js';
+import { consumeItem, decreaseItemQuantity, increaseItemQuantity } from '../../dao/playerItemDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../../dao/dinozItemDao.js';
 import { boxOpening } from '../../utils/boxesLogic.js';
 import { generateDinozDisplay, learnNextSphereSkill } from '../../utils/dinoz.js';
@@ -92,6 +93,7 @@ const dinozForItem = (overrides = {}) => ({
 beforeEach(() => {
 	vi.clearAllMocks();
 	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1' } as never);
+	vi.mocked(consumeItem).mockResolvedValue(true);
 });
 
 function withItem(itemId: number, overrides = {}) {
@@ -138,7 +140,13 @@ describe('useItem', () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(1) as never);
 		const result = await useItem(req({ dinozId: '1', itemId: '1' }));
 		expect(result[0].category).toBeDefined();
-		expect(decreaseItemQuantity).toHaveBeenCalled();
+		expect(consumeItem).toHaveBeenCalledWith('p1', 1, 1);
+	});
+	it('applies no effect when a concurrent request already spent the item', async () => {
+		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(62) as never);
+		vi.mocked(consumeItem).mockResolvedValue(false);
+		await expect(useItem(req({ dinozId: '1', itemId: '62' }))).rejects.toThrow('notEnoughItem');
+		expect(playerDao.addMoney).not.toHaveBeenCalled();
 	});
 	it('heals with a heal item', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(3) as never);
@@ -207,6 +215,8 @@ describe('useItem', () => {
 	it('throws for an item with no usable effect', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(withItem(6) as never);
 		await expect(useItem(req({ dinozId: '1', itemId: '6' }))).rejects.toThrow('WTF');
+		// The item spent before the refused effect is given back
+		expect(increaseItemQuantity).toHaveBeenCalledWith('p1', 6, 1);
 	});
 	it('heals a dinoz locked on the clan championship board', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(
@@ -221,7 +231,7 @@ describe('useItem', () => {
 			withItem(1, { unavailableReason: UnavailableReason.clanChampionship }) as never
 		);
 		await expect(useItem(req({ dinozId: '1', itemId: '1' }))).rejects.toThrow('UnavailableReason.clanChampionship');
-		expect(decreaseItemQuantity).not.toHaveBeenCalled();
+		expect(consumeItem).not.toHaveBeenCalled();
 	});
 });
 

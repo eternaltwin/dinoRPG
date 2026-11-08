@@ -1222,6 +1222,55 @@ export async function consumeRemainingAction(dinozId: number): Promise<boolean> 
 	});
 }
 
+/**
+ * Spends the fight or gather action of a whole team before its reward is computed. The write only matches
+ * dinoz of the player that still have the action and are available and alive, and the transaction is rolled
+ * back unless every dinoz matched: of two concurrent requests, only the first one gets through.
+ * @returns `true` if the action of every dinoz was spent
+ */
+export async function claimDinozActions(
+	dinozIds: number[],
+	playerId: string,
+	action: 'fight' | 'gather'
+): Promise<boolean> {
+	return withSpan(claimDinozActions.name, async () => {
+		const ids = [...new Set(dinozIds)];
+		if (ids.length === 0) return false;
+		try {
+			return await prisma.$transaction(async tx => {
+				const { count } = await tx.dinoz.updateMany({
+					where: { id: { in: ids }, playerId, [action]: true, unavailableReason: null, life: { gt: 0 } },
+					data: { [action]: false }
+				});
+				if (count !== ids.length) throw new ActionAlreadySpent();
+				return true;
+			});
+		} catch (err) {
+			if (err instanceof ActionAlreadySpent) return false;
+			throw err;
+		}
+	});
+}
+
+class ActionAlreadySpent extends Error {}
+
+/**
+ * Moves a dinoz to its next level before the skill is granted: only the request that still sees the level and
+ * the experience it read gets through, so one level gives one skill.
+ * @returns `true` if this call took the level
+ */
+export async function claimLevelUp(dinozId: number, level: number, maxXp: number, event = false): Promise<boolean> {
+	return withSpan(claimLevelUp.name, async () => {
+		// Event dinoz level up without the experience requirement
+		const where = event ? { id: dinozId, level } : { id: dinozId, level, experience: { gte: maxXp } };
+		const data = { level: { increment: 1 }, experience: { decrement: maxXp } };
+		const { count } = event
+			? await prisma.gameDinoz.updateMany({ where, data })
+			: await prisma.dinoz.updateMany({ where, data });
+		return count === 1;
+	});
+}
+
 export async function getIrmaUsageInfo(dinozId: number) {
 	return withSpan(getIrmaUsageInfo.name, async () => {
 		return await prisma.dinoz.findUnique({

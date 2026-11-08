@@ -35,7 +35,7 @@ import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.j
 import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { consumeItem, decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { upsertQuest } from '../dao/questsDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -168,131 +168,139 @@ export async function useItem(req: Request) {
 		throw new ExpectedError(translate(`notEnoughItem`, authed));
 	}
 
-	// Star quest
-	const starQuest = dinoz.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
-	if (starQuest) {
-		// Current date
-		const currentDate = dayjs();
-		// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
-		const dayOfWeek = currentDate.day();
-		if (
-			SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
-			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
-			itemId === itemList[Item.MEAT_PIE].itemId
-		) {
-			await upsertQuest(dinoz.player.id, Scenario.STAR, 4);
-			await rewarder(
-				[
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.MAGIC_STAR,
-						quantity: 1
-					}
-				],
-				[],
-				dinoz.player.id
-			);
-			const initialLife = dinoz.life;
-			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
-			const lifeHealed = Math.max(0, dinoz.life - initialLife);
-			//Update stats
-			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
-			await decreaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
-			await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
-			return {
-				category: ItemEffect.QUEST,
-				value: 'eat_star_found'
-			};
-		}
+	// Spend the item before its effect: a concurrent request finds it spent instead of using it twice
+	if (!(await consumeItem(dinoz.player.id, itemData.itemId, 1))) {
+		throw new ExpectedError(translate(`notEnoughItem`, authed));
 	}
 
 	let feedback: ItemFeedBack[] = new Array<ItemFeedBack>();
-	switch (item.effect?.category) {
-		case ItemEffect.ACTION:
-			await updateDinoz(dinoz.id, {
-				fight: true,
-				gather: true
-			});
-			feedback.push({
-				category: ItemEffect.ACTION,
-				value: 1
-			});
-			break;
-		case ItemEffect.HEAL:
-			const initialLife = dinoz.life;
-			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * (dinoz.player.cooker ? 1.1 : 1)));
-			const lifeHealed = Math.max(0, dinoz.life - initialLife);
-			feedback.push({
-				category: ItemEffect.HEAL,
-				value: lifeHealed
-			});
-			//Update stats
-			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
-			// The dungeon's healing cell stays open for the rest of the team; it's spent
-			// once they walk off it.
-			if (healingZone) {
-				await markHealingCellUsed(dinoz);
+	try {
+		// Star quest
+		const starQuest = dinoz.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
+		if (starQuest) {
+			// Current date
+			const currentDate = dayjs();
+			// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
+			const dayOfWeek = currentDate.day();
+			if (
+				SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
+				dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
+				itemId === itemList[Item.MEAT_PIE].itemId
+			) {
+				await upsertQuest(dinoz.player.id, Scenario.STAR, 4);
+				await rewarder(
+					[
+						{
+							rewardType: RewardEnum.ITEM,
+							value: Item.MAGIC_STAR,
+							quantity: 1
+						}
+					],
+					[],
+					dinoz.player.id
+				);
+				const initialLife = dinoz.life;
+				await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
+				const lifeHealed = Math.max(0, dinoz.life - initialLife);
+				//Update stats
+				await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
+				await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
+				return {
+					category: ItemEffect.QUEST,
+					value: 'eat_star_found'
+				};
 			}
-			break;
-		case ItemEffect.RESURRECT:
-			await updateDinoz(dinoz.id, resurrect(dinoz));
-			feedback.push({
-				category: ItemEffect.RESURRECT
-			});
-			//Update stats
-			await setSpecificStat(StatTracking.DEATHS, dinoz.player.id, 1);
-			await createLog(LogType.Revive, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
-			break;
-		case ItemEffect.EGG:
-			const race = await hatchEgg(item, authed);
-			feedback.push({
-				category: ItemEffect.EGG,
-				value: raceList[race].name
-			});
-			break;
-		case ItemEffect.SPHERE:
-			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value, authed);
-			const skill = Object.values(skillList).find(skill => skill.id === skillToLearn);
+		}
 
-			if (!skill) {
-				throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`);
-			}
-
-			await applySkillEffect(dinoz, skill, dinoz.player.id);
-			await addSkillToDinoz(dinozId, skillToLearn);
-			feedback.push({
-				category: ItemEffect.SPHERE,
-				value: skill.name
-			});
-			break;
-		case ItemEffect.GOLD:
-			await addMoney(dinoz.player.id, item.effect.value);
-			feedback.push({
-				category: ItemEffect.GOLD,
-				value: item.effect.value
-			});
-			break;
-		case ItemEffect.SPECIAL:
-			const itemWon = await useSpecialItem(dinoz, item);
-			const itemName = itemList[item.itemId as Item];
-			feedback.push({
-				category: ItemEffect.SPECIAL,
-				value: itemName.name.toLowerCase(),
-				effect: itemWon?.name ?? '',
-				quantity: itemWon?.quantity ?? 1
-			});
-			if (item.itemId === Item.PAMPLEBOUM) {
+		switch (item.effect?.category) {
+			case ItemEffect.ACTION:
+				await updateDinoz(dinoz.id, {
+					fight: true,
+					gather: true
+				});
+				feedback.push({
+					category: ItemEffect.ACTION,
+					value: 1
+				});
+				break;
+			case ItemEffect.HEAL:
+				const initialLife = dinoz.life;
+				await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * (dinoz.player.cooker ? 1.1 : 1)));
+				const lifeHealed = Math.max(0, dinoz.life - initialLife);
 				feedback.push({
 					category: ItemEffect.HEAL,
-					value: itemWon?.quantity ?? 0
+					value: lifeHealed
 				});
-			}
-			break;
-		default:
-			throw new ExpectedError('WTF');
-	}
+				//Update stats
+				await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
+				// The dungeon's healing cell stays open for the rest of the team; it's spent
+				// once they walk off it.
+				if (healingZone) {
+					await markHealingCellUsed(dinoz);
+				}
+				break;
+			case ItemEffect.RESURRECT:
+				await updateDinoz(dinoz.id, resurrect(dinoz));
+				feedback.push({
+					category: ItemEffect.RESURRECT
+				});
+				//Update stats
+				await setSpecificStat(StatTracking.DEATHS, dinoz.player.id, 1);
+				await createLog(LogType.Revive, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
+				break;
+			case ItemEffect.EGG:
+				const race = await hatchEgg(item, authed);
+				feedback.push({
+					category: ItemEffect.EGG,
+					value: raceList[race].name
+				});
+				break;
+			case ItemEffect.SPHERE:
+				const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value, authed);
+				const skill = Object.values(skillList).find(skill => skill.id === skillToLearn);
 
-	await decreaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
+				if (!skill) {
+					throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`);
+				}
+
+				await applySkillEffect(dinoz, skill, dinoz.player.id);
+				await addSkillToDinoz(dinozId, skillToLearn);
+				feedback.push({
+					category: ItemEffect.SPHERE,
+					value: skill.name
+				});
+				break;
+			case ItemEffect.GOLD:
+				await addMoney(dinoz.player.id, item.effect.value);
+				feedback.push({
+					category: ItemEffect.GOLD,
+					value: item.effect.value
+				});
+				break;
+			case ItemEffect.SPECIAL:
+				const itemWon = await useSpecialItem(dinoz, item);
+				const itemName = itemList[item.itemId as Item];
+				feedback.push({
+					category: ItemEffect.SPECIAL,
+					value: itemName.name.toLowerCase(),
+					effect: itemWon?.name ?? '',
+					quantity: itemWon?.quantity ?? 1
+				});
+				if (item.itemId === Item.PAMPLEBOUM) {
+					feedback.push({
+						category: ItemEffect.HEAL,
+						value: itemWon?.quantity ?? 0
+					});
+				}
+				break;
+			default:
+				throw new ExpectedError('WTF');
+		}
+	} catch (err) {
+		// The effect was refused (too many dinoz, nothing to learn…): give the item back
+		await increaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
+		throw err;
+	}
 
 	await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
 	return feedback;

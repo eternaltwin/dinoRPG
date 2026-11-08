@@ -27,7 +27,7 @@ import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { LOGGER } from '../context.js';
-import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
+import { claimDinozActions, getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
@@ -113,19 +113,23 @@ export async function processFight(req: Request) {
 		throw new ExpectedError(translate(`dead`, authed));
 	}
 
+	// Spend the fight action of the whole team before any reward: a concurrent request finds it spent
+	if (
+		!(await claimDinozActions(
+			team.map(d => d.id),
+			authed.id,
+			'fight'
+		))
+	) {
+		throw new ExpectedError(translate(`missingIrma`, authed));
+	}
+
 	// Look for a special action that happens on the fight.
 	let fight = await movementListener(player, team, dinozData.placeId, dinozId);
 
 	// If no fight happened, trigger a regular fight.
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, dinozData.placeId, player);
-	}
-
-	// Consume fight action
-	for (const dino of team) {
-		await updateDinoz(dino.id, {
-			fight: false
-		});
 	}
 
 	// Update player stats

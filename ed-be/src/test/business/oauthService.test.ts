@@ -28,6 +28,7 @@ vi.mock('../../dao/playerDao.js', () => ({
 	archiveOldUsername: vi.fn(),
 	createPlayer: vi.fn(),
 	getCommonDataRequest: vi.fn(),
+	grantDailyLoginBonus: vi.fn(),
 	setPlayer: vi.fn(),
 	updateUsernameOnRelatedTables: vi.fn()
 }));
@@ -46,7 +47,7 @@ vi.mock('@drpg/core/utils/DinozUtils', () => ({
 }));
 vi.mock('@drpg/core/models/event/Events', () => ({ currentEvents: () => [], GameEvent: { CHRISTMAS: 'christmas' } }));
 
-import { createPlayer, getCommonDataRequest } from '../../dao/playerDao.js';
+import { createPlayer, getCommonDataRequest, grantDailyLoginBonus } from '../../dao/playerDao.js';
 import { addPlayerInRanking } from '../../dao/rankingDao.js';
 import { upsertToken } from '../../dao/eternaltwinTokenDao.js';
 import { createState } from '../../utils/server/oauthState.js';
@@ -170,6 +171,8 @@ describe('OAuth', () => {
 		await oauth.token(req, res);
 		expect(upsertToken).toHaveBeenCalledWith('u1', 'tok', 'forum:write', expect.any(Date));
 		expect((res as { send: ReturnType<typeof vi.fn> }).send).toHaveBeenCalled();
+		// The bonus goes through the shared, conditional daily claim
+		expect(grantDailyLoginBonus).toHaveBeenCalledWith(expect.objectContaining({ id: 'u1' }));
 	});
 
 	it('token reports an error on an invalid code', async () => {
