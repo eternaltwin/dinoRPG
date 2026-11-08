@@ -17,7 +17,9 @@ export async function getMyDojoDao(playerId: string) {
 			playerId: true,
 			reputation: true,
 			activeChallenge: true,
-			TournamentTeam: true
+			TournamentTeam: true,
+			dailyReset: true,
+			teamUpdate: true
 		}
 	});
 	return dojo;
@@ -125,19 +127,46 @@ export async function createMyDojo(playerId: string, challenge: Challenge) {
 			playerId: true,
 			reputation: true,
 			activeChallenge: true,
-			TournamentTeam: true
+			TournamentTeam: true,
+			dailyReset: true,
+			teamUpdate: true
 		}
 	});
 	return dojo;
 }
 
-export async function replaceMyTeamDao(dinozList: number[], opponentIds: number[], dojoId: string) {
-	await prisma.$transaction([
-		prisma.dojoTeam.deleteMany({ where: { dojoId } }),
-		prisma.dojoOpponents.deleteMany({ where: { dojoId } }),
-		prisma.dojoTeam.createMany({ data: dinozList.map(dinozId => ({ dojoId, dinozId })) }),
-		prisma.dojoOpponents.createMany({ data: opponentIds.map(dinozId => ({ dojoId, dinozId })) })
-	]);
+/**
+ * Replaces the team and its opponents, which resets the fights of the current wave. Allowed while waves are
+ * left today, and once a day when a team already exists (the first team is always allowed): the condition and
+ * the stamp of `teamUpdate` are one write, so concurrent requests can't replace the team twice.
+ * @returns `null` when the replacement is refused
+ */
+export async function replaceMyTeamDao(
+	dinozList: number[],
+	opponentIds: number[],
+	dojoId: string,
+	maxSeries: number,
+	startOfDay: Date
+) {
+	const replaced = await prisma.$transaction(async tx => {
+		const { count } = await tx.dojo.updateMany({
+			where: {
+				id: dojoId,
+				dailyReset: { lt: maxSeries },
+				OR: [{ team: { none: {} } }, { teamUpdate: null }, { teamUpdate: { lt: startOfDay } }]
+			},
+			data: { teamUpdate: new Date() }
+		});
+		if (count !== 1) return false;
+		await tx.dojoTeam.deleteMany({ where: { dojoId } });
+		await tx.dojoOpponents.deleteMany({ where: { dojoId } });
+		await tx.dojoTeam.createMany({ data: dinozList.map(dinozId => ({ dojoId, dinozId })) });
+		await tx.dojoOpponents.createMany({ data: opponentIds.map(dinozId => ({ dojoId, dinozId })) });
+		return true;
+	});
+	if (!replaced) {
+		return null;
+	}
 	const dojo = await prisma.dojo.findUniqueOrThrow({
 		where: {
 			id: dojoId

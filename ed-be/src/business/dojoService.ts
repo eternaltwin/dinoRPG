@@ -20,6 +20,7 @@ import {
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Dojo, NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
+import dayjs from 'dayjs';
 import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest, viewFight } from '../dao/archiveDao.js';
 import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
 import {
@@ -87,6 +88,12 @@ export async function createMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.wrongDinozInTeam', authed));
 	}
 
+	// A new team comes with new opponents and resets the fights of the wave: it is refused once the waves of
+	// the day are over, and allowed once a day only (the first team is always allowed)
+	if (myDojo.dailyReset >= DOJO_MAX_SERIES) {
+		throw new ExpectedError(translate('dojo.dailySeriesOver', authed));
+	}
+
 	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);
 
 	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
@@ -101,7 +108,17 @@ export async function createMyTeam(req: Request) {
 	}
 	const opponentIds = await pickOpponentIds(team, myDojo.playerId);
 
-	return await replaceMyTeamDao(teamIds, opponentIds, myDojo.id);
+	const replaced = await replaceMyTeamDao(
+		teamIds,
+		opponentIds,
+		myDojo.id,
+		DOJO_MAX_SERIES,
+		dayjs().startOf('day').toDate()
+	);
+	if (!replaced) {
+		throw new ExpectedError(translate('dojo.teamAlreadyChanged', authed));
+	}
+	return replaced;
 }
 
 export async function getMyTeam(req: Request) {

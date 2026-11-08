@@ -125,7 +125,7 @@ describe('getDojo', () => {
 describe('createMyTeam', () => {
 	const dinozList = Array.from({ length: 5 }, (_, i) => ({ id: i + 1, level: 20 }));
 	beforeEach(() => {
-		vi.mocked(dojoDao.getMyDojoDao).mockResolvedValue({ id: 'd1', playerId: 'p1' } as never);
+		vi.mocked(dojoDao.getMyDojoDao).mockResolvedValue({ id: 'd1', playerId: 'p1', dailyReset: 0 } as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({ dinoz: dinozList } as never);
 		vi.mocked(getRandomDinozFromLevel).mockResolvedValue({ id: 99 } as never);
 		vi.mocked(dojoDao.replaceMyTeamDao).mockResolvedValue({ id: 'team' } as never);
@@ -133,6 +133,23 @@ describe('createMyTeam', () => {
 	it('creates a team with valid input', async () => {
 		const result = await createMyTeam(req({ team: [1, 2, 3, 4, 5] }));
 		expect(result).toEqual({ id: 'team' });
+		// The daily quota and the once-a-day replacement are checked by the conditional write
+		expect(dojoDao.replaceMyTeamDao).toHaveBeenCalledWith(
+			[1, 2, 3, 4, 5],
+			expect.any(Array),
+			'd1',
+			5,
+			expect.any(Date)
+		);
+	});
+	it('refuses a new team once the waves of the day are over', async () => {
+		vi.mocked(dojoDao.getMyDojoDao).mockResolvedValue({ id: 'd1', playerId: 'p1', dailyReset: 5 } as never);
+		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dailySeriesOver');
+		expect(dojoDao.replaceMyTeamDao).not.toHaveBeenCalled();
+	});
+	it('refuses a second replacement of the team the same day', async () => {
+		vi.mocked(dojoDao.replaceMyTeamDao).mockResolvedValue(null);
+		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('teamAlreadyChanged');
 	});
 	it('throws when not in qualification', async () => {
 		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(null as never);
