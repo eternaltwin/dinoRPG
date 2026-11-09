@@ -5584,6 +5584,7 @@
 		"scoreLine": "Ligne de score : {line}",
 		"quota": "Quota : {used}/{max}",
 		"timeLeft": "Temps restant : {time}",
+		"nextTick": "Prochain tick dans {time}",
 		"startsAt": "Début : {date}",
 		"level": "niv. {level}",
 		"status": {

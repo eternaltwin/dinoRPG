@@ -80,13 +80,13 @@ const ICON_SIZE = 40;
 // Widths relative to a cell keep the sprites at the same scale as each other
 const OBSTACLE_SPRITES = [
 	{ name: 'boulders', width: '99%' },
-	{ name: 'log', width: '82%' },
-	{ name: 'crate', width: '90%' },
-	{ name: 'cactus', width: '82%' },
+	{ name: 'log', width: '105%' },
+	{ name: 'crate', width: '100%' },
+	{ name: 'cactus', width: '100%' },
 	{ name: 'cactus_double', width: '104%' },
 	{ name: 'rock', width: '97%' },
-	{ name: 'rock_dark', width: '85%' },
-	{ name: 'mushroom', width: '92%' }
+	{ name: 'rock_dark', width: '100%' },
+	{ name: 'mushroom', width: '103%' }
 ].map(({ name, width }) => ({ src: getImgURL('clan/championship', name), width }));
 
 /** Purely visual: the board only stores blocked cells, so the sprite is derived from the cell to stay stable. */

@@ -3,7 +3,15 @@
 		<p v-if="loadError" class="no-match error" data-testid="board-error">{{ $t('clanChampionship.loadError') }}</p>
 		<p v-if="loaded && !board && !loadError" class="no-match">{{ $t('clanChampionship.noMatch') }}</p>
 		<template v-else-if="board">
-			<ChampionshipScoreBar :west="board.west" :east="board.east" />
+			<ChampionshipScoreBar
+				:west="board.west"
+				:east="board.east"
+				:startsAt="board.startsAt"
+				:endsAt="board.endsAt"
+				:status="board.status"
+			/>
+			<ChampionshipTickBar v-if="board.status === 'live'" :startsAt="board.startsAt" :endsAt="board.endsAt" />
+			<p v-if="board.status === 'finished'" class="finished">{{ $t('clanChampionship.matchFinished') }}</p>
 			<ChampionshipBoard
 				:board="board"
 				:selectedDinozId="selectedDinozId"
@@ -11,7 +19,6 @@
 				@select="selectedDinozId = $event"
 				@move="onMove"
 			/>
-			<ChampionshipMatchTimer :startsAt="board.startsAt" :endsAt="board.endsAt" :status="board.status" />
 			<div v-if="board.status === 'finished'" class="replay-link">
 				<RouterLink
 					:to="{ name: 'ClanChampionshipReplay', params: { id: route.params.id, matchId: board.matchId } }"
@@ -44,7 +51,7 @@ import { errorHandler } from '../../../utils';
 import { playerStore, useDinozStore } from '../../../store';
 import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import ChampionshipBoard from './ChampionshipBoard.vue';
-import ChampionshipMatchTimer from './ChampionshipMatchTimer.vue';
+import ChampionshipTickBar from './ChampionshipTickBar.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
 import DZButton from '../../common/DZButton.vue';
 
@@ -72,7 +79,10 @@ const rootStyle = computed(() => {
 		'--cdc-mine': mine,
 		'--cdc-enemy': enemy,
 		'--cdc-west': readerIsWest.value ? mine : enemy,
-		'--cdc-east': readerIsWest.value ? enemy : mine
+		'--cdc-east': readerIsWest.value ? enemy : mine,
+		// Original score bar colours, darker so they read on its beige background
+		'--cdc-bar-west': readerIsWest.value ? '#2b6cb0' : '#b03a2e',
+		'--cdc-bar-east': readerIsWest.value ? '#b03a2e' : '#2b6cb0'
 	};
 });
 
@@ -217,7 +227,8 @@ defineExpose({ onEnter, onLeave });
 	display: flex;
 	justify-content: center;
 }
-.no-match {
+.no-match,
+.finished {
 	text-align: center;
 	font-weight: bold;
 }

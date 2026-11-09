@@ -232,7 +232,10 @@ const rootStyle = computed(() => {
 		'--cdc-mine': mine,
 		'--cdc-enemy': enemy,
 		'--cdc-west': readerIsWest.value ? mine : enemy,
-		'--cdc-east': readerIsWest.value ? enemy : mine
+		'--cdc-east': readerIsWest.value ? enemy : mine,
+		// Original score bar colours, darker so they read on its beige background
+		'--cdc-bar-west': readerIsWest.value ? '#2b6cb0' : '#b03a2e',
+		'--cdc-bar-east': readerIsWest.value ? '#b03a2e' : '#2b6cb0'
 	};
 });
 
