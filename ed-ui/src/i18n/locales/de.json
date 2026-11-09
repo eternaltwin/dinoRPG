@@ -5583,6 +5583,15 @@
 		"quota": "Quote: {used}/{max}",
 		"timeLeft": "Restzeit: {time}",
 		"nextTick": "Nächster Tick in {time}",
+		"timeline": {
+			"label": "Spielverlauf: klicke, um das Brett zu diesem Zeitpunkt zu sehen",
+			"live": "Live",
+			"end": "Ende der Partie",
+			"loading": "Verlauf wird geladen…",
+			"viewing": "Brett am {time}",
+			"backToLive": "Zurück zu live",
+			"backToEnd": "Zurück zum Ende"
+		},
 		"startsAt": "Beginn: {date}",
 		"level": "St. {level}",
 		"status": {

@@ -674,3 +674,152 @@ test('a finished match replays every step with the state of both clans, fights i
 		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
 	}
 });
+
+test('the timeline under a live board shows it as it was at the instant clicked, without the enemy state', async ({
+	page,
+	player,
+	createPlayer,
+	db
+}) => {
+	test.setTimeout(60_000);
+	const suffix = player.id.slice(0, 8);
+	const rival = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
+	await db.clanMember.create({ data: { clanId: clanA.id, playerId: player.id, rights: [] } });
+	await db.clanMember.create({ data: { clanId: clanB.id, playerId: rival.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clanA.id } });
+	await db.player.update({ where: { id: rival.id }, data: { clanId: clanB.id } });
+
+	const dinozData = (name: string, playerId: string) => ({
+		name,
+		raceId: 1,
+		level: 1,
+		nextUpElementId: 1,
+		nextUpAltElementId: 2,
+		placeId: PLACE_ID,
+		canChangeName: false,
+		display: 'A093Rmo7JM3f2000',
+		life: 100,
+		maxLife: 100,
+		experience: 0,
+		nbrUpFire: 0,
+		nbrUpWood: 0,
+		nbrUpWater: 0,
+		nbrUpLightning: 0,
+		nbrUpAir: 0,
+		unavailableReason: 'clanChampionship' as const,
+		playerId
+	});
+	const dinoz = await db.dinoz.create({ data: dinozData(`Mine${suffix}`, player.id) });
+	const enemy = await db.dinoz.create({ data: { ...dinozData(`Foe${suffix}`, rival.id), life: 70 } });
+
+	// 5 minutes in, 10 to go: no tick falls during the test. The bar spans the 15 minutes of the match.
+	const now = Date.now();
+	const startsAt = new Date(now - 5 * MINUTE);
+	const endsAt = new Date(now + 10 * MINUTE);
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * 60 * MINUTE).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	const match = await db.clanChampionshipMatch.create({
+		data: {
+			eventId: event.id,
+			round: 0,
+			homeClanId: clanA.id,
+			awayClanId: clanB.id,
+			homeClanName: clanA.name,
+			awayClanName: clanB.name,
+			startsAt,
+			endsAt,
+			placeId: PLACE_ID,
+			westClanId: clanA.id,
+			obstacles: [],
+			status: 'live',
+			ticksApplied: 0,
+			version: 2
+		}
+	});
+	const y = 4;
+	// Now: our piece one step in, the enemy's on the board
+	await db.clanChampionshipPiece.create({
+		data: { matchId: match.id, dinozId: dinoz.id, playerId: player.id, clanId: clanA.id, x: 1, y, actionPoints: 2 }
+	});
+	await db.clanChampionshipPiece.create({
+		data: { matchId: match.id, dinozId: enemy.id, playerId: rival.id, clanId: clanB.id, x: 5, y, actionPoints: 3 }
+	});
+	// 1 minute in, our piece entered; 3 minutes in, it moved while the enemy's was there
+	const frame = (version: number, minute: number, events: unknown[], pieces: number[][]) => ({
+		matchId: match.id,
+		version,
+		createdAt: new Date(startsAt.getTime() + minute * MINUTE),
+		events: events as never,
+		homeScore: 0,
+		awayScore: 0,
+		ticksApplied: 0,
+		pieces: pieces as never
+	});
+	await db.clanChampionshipFrame.createMany({
+		data: [
+			frame(1, 1, [{ type: 'enter', dinozId: dinoz.id, x: 0, y }], [[dinoz.id, clanA.id, 0, 0, y, 3, 100, 100]]),
+			frame(
+				2,
+				3,
+				[{ type: 'move', dinozId: dinoz.id, x: 1, y }],
+				[
+					[dinoz.id, clanA.id, 0, 1, y, 2, 100, 100],
+					[enemy.id, clanB.id, 0, 5, y, 3, 70, 100]
+				]
+			)
+		]
+	});
+
+	try {
+		await page.goto(`/clan/${clanA.id}/championship/match`);
+		await expect(page.getByTestId('board-piece')).toHaveCount(2);
+		const track = page.getByTestId('match-timeline-track');
+		await expect(track).toHaveAttribute('aria-valuetext', 'En direct');
+
+		// 2 minutes in: only our piece, at its entry cell
+		const box = await track.boundingBox();
+		if (!box) throw new Error('timeline not laid out');
+		await track.click({ position: { x: (box.width * 2) / 15, y: box.height / 2 } });
+		await expect(page.getByTestId('match-timeline-instant')).toContainText('+0h02');
+		await expect(page.getByTestId('board-piece')).toHaveCount(1);
+		await expect(page.getByTestId(`board-cell-0-${y}`).getByTestId('board-piece')).toBeVisible();
+
+		// The next step: our move, with the enemy piece but none of its life
+		await track.press('ArrowRight');
+		await expect(page.getByTestId(`board-cell-1-${y}`).getByTestId('board-piece')).toBeVisible();
+		await expect(page.getByTestId(`board-cell-5-${y}`).getByTestId('board-piece')).toBeVisible();
+		await expect(page.getByTestId(`board-cell-5-${y}`).locator('.hp')).toHaveCount(0);
+		await expect(page.getByTestId(`board-cell-1-${y}`).locator('.hp')).toHaveCount(1);
+
+		// Past the last step: the live board again
+		await track.press('ArrowRight');
+		await expect(page.getByTestId('match-timeline-instant')).toBeHidden();
+		await expect(track).toHaveAttribute('aria-valuetext', 'En direct');
+
+		// Back in time, then to the live board through the button
+		await track.press('Home');
+		await expect(page.getByTestId('match-timeline-instant')).toBeVisible();
+		await page.getByTestId('match-timeline-live').click();
+		await expect(page.getByTestId('match-timeline-instant')).toBeHidden();
+		await expect(page.getByTestId('board-piece')).toHaveCount(2);
+	} finally {
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.dinoz.deleteMany({ where: { playerId: { in: [player.id, rival.id] } } });
+		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
+});

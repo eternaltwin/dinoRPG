@@ -226,6 +226,8 @@ export interface MatchReplayDTO {
 	homeScore: number;
 	awayScore: number;
 	winnerClanId: number | null;
+	/** Over: life and action points of both clans. Live: those of the enemy are zeroed (see `getMatchReplay`). */
+	omniscient: boolean;
 	dinoz: ReplayDinozDTO[];
 	frames: ReplayFrameDTO[];
 }
