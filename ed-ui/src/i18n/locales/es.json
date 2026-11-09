@@ -5582,6 +5582,7 @@
 		"scoreLine": "Línea de puntuación: {line}",
 		"quota": "Cupo: {used}/{max}",
 		"timeLeft": "Tiempo restante: {time}",
+		"nextTick": "Próximo tick en {time}",
 		"startsAt": "Inicio: {date}",
 		"level": "niv. {level}",
 		"status": {

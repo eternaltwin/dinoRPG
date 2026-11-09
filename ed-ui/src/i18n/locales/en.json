@@ -5582,6 +5582,7 @@
 		"scoreLine": "Score line: {line}",
 		"quota": "Quota: {used}/{max}",
 		"timeLeft": "Time left: {time}",
+		"nextTick": "Next tick in {time}",
 		"startsAt": "Starts: {date}",
 		"level": "lvl. {level}",
 		"status": {
