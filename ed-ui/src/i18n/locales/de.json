@@ -5593,7 +5593,14 @@
 			"clan": "Klan-Dinoz",
 			"mine": "Meine Dinoz",
 			"selection": "Auswahl",
-			"journal": "Protokoll"
+			"journal": "Protokoll",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Schreib deinem Clan…",
+			"send": "Senden",
+			"more": "Ältere Nachrichten",
+			"empty": "Noch keine Nachrichten."
 		},
 		"matchPlace": "Austragungsort: {place}",
 		"enter": "Betreten",

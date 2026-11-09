@@ -5595,7 +5595,14 @@
 			"clan": "Dinoz du clan",
 			"mine": "Mes Dinoz",
 			"selection": "Sélection",
-			"journal": "Journal"
+			"journal": "Journal",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Écris à ton clan…",
+			"send": "Envoyer",
+			"more": "Messages précédents",
+			"empty": "Aucun message pour le moment."
 		},
 		"matchPlace": "Lieu du match : {place}",
 		"enter": "Entrer",

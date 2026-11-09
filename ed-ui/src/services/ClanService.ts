@@ -16,6 +16,7 @@ import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { GetClanMemberResponse, UpdateClanMemberRequestBody } from '@drpg/core/returnTypes/Clan';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
+import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WarHistoryResponse } from '@drpg/core/returnTypes/WarHistory';
 
 export const ClanService = {
@@ -119,8 +120,8 @@ export const ClanService = {
 		const res = await http().delete(`/clan/${clanId}/page/${pageId}`);
 		return res.data;
 	},
-	async getClanMessages(clanId: number, page: number) {
-		const res = await http().get(`/clan/${clanId}/messages/${page}`);
+	async getClanMessages(clanId: number, page: number, silent = false): Promise<CreateClanMessage[]> {
+		const res = await http().get(`/clan/${clanId}/messages/${page}`, { silent });
 		return res.data;
 	},
 	async getClanHistory(id: number, page: number): Promise<{ history: ClanHistory[]; count: number }> {

@@ -5593,7 +5593,14 @@
 			"clan": "Clan's Dinoz",
 			"mine": "My Dinoz",
 			"selection": "Selection",
-			"journal": "Log"
+			"journal": "Log",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Write to your clan…",
+			"send": "Send",
+			"more": "Older messages",
+			"empty": "No messages yet."
 		},
 		"matchPlace": "Match location: {place}",
 		"enter": "Enter",

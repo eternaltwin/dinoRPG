@@ -5593,7 +5593,14 @@
 			"clan": "Dinoz du clan",
 			"mine": "Mis dinoz",
 			"selection": "Selección",
-			"journal": "Registro"
+			"journal": "Registro",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Escribe a tu clan…",
+			"send": "Enviar",
+			"more": "Mensajes anteriores",
+			"empty": "Aún no hay mensajes."
 		},
 		"matchPlace": "Lugar del partido: {place}",
 		"enter": "Entrar",

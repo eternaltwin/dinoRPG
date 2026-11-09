@@ -2,7 +2,10 @@
 	<div class="cdc-tabs">
 		<ul class="tab-list">
 			<li v-for="t in tabs" :key="t" :class="{ active: tab === t }">
-				<button type="button" :data-testid="`tab-${t}`" @click="tab = t">{{ $t(`clanChampionship.tabs.${t}`) }}</button>
+				<button type="button" :data-testid="`tab-${t}`" @click="tab = t">
+					{{ $t(`clanChampionship.tabs.${t}`) }}
+					<span v-if="t === 'chat' && unread > 0" class="badge" data-testid="chat-unread">{{ unread }}</span>
+				</button>
 			</li>
 		</ul>
 
@@ -92,7 +95,7 @@
 			<p v-else class="muted">{{ $t('clanChampionship.noSelection') }}</p>
 		</div>
 
-		<div v-else class="tab-body">
+		<div v-else-if="tab === 'journal'" class="tab-body">
 			<ul v-if="journal.length" class="list">
 				<li v-for="f in journal" :key="f.id" class="fight">
 					<span class="muted">{{ formatDate(f.createdAt) }}</span>
@@ -116,11 +119,16 @@
 				$t('clanChampionship.moreFights')
 			}}</DZButton>
 		</div>
+
+		<!-- Always mounted: the conversation keeps its history and its socket listener between tabs -->
+		<div v-if="player.clanId !== undefined" v-show="tab === 'chat'" class="tab-body">
+			<ClanChat ref="chat" :clanId="player.clanId" @unread="onUnread" />
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
@@ -134,13 +142,14 @@ import {
 } from '@drpg/core/models/clan/clanChampionship';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import type { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { useDinozStore } from '../../../store';
+import { playerStore, useDinozStore } from '../../../store';
 import { ClanChampionshipService } from '../../../services';
 import { errorHandler } from '../../../utils';
 import DZButton from '../../common/DZButton.vue';
 import DinozIcon from './DinozIcon.vue';
 import DinozEquip from '../../dinoz/DinozEquip.vue';
 import InventoryTab from '../../common/InventoryTab.vue';
+import ClanChat from '../ClanChat.vue';
 
 const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; pending: boolean }>();
 const emit = defineEmits<{
@@ -150,11 +159,25 @@ const emit = defineEmits<{
 	itemUsed: [dinozId: number];
 }>();
 
-const tabs = ['clan', 'mine', 'selection', 'journal'] as const;
+const tabs = ['clan', 'mine', 'selection', 'journal', 'chat'] as const;
 const tab = ref<(typeof tabs)[number]>('mine');
 const { locale, t } = useI18n();
 const route = useRoute();
 const dinozStore = useDinozStore();
+const player = playerStore();
+const chat = ref<InstanceType<typeof ClanChat> | null>(null);
+
+/** Messages of other players received while the chat tab was closed. */
+const unread = ref(0);
+function onUnread(): void {
+	if (tab.value !== 'chat') unread.value++;
+}
+watch(tab, async current => {
+	if (current !== 'chat') return;
+	unread.value = 0;
+	await nextTick();
+	await chat.value?.scrollToBottom(true);
+});
 const $toast = useToast();
 
 const older = ref<FightJournalEntryDTO[]>([]);
@@ -276,6 +299,17 @@ function formatDate(d: Date | string): string {
 			font: inherit;
 			cursor: pointer;
 			color: white;
+		}
+		.badge {
+			display: inline-block;
+			min-width: 16px;
+			margin-left: 4px;
+			padding: 0 4px;
+			border-radius: 8px;
+			background: #c0392b;
+			color: white;
+			font-size: 0.8em;
+			text-align: center;
 		}
 		&.active button {
 			background: #fbe7c5;
