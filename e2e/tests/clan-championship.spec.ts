@@ -1,4 +1,5 @@
 import { expect, test } from '../support/fixtures.js';
+import { FRONT_URL, RELEASE_CHANNEL } from '../support/env.js';
 
 const PLACE_ID = 5; // PlaceEnum.DINOVILLE
 const MINUTE = 60 * 1000;
@@ -445,4 +446,100 @@ test('a player without a clan has no clan socket', async ({ page, player }) => {
 	await page.goto('/');
 	await page.waitForTimeout(2000);
 	expect(sockets).toEqual([]);
+});
+
+test('clan members talk in real time in the chat tab of the board', async ({
+	page,
+	player,
+	createPlayer,
+	browser,
+	db
+}) => {
+	test.setTimeout(60_000);
+	const suffix = player.id.slice(0, 8);
+	const mate = await createPlayer();
+	const rival = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-CA-${suffix}`, leaderId: player.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-CB-${suffix}`, leaderId: rival.id } });
+	for (const [clanId, playerId] of [
+		[clanA.id, player.id],
+		[clanA.id, mate.id],
+		[clanB.id, rival.id]
+	] as const) {
+		await db.clanMember.create({ data: { clanId, playerId, rights: [] } });
+		await db.player.update({ where: { id: playerId }, data: { clanId } });
+	}
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * 60 * MINUTE).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	await db.clanChampionshipMatch.create({
+		data: {
+			eventId: event.id,
+			round: 0,
+			homeClanId: clanA.id,
+			awayClanId: clanB.id,
+			homeClanName: clanA.name,
+			awayClanName: clanB.name,
+			startsAt: new Date(now - 5 * MINUTE),
+			endsAt: new Date(now + 2 * DAY),
+			placeId: PLACE_ID,
+			westClanId: clanA.id,
+			obstacles: [],
+			status: 'live',
+			ticksApplied: 0,
+			version: 0
+		}
+	});
+
+	const mateContext = await browser.newContext();
+	try {
+		await mateContext.addCookies([
+			{ name: `x-drpg-${RELEASE_CHANNEL}-user`, value: mate.id, url: FRONT_URL },
+			{ name: `x-drpg-${RELEASE_CHANNEL}-token`, value: mate.token, url: FRONT_URL }
+		]);
+		const matePage = await mateContext.newPage();
+		await Promise.all([
+			page.goto(`/clan/${clanA.id}/championship/match`),
+			matePage.goto(`/clan/${clanA.id}/championship/match`)
+		]);
+		await matePage.getByTestId('tab-chat').click();
+		const mateEditor = matePage.getByTestId('clan-chat').locator('textarea');
+		await expect(mateEditor).toBeEnabled();
+		await expect(page.getByTestId('clan-chat').locator('textarea')).toBeEnabled({ timeout: 10_000 });
+
+		// Received while another tab is open: counted on the chat tab
+		await mateEditor.fill('On attaque au centre');
+		await matePage.getByTestId('chat-send').click();
+		await expect(page.getByTestId('chat-unread')).toHaveText('1');
+
+		await page.getByTestId('tab-chat').click();
+		await expect(page.getByTestId('chat-unread')).toHaveCount(0);
+		await expect(page.getByTestId('chat-message').last()).toContainText('On attaque au centre');
+
+		await page.getByTestId('clan-chat').locator('textarea').fill('Bien reçu');
+		await page.getByTestId('chat-send').click();
+		await expect(matePage.getByTestId('chat-message').last()).toContainText('Bien reçu');
+
+		// Same messages as the clan forum
+		const saved = await db.clanMessage.findMany({ where: { clanId: clanA.id }, orderBy: { id: 'asc' } });
+		expect(saved.map(m => m.authorId)).toEqual([mate.id, player.id]);
+	} finally {
+		await mateContext.close();
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.clanMessage.deleteMany({ where: { clanId: clanA.id } });
+		await db.player.updateMany({ where: { id: { in: [player.id, mate.id, rival.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
 });
