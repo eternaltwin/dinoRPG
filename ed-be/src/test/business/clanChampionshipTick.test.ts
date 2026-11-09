@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { BOARD_TICK_AP } from '@drpg/core/models/clan/clanChampionship';
 
 vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() }, LOGGER: { error: vi.fn() } }));
 vi.mock('node-schedule', () => ({ scheduleJob: vi.fn(), scheduledJobs: {} }));
@@ -155,7 +156,7 @@ describe('championshipTick', () => {
 		expect(matchUpdate().data).toEqual({ homeScore: 10, awayScore: 8, ticksApplied: 2, version: { increment: 1 } });
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
-			data: { actionPoints: { increment: 4 } }
+			data: { actionPoints: { increment: 2 * BOARD_TICK_AP } }
 		});
 	});
 
@@ -212,7 +213,7 @@ describe('championshipTick', () => {
 		expect(data.status).toBe('finished');
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
-			data: { actionPoints: { increment: 16 } }
+			data: { actionPoints: { increment: 8 * BOARD_TICK_AP } }
 		});
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
