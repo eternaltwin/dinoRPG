@@ -1,7 +1,7 @@
 import { FightOutcome } from '../fight/FightResult.mjs';
 import { ChampionshipPhase } from './clanEventConfig.mjs';
 
-export const CHAMPIONSHIP_REGISTRATION_WEEKS = 2;
+export const CHAMPIONSHIP_REGISTRATION_WEEKS = 1;
 export const CHAMPIONSHIP_MATCH_UTC_HOUR = 18;
 
 export const BOARD_SIZE = 20;
