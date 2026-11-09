@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { CHAMPIONSHIP_REGISTRATION_WEEKS } from '@drpg/core/models/clan/clanChampionship';
 import {
 	computeMatchSlots,
 	computeMatchSlotsFrom,
@@ -8,10 +9,10 @@ import {
 import { roundRobin } from '../../utils/clanChampionship/roundRobin.js';
 
 describe('computeRegistrationWindow', () => {
-	it('spans two weeks from Monday 00:00 UTC', () => {
+	it('spans CHAMPIONSHIP_REGISTRATION_WEEKS weeks from Monday 00:00 UTC', () => {
 		const w = computeRegistrationWindow('2026-11-09');
 		expect(w.registrationStart.toISOString()).toBe('2026-11-09T00:00:00.000Z');
-		expect(w.registrationEnd.toISOString()).toBe('2026-11-23T00:00:00.000Z');
+		expect(w.registrationEnd).toEqual(new Date(Date.UTC(2026, 10, 9 + 7 * CHAMPIONSHIP_REGISTRATION_WEEKS)));
 	});
 });
 describe('isMonday', () => {
@@ -22,8 +23,10 @@ describe('isMonday', () => {
 });
 describe('computeMatchSlots', () => {
 	it('alternates Mon→Wed and Thu→Sat at 18:00 UTC', () => {
-		const end = computeRegistrationWindow('2026-11-09').registrationEnd;
-		const s = computeMatchSlots(end, 3).map(x => [x.startsAt.toISOString(), x.endsAt.toISOString()]);
+		const s = computeMatchSlots(new Date('2026-11-23T00:00:00.000Z'), 3).map(x => [
+			x.startsAt.toISOString(),
+			x.endsAt.toISOString()
+		]);
 		expect(s).toEqual([
 			['2026-11-23T18:00:00.000Z', '2026-11-25T18:00:00.000Z'],
 			['2026-11-26T18:00:00.000Z', '2026-11-28T18:00:00.000Z'],

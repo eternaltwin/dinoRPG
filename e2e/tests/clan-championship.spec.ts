@@ -8,6 +8,12 @@ const DAY = 24 * 60 * MINUTE;
 // The backend serves a single active championship: tests creating one must not run in parallel workers.
 test.describe.configure({ mode: 'serial' });
 
+// A run cut short skips the `finally` clean-ups: its championship would stay active and be shown instead of the
+// test's own. The e2e database has no championship but the ones these tests create (their matches cascade).
+test.beforeAll(async ({ workerDb }) => {
+	await workerDb.clanEvent.deleteMany({ where: { eventType: 'championship' } });
+});
+
 test('a clan leader enters the board and moves a piece in a live championship match', async ({
 	page,
 	player,

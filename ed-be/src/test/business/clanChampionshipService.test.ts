@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { CHAMPIONSHIP_REGISTRATION_WEEKS } from '@drpg/core/models/clan/clanChampionship';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 
 vi.mock('../../dao/playerDao.js', () => ({ auth: vi.fn() }));
@@ -129,15 +130,16 @@ describe('startClanChampionship', () => {
 		expect(result).toEqual({ id: 'ev-1' });
 		const data = p.clanEvent.create.mock.calls[0][0].data;
 		expect(data.eventType).toBe('championship');
+		const closesAt = new Date(Date.UTC(2026, 10, 9 + 7 * CHAMPIONSHIP_REGISTRATION_WEEKS));
 		expect(data.startDate).toEqual(new Date('2026-11-09T00:00:00.000Z'));
-		expect(data.endDate).toEqual(registrationEnd);
+		expect(data.endDate).toEqual(closesAt);
 		expect(JSON.parse(data.config)).toEqual({
 			eventType: 'championship',
 			places: [PlaceEnum.DINOVILLE],
-			registrationEnd: registrationEnd.toISOString(),
+			registrationEnd: closesAt.toISOString(),
 			phase: 'registration'
 		});
-		expect(scheduleJob).toHaveBeenCalledWith('championshipClose_ev-1', registrationEnd, expect.any(Function));
+		expect(scheduleJob).toHaveBeenCalledWith('championshipClose_ev-1', closesAt, expect.any(Function));
 	});
 });
 
