@@ -183,6 +183,13 @@ describe('join flow', () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
 		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('cannot accept');
 	});
+	it('acceptJoinRequest refuses while the clan plays the championship', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 4, clan: { _count: { members: 1 } } } as never);
+		vi.mocked(isClanInRunningChampionship).mockResolvedValueOnce(true);
+		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('clanChampionship.rosterLocked');
+		expect(isClanInRunningChampionship).toHaveBeenCalledWith(4);
+		expect(clansDao.acceptPlayerJoinRequest).not.toHaveBeenCalled();
+	});
 	it('denyJoinRequest refunds the requester, not the clan member who denies', async () => {
 		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'requester' } as never);
 		await svc.denyJoinRequest(req({ id: '1' }));
@@ -227,8 +234,11 @@ describe('join flow', () => {
 	});
 });
 
-vi.mock('../../business/clanChampionshipService.js', () => ({ isClanInActiveChampionship: vi.fn() }));
-import { isClanInActiveChampionship } from '../../business/clanChampionshipService.js';
+vi.mock('../../business/clanChampionshipService.js', () => ({
+	isClanInActiveChampionship: vi.fn(),
+	isClanInRunningChampionship: vi.fn()
+}));
+import { isClanInActiveChampionship, isClanInRunningChampionship } from '../../business/clanChampionshipService.js';
 
 describe('deleteClan', () => {
 	it('rejects when the clan is registered in the active championship', async () => {
@@ -295,6 +305,12 @@ describe('right-guarded updates', () => {
 	it('excludeClanMember throws without right', async () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
 		await expect(svc.excludeClanMember(req({ clanId: '1', id: '2' }))).rejects.toThrow('right');
+	});
+	it('excludeClanMember refuses while the clan plays the championship', async () => {
+		vi.mocked(isClanInRunningChampionship).mockResolvedValueOnce(true);
+		await expect(svc.excludeClanMember(req({ clanId: '1', id: '2' }))).rejects.toThrow('clanChampionship.rosterLocked');
+		expect(isClanInRunningChampionship).toHaveBeenCalledWith(1);
+		expect(clansDao.excludeClanMemberRequest).not.toHaveBeenCalled();
 	});
 	it('excludeClanMember scopes the member to the clan the right was checked on', async () => {
 		vi.mocked(clansDao.excludeClanMemberRequest).mockResolvedValue({ id: 'm' } as never);

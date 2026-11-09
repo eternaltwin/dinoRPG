@@ -156,6 +156,19 @@ export async function isClanInActiveChampionship(
 	return !!registration;
 }
 
+/** True when the clan is registered to a championship whose matches are running (roster locked). */
+export async function isClanInRunningChampionship(
+	clanId: number,
+	tx: PismaClientLocal | LocalTransactionClient = prisma
+): Promise<boolean> {
+	const event = await findActiveChampionshipEvent(tx);
+	if (!event) return false;
+	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+	if (config.phase !== 'running') return false;
+	const registration = await tx.clanChampionshipRegistration.findFirst({ where: { eventId: event.id, clanId } });
+	return !!registration;
+}
+
 export async function startClanChampionship(req: Request): Promise<{ id: string }> {
 	const authed = await auth(req);
 	const { start, places } = req.body as ChampionshipForm;
