@@ -14,6 +14,7 @@
 		"notRegistered": "Votre clan n'est pas inscrit au championnat.",
 		"clanAtWar": "Votre clan a encore une guerre en cours.",
 		"registeredNoDelete": "Votre clan est inscrit au championnat : il ne peut pas être dissous.",
+		"rosterLocked": "Votre clan dispute le championnat : impossible d'accepter ou d'exclure un membre avant la fin des matchs.",
 		"noLiveMatch": "Aucun match en cours pour votre clan.",
 		"replayUnavailable": "Ce match ne peut pas être revu.",
 		"notYourDinoz": "Ce Dinoz ne vous appartient pas.",

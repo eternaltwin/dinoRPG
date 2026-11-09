@@ -32,6 +32,7 @@ import {
 	closeRegistrations,
 	finishChampionship,
 	isClanInActiveChampionship,
+	isClanInRunningChampionship,
 	openChampionshipRegistrations,
 	startChampionshipMatches,
 	scheduleClanChampionship,
@@ -695,6 +696,29 @@ describe('isClanInActiveChampionship', () => {
 		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
 		p.clanChampionshipRegistration.findFirst.mockResolvedValue(null);
 		expect(await isClanInActiveChampionship(7, p)).toBe(false);
+	});
+});
+
+describe('isClanInRunningChampionship', () => {
+	const runningEvent = () =>
+		activeEvent({ config: JSON.stringify({ ...JSON.parse(activeEvent().config), phase: 'running' }) });
+	it('is true when registered to a running championship', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(runningEvent());
+		p.clanChampionshipRegistration.findFirst.mockResolvedValue({ id: 1 });
+		expect(await isClanInRunningChampionship(7, p)).toBe(true);
+	});
+	it('is false during registrations', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		p.clanChampionshipRegistration.findFirst.mockResolvedValue({ id: 1 });
+		expect(await isClanInRunningChampionship(7, p)).toBe(false);
+	});
+	it('is false when not registered', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(runningEvent());
+		p.clanChampionshipRegistration.findFirst.mockResolvedValue(null);
+		expect(await isClanInRunningChampionship(7, p)).toBe(false);
+	});
+	it('is false without an active championship', async () => {
+		expect(await isClanInRunningChampionship(7, p)).toBe(false);
 	});
 });
 

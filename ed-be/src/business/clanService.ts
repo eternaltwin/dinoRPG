@@ -57,7 +57,7 @@ import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 import { prisma } from '../prisma.js';
 import { updateDinoz } from '../dao/dinozDao.js';
-import { isClanInActiveChampionship } from './clanChampionshipService.js';
+import { isClanInActiveChampionship, isClanInRunningChampionship } from './clanChampionshipService.js';
 import { removePlayerFromBoards } from './clanChampionshipMatchService.js';
 import { kickPlayerFromWsChannels } from './serverEventService.js';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
@@ -236,6 +236,10 @@ export async function acceptJoinRequest(req: Request): Promise<ClanMember> {
 
 	if (!hasRight) {
 		throw new ExpectedError(`You cannot accept this request`);
+	}
+
+	if (await isClanInRunningChampionship(fullClanRequest.clanId)) {
+		throw new ExpectedError(translate('clanChampionship.rosterLocked', authed));
 	}
 
 	const join = await acceptPlayerJoinRequest(+req.params.id, authed.id);
@@ -480,6 +484,10 @@ export async function excludeClanMember(req: Request) {
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EXCLUDE);
 	if (!hasRight) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.MEMBER_EXCLUDE}`);
+	}
+
+	if (await isClanInRunningChampionship(Number(req.params.clanId))) {
+		throw new ExpectedError(translate('clanChampionship.rosterLocked', authed));
 	}
 
 	const member = await excludeClanMemberRequest(+req.params.id, Number(req.params.clanId), authed.id);
