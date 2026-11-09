@@ -54,10 +54,10 @@ beforeEach(() => {
 });
 
 describe('getMatchReplay', () => {
-	it('refuses a reader without clan, of another clan, or before the end of the match', async () => {
+	it('refuses a reader without clan, of another clan, or before the start of the match', async () => {
 		await expect(getMatchReplay(authed(null), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
 		await expect(getMatchReplay(authed(9), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
-		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'live' }));
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'scheduled' }));
 		await expect(getMatchReplay(authed(HOME), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
 		expect(p.clanChampionshipFrame.findMany).not.toHaveBeenCalled();
 	});
@@ -82,6 +82,7 @@ describe('getMatchReplay', () => {
 			{ id: 10, name: 'Moueffe', display: 'abc', level: 12, player: { name: 'Alice' } }
 		]);
 		const replay = await getMatchReplay(authed(AWAY), MATCH_ID);
+		expect(replay.omniscient).toBe(true);
 		expect(p.clanChampionshipFrame.findMany).toHaveBeenCalledWith({
 			where: { matchId: MATCH_ID },
 			orderBy: { version: 'asc' }
@@ -108,6 +109,40 @@ describe('getMatchReplay', () => {
 			{ dinozId: 10, name: 'Moueffe', display: 'abc', level: 12, playerName: 'Alice' },
 			{ dinozId: 20, name: '?', display: '', level: 0, playerName: '' }
 		]);
+	});
+	it('while live, hides the enemy life, action points, heals and fight archives', async () => {
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'live', winnerClanId: null }));
+		const pieces = [
+			[10, HOME, 0, 0, 3, 2, 80, 100],
+			[20, AWAY, 0, 9, 3, 1, 60, 90]
+		];
+		const frame = (version: number, events: unknown[]) => ({
+			version,
+			createdAt: new Date('2026-11-23T18:10:00.000Z'),
+			events,
+			homeScore: 0,
+			awayScore: 0,
+			ticksApplied: 1,
+			pieces
+		});
+		p.clanChampionshipFrame.findMany.mockResolvedValue([
+			frame(1, [{ type: 'heal', dinozId: 10, life: 80 }]),
+			frame(2, [{ type: 'heal', dinozId: 20, life: 60 }]),
+			frame(3, [{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: 'arch', outcome: 0, deadDinozIds: [] }])
+		]);
+		const replay = await getMatchReplay(authed(HOME), MATCH_ID);
+		expect(replay.omniscient).toBe(false);
+		// The enemy heal is left out, the own one kept
+		expect(replay.frames.map(f => f.version)).toEqual([1, 3]);
+		expect(replay.frames[1].events).toEqual([
+			{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: '', outcome: 0, deadDinozIds: [] }
+		]);
+		for (const f of replay.frames) {
+			expect(f.pieces).toEqual([
+				[10, HOME, 0, 0, 3, 2, 80, 100],
+				[20, AWAY, 0, 9, 3, 0, 0, 0]
+			]);
+		}
 	});
 });
 

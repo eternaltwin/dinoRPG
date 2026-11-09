@@ -5585,6 +5585,15 @@
 		"quota": "Quota : {used}/{max}",
 		"timeLeft": "Temps restant : {time}",
 		"nextTick": "Prochain tick dans {time}",
+		"timeline": {
+			"label": "Chronologie du match : cliquez pour revoir un instant",
+			"live": "En direct",
+			"end": "Fin du match",
+			"loading": "Chargement de l'historique…",
+			"viewing": "Damier le {time}",
+			"backToLive": "Revenir au direct",
+			"backToEnd": "Revenir à la fin"
+		},
 		"startsAt": "Début : {date}",
 		"level": "niv. {level}",
 		"status": {

@@ -5583,6 +5583,15 @@
 		"quota": "Quota: {used}/{max}",
 		"timeLeft": "Time left: {time}",
 		"nextTick": "Next tick in {time}",
+		"timeline": {
+			"label": "Match timeline: click to see the board at that moment",
+			"live": "Live",
+			"end": "End of the match",
+			"loading": "Loading the history…",
+			"viewing": "Board at {time}",
+			"backToLive": "Back to live",
+			"backToEnd": "Back to the end"
+		},
 		"startsAt": "Starts: {date}",
 		"level": "lvl. {level}",
 		"status": {

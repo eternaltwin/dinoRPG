@@ -5583,6 +5583,15 @@
 		"quota": "Cupo: {used}/{max}",
 		"timeLeft": "Tiempo restante: {time}",
 		"nextTick": "Próximo tick en {time}",
+		"timeline": {
+			"label": "Cronología del partido: haz clic para ver el tablero en ese momento",
+			"live": "En directo",
+			"end": "Fin del partido",
+			"loading": "Cargando el historial…",
+			"viewing": "Tablero el {time}",
+			"backToLive": "Volver al directo",
+			"backToEnd": "Volver al final"
+		},
 		"startsAt": "Inicio: {date}",
 		"level": "niv. {level}",
 		"status": {

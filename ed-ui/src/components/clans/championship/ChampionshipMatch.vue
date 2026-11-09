@@ -4,8 +4,8 @@
 		<p v-if="loaded && !board && !loadError" class="no-match">{{ $t('clanChampionship.noMatch') }}</p>
 		<template v-else-if="board">
 			<ChampionshipScoreBar
-				:west="board.west"
-				:east="board.east"
+				:west="shownBoard.west"
+				:east="shownBoard.east"
 				:startsAt="board.startsAt"
 				:endsAt="board.endsAt"
 				:status="board.status"
@@ -13,11 +13,25 @@
 			<ChampionshipTickBar v-if="board.status === 'live'" :startsAt="board.startsAt" :endsAt="board.endsAt" />
 			<p v-if="board.status === 'finished'" class="finished">{{ $t('clanChampionship.matchFinished') }}</p>
 			<ChampionshipBoard
-				:board="board"
-				:selectedDinozId="selectedDinozId"
-				:disabled="pending || board.status !== 'live'"
+				:board="shownBoard"
+				:selectedDinozId="historyAt === null ? selectedDinozId : null"
+				:disabled="pending || historyAt !== null || board.status !== 'live'"
+				:omniscient="historyAt !== null && !!replay?.omniscient"
+				:highlighted="historyActors"
 				@select="selectedDinozId = $event"
 				@move="onMove"
+			/>
+			<ChampionshipTimeline
+				v-if="board.status !== 'scheduled'"
+				:startsAt="board.startsAt"
+				:endsAt="board.endsAt"
+				:status="board.status"
+				:frames="replay?.frames ?? null"
+				:selectedAt="historyAt"
+				:loading="replayLoading"
+				@seek="onSeek"
+				@step="onStep"
+				@live="historyAt = null"
 			/>
 			<div v-if="board.status === 'finished'" class="replay-link">
 				<RouterLink
@@ -44,7 +58,12 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
-import type { BoardDirection, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
+import type {
+	BoardDirection,
+	MatchBoardDTO,
+	MatchReplayDTO,
+	ReplayFrameDTO
+} from '@drpg/core/models/clan/clanChampionship';
 import { ClanChampionshipService } from '../../../services';
 import { clanSocket } from '../../../services/clanSocket';
 import { errorHandler } from '../../../utils';
@@ -53,6 +72,8 @@ import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import ChampionshipBoard from './ChampionshipBoard.vue';
 import ChampionshipTickBar from './ChampionshipTickBar.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
+import ChampionshipTimeline from './ChampionshipTimeline.vue';
+import { frameActors, frameToBoard } from './replayBoard';
 import DZButton from '../../common/DZButton.vue';
 
 const RETRY_DELAY = 5_000;
@@ -87,6 +108,99 @@ const rootStyle = computed(() => {
 });
 
 let unmounted = false;
+
+/** The recorded steps of the match, fetched on the first use of the timeline, and the board version they cover. */
+const replay = ref<MatchReplayDTO | null>(null);
+const replayLoading = ref(false);
+let replayVersion = -1;
+let replayRequest: Promise<MatchReplayDTO | null> | null = null;
+/** The instant the board is shown at, `null` for the current board. */
+const historyAt = ref<number | null>(null);
+
+const frameAt = (f: ReplayFrameDTO) => new Date(f.at).getTime();
+
+/** The last step recorded at or before the instant shown. */
+const historyIndex = computed<number | null>(() => {
+	const frames = replay.value?.frames;
+	if (historyAt.value === null || !frames?.length) return null;
+	let index = 0;
+	for (let i = 0; i < frames.length && frameAt(frames[i]) <= historyAt.value; i++) index = i;
+	return index;
+});
+const historyFrame = computed(() =>
+	historyIndex.value === null ? null : (replay.value?.frames[historyIndex.value] ?? null)
+);
+const shownBoard = computed<MatchBoardDTO>(() =>
+	replay.value && historyFrame.value
+		? frameToBoard(replay.value, historyFrame.value, player.clanId)
+		: (board.value as MatchBoardDTO)
+);
+const historyActors = computed(() => (historyFrame.value ? frameActors(historyFrame.value) : []));
+
+/** The replay up to the current board version: fetched again only when the board moved on since. */
+function loadReplay(): Promise<MatchReplayDTO | null> {
+	const current = board.value;
+	if (!current) return Promise.resolve(null);
+	if (replay.value?.matchId === current.matchId && replayVersion >= current.version) {
+		return Promise.resolve(replay.value);
+	}
+	if (replayRequest) return replayRequest;
+	const version = current.version;
+	replayLoading.value = true;
+	replayRequest = ClanChampionshipService.getReplay(current.matchId)
+		.then(result => {
+			if (unmounted || result.matchId !== board.value?.matchId) return null;
+			replay.value = result;
+			replayVersion = version;
+			return result;
+		})
+		.catch(e => {
+			if (!unmounted) errorHandler.handle(e, $toast);
+			return null;
+		})
+		.finally(() => {
+			replayRequest = null;
+			replayLoading.value = false;
+		});
+	return replayRequest;
+}
+
+/** Up to date and on its last step, the replay shows the current board: back to it then. */
+function showStep(result: MatchReplayDTO, index: number, at: number) {
+	const last = result.frames.length - 1;
+	if (index >= last && replayVersion >= (board.value?.version ?? 0)) historyAt.value = null;
+	else historyAt.value = at;
+}
+
+async function onSeek(at: number) {
+	const result = await loadReplay();
+	if (!result?.frames.length) return;
+	let index = 0;
+	for (let i = 0; i < result.frames.length && frameAt(result.frames[i]) <= at; i++) index = i;
+	showStep(result, index, at);
+}
+
+async function onStep(direction: 1 | -1) {
+	if (historyAt.value === null && direction === 1) return;
+	const result = await loadReplay();
+	if (!result?.frames.length) return;
+	const last = result.frames.length - 1;
+	const from = historyIndex.value ?? last;
+	const target = Math.max(0, Math.min(last, from + direction));
+	if (direction === 1 && from === last) {
+		historyAt.value = null;
+		return;
+	}
+	showStep(result, target, frameAt(result.frames[target]));
+}
+
+// Another match (the next round): its steps are not those of the previous one
+watch(matchId, () => {
+	replay.value = null;
+	replayVersion = -1;
+	historyAt.value = null;
+});
+
 let retryTimer: ReturnType<typeof setTimeout> | null = null;
 
 async function refetch(retry = true) {
@@ -134,6 +248,8 @@ function refreshFiche(dinozId: number) {
 async function runAction(dinozId: number, action: () => Promise<void>) {
 	if (pending.value) return;
 	pending.value = true;
+	// Acting is done on the current board
+	historyAt.value = null;
 	try {
 		await action();
 	} catch (e) {

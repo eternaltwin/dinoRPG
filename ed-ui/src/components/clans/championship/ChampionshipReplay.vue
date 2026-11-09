@@ -113,7 +113,7 @@
 					:board="board"
 					:selectedDinozId="null"
 					:disabled="true"
-					:omniscient="true"
+					:omniscient="replay.omniscient"
 					:highlighted="actors"
 				/>
 
@@ -168,8 +168,6 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { ReplayPieceStateCode } from '@drpg/core/models/clan/clanChampionship';
 import type {
-	BoardPieceDTO,
-	BoardSideDTO,
 	MatchBoardDTO,
 	MatchReplayDTO,
 	ReplayDinozDTO,
@@ -185,6 +183,7 @@ import ChampionshipBoard from './ChampionshipBoard.vue';
 import ChampionshipReplayFight from './ChampionshipReplayFight.vue';
 import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import DinozIcon from './DinozIcon.vue';
+import { eastClanOf, frameActors, frameToBoard, isWestClanOf, westClanOf } from './replayBoard';
 
 const SPEEDS = [1, 2, 4, 8];
 const STEP_MS = 1500;
@@ -210,18 +209,11 @@ const frame = computed<ReplayFrameDTO | null>(() => frames.value[index.value] ??
 const previousFrame = computed<ReplayFrameDTO | null>(() => frames.value[index.value - 1] ?? null);
 const dinozById = computed(() => new Map<number, ReplayDinozDTO>((replay.value?.dinoz ?? []).map(d => [d.dinozId, d])));
 
-const westClan = computed(() =>
-	replay.value ? (replay.value.westIsHome ? replay.value.home : replay.value.away) : null
-);
-const eastClan = computed(() =>
-	replay.value ? (replay.value.westIsHome ? replay.value.away : replay.value.home) : null
-);
+const westClan = computed(() => (replay.value ? westClanOf(replay.value) : null));
+const eastClan = computed(() => (replay.value ? eastClanOf(replay.value) : null));
 
 function isWest(clanId: number): boolean {
-	const west = westClan.value;
-	const east = eastClan.value;
-	if (west?.clanId !== null && west?.clanId !== undefined) return clanId === west.clanId;
-	return clanId !== east?.clanId;
+	return !!replay.value && isWestClanOf(replay.value, clanId);
 }
 
 const readerIsWest = computed(() => player.clanId !== undefined && westClan.value?.clanId === player.clanId);
@@ -239,67 +231,12 @@ const rootStyle = computed(() => {
 	};
 });
 
-const board = computed<MatchBoardDTO | null>(() => {
-	const r = replay.value;
-	const f = frame.value;
-	if (!r || !f || !westClan.value || !eastClan.value) return null;
-	const pieces: BoardPieceDTO[] = f.pieces
-		.filter(p => p[2] === ON_BOARD)
-		.map(([dinozId, clanId, , x, y, actionPoints, life, maxLife]) => {
-			const dinoz = dinozById.value.get(dinozId);
-			return {
-				dinozId,
-				clanId,
-				x,
-				y,
-				mine: false,
-				ally: clanId === player.clanId,
-				name: dinoz?.name ?? '?',
-				display: dinoz?.display ?? '',
-				level: dinoz?.level ?? 0,
-				playerName: dinoz?.playerName ?? '',
-				life,
-				maxLife,
-				actionPoints
-			};
-		});
-	const westHome = r.westIsHome;
-	const side = (clan: { clanId: number | null; name: string }, west: boolean): BoardSideDTO => ({
-		clanId: clan.clanId,
-		name: clan.name,
-		score: west === westHome ? f.homeScore : f.awayScore,
-		scoreLine: west ? f.westScoreLine : f.eastScoreLine,
-		quotaUsed: f.pieces.filter(p => isWest(p[1]) === west).length
-	});
-	const ended = f.events.some(e => e.type === 'end');
-	return {
-		matchId: r.matchId,
-		version: f.version,
-		round: r.round,
-		placeId: r.placeId,
-		status: ended ? 'finished' : 'live',
-		startsAt: r.startsAt,
-		endsAt: r.endsAt,
-		ticksApplied: f.ticksApplied,
-		west: side(westClan.value, true),
-		east: side(eastClan.value, false),
-		obstacles: r.obstacles,
-		pieces,
-		deadDinozIds: f.pieces.filter(p => p[2] === DEAD).map(p => p[0]),
-		fights: []
-	};
-});
+const board = computed<MatchBoardDTO | null>(() =>
+	replay.value && frame.value ? frameToBoard(replay.value, frame.value, player.clanId) : null
+);
 
 /** The dinoz the step is about: pointed out on the board and in the rosters. */
-const actors = computed<number[]>(() => {
-	const ids: number[] = [];
-	for (const e of frame.value?.events ?? []) {
-		if ('dinozId' in e) ids.push(e.dinozId);
-		if (e.type === 'attack') ids.push(e.targetDinozId, ...e.deadDinozIds);
-		if (e.type === 'withdrawn') ids.push(...e.dinozIds);
-	}
-	return [...new Set(ids)];
-});
+const actors = computed<number[]>(() => frameActors(frame.value));
 
 const fightArchiveId = computed<string | null>(() => {
 	const attack = frame.value?.events.find(e => e.type === 'attack');
