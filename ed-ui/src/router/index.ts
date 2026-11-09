@@ -480,6 +480,11 @@ const router = createRouter({
 							component: () => import('../components/clans/championship/ChampionshipMatch.vue')
 						},
 						{
+							path: 'championship/replay/:matchId',
+							name: 'ClanChampionshipReplay',
+							component: () => import('../components/clans/championship/ChampionshipReplay.vue')
+						},
+						{
 							path: 'builds',
 							name: 'ClanBuilds',
 							component: () => import('../components/clans/ClanBuilds.vue')

@@ -31,6 +31,9 @@ vi.mock('../../dao/questsDao.js', () => ({ upsertQuest: vi.fn() }));
 vi.mock('../../dao/rankingDao.js', () => ({ updateDinozCount: vi.fn(), updatePoints: vi.fn() }));
 vi.mock('../../dao/trackingDao.js', () => ({ setSpecificStat: vi.fn() }));
 vi.mock('../../utils/boxesLogic.js', () => ({ boxOpening: vi.fn() }));
+vi.mock('../../business/clanChampionshipMatchService.js', () => ({
+	recordBoardHeal: vi.fn().mockResolvedValue(undefined)
+}));
 vi.mock('../../utils/dinoz.js', async importOriginal => {
 	const actual = await importOriginal();
 	return {
@@ -66,6 +69,7 @@ import {
 import { updateDinoz } from '../../dao/dinozDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { gameConfig } from '../../utils/gameConfig.js';
+import { recordBoardHeal } from '../../business/clanChampionshipMatchService.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
 
@@ -225,6 +229,8 @@ describe('useItem', () => {
 		const result = await useItem(req({ dinozId: '1', itemId: '3' }));
 		expect(result[0].category).toBe(ItemEffect.HEAL);
 		expect(dinozDao.updateDinoz).toHaveBeenCalled();
+		// The heal is a board version of its own, for the match replay
+		expect(recordBoardHeal).toHaveBeenCalledWith(1);
 	});
 	it('refuses a non-healing item on a dinoz locked on the clan championship board', async () => {
 		vi.mocked(dinozDao.getDinozFicheItemRequest).mockResolvedValue(

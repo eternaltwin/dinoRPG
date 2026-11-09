@@ -52,6 +52,13 @@
 					<td>
 						<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
 						<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
+						<div v-if="canReplay(m)">
+							<RouterLink
+								:to="{ name: 'ClanChampionshipReplay', params: { id: playerStore.clanId, matchId: m.id } }"
+								data-testid="match-replay-link"
+								>{{ $t('clanChampionship.replayMatch') }}</RouterLink
+							>
+						</div>
 					</td>
 				</tr>
 			</DZTable>
@@ -128,6 +135,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		/** The replay is open to both clans of a finished match. */
+		canReplay(m: ClanChampionshipMatchDTO): boolean {
+			const clanId = this.playerStore.clanId;
+			return m.status === 'finished' && clanId !== undefined && (m.homeClan.id === clanId || m.awayClan.id === clanId);
+		},
 		formatDate(d: Date | string): string {
 			return new Date(d).toLocaleString(this.$i18n.locale, { dateStyle: 'short', timeStyle: 'short' });
 		},

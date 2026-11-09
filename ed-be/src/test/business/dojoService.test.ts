@@ -9,6 +9,7 @@ vi.mock('../../dao/archiveDao.js', () => ({
 	getAllArchivedFightRequest: vi.fn(),
 	getArchivedFightRequest: vi.fn(),
 	getClanChampionshipFightParticipants: vi.fn(),
+	isClanChampionshipFightReplayable: vi.fn().mockResolvedValue(false),
 	viewFight: vi.fn()
 }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozForDojoFight: vi.fn(), getRandomDinozFromLevel: vi.fn() }));

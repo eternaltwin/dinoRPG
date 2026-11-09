@@ -821,6 +821,7 @@ model ClanChampionshipMatch {
   awayClan     Clan?                       @relation("championshipAway", fields: [awayClanId], references: [id], onDelete: SetNull)
   pieces       ClanChampionshipPiece[]
   fights       ClanChampionshipFight[]
+  frames       ClanChampionshipFrame[]
 
   @@index([eventId, round])
   @@map("clan_championship_match")
@@ -858,6 +859,25 @@ model ClanChampionshipFight {
 
   @@index([matchId, createdAt])
   @@map("clan_championship_fight")
+}
+
+/// Omniscient snapshot of a match board, written on every board version: the match replay.
+model ClanChampionshipFrame {
+  id           Int                   @id @default(autoincrement())
+  matchId      String                @db.Uuid
+  version      Int
+  createdAt    DateTime              @default(now()) @db.Timestamp(6)
+  /// What changed the board since the previous frame (ReplayEvent[])
+  events       Json
+  homeScore    Int
+  awayScore    Int
+  ticksApplied Int
+  /// Every piece of the match (ReplayPieceState[])
+  pieces       Json
+  match        ClanChampionshipMatch @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, version])
+  @@map("clan_championship_frame")
 }
 
 model ClanIngredient {

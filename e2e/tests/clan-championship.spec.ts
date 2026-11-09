@@ -543,3 +543,134 @@ test('clan members talk in real time in the chat tab of the board', async ({
 		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
 	}
 });
+
+test('a finished match replays every step with the state of both clans, fights included', async ({
+	page,
+	player,
+	createPlayer,
+	db
+}) => {
+	test.setTimeout(90_000);
+	const suffix = player.id.slice(0, 8);
+	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
+	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	const rival = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
+	await db.clanMember.create({ data: { clanId: clanA.id, playerId: player.id, rights: [] } });
+	await db.clanMember.create({ data: { clanId: clanB.id, playerId: rival.id, rights: [] } });
+	await db.player.update({ where: { id: player.id }, data: { clanId: clanA.id } });
+	await db.player.update({ where: { id: rival.id }, data: { clanId: clanB.id } });
+
+	const dinozData = (name: string, playerId: string) => ({
+		name,
+		raceId: 1,
+		level: 1,
+		nextUpElementId: 1,
+		nextUpAltElementId: 2,
+		placeId: PLACE_ID,
+		canChangeName: false,
+		display: 'A093Rmo7JM3f2000',
+		life: 100,
+		maxLife: 100,
+		experience: 0,
+		nbrUpFire: 0,
+		nbrUpWood: 0,
+		nbrUpWater: 0,
+		nbrUpLightning: 0,
+		nbrUpAir: 0,
+		playerId
+	});
+	const dinoz = await db.dinoz.create({ data: dinozData(`Mine${suffix}`, player.id) });
+	const enemy = await db.dinoz.create({
+		data: { ...dinozData(`Foe${suffix}`, rival.id), life: 70, unavailableReason: 'clanChampionship' }
+	});
+
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * 60 * MINUTE).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	const match = await db.clanChampionshipMatch.create({
+		data: {
+			eventId: event.id,
+			round: 0,
+			homeClanId: clanA.id,
+			awayClanId: clanB.id,
+			homeClanName: clanA.name,
+			awayClanName: clanB.name,
+			startsAt: new Date(now - 5 * MINUTE),
+			endsAt: new Date(now + 2 * DAY),
+			placeId: PLACE_ID,
+			westClanId: clanA.id,
+			obstacles: [],
+			status: 'live',
+			ticksApplied: 0,
+			version: 0
+		}
+	});
+
+	try {
+		// Played for real: entering, moving and attacking each record a replay frame
+		await page.goto(`/clan/${clanA.id}/championship/match`);
+		await page.getByTestId(`enter-${dinoz.id}`).click();
+		await expect(page.getByTestId('board-piece')).toHaveCount(1);
+		const piece = await db.clanChampionshipPiece.findFirstOrThrow({ where: { matchId: match.id } });
+		const y = piece.y as number;
+		await db.clanChampionshipPiece.update({ where: { id: piece.id }, data: { actionPoints: 3 } });
+		await db.clanChampionshipPiece.create({
+			data: { matchId: match.id, dinozId: enemy.id, playerId: rival.id, clanId: clanB.id, x: 2, y, actionPoints: 4 }
+		});
+		await page.reload();
+		await page.getByTestId(`board-cell-0-${y}`).click();
+		await page.getByTestId(`board-cell-1-${y}`).click();
+		await expect(page.getByTestId(`board-cell-1-${y}`).getByTestId('board-piece')).toBeVisible();
+		await page.getByTestId(`board-cell-1-${y}`).click();
+		await page.getByTestId(`board-cell-2-${y}`).click();
+		await page.waitForURL(/\/replay\//);
+
+		// The match is over: the replay opens to both clans
+		await db.clanChampionshipMatch.update({ where: { id: match.id }, data: { status: 'finished' } });
+		const frames = await db.clanChampionshipFrame.findMany({
+			where: { matchId: match.id },
+			orderBy: { version: 'asc' }
+		});
+		expect(frames.map(f => (f.events as { type: string }[])[0].type)).toEqual(['enter', 'move', 'attack']);
+
+		await page.goto(`/clan/${clanA.id}/championship`);
+		await page.getByTestId('match-replay-link').click();
+		await page.waitForURL(`**/championship/replay/${match.id}`);
+
+		const step = page.getByTestId('replay-step');
+		await expect(step).toContainText('Étape 1 / 3');
+		await expect(step).toContainText(`Mine${suffix} entre sur le damier`);
+
+		await page.getByTestId('replay-next').click();
+		await expect(step).toContainText(`Mine${suffix} se déplace en (1, ${y})`);
+		// Omniscient: the enemy piece, inserted without a frame of its own, shows up with its life and action points
+		const rows = page.getByTestId('replay-roster-row');
+		await expect(rows.filter({ hasText: `Foe${suffix}` })).toContainText('70 / 100');
+		await expect(page.getByTestId(`board-cell-2-${y}`).getByTestId('board-piece-ap')).toHaveText('4');
+
+		await page.getByTestId('replay-next').click();
+		await expect(step).toContainText(`Mine${suffix} attaque Foe${suffix}`);
+		await page.getByTestId('replay-show-fight').click();
+		await expect(page.getByTestId('replay-fight').locator('canvas')).toBeVisible({ timeout: 20_000 });
+	} finally {
+		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.dinoz.deleteMany({ where: { playerId: { in: [player.id, rival.id] } } });
+		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
+});

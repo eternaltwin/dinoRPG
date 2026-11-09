@@ -9,7 +9,8 @@ import {
 	FightJournalEntryDTO,
 	JOURNAL_PAGE_SIZE,
 	MatchBoardDTO,
-	PLACE_REVEAL_HOURS
+	PLACE_REVEAL_HOURS,
+	ReplayEvent
 } from '@drpg/core/models/clan/clanChampionship';
 import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventConfig';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -28,6 +29,7 @@ import { CronJob } from 'cron';
 import seedrandom from 'seedrandom';
 import { LocalTransactionClient } from '../dao/clansDao.js';
 import { archiveFight } from '../dao/archiveDao.js';
+import { recordFrame } from '../dao/clanChampionshipFrameDao.js';
 import { getDinozForChampionshipFight } from '../dao/dinozDao.js';
 import { Auth } from '../dao/playerDao.js';
 import { prisma } from '../prisma.js';
@@ -106,6 +108,7 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 			if (!match || match.status === ClanChampionshipMatchStatus.finished) return null;
 
 			const data: Record<string, unknown> = {};
+			const events: ReplayEvent[] = [];
 			let placeDrawn = false;
 			let status = match.status;
 			let westClanId = match.westClanId;
@@ -125,6 +128,7 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 				data.westClanId = westClanId;
 				status = ClanChampionshipMatchStatus.live;
 				data.status = status;
+				events.push({ type: 'start' });
 			}
 
 			if (status === ClanChampionshipMatchStatus.live) {
@@ -164,6 +168,7 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 					}
 					ticksApplied = expected;
 					Object.assign(data, { homeScore, awayScore, ticksApplied });
+					events.push({ type: 'tick', ticks: missed });
 				}
 
 				if (now >= match.endsAt) {
@@ -184,9 +189,11 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 							data: { unavailableReason: null }
 						});
 					}
-					data.winnerClanId =
+					const winnerClanId =
 						homeScore === awayScore ? null : homeScore > awayScore ? match.homeClanId : match.awayClanId;
+					data.winnerClanId = winnerClanId;
 					data.status = ClanChampionshipMatchStatus.finished;
+					events.push({ type: 'end', winnerClanId });
 				}
 			}
 
@@ -196,6 +203,8 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 				data: { ...data, version: { increment: 1 } },
 				select: { version: true }
 			});
+			// A bare place draw happens before the kick-off: the replay starts with the match
+			if (events.length > 0) await recordFrame(tx, matchId, updated.version, events);
 			return updated.version;
 		},
 		{ timeout: 15000 }
@@ -469,7 +478,14 @@ function addLog(
 /** Runs an action on the player's live match, under the match lock and re-validating its liveness. */
 async function withLiveMatch<T>(
 	authed: Auth,
-	action: (tx: LocalTransactionClient, match: MatchEntity, authed: Authed, clanId: number, side: Side) => Promise<T>
+	action: (
+		tx: LocalTransactionClient,
+		match: MatchEntity,
+		authed: Authed,
+		clanId: number,
+		side: Side,
+		events: ReplayEvent[]
+	) => Promise<T>
 ): Promise<T> {
 	const noLiveMatch = () => new ExpectedError(translate('clanChampionship.noLiveMatch', authed));
 	const clanId = authed.clanId;
@@ -485,9 +501,12 @@ async function withLiveMatch<T>(
 			if (!match || match.status !== ClanChampionshipMatchStatus.live || Date.now() >= match.endsAt.getTime()) {
 				throw noLiveMatch();
 			}
-			const result = await action(tx, match, authed, clanId, sideOf(match, clanId));
+			const events: ReplayEvent[] = [];
+			const result = await action(tx, match, authed, clanId, sideOf(match, clanId), events);
 			// One bump per action, whatever it touched (a fight included), in the action's own transaction.
-			return { result, version: await bumpVersion(tx, match.id) };
+			const version = await bumpVersion(tx, match.id);
+			await recordFrame(tx, match.id, version, events);
+			return { result, version };
 		},
 		{ timeout: 15000 }
 	);
@@ -496,7 +515,7 @@ async function withLiveMatch<T>(
 }
 
 export async function enterBoard(authed: Auth, dinozId: number): Promise<void> {
-	await withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
+	await withLiveMatch(authed, async (tx, match, authed, clanId, side, events) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		// The membership may have changed since the match was found, before the lock.
 		const membership = await tx.clanMember.findUnique({ where: { playerId: authed.id }, select: { clanId: true } });
@@ -562,11 +581,12 @@ export async function enterBoard(authed: Auth, dinozId: number): Promise<void> {
 				actionPoints: 0
 			}
 		});
+		events.push({ type: 'enter', dinozId, x: cell.x, y: cell.y });
 	});
 }
 
 export async function leaveBoard(authed: Auth, dinozId: number): Promise<void> {
-	await withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
+	await withLiveMatch(authed, async (tx, match, authed, clanId, side, events) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
@@ -583,11 +603,12 @@ export async function leaveBoard(authed: Auth, dinozId: number): Promise<void> {
 			where: { id: dinozId, unavailableReason: UnavailableReason.clanChampionship },
 			data: { unavailableReason: null }
 		});
+		events.push({ type: 'leave', dinozId });
 	});
 }
 
 export async function moveOnBoard(authed: Auth, dinozId: number, direction: BoardDirection): Promise<BoardMoveResult> {
-	return withLiveMatch(authed, async (tx, match, authed, clanId, side) => {
+	return withLiveMatch(authed, async (tx, match, authed, clanId, side, events) => {
 		const fail = (key: string) => new ExpectedError(translate(`clanChampionship.${key}`, authed));
 		const own = await tx.clanChampionshipPiece.findUnique({
 			where: { matchId_dinozId: { matchId: match.id, dinozId } }
@@ -619,11 +640,13 @@ export async function moveOnBoard(authed: Auth, dinozId: number, direction: Boar
 				where: { id: own.id },
 				data: { x: target.x, y: target.y, actionPoints: { decrement: 1 } }
 			});
+			events.push({ type: 'move', dinozId, x: target.x, y: target.y });
 			return { fight: null };
 		}
 
 		await tx.clanChampionshipPiece.update({ where: { id: own.id }, data: { actionPoints: { decrement: 1 } } });
 		const fight = await resolveBoardAttack(tx, match, { ...own, actionPoints: own.actionPoints - 1 }, occupant, authed);
+		events.push({ type: 'attack', dinozId, targetDinozId: occupant.dinozId, ...fight });
 		return { fight };
 	});
 }
@@ -648,11 +671,47 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 				},
 				data: { unavailableReason: null }
 			});
-			return bumpVersion(tx, found.id);
+			const version = await bumpVersion(tx, found.id);
+			await recordFrame(tx, found.id, version, [{ type: 'withdrawn', dinozIds: pieces.map(piece => piece.dinozId) }]);
+			return version;
 		},
 		{ timeout: 15000 }
 	);
 	if (version !== null) publishBoardChanged(found, version);
+}
+
+/**
+ * A dinoz healed on the board (the only item it may use there): the life change is a board version of its own,
+ * so the replay shows it and the allies see it at once. Best effort, called after the heal committed.
+ */
+export async function recordBoardHeal(dinozId: number): Promise<void> {
+	const found = await prisma.clanChampionshipPiece.findFirst({
+		where: {
+			dinozId,
+			state: ClanChampionshipPieceState.onBoard,
+			match: { status: ClanChampionshipMatchStatus.live }
+		},
+		select: { match: { select: { id: true, homeClanId: true, awayClanId: true } } }
+	});
+	if (!found) return;
+	const match = found.match;
+	const version = await prisma.$transaction(
+		async tx => {
+			await lockMatch(tx, match.id);
+			const current = await tx.clanChampionshipMatch.findUnique({ where: { id: match.id }, select: { status: true } });
+			if (current?.status !== ClanChampionshipMatchStatus.live) return null;
+			const piece = await tx.clanChampionshipPiece.findUnique({
+				where: { matchId_dinozId: { matchId: match.id, dinozId } },
+				select: { state: true, dinoz: { select: { life: true } } }
+			});
+			if (piece?.state !== ClanChampionshipPieceState.onBoard) return null;
+			const version = await bumpVersion(tx, match.id);
+			await recordFrame(tx, match.id, version, [{ type: 'heal', dinozId, life: piece.dinoz.life }]);
+			return version;
+		},
+		{ timeout: 15000 }
+	);
+	if (version !== null) publishBoardChanged(match, version);
 }
 
 type JournalRow = {

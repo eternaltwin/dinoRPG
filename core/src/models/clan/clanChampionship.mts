@@ -162,3 +162,70 @@ export type ChampionshipChangedMessage = { type: 'championshipChanged' };
 export type BoardMoveResult = {
 	fight: { archiveId: string; outcome: FightOutcome; deadDinozIds: number[] } | null;
 };
+
+/** What changed a match board, as recorded in its replay. */
+export type ReplayEvent =
+	| { type: 'start' }
+	| { type: 'tick'; ticks: number }
+	| { type: 'end'; winnerClanId: number | null }
+	| { type: 'enter'; dinozId: number; x: number; y: number }
+	| { type: 'leave'; dinozId: number }
+	| { type: 'move'; dinozId: number; x: number; y: number }
+	| {
+			type: 'attack';
+			dinozId: number;
+			targetDinozId: number;
+			archiveId: string;
+			outcome: FightOutcome;
+			deadDinozIds: number[];
+	  }
+	| { type: 'heal'; dinozId: number; life: number }
+	| { type: 'withdrawn'; dinozIds: number[] };
+
+export enum ReplayPieceStateCode {
+	ON_BOARD = 0,
+	LEFT = 1,
+	DEAD = 2
+}
+
+/** Compact piece of a replay frame: [dinozId, clanId, state, x, y, actionPoints, life, maxLife]; x and y are -1 off the board. */
+export type ReplayPieceState = [number, number, ReplayPieceStateCode, number, number, number, number, number];
+
+/** The whole board right after one of its versions, both clans included. */
+export interface ReplayFrameDTO {
+	version: number;
+	at: Date;
+	events: ReplayEvent[];
+	homeScore: number;
+	awayScore: number;
+	ticksApplied: number;
+	pieces: ReplayPieceState[];
+	/** Score lines of this board (computed when read, not stored). */
+	westScoreLine: number;
+	eastScoreLine: number;
+}
+
+export interface ReplayDinozDTO {
+	dinozId: number;
+	name: string;
+	display: string;
+	level: number;
+	playerName: string;
+}
+
+export interface MatchReplayDTO {
+	matchId: string;
+	round: number;
+	placeId: number | null;
+	startsAt: Date;
+	endsAt: Date;
+	home: { clanId: number | null; name: string };
+	away: { clanId: number | null; name: string };
+	westIsHome: boolean;
+	obstacles: number[];
+	homeScore: number;
+	awayScore: number;
+	winnerClanId: number | null;
+	dinoz: ReplayDinozDTO[];
+	frames: ReplayFrameDTO[];
+}

@@ -641,6 +641,18 @@ exports.Prisma.ClanChampionshipFightScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ClanChampionshipFrameScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  version: 'version',
+  createdAt: 'createdAt',
+  events: 'events',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  ticksApplied: 'ticksApplied',
+  pieces: 'pieces'
+};
+
 exports.Prisma.ClanIngredientScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
@@ -1149,6 +1161,7 @@ exports.Prisma.ModelName = {
   ClanChampionshipMatch: 'ClanChampionshipMatch',
   ClanChampionshipPiece: 'ClanChampionshipPiece',
   ClanChampionshipFight: 'ClanChampionshipFight',
+  ClanChampionshipFrame: 'ClanChampionshipFrame',
   ClanIngredient: 'ClanIngredient',
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',

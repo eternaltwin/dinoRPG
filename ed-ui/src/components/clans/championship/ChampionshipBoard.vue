@@ -43,19 +43,23 @@
 						ally: cell.piece.ally && !cell.piece.mine,
 						enemy: !cell.piece.mine && !cell.piece.ally,
 						selected: cell.piece.dinozId === selectedDinozId,
-						exhausted: isOurs(cell.piece) && cell.piece.actionPoints === 0
+						highlighted: highlighted?.includes(cell.piece.dinozId),
+						exhausted: showsState(cell.piece) && cell.piece.actionPoints === 0
 					}"
 					data-testid="board-piece"
-					:title="`${cell.piece.name} (${$t('clanChampionship.level', { level: cell.piece.level })}) - ${cell.piece.playerName}`"
+					:title="pieceTitle(cell.piece)"
 				>
 					<DinozIcon
 						:display="cell.piece.display"
 						:size="ICON_SIZE"
 						:flip="cell.piece.clanId === props.board.west.clanId"
 					/>
-					<div v-if="isOurs(cell.piece) && cell.piece.maxLife" class="hp">
+					<div v-if="showsState(cell.piece) && cell.piece.maxLife" class="hp">
 						<div class="hp-fill" :style="{ width: `${hpPercent(cell.piece)}%` }" />
 					</div>
+					<span v-if="omniscient" class="ap-badge" data-testid="board-piece-ap">{{
+						cell.piece.actionPoints ?? 0
+					}}</span>
 				</div>
 			</div>
 		</div>
@@ -64,6 +68,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { BOARD_SIZE, BoardDirection } from '@drpg/core/models/clan/clanChampionship';
 import type { BoardPieceDTO, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
 import { getImgURL } from '../../../mixin/mixin';
@@ -95,13 +100,22 @@ function columnEdge(column: number): string {
 	return `${(column / BOARD_SIZE) * 100}%`;
 }
 
-const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; disabled: boolean }>();
+const props = defineProps<{
+	board: MatchBoardDTO;
+	selectedDinozId: number | null;
+	disabled: boolean;
+	/** Match replay: life and action points of every piece, whatever its clan. */
+	omniscient?: boolean;
+	/** Pieces to point out (the actors of a replayed step). */
+	highlighted?: number[];
+}>();
 const emit = defineEmits<{
 	(e: 'select', dinozId: number): void;
 	(e: 'move', direction: BoardDirection): void;
 }>();
 
 const store = playerStore();
+const { t } = useI18n();
 
 const DELTAS: { direction: BoardDirection; dx: number; dy: number }[] = [
 	{ direction: BoardDirection.N, dx: 0, dy: -1 },
@@ -127,6 +141,16 @@ const selected = computed(() => props.board.pieces.find(p => p.dinozId === props
 
 function isOurs(p: BoardPieceDTO): boolean {
 	return p.mine || p.ally;
+}
+
+function showsState(p: BoardPieceDTO): boolean {
+	return isOurs(p) || !!props.omniscient;
+}
+
+function pieceTitle(p: BoardPieceDTO): string {
+	const title = `${p.name} (${t('clanChampionship.level', { level: p.level })}) - ${p.playerName}`;
+	if (!props.omniscient) return title;
+	return `${title}\n${t('clanChampionship.replayView.hpValue', { life: p.life ?? 0, maxLife: p.maxLife ?? 0 })} · ${t('clanChampionship.replayView.apValue', { ap: p.actionPoints ?? 0 })}`;
 }
 
 function hpPercent(p: BoardPieceDTO): number {
@@ -325,6 +349,12 @@ $rim-width: 11px;
 	&.exhausted :deep(.dinoz-icon) {
 		filter: grayscale(0.7) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 	}
+	&.highlighted::before {
+		background-color: rgba(255, 255, 255, 0.45);
+		box-shadow:
+			0 0 0 2px #fff,
+			0 0 6px 2px rgba(255, 255, 255, 0.8);
+	}
 	&.selected::before {
 		background-color: rgba(245, 197, 24, 0.6);
 		box-shadow:
@@ -334,6 +364,21 @@ $rim-width: 11px;
 	:deep(.dinoz-icon) {
 		position: relative;
 		filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+	}
+	.ap-badge {
+		position: absolute;
+		right: -2px;
+		bottom: -2px;
+		min-width: 12px;
+		padding: 0 2px;
+		border-radius: 6px;
+		background-color: rgba(20, 30, 60, 0.85);
+		color: #ffe9a8;
+		font-size: 9px;
+		font-weight: bold;
+		line-height: 12px;
+		text-align: center;
+		pointer-events: none;
 	}
 	.hp {
 		position: absolute;
