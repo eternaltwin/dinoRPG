@@ -11,6 +11,7 @@ vi.mock('../../business/serverEventService.js', () => ({
 	publishToWsChannelFamily: vi.fn(),
 	kickPlayerFromWsChannels: vi.fn()
 }));
+vi.mock('../../dao/clanChampionshipFrameDao.js', () => ({ recordFrame: vi.fn() }));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
@@ -26,6 +27,7 @@ import { DISCORD } from '../../context.js';
 import { prisma } from '../../prisma.js';
 import { publishToWsChannel, publishToWsChannelFamily } from '../../business/serverEventService.js';
 import { championshipTick, startChampionshipTicker } from '../../business/clanChampionshipMatchService.js';
+import { recordFrame } from '../../dao/clanChampionshipFrameDao.js';
 
 const p = prisma as any;
 const HOME = 1;
@@ -369,6 +371,24 @@ describe('championshipTick board version', () => {
 		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
 		expect(publishToWsChannel).not.toHaveBeenCalled();
 		expect(publishToWsChannelFamily).not.toHaveBeenCalled();
+	});
+	it('records a replay frame of the kick-off at the new version', async () => {
+		setup(match());
+		await championshipTick(startsAt);
+		expect(recordFrame).toHaveBeenCalledWith(p, match().id, 5, [{ type: 'start' }]);
+	});
+	it('records the missed ticks and the end in one replay frame', async () => {
+		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+		await championshipTick(new Date(endsAt.getTime() - 1));
+		expect(recordFrame).toHaveBeenCalledTimes(1);
+		const events = vi.mocked(recordFrame).mock.calls[0][3];
+		expect(events[0]).toEqual({ type: 'tick', ticks: 1 });
+		expect(events[1]).toMatchObject({ type: 'end' });
+	});
+	it('records no replay frame for a bare place draw', async () => {
+		setup(match({ placeId: null, startsAt: new Date('2026-11-26T18:00:00.000Z') }));
+		await championshipTick(new Date('2026-11-25T18:00:00.000Z'));
+		expect(recordFrame).not.toHaveBeenCalled();
 	});
 	it('a failing match publishes nothing', async () => {
 		setup(live(), [piece(1, HOME, 5)]);

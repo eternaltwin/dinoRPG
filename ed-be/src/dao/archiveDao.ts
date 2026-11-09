@@ -1,3 +1,4 @@
+import { ClanChampionshipMatchStatus } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import type { LocalTransactionClient } from './clansDao.js';
 import { FighterRecap, FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
@@ -175,5 +176,19 @@ export async function getClanChampionshipFightParticipants(archiveId: string): P
 			select: { participantPlayerIds: true }
 		});
 		return row ? row.participantPlayerIds : null;
+	});
+}
+
+/** True when the player's clan played the (finished) match of this clan championship fight: the match replay shows it. */
+export async function isClanChampionshipFightReplayable(archiveId: string, playerId: string): Promise<boolean> {
+	return withSpan(isClanChampionshipFightReplayable.name, async () => {
+		const row = await prisma.clanChampionshipFight.findUnique({
+			where: { archiveId },
+			select: { match: { select: { status: true, homeClanId: true, awayClanId: true } } }
+		});
+		if (!row || row.match.status !== ClanChampionshipMatchStatus.finished) return false;
+		const member = await prisma.clanMember.findUnique({ where: { playerId }, select: { clanId: true } });
+		if (!member) return false;
+		return member.clanId === row.match.homeClanId || member.clanId === row.match.awayClanId;
 	});
 }

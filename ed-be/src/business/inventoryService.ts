@@ -56,7 +56,8 @@ import { applySkillEffect } from './skillService.js';
 import { isOnHealingCell, leaveDungeonIfDead, markHealingCellUsed } from './dungeonService.js';
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
-import { GLOBAL } from '../context.js';
+import { GLOBAL, LOGGER } from '../context.js';
+import { recordBoardHeal } from './clanChampionshipMatchService.js';
 import { rewarder } from '../utils/rewarder.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
@@ -237,6 +238,11 @@ export async function useItem(req: Request) {
 				// once they walk off it.
 				if (healingZone) {
 					await markHealingCellUsed(dinoz);
+				}
+				if (dinoz.unavailableReason === UnavailableReason.clanChampionship) {
+					await recordBoardHeal(dinoz.id).catch(err =>
+						LOGGER.error(`Cannot record the board heal of dinoz ${dinoz.id}`, err)
+					);
 				}
 				break;
 			case ItemEffect.RESURRECT:

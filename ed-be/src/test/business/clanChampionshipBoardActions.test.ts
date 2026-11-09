@@ -17,6 +17,7 @@ vi.mock('../../business/fightService.js', () => ({ calculateFightBetweenPlayers:
 vi.mock('../../dao/archiveDao.js', () => ({ archiveFight: vi.fn() }));
 vi.mock('../../dao/dinozDao.js', () => ({ getDinozForChampionshipFight: vi.fn() }));
 vi.mock('../../utils/gameConfig.js', () => ({ gameConfig: () => ({ dinoz: { maxLevel: 50 } }) }));
+vi.mock('../../dao/clanChampionshipFrameDao.js', () => ({ recordFrame: vi.fn() }));
 vi.mock('../../prisma.js', () => ({
 	prisma: {
 		$transaction: vi.fn(),
@@ -52,6 +53,7 @@ import {
 	removePlayerFromBoards,
 	sideOf
 } from '../../business/clanChampionshipMatchService.js';
+import { recordFrame } from '../../dao/clanChampionshipFrameDao.js';
 
 const p = prisma as any;
 const HOME = 1;
@@ -234,6 +236,10 @@ describe('enterBoard', () => {
 			where: { id: 5, unavailableReason: null, placeId: 1, life: { gt: 0 } },
 			data: { unavailableReason: 'clanChampionship' }
 		});
+		// The replay frame is written at the bumped version, after the piece
+		expect(recordFrame).toHaveBeenCalledWith(p, liveMatch().id, 7, [
+			{ type: 'enter', dinozId: 5, x: 0, y: call.create.y }
+		]);
 	});
 	it('east clan enters on column 19', async () => {
 		vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: AWAY } as never);
@@ -313,6 +319,7 @@ describe('leaveBoard', () => {
 			where: { id: 5, unavailableReason: 'clanChampionship' },
 			data: { unavailableReason: null }
 		});
+		expect(recordFrame).toHaveBeenCalledWith(p, liveMatch().id, 7, [{ type: 'leave', dinozId: 5 }]);
 	});
 });
 
@@ -380,6 +387,7 @@ describe('moveOnBoard', () => {
 			where: { id: 1 },
 			data: { x: 6, y: 5, actionPoints: { decrement: 1 } }
 		});
+		expect(recordFrame).toHaveBeenCalledWith(p, liveMatch().id, 7, [{ type: 'move', dinozId: 5, x: 6, y: 5 }]);
 	});
 	it('dinozDead: a piece whose dinoz lost its life off the board cannot move', async () => {
 		p.dinoz.findUnique.mockResolvedValue(dinozRow({ life: 0 }));
@@ -402,7 +410,7 @@ describe('moveOnBoard', () => {
 		});
 	});
 	it('an enemy target reaches the attack resolution after paying the AP', async () => {
-		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: AWAY, x: 6, y: 5 }]);
+		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, dinozId: 20, clanId: AWAY, x: 6, y: 5 }]);
 		// No dinoz returned for the fight: the engine is mocked, an empty result is enough.
 		vi.mocked(getDinozForChampionshipFight).mockResolvedValue([]);
 		vi.mocked(calculateFightBetweenPlayers).mockReturnValue({
@@ -415,6 +423,9 @@ describe('moveOnBoard', () => {
 		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
 		const r = await move(BoardDirection.E);
 		expect(r).toEqual({ fight: { archiveId: 'arch-1', outcome: 0, deadDinozIds: [] } });
+		expect(recordFrame).toHaveBeenCalledWith(p, liveMatch().id, 7, [
+			{ type: 'attack', dinozId: 5, targetDinozId: 20, archiveId: 'arch-1', outcome: 0, deadDinozIds: [] }
+		]);
 		expect(vi.mocked(archiveFight).mock.calls[0][5]).toBe(p);
 		expect(p.clanChampionshipPiece.update).toHaveBeenCalledWith({
 			where: { id: 1 },
@@ -439,6 +450,7 @@ describe('removePlayerFromBoards', () => {
 			data: { unavailableReason: null }
 		});
 		expect(p.$queryRaw).toHaveBeenCalled();
+		expect(recordFrame).toHaveBeenCalledWith(p, liveMatch().id, 7, [{ type: 'withdrawn', dinozIds: [5, 6] }]);
 	});
 	it('does nothing when the match is no longer live under the lock', async () => {
 		setup();

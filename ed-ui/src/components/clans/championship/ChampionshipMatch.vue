@@ -12,6 +12,14 @@
 				@move="onMove"
 			/>
 			<ChampionshipMatchTimer :startsAt="board.startsAt" :endsAt="board.endsAt" :status="board.status" />
+			<div v-if="board.status === 'finished'" class="replay-link">
+				<RouterLink
+					:to="{ name: 'ClanChampionshipReplay', params: { id: route.params.id, matchId: board.matchId } }"
+					data-testid="board-replay-link"
+				>
+					<DZButton>{{ $t('clanChampionship.replayMatch') }}</DZButton>
+				</RouterLink>
+			</div>
 			<ChampionshipTabs
 				:board="board"
 				:selectedDinozId="selectedDinozId"
@@ -38,6 +46,7 @@ import ChampionshipScoreBar from './ChampionshipScoreBar.vue';
 import ChampionshipBoard from './ChampionshipBoard.vue';
 import ChampionshipMatchTimer from './ChampionshipMatchTimer.vue';
 import ChampionshipTabs from './ChampionshipTabs.vue';
+import DZButton from '../../common/DZButton.vue';
 
 const RETRY_DELAY = 5_000;
 
@@ -203,6 +212,10 @@ defineExpose({ onEnter, onLeave });
 	flex-direction: column;
 	gap: 8px;
 	padding-bottom: 5px;
+}
+.replay-link {
+	display: flex;
+	justify-content: center;
 }
 .no-match {
 	text-align: center;

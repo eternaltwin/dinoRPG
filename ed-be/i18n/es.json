@@ -15,6 +15,7 @@
 		"clanAtWar": "Tu clan todavía tiene una guerra en curso.",
 		"registeredNoDelete": "Tu clan está inscrito en el campeonato y no puede disolverse.",
 		"noLiveMatch": "No hay ningún partido en curso para tu clan.",
+		"replayUnavailable": "Este partido no se puede volver a ver.",
 		"notYourDinoz": "Este Dinoz no te pertenece.",
 		"wrongPlace": "Este Dinoz no está en el lugar del partido.",
 		"dinozDead": "Este Dinoz está muerto.",
