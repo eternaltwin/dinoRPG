@@ -1919,7 +1919,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					{ hp: 2, odds: 5 },
 					{ hp: 3, odds: 3 }
 				];
-				const item = weightedRandom(data);
+				const item = weightedRandom(data, fightData.rng);
 				heal(fightData, fighter, 1 + item.hp, undefined, LifeEffect.Normal, true);
 				break;
 			}
