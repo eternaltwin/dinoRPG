@@ -1421,7 +1421,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				korgon.bonus_defense = korgon.bonus_defense ?? 0 + buff;
 				korgon.hp += buff;
 
-				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+				createMonster(fightData, fighter, korgon);
 				break;
 			}
 			case Skill.VIGNES: {
