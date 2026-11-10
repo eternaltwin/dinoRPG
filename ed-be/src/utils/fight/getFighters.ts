@@ -275,6 +275,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 
 	const clone: DetailedFighter = {
 		id: clone_id,
+		master: dinoz.id,
 		playerId: dinoz.playerId,
 		display: dinoz.display,
 		name: dinoz.name,
