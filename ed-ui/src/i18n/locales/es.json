@@ -5584,6 +5584,16 @@
 		"scoreLine": "Línea de puntuación: {line}",
 		"quota": "Capacidad: {used}/{max}",
 		"timeLeft": "Tiempo restante: {time}",
+		"nextTick": "Próximo tick en {time}",
+		"timeline": {
+			"label": "Cronología del partido: haz clic para ver el tablero en ese momento",
+			"live": "En directo",
+			"end": "Fin del partido",
+			"loading": "Cargando el historial…",
+			"viewing": "Tablero el {time}",
+			"backToLive": "Volver al directo",
+			"backToEnd": "Volver al final"
+		},
 		"startsAt": "Inicio: {date}",
 		"level": "niv. {level}",
 		"status": {
@@ -5595,7 +5605,14 @@
 			"clan": "Dinos del clan",
 			"mine": "Mis Dinos",
 			"selection": "Selección",
-			"journal": "Registro"
+			"journal": "Registro",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Escribe a tu clan…",
+			"send": "Enviar",
+			"more": "Mensajes anteriores",
+			"empty": "Aún no hay mensajes."
 		},
 		"matchPlace": "Lugar de batalla: {place}",
 		"enter": "Entrar",
@@ -5619,6 +5636,49 @@
 			"wrongPlace": "Lugar incorrecto",
 			"inGroup": "En un grupo",
 			"busy": "No disponible"
+		},
+		"replayMatch": "Volver a ver el partido",
+		"replayView": {
+			"back": "Volver al campeonato",
+			"loadError": "No se puede cargar la repetición de este partido.",
+			"noFrames": "Este partido se jugó antes de que se grabaran las repeticiones: no hay nada que ver.",
+			"first": "Inicio",
+			"last": "Fin",
+			"previous": "Paso anterior",
+			"next": "Paso siguiente",
+			"play": "Reproducir",
+			"pause": "Pausa",
+			"previousFight": "Combate anterior",
+			"nextFight": "Combate siguiente",
+			"speed": "Velocidad",
+			"skipTicks": "Saltar los turnos sin acción",
+			"playFights": "Reproducir los combates",
+			"step": "Paso {step} / {total}",
+			"showFight": "Ver el combate",
+			"closeFight": "Cerrar el combate",
+			"fightUnavailable": "Este combate ya no está disponible.",
+			"noDinoz": "Ningún Dinoz en juego",
+			"dinoz": "Dinoz",
+			"state": "Estado",
+			"hp": "PV",
+			"hpValue": "{life} / {maxLife} PV",
+			"apValue": "{ap} PA",
+			"position": "({x}, {y})",
+			"left": "Salió",
+			"dead": "Muerto",
+			"event": {
+				"start": "Comienzo del partido.",
+				"tick": "{ticks} turno(s) de juego: puntos de acción repartidos y marcador contado.",
+				"end": "Fin del partido, gana {clan}.",
+				"endDraw": "Fin del partido, empate.",
+				"enter": "{dinoz} entra en el tablero en ({x}, {y}).",
+				"leave": "{dinoz} sale del tablero.",
+				"move": "{dinoz} se mueve a ({x}, {y}).",
+				"attack": "{dinoz} ataca a {target}: {outcome}.",
+				"deaths": "Muertos: {names}.",
+				"heal": "{dinoz} se cura ({life} PV).",
+				"withdrawn": "Retirados del tablero (el jugador dejó el clan): {names}."
+			}
 		}
 	}
 }
