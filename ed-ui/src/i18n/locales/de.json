@@ -5584,6 +5584,16 @@
 		"scoreLine": "Punktelinie: {line}",
 		"quota": "Quote: {used}/{max}",
 		"timeLeft": "Restzeit: {time}",
+		"nextTick": "Nächster Tick in {time}",
+		"timeline": {
+			"label": "Spielverlauf: klicke, um das Brett zu diesem Zeitpunkt zu sehen",
+			"live": "Live",
+			"end": "Ende der Partie",
+			"loading": "Verlauf wird geladen…",
+			"viewing": "Brett am {time}",
+			"backToLive": "Zurück zu live",
+			"backToEnd": "Zurück zum Ende"
+		},
 		"startsAt": "Beginn: {date}",
 		"level": "St. {level}",
 		"status": {
@@ -5595,7 +5605,14 @@
 			"clan": "Klan-Dinoz",
 			"mine": "Meine Dinoz",
 			"selection": "Auswahl",
-			"journal": "Protokoll"
+			"journal": "Protokoll",
+			"chat": "Chat"
+		},
+		"chat": {
+			"placeholder": "Schreib deinem Clan…",
+			"send": "Senden",
+			"more": "Ältere Nachrichten",
+			"empty": "Noch keine Nachrichten."
 		},
 		"matchPlace": "Austragungsort: {place}",
 		"enter": "Betreten",
@@ -5619,6 +5636,49 @@
 			"wrongPlace": "Falscher Ort",
 			"inGroup": "In einer Gruppe",
 			"busy": "Nicht verfügbar"
+		},
+		"replayMatch": "Partie erneut ansehen",
+		"replayView": {
+			"back": "Zurück zur Meisterschaft",
+			"loadError": "Die Wiederholung dieser Partie kann nicht geladen werden.",
+			"noFrames": "Diese Partie wurde gespielt, bevor Wiederholungen aufgezeichnet wurden: es gibt nichts anzusehen.",
+			"first": "Anfang",
+			"last": "Ende",
+			"previous": "Vorheriger Schritt",
+			"next": "Nächster Schritt",
+			"play": "Abspielen",
+			"pause": "Pause",
+			"previousFight": "Vorheriger Kampf",
+			"nextFight": "Nächster Kampf",
+			"speed": "Geschwindigkeit",
+			"skipTicks": "Runden ohne Aktion überspringen",
+			"playFights": "Kämpfe abspielen",
+			"step": "Schritt {step} / {total}",
+			"showFight": "Kampf ansehen",
+			"closeFight": "Kampf schließen",
+			"fightUnavailable": "Dieser Kampf ist nicht mehr verfügbar.",
+			"noDinoz": "Kein Dinoz im Spiel",
+			"dinoz": "Dinoz",
+			"state": "Zustand",
+			"hp": "LP",
+			"hpValue": "{life} / {maxLife} LP",
+			"apValue": "{ap} AP",
+			"position": "({x}, {y})",
+			"left": "Ausgetreten",
+			"dead": "Tot",
+			"event": {
+				"start": "Anpfiff.",
+				"tick": "{ticks} Spielrunde(n): Aktionspunkte verteilt und Punkte gezählt.",
+				"end": "Ende der Partie, {clan} gewinnt.",
+				"endDraw": "Ende der Partie, unentschieden.",
+				"enter": "{dinoz} betritt das Spielfeld auf ({x}, {y}).",
+				"leave": "{dinoz} verlässt das Spielfeld.",
+				"move": "{dinoz} zieht nach ({x}, {y}).",
+				"attack": "{dinoz} greift {target} an: {outcome}.",
+				"deaths": "Tot: {names}.",
+				"heal": "{dinoz} wird geheilt ({life} LP).",
+				"withdrawn": "Vom Spielfeld genommen (Spieler hat den Klan verlassen): {names}."
+			}
 		}
 	}
 }
