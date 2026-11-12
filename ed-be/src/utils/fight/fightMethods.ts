@@ -3898,7 +3898,7 @@ const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
 const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiHitCounter: number) => {
-	return testStat(fightData.rng, getFighterMultihit(fighter));
+	return testStat(fightData.rng, getFighterMultihit(fighter, multiHitCounter));
 };
 
 /**
