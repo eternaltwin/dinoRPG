@@ -1417,8 +1417,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.RENFORTS_KORGON: {
 				let korgon = structuredClone(monsterList.KORGON_REINFORCEMENT);
 				let buff = powerOf(fightData.rng, fighter, [[ElementType.WOOD, 3]]);
-				korgon.bonus_attack = korgon.bonus_attack ?? 0 + buff;
-				korgon.bonus_defense = korgon.bonus_defense ?? 0 + buff;
+				korgon.bonus_attack = (korgon.bonus_attack ?? 0) + buff;
+				korgon.bonus_defense = (korgon.bonus_defense ?? 0) + buff;
 				korgon.hp += buff;
 
 				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
@@ -1493,8 +1493,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.ESPRIT_GORILLOZ: {
 				let spirit = structuredClone(monsterList.GORILLOZ_SPIRIT);
 				let buff = powerOf(fightData.rng, fighter, [[ElementType.WOOD, 5]]);
-				spirit.bonus_attack = spirit.bonus_attack ?? 0 + buff;
-				spirit.bonus_defense = spirit.bonus_defense ?? 0 + buff;
+				spirit.bonus_attack = (spirit.bonus_attack ?? 0) + buff;
+				spirit.bonus_defense = (spirit.bonus_defense ?? 0) + buff;
 				spirit.hp += buff;
 				const monster = createMonster(fightData, fighter, spirit);
 
