@@ -32,7 +32,13 @@
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">
 				<tr>
-					<th class="dinoz-header" colspan="4">{{ $t('clanChampionship.round', { round: round.round + 1 }) }}</th>
+					<th class="dinoz-header" colspan="4">
+						{{
+							championship.totalRounds
+								? $t('clanChampionship.roundOf', { round: round.round + 1, total: championship.totalRounds })
+								: $t('clanChampionship.round', { round: round.round + 1 })
+						}}
+					</th>
 				</tr>
 				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
 					<td>
@@ -61,7 +67,11 @@
 						</div>
 					</td>
 				</tr>
+				<tr v-for="b in byesOf(round.round)" :key="`bye-${b.clanName}`" :class="{ mine: b.clanId === viewedClanId }">
+					<td colspan="4" data-testid="championship-bye">{{ $t('clanChampionship.bye', { clan: b.clanName }) }}</td>
+				</tr>
 			</DZTable>
+			<p v-if="nextRoundPending">{{ $t('clanChampionship.nextRoundPending') }}</p>
 		</template>
 	</div>
 </template>
@@ -132,9 +142,17 @@ export default defineComponent({
 				byRound.set(m.round, [...(byRound.get(m.round) ?? []), m]);
 			}
 			return [...byRound.entries()].sort((a, b) => a[0] - b[0]).map(([round, matches]) => ({ round, matches }));
+		},
+		/** Swiss rounds are drawn one at a time: announce the next one until the last is drawn. */
+		nextRoundPending(): boolean {
+			const c = this.championship;
+			return !!c && c.phase === 'running' && c.totalRounds !== null && this.rounds.length < c.totalRounds;
 		}
 	},
 	methods: {
+		byesOf(round: number): ClanChampionshipDTO['byes'] {
+			return (this.championship?.byes ?? []).filter(b => b.round === round);
+		},
 		/** The replay is open to both clans of a finished match. */
 		canReplay(m: ClanChampionshipMatchDTO): boolean {
 			const clanId = this.playerStore.clanId;

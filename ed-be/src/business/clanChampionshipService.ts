@@ -10,8 +10,8 @@ import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { Auth, auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
-import { computeStandings } from '../utils/clanChampionship/standings.js';
-import { roundRobin } from '../utils/clanChampionship/roundRobin.js';
+import { computeStandings, StandingBye } from '../utils/clanChampionship/standings.js';
+import { pairKey, pairSwissRound, swissRoundCount } from '../utils/clanChampionship/swiss.js';
 import {
 	computeMatchSlots,
 	computeMatchSlotsFrom,
@@ -47,9 +47,53 @@ function serializeConfig(config: ClanChampionshipEventConfig, phase: ClanChampio
 	return JSON.stringify({ ...config, phase });
 }
 
-type Slots = { startsAt: Date; endsAt: Date }[];
+type Slot = { startsAt: Date; endsAt: Date };
+type Slots = Slot[];
 
-/** Draws the round-robin, creates the matches, switches to running and draws the round-0 place. */
+type SwissHistory = { met: Set<string>; byes: Set<number>; homeCount: Map<number, number> };
+
+/** Pairs one Swiss round, creates its matches, records the bye and draws the places of the round. */
+async function createSwissRound(
+	tx: LocalTransactionClient,
+	eventId: string,
+	places: ClanChampionshipEventConfig['places'],
+	round: number,
+	slot: Slot,
+	clanNames: Map<number, string>,
+	ranked: number[],
+	history: SwissHistory
+): Promise<void> {
+	const { pairs, bye } = pairSwissRound({ ranked, ...history });
+	await tx.clanChampionshipMatch.createMany({
+		data: pairs.map(([homeClanId, awayClanId]) => ({
+			eventId,
+			round,
+			homeClanId,
+			awayClanId,
+			homeClanName: clanNames.get(homeClanId) as string,
+			awayClanName: clanNames.get(awayClanId) as string,
+			startsAt: slot.startsAt,
+			endsAt: slot.endsAt
+		}))
+	});
+	if (bye !== null) {
+		await tx.clanChampionshipRegistration.updateMany({
+			where: { eventId, clanId: bye },
+			data: { byeRounds: { push: round } }
+		});
+	}
+	const created = await tx.clanChampionshipMatch.findMany({ where: { eventId, round } });
+	for (const match of created) await drawMatchPlace(tx, match, places);
+}
+
+function byesOf(registrations: { clanId: number | null; clanName: string; byeRounds: number[] }[]): StandingBye[] {
+	return registrations.flatMap(r => r.byeRounds.map(round => ({ round, clanId: r.clanId, clanName: r.clanName })));
+}
+
+/**
+ * Sizes the Swiss championship, switches to running and draws round 0 (random order). The next rounds are drawn
+ * by generateNextRound once the previous one is over, from the standings.
+ */
 async function createCalendar(
 	tx: LocalTransactionClient,
 	event: { id: string },
@@ -60,34 +104,97 @@ async function createCalendar(
 	const eventId = event.id;
 	const clanNames = new Map<number, string>();
 	for (const r of registrations) if (r.clanId !== null) clanNames.set(r.clanId, r.clanName);
-	const rounds = roundRobin(shuffle([...clanNames.keys()]));
-	const slots = slotsFor(rounds.length);
-	await tx.clanChampionshipMatch.createMany({
-		data: rounds.flatMap((pairs, round) =>
-			pairs.map(([homeClanId, awayClanId]) => ({
-				eventId,
-				round,
-				homeClanId,
-				awayClanId,
-				homeClanName: clanNames.get(homeClanId) as string,
-				awayClanName: clanNames.get(awayClanId) as string,
-				startsAt: slots[round].startsAt,
-				endsAt: slots[round].endsAt
-			}))
-		)
-	});
-	const endDate = slots[slots.length - 1].endsAt;
+	const rounds = swissRoundCount(clanNames.size);
+	const slots = slotsFor(rounds);
+	const running: ClanChampionshipEventConfig = {
+		...config,
+		phase: 'running',
+		rounds,
+		firstRoundStart: slots[0].startsAt.toISOString()
+	};
 	await tx.clanEvent.update({
 		where: { id: eventId },
-		data: { config: serializeConfig(config, 'running'), endDate }
+		data: { config: JSON.stringify(running), endDate: slots[slots.length - 1].endsAt }
 	});
-	const firstRound = await tx.clanChampionshipMatch.findMany({ where: { eventId, round: 0 } });
-	for (const match of firstRound) await drawMatchPlace(tx, match, config.places);
+	await createSwissRound(tx, eventId, config.places, 0, slots[0], clanNames, shuffle([...clanNames.keys()]), {
+		met: new Set(),
+		byes: new Set(),
+		homeCount: new Map()
+	});
 }
 
 /**
- * Closes registrations (job at registrationEnd): cancels with fewer than 2 clans, otherwise builds
- * the round-robin calendar and switches to running. No-op unless the phase is still `registration`.
+ * Called by the tick once no match is left open: draws the next Swiss round from the standings (closest points,
+ * no rematch when possible), or finishes the championship after its last round or when fewer than 2 clans are
+ * left. Idempotent: no-op while a match is open or when the next round already exists. A round drawn after its
+ * slot (server down) is shifted to start now, and the following rounds with it.
+ */
+export async function generateNextRound(eventId: string, now: Date = new Date()): Promise<void> {
+	const changed = await prisma.$transaction(async tx => {
+		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
+		const event = await tx.clanEvent.findUnique({ where: { id: eventId } });
+		if (!event) return false;
+		const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+		if (config.phase !== 'running' || config.rounds === undefined || config.firstRoundStart === undefined) {
+			return false;
+		}
+		const [registrations, matches] = await Promise.all([
+			tx.clanChampionshipRegistration.findMany({ where: { eventId } }),
+			tx.clanChampionshipMatch.findMany({ where: { eventId } })
+		]);
+		if (matches.some(m => m.status !== 'finished')) return false;
+
+		const lastRound = Math.max(-1, ...matches.map(m => m.round), ...registrations.flatMap(r => r.byeRounds));
+		const nextRound = lastRound + 1;
+		const clanNames = new Map<number, string>();
+		for (const r of registrations) if (r.clanId !== null) clanNames.set(r.clanId, r.clanName);
+
+		if (nextRound >= config.rounds || clanNames.size < 2) {
+			const endDate = event.endDate && event.endDate < now ? event.endDate : now;
+			await tx.clanEvent.update({
+				where: { id: eventId },
+				data: { config: serializeConfig(config, 'finished'), endDate }
+			});
+			return true;
+		}
+
+		const byes = byesOf(registrations);
+		const ranked = computeStandings(matches, byes)
+			.map(row => row.clanId)
+			.filter((id): id is number => id !== null && clanNames.has(id));
+		for (const id of clanNames.keys()) if (!ranked.includes(id)) ranked.push(id);
+
+		const history: SwissHistory = { met: new Set(), byes: new Set(), homeCount: new Map() };
+		for (const m of matches) {
+			if (m.homeClanId !== null && m.awayClanId !== null) history.met.add(pairKey(m.homeClanId, m.awayClanId));
+			if (m.homeClanId !== null) history.homeCount.set(m.homeClanId, (history.homeCount.get(m.homeClanId) ?? 0) + 1);
+		}
+		for (const b of byes) if (b.clanId !== null) history.byes.add(b.clanId);
+
+		let anchor = new Date(config.firstRoundStart);
+		let slots = computeMatchSlotsFrom(anchor, config.rounds);
+		const lateMs = now.getTime() - slots[nextRound].startsAt.getTime();
+		if (lateMs > 0) {
+			anchor = new Date(anchor.getTime() + lateMs);
+			slots = computeMatchSlotsFrom(anchor, config.rounds);
+			await tx.clanEvent.update({
+				where: { id: eventId },
+				data: {
+					config: JSON.stringify({ ...config, firstRoundStart: anchor.toISOString() }),
+					endDate: slots[slots.length - 1].endsAt
+				}
+			});
+		}
+
+		await createSwissRound(tx, eventId, config.places, nextRound, slots[nextRound], clanNames, ranked, history);
+		return true;
+	});
+	if (changed) publishChampionshipChanged();
+}
+
+/**
+ * Closes registrations (job at registrationEnd): cancels with fewer than 2 clans, otherwise sizes the
+ * Swiss championship, draws round 0 and switches to running. No-op unless the phase is still `registration`.
  */
 export async function closeRegistrations(eventId: string): Promise<void> {
 	await prisma.$transaction(async tx => {
@@ -113,7 +220,7 @@ export async function closeRegistrations(eventId: string): Promise<void> {
 	publishChampionshipChanged();
 }
 
-/** running -> finished (called by the tick once every match is finished). */
+/** running -> finished (called by the tick once every match of a round-robin championship is finished). */
 export async function finishChampionship(eventId: string): Promise<void> {
 	await prisma.$transaction(async tx => {
 		await tx.$queryRaw`SELECT id FROM "ClanEvent" WHERE id = ${eventId}::uuid FOR UPDATE`;
@@ -395,7 +502,9 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 			startsAt: m.startsAt,
 			endsAt: m.endsAt
 		})),
-		standings: computeStandings(matches),
+		totalRounds: config.rounds ?? null,
+		byes: byesOf(registrations).sort((a, b) => a.round - b.round),
+		standings: computeStandings(matches, byesOf(registrations)),
 		myClanRegistered: !!authed.clanId && registrations.some(r => r.clanId === authed.clanId),
 		canManageRegistration
 	};

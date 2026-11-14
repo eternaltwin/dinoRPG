@@ -593,7 +593,8 @@ exports.Prisma.ClanChampionshipRegistrationScalarFieldEnum = {
   clanId: 'clanId',
   clanName: 'clanName',
   registeredById: 'registeredById',
-  registeredAt: 'registeredAt'
+  registeredAt: 'registeredAt',
+  byeRounds: 'byeRounds'
 };
 
 exports.Prisma.ClanChampionshipMatchScalarFieldEnum = {

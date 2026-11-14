@@ -51,7 +51,7 @@ import translate from '../utils/server/translate.js';
 import { getRandomArrayElement } from '../utils/tools.js';
 import { findActiveChampionshipEvent, findVisibleChampionshipEvent, parseEventConfig } from './clanEventService.js';
 import { calculateFightBetweenPlayers } from './fightService.js';
-import { finishChampionship, runChampionshipJob } from './clanChampionshipService.js';
+import { finishChampionship, generateNextRound, runChampionshipJob } from './clanChampionshipService.js';
 import { publishBoardChanged, publishChampionshipChanged } from './clanChampionshipEvents.js';
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -237,7 +237,10 @@ export async function championshipTick(now: Date = new Date()): Promise<void> {
 	const remaining = await prisma.clanChampionshipMatch.count({
 		where: { eventId: event.id, status: { not: ClanChampionshipMatchStatus.finished } }
 	});
-	if (remaining === 0) await finishChampionship(event.id);
+	if (remaining > 0) return;
+	// A Swiss championship draws its next round (or ends after the last one); a round robin one just ends
+	if (config.rounds !== undefined) await generateNextRound(event.id, now);
+	else await finishChampionship(event.id);
 }
 
 export function startChampionshipTicker(): CronJob {

@@ -786,6 +786,8 @@ model ClanChampionshipRegistration {
   clanName       String
   registeredById String    @db.Uuid
   registeredAt   DateTime  @default(now()) @db.Timestamp(6)
+  /// 0-based Swiss rounds in which the clan had a bye (counted as a win)
+  byeRounds      Int[]     @default([])
   event          ClanEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
   clan           Clan?     @relation(fields: [clanId], references: [id], onDelete: SetNull)
 

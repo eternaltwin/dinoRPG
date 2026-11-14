@@ -6,7 +6,6 @@ import {
 	computeRegistrationWindow,
 	isMonday
 } from '../../utils/clanChampionship/schedule.js';
-import { roundRobin } from '../../utils/clanChampionship/roundRobin.js';
 
 describe('computeRegistrationWindow', () => {
 	it('spans CHAMPIONSHIP_REGISTRATION_WEEKS weeks from Monday 00:00 UTC', () => {
@@ -45,24 +44,5 @@ describe('computeMatchSlotsFrom', () => {
 			['2026-11-09T14:37:00.000Z', '2026-11-11T14:37:00.000Z'],
 			['2026-11-13T14:37:00.000Z', '2026-11-15T14:37:00.000Z']
 		]);
-	});
-});
-describe('roundRobin', () => {
-	const pairKey = ([a, b]: [number, number]) => [a, b].sort().join('-');
-	it('4 clans: 3 rounds, every pair once, each clan once per round', () => {
-		const rounds = roundRobin([1, 2, 3, 4]);
-		expect(rounds).toHaveLength(3);
-		rounds.forEach(r => expect(new Set(r.flat()).size).toBe(4));
-		expect(new Set(rounds.flat().map(pairKey)).size).toBe(6);
-	});
-	it('5 clans: 5 rounds of 2 matches, each clan has exactly one bye', () => {
-		const rounds = roundRobin([1, 2, 3, 4, 5]);
-		expect(rounds).toHaveLength(5);
-		rounds.forEach(r => expect(r).toHaveLength(2));
-		expect(new Set(rounds.flat().map(pairKey)).size).toBe(10);
-		[1, 2, 3, 4, 5].forEach(id => expect(rounds.filter(r => !r.flat().includes(id))).toHaveLength(1));
-	});
-	it('2 clans: a single match', () => {
-		expect(roundRobin([7, 9])).toEqual([[[7, 9]]]);
 	});
 });

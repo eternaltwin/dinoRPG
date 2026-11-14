@@ -17,6 +17,10 @@ export type ClanChampionshipEventConfig = {
 	places: PlaceEnum[];
 	registrationEnd: string; // ISO UTC
 	phase: ChampionshipPhase;
+	/** Number of Swiss rounds. Absent on a championship drawn as a full round robin (every match created upfront). */
+	rounds?: number;
+	/** ISO UTC start of round 0: anchor of the slots of the rounds drawn later. */
+	firstRoundStart?: string;
 };
 
 export type ClanEventConfig = ClanWarEventConfig | ClanChampionshipEventConfig;
