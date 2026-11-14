@@ -10,7 +10,13 @@ Les **Clans** peuvent aussi s'affronter les uns aux autres lors du Championnat d
 
 Une fois un championnat démarré, plus aucun Clan ne peut rejoindre un classement ou changer de classement jusqu'à la fin de ce Championnat.
 
-Tous les clans s'affrontent sur des batailles de 48 heures. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point. Une fois tous les clans affrontés, le championnat se termine.
+Le championnat se joue en **ronde suisse**, sur des batailles de 48 heures. Tous les Clans commencent à 0 point. Une victoire fait remporter 3 points, un nul 1 point et une défaite 0 point.
+
+À chaque ronde, chaque Clan affronte un Clan ayant un score proche du sien, en évitant autant que possible de rencontrer deux fois le même adversaire. La première ronde est tirée au sort, chacune des suivantes est tirée à la fin de la précédente. Le nombre de rondes dépend du nombre de Clans inscrits : au moins 3, une de plus à chaque fois que le nombre de Clans double (8 Clans : 3 rondes, 16 Clans : 4 rondes, 32 Clans : 5 rondes...).
+
+Si le nombre de Clans est impair, un Clan est exempt à chaque ronde : il ne joue pas et marque les 3 points d'une victoire. L'exemption revient au Clan le moins bien classé qui n'en a pas encore eu.
+
+À la fin de la dernière ronde, le classement est établi selon les points obtenus. En cas d'égalité, les Clans sont départagés par le **Buchholz** (la somme des points de leurs adversaires), puis par la différence de score et enfin par le score marqué.
 
 # Bataille
 

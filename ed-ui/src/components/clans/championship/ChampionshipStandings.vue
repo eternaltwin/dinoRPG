@@ -9,6 +9,7 @@
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.lost') }}</th>
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.diff') }}</th>
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.scoreFor') }}</th>
+			<th class="dinoz-header" title="Buchholz">{{ $t('clanChampionship.standingsCol.buchholz') }}</th>
 			<th class="dinoz-header">{{ $t('clanChampionship.standingsCol.points') }}</th>
 		</tr>
 		<tr v-for="(s, i) in standings" :key="i" :class="{ mine: s.clanId !== null && s.clanId === clanStored.getClanId }">
@@ -25,6 +26,7 @@
 			<td>{{ s.lost }}</td>
 			<td>{{ signed(s.scoreDiff) }}</td>
 			<td>{{ s.scoreFor }}</td>
+			<td>{{ s.buchholz }}</td>
 			<td>{{ s.points }}</td>
 		</tr>
 	</DZTable>

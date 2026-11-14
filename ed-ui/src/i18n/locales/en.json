@@ -5568,10 +5568,14 @@
 			"lost": "L",
 			"diff": "Diff.",
 			"scoreFor": "Score",
-			"points": "Pts"
+			"points": "Pts",
+			"buchholz": "Bch"
 		},
 		"calendar": "Calendar",
 		"round": "Round {round}",
+		"roundOf": "Round {round} / {total}",
+		"bye": "{clan} has a bye (win)",
+		"nextRoundPending": "The next round will be drawn at the end of the current one, between clans with close scores.",
 		"versus": "vs",
 		"daysShort": "{days} d",
 		"noMatch": "No battle in progress",

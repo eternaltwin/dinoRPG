@@ -10,7 +10,13 @@ icon:
 
 Once a championship starts, Clans can no longer register nor change league.
 
-Clans face each other during 48--hour battles. A victory awards 4 points, a draw 1 point and a defeat 0 point. Once clans battled each other, the championship finishes.
+The championship is played as a **Swiss tournament** of 48-hour battles. Every Clan starts with 0 points. A victory awards 3 points, a draw 1 point and a defeat 0 points.
+
+Each round, every Clan faces a Clan with a close score, avoiding as much as possible meeting the same opponent twice. The first round is drawn at random, each following one is drawn at the end of the previous one. The number of rounds depends on the number of registered Clans: at least 3, plus one each time the number of Clans doubles (8 Clans: 3 rounds, 16 Clans: 4 rounds, 32 Clans: 5 rounds...).
+
+With an odd number of Clans, one Clan has a bye each round: it does not play and scores the 3 points of a victory. The bye goes to the lowest ranked Clan that has not had one yet.
+
+After the last round, the standings are set by the points earned. Tied Clans are separated by their **Buchholz** (the sum of their opponents' points), then by the score difference and finally by the score earned.
 
 # Battle
 

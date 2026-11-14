@@ -44,6 +44,8 @@ export interface ClanChampionshipStandingDTO {
 	drawn: number;
 	lost: number;
 	points: number;
+	/** Sum of the points of the opponents met (Swiss tie-break) */
+	buchholz: number;
 	scoreFor: number;
 	scoreAgainst: number;
 	scoreDiff: number;
@@ -58,6 +60,10 @@ export interface ClanChampionshipDTO {
 	places: number[];
 	registrations: { clanId: number | null; clanName: string }[];
 	matches: ClanChampionshipMatchDTO[];
+	/** Swiss rounds of the championship, null for a championship drawn as a full round robin */
+	totalRounds: number | null;
+	/** Swiss byes (counted as a win), 0-based round */
+	byes: { round: number; clanId: number | null; clanName: string }[];
 	standings: ClanChampionshipStandingDTO[];
 	myClanRegistered: boolean;
 	canManageRegistration: boolean;

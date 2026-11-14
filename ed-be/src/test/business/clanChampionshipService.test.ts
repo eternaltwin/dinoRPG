@@ -15,7 +15,13 @@ vi.mock('../../prisma.js', () => ({
 		$queryRaw: vi.fn(),
 		$executeRaw: vi.fn(),
 		clanEvent: { create: vi.fn(), findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
-		clanChampionshipRegistration: { create: vi.fn(), findMany: vi.fn(), deleteMany: vi.fn(), findFirst: vi.fn() },
+		clanChampionshipRegistration: {
+			create: vi.fn(),
+			findMany: vi.fn(),
+			deleteMany: vi.fn(),
+			findFirst: vi.fn(),
+			updateMany: vi.fn()
+		},
 		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn(), update: vi.fn() },
 		clanWar: { findFirst: vi.fn() },
 		clan: { findUniqueOrThrow: vi.fn() }
@@ -31,6 +37,7 @@ import { playerHasRightRequest } from '../../dao/clansDao.js';
 import {
 	closeRegistrations,
 	finishChampionship,
+	generateNextRound,
 	isClanInActiveChampionship,
 	isClanInRunningChampionship,
 	openChampionshipRegistrations,
@@ -293,7 +300,7 @@ describe('getCurrentChampionship', () => {
 	beforeEach(() => {
 		vi.useFakeTimers();
 		vi.setSystemTime(new Date('2026-11-10T10:00:00.000Z'));
-		p.clanChampionshipRegistration.findMany.mockResolvedValue([{ clanId: 7, clanName: 'Seven' }]);
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([{ clanId: 7, clanName: 'Seven', byeRounds: [] }]);
 		p.clanChampionshipMatch.findMany.mockResolvedValue([]);
 	});
 
@@ -457,21 +464,36 @@ describe('closeRegistrations', () => {
 		expect(scheduleJob).not.toHaveBeenCalled();
 	});
 
-	it('builds the calendar with 4 registrations', async () => {
+	it('sizes the Swiss championship and draws round 0 only with 4 registrations', async () => {
 		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(4));
 		await closeRegistrations('ev-1');
 		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
-		expect(matches).toHaveLength(6);
+		expect(matches).toHaveLength(2);
 		for (const m of matches) {
+			expect(m.round).toBe(0);
 			expect(m.homeClanName).toBe(`Clan ${m.homeClanId}`);
 			expect(m.awayClanName).toBe(`Clan ${m.awayClanId}`);
 		}
-		expect([...new Set(matches.map((m: any) => m.round))]).toEqual([0, 1, 2]);
+		expect(new Set(matches.flatMap((m: any) => [m.homeClanId, m.awayClanId])).size).toBe(4);
 		expect(matches[0].startsAt).toEqual(new Date('2026-11-23T18:00:00.000Z'));
 		const arg = p.clanEvent.update.mock.calls[0][0];
-		expect(JSON.parse(arg.data.config).phase).toBe('running');
+		const config = JSON.parse(arg.data.config);
+		expect(config).toMatchObject({ phase: 'running', rounds: 3, firstRoundStart: '2026-11-23T18:00:00.000Z' });
 		expect(arg.data.endDate).toEqual(new Date('2026-12-02T18:00:00.000Z'));
+		expect(p.clanChampionshipRegistration.updateMany).not.toHaveBeenCalled();
 		expect(scheduleJob).not.toHaveBeenCalled();
+	});
+
+	it('gives a round-0 bye with an odd number of clans', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue(regs(5));
+		await closeRegistrations('ev-1');
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(matches).toHaveLength(2);
+		const playing = new Set(matches.flatMap((m: any) => [m.homeClanId, m.awayClanId]));
+		const bye = p.clanChampionshipRegistration.updateMany.mock.calls[0][0];
+		expect(playing.has(bye.where.clanId)).toBe(false);
+		expect(bye).toEqual({ where: { eventId: 'ev-1', clanId: bye.where.clanId }, data: { byeRounds: { push: 0 } } });
+		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).rounds).toBe(3);
 	});
 
 	it('draws the place of the round-0 matches only', async () => {
@@ -498,6 +520,137 @@ describe('closeRegistrations', () => {
 		await closeRegistrations('ev-1');
 		expect(p.clanEvent.update).not.toHaveBeenCalled();
 		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+	});
+});
+
+describe('generateNextRound', () => {
+	const firstRoundStart = '2026-11-23T18:00:00.000Z';
+	const running = (over: Record<string, unknown> = {}) =>
+		activeEvent({
+			endDate: new Date('2026-12-02T18:00:00.000Z'),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PlaceEnum.DINOVILLE],
+				registrationEnd: '2026-11-23T00:00:00.000Z',
+				phase: 'running',
+				rounds: 3,
+				firstRoundStart,
+				...over
+			})
+		});
+	const reg = (clanId: number | null, byeRounds: number[] = []) => ({
+		clanId,
+		clanName: `Clan ${clanId ?? 'gone'}`,
+		byeRounds
+	});
+	const played = (
+		round: number,
+		home: number,
+		away: number,
+		homeScore: number,
+		awayScore: number,
+		status = 'finished'
+	) => ({
+		id: `m-${round}-${home}`,
+		round,
+		homeClanId: home,
+		awayClanId: away,
+		homeClanName: `Clan ${home}`,
+		awayClanName: `Clan ${away}`,
+		homeScore,
+		awayScore,
+		status
+	});
+	let existing: any[];
+
+	beforeEach(() => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-11-25T18:00:01.000Z'));
+		p.clanEvent.findUnique.mockResolvedValue(running());
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([reg(1), reg(2), reg(3), reg(4)]);
+		existing = [played(0, 1, 2, 10, 0), played(0, 3, 4, 0, 10)];
+		p.clanChampionshipMatch.findMany.mockImplementation(async ({ where }: any) =>
+			where.round === undefined ? existing : [{ id: 'new-1' }, { id: 'new-2' }]
+		);
+	});
+
+	it('pairs the winners together and the losers together in the next slot, and draws their places', async () => {
+		await generateNextRound('ev-1');
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(matches.map((m: any) => [m.homeClanId, m.awayClanId].sort().join('-')).sort()).toEqual(['1-4', '2-3']);
+		for (const m of matches) {
+			expect(m.round).toBe(1);
+			expect(m.startsAt).toEqual(new Date('2026-11-26T18:00:00.000Z'));
+			expect(m.endsAt).toEqual(new Date('2026-11-28T18:00:00.000Z'));
+		}
+		expect(p.clanChampionshipMatch.update.mock.calls.map((c: any) => c[0].where.id)).toEqual(['new-1', 'new-2']);
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+	});
+
+	it('never pairs a rematch when another pairing exists', async () => {
+		existing = [played(0, 1, 2, 10, 0), played(0, 3, 4, 10, 0), played(1, 1, 3, 10, 0), played(1, 2, 4, 10, 0)];
+		await generateNextRound('ev-1');
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(matches.map((m: any) => [m.homeClanId, m.awayClanId].sort().join('-')).sort()).toEqual(['1-4', '2-3']);
+		expect(matches[0].round).toBe(2);
+	});
+
+	it('is a no-op while a match of the round is still open', async () => {
+		existing = [played(0, 1, 2, 10, 0), played(0, 3, 4, 0, 0, 'live')];
+		await generateNextRound('ev-1');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+	});
+
+	it('is a no-op for a round-robin championship', async () => {
+		p.clanEvent.findUnique.mockResolvedValue(running({ rounds: undefined, firstRoundStart: undefined }));
+		await generateNextRound('ev-1');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
+	});
+
+	it('gives the bye to the last clan that never had one, and drops deleted clans', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([reg(1), reg(2), reg(3), reg(4, [0]), reg(5), reg(null)]);
+		existing = [played(0, 1, 2, 10, 0), played(0, 3, 5, 10, 0)];
+		await generateNextRound('ev-1');
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		const playing = matches.flatMap((m: any) => [m.homeClanId, m.awayClanId]);
+		expect(playing).not.toContain(null);
+		// 1, 3 and 4 have 3 pts, 2 and 5 have 0: 5 is the lowest ranked clan without a bye
+		expect(p.clanChampionshipRegistration.updateMany).toHaveBeenCalledWith({
+			where: { eventId: 'ev-1', clanId: 5 },
+			data: { byeRounds: { push: 1 } }
+		});
+		expect(playing.sort()).toEqual([1, 2, 3, 4]);
+	});
+
+	it('finishes the championship after its last round', async () => {
+		existing = [played(0, 1, 2, 1, 0), played(1, 1, 3, 1, 0), played(2, 1, 4, 1, 0)];
+		await generateNextRound('ev-1');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).phase).toBe('finished');
+	});
+
+	it('finishes early when fewer than 2 clans are left', async () => {
+		p.clanChampionshipRegistration.findMany.mockResolvedValue([reg(1), reg(null), reg(null), reg(null)]);
+		await generateNextRound('ev-1');
+		expect(p.clanChampionshipMatch.createMany).not.toHaveBeenCalled();
+		const arg = p.clanEvent.update.mock.calls[0][0];
+		expect(JSON.parse(arg.data.config).phase).toBe('finished');
+		expect(arg.data.endDate).toEqual(new Date('2026-11-25T18:00:01.000Z'));
+	});
+
+	it('shifts a late round and the following ones to start now', async () => {
+		const now = new Date('2026-11-27T12:00:00.000Z');
+		await generateNextRound('ev-1', now);
+		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(matches[0].startsAt).toEqual(now);
+		const arg = p.clanEvent.update.mock.calls[0][0];
+		const config = JSON.parse(arg.data.config);
+		expect(config.phase).toBe('running');
+		// Round 1 was due on 26/11 18:00: 18 h late
+		expect(config.firstRoundStart).toBe('2026-11-24T12:00:00.000Z');
+		expect(arg.data.endDate).toEqual(new Date('2026-12-03T12:00:00.000Z'));
 	});
 });
 
@@ -576,7 +729,7 @@ describe('startChampionshipMatches', () => {
 		p.clanChampionshipMatch.findMany.mockResolvedValue([{ id: 'm1' }, { id: 'm2' }]);
 		await startMatches();
 		const matches = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
-		expect(matches).toHaveLength(6);
+		expect(matches).toHaveLength(2);
 		expect(matches[0].startsAt).toEqual(now);
 		expect(matches[0].endsAt).toEqual(new Date('2026-11-08T14:37:00.000Z'));
 		const arg = p.clanEvent.update.mock.calls[0][0];

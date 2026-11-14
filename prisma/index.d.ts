@@ -68071,11 +68071,13 @@ export namespace Prisma {
   export type ClanChampionshipRegistrationAvgAggregateOutputType = {
     id: number | null
     clanId: number | null
+    byeRounds: number | null
   }
 
   export type ClanChampionshipRegistrationSumAggregateOutputType = {
     id: number | null
     clanId: number | null
+    byeRounds: number[]
   }
 
   export type ClanChampionshipRegistrationMinAggregateOutputType = {
@@ -68103,6 +68105,7 @@ export namespace Prisma {
     clanName: number
     registeredById: number
     registeredAt: number
+    byeRounds: number
     _all: number
   }
 
@@ -68110,11 +68113,13 @@ export namespace Prisma {
   export type ClanChampionshipRegistrationAvgAggregateInputType = {
     id?: true
     clanId?: true
+    byeRounds?: true
   }
 
   export type ClanChampionshipRegistrationSumAggregateInputType = {
     id?: true
     clanId?: true
+    byeRounds?: true
   }
 
   export type ClanChampionshipRegistrationMinAggregateInputType = {
@@ -68142,6 +68147,7 @@ export namespace Prisma {
     clanName?: true
     registeredById?: true
     registeredAt?: true
+    byeRounds?: true
     _all?: true
   }
 
@@ -68238,6 +68244,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt: Date
+    byeRounds: number[]
     _count: ClanChampionshipRegistrationCountAggregateOutputType | null
     _avg: ClanChampionshipRegistrationAvgAggregateOutputType | null
     _sum: ClanChampionshipRegistrationSumAggregateOutputType | null
@@ -68266,6 +68273,7 @@ export namespace Prisma {
     clanName?: boolean
     registeredById?: boolean
     registeredAt?: boolean
+    byeRounds?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
     clan?: boolean | ClanChampionshipRegistration$clanArgs<ExtArgs>
   }, ExtArgs["result"]["clanChampionshipRegistration"]>
@@ -68277,6 +68285,7 @@ export namespace Prisma {
     clanName?: boolean
     registeredById?: boolean
     registeredAt?: boolean
+    byeRounds?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
     clan?: boolean | ClanChampionshipRegistration$clanArgs<ExtArgs>
   }, ExtArgs["result"]["clanChampionshipRegistration"]>
@@ -68288,6 +68297,7 @@ export namespace Prisma {
     clanName?: boolean
     registeredById?: boolean
     registeredAt?: boolean
+    byeRounds?: boolean
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
     clan?: boolean | ClanChampionshipRegistration$clanArgs<ExtArgs>
   }, ExtArgs["result"]["clanChampionshipRegistration"]>
@@ -68299,9 +68309,10 @@ export namespace Prisma {
     clanName?: boolean
     registeredById?: boolean
     registeredAt?: boolean
+    byeRounds?: boolean
   }
 
-  export type ClanChampionshipRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "clanId" | "clanName" | "registeredById" | "registeredAt", ExtArgs["result"]["clanChampionshipRegistration"]>
+  export type ClanChampionshipRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "clanId" | "clanName" | "registeredById" | "registeredAt" | "byeRounds", ExtArgs["result"]["clanChampionshipRegistration"]>
   export type ClanChampionshipRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     event?: boolean | ClanEventDefaultArgs<ExtArgs>
     clan?: boolean | ClanChampionshipRegistration$clanArgs<ExtArgs>
@@ -68331,6 +68342,10 @@ export namespace Prisma {
       clanName: string
       registeredById: string
       registeredAt: Date
+      /**
+       * 0-based Swiss rounds in which the clan had a bye (counted as a win)
+       */
+      byeRounds: number[]
     }, ExtArgs["result"]["clanChampionshipRegistration"]>
     composites: {}
   }
@@ -68762,6 +68777,7 @@ export namespace Prisma {
     readonly clanName: FieldRef<"ClanChampionshipRegistration", 'String'>
     readonly registeredById: FieldRef<"ClanChampionshipRegistration", 'String'>
     readonly registeredAt: FieldRef<"ClanChampionshipRegistration", 'DateTime'>
+    readonly byeRounds: FieldRef<"ClanChampionshipRegistration", 'Int[]'>
   }
     
 
@@ -98953,7 +98969,8 @@ export namespace Prisma {
     clanId: 'clanId',
     clanName: 'clanName',
     registeredById: 'registeredById',
-    registeredAt: 'registeredAt'
+    registeredAt: 'registeredAt',
+    byeRounds: 'byeRounds'
   };
 
   export type ClanChampionshipRegistrationScalarFieldEnum = (typeof ClanChampionshipRegistrationScalarFieldEnum)[keyof typeof ClanChampionshipRegistrationScalarFieldEnum]
@@ -103214,6 +103231,7 @@ export namespace Prisma {
     clanName?: StringFilter<"ClanChampionshipRegistration"> | string
     registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
     registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+    byeRounds?: IntNullableListFilter<"ClanChampionshipRegistration">
     event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
   }
@@ -103225,6 +103243,7 @@ export namespace Prisma {
     clanName?: SortOrder
     registeredById?: SortOrder
     registeredAt?: SortOrder
+    byeRounds?: SortOrder
     event?: ClanEventOrderByWithRelationInput
     clan?: ClanOrderByWithRelationInput
   }
@@ -103240,6 +103259,7 @@ export namespace Prisma {
     clanName?: StringFilter<"ClanChampionshipRegistration"> | string
     registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
     registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+    byeRounds?: IntNullableListFilter<"ClanChampionshipRegistration">
     event?: XOR<ClanEventScalarRelationFilter, ClanEventWhereInput>
     clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
   }, "id" | "eventId_clanId">
@@ -103251,6 +103271,7 @@ export namespace Prisma {
     clanName?: SortOrder
     registeredById?: SortOrder
     registeredAt?: SortOrder
+    byeRounds?: SortOrder
     _count?: ClanChampionshipRegistrationCountOrderByAggregateInput
     _avg?: ClanChampionshipRegistrationAvgOrderByAggregateInput
     _max?: ClanChampionshipRegistrationMaxOrderByAggregateInput
@@ -103268,6 +103289,7 @@ export namespace Prisma {
     clanName?: StringWithAggregatesFilter<"ClanChampionshipRegistration"> | string
     registeredById?: UuidWithAggregatesFilter<"ClanChampionshipRegistration"> | string
     registeredAt?: DateTimeWithAggregatesFilter<"ClanChampionshipRegistration"> | Date | string
+    byeRounds?: IntNullableListFilter<"ClanChampionshipRegistration">
   }
 
   export type ClanChampionshipMatchWhereInput = {
@@ -108676,6 +108698,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
     event: ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput
     clan?: ClanCreateNestedOneWithoutChampionshipRegistrationsInput
   }
@@ -108687,12 +108710,14 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationUpdateInput = {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
     event?: ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
     clan?: ClanUpdateOneWithoutChampionshipRegistrationsNestedInput
   }
@@ -108704,6 +108729,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationCreateManyInput = {
@@ -108713,12 +108739,14 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationUpdateManyMutationInput = {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationUncheckedUpdateManyInput = {
@@ -108728,6 +108756,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipMatchCreateInput = {
@@ -114061,11 +114090,13 @@ export namespace Prisma {
     clanName?: SortOrder
     registeredById?: SortOrder
     registeredAt?: SortOrder
+    byeRounds?: SortOrder
   }
 
   export type ClanChampionshipRegistrationAvgOrderByAggregateInput = {
     id?: SortOrder
     clanId?: SortOrder
+    byeRounds?: SortOrder
   }
 
   export type ClanChampionshipRegistrationMaxOrderByAggregateInput = {
@@ -114089,6 +114120,7 @@ export namespace Prisma {
   export type ClanChampionshipRegistrationSumOrderByAggregateInput = {
     id?: SortOrder
     clanId?: SortOrder
+    byeRounds?: SortOrder
   }
 
   export type EnumClanChampionshipMatchStatusFilter<$PrismaModel = never> = {
@@ -120522,6 +120554,10 @@ export namespace Prisma {
     deleteMany?: ClanChampionshipMatchScalarWhereInput | ClanChampionshipMatchScalarWhereInput[]
   }
 
+  export type ClanChampionshipRegistrationCreatebyeRoundsInput = {
+    set: number[]
+  }
+
   export type ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput = {
     create?: XOR<ClanEventCreateWithoutChampionshipRegistrationsInput, ClanEventUncheckedCreateWithoutChampionshipRegistrationsInput>
     connectOrCreate?: ClanEventCreateOrConnectWithoutChampionshipRegistrationsInput
@@ -120532,6 +120568,11 @@ export namespace Prisma {
     create?: XOR<ClanCreateWithoutChampionshipRegistrationsInput, ClanUncheckedCreateWithoutChampionshipRegistrationsInput>
     connectOrCreate?: ClanCreateOrConnectWithoutChampionshipRegistrationsInput
     connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanChampionshipRegistrationUpdatebyeRoundsInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput = {
@@ -139126,6 +139167,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
     event: ClanEventCreateNestedOneWithoutChampionshipRegistrationsInput
   }
 
@@ -139135,6 +139177,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationCreateOrConnectWithoutClanInput = {
@@ -139784,6 +139827,7 @@ export namespace Prisma {
     clanName?: StringFilter<"ClanChampionshipRegistration"> | string
     registeredById?: UuidFilter<"ClanChampionshipRegistration"> | string
     registeredAt?: DateTimeFilter<"ClanChampionshipRegistration"> | Date | string
+    byeRounds?: IntNullableListFilter<"ClanChampionshipRegistration">
   }
 
   export type ClanChampionshipMatchUpsertWithWhereUniqueWithoutHomeClanInput = {
@@ -141273,6 +141317,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
     clan?: ClanCreateNestedOneWithoutChampionshipRegistrationsInput
   }
 
@@ -141282,6 +141327,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationCreateOrConnectWithoutEventInput = {
@@ -154503,6 +154549,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipMatchCreateManyHomeClanInput = {
@@ -155032,6 +155079,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
     event?: ClanEventUpdateOneRequiredWithoutChampionshipRegistrationsNestedInput
   }
 
@@ -155041,6 +155089,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutClanInput = {
@@ -155049,6 +155098,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipMatchUpdateWithoutHomeClanInput = {
@@ -155422,6 +155472,7 @@ export namespace Prisma {
     clanName: string
     registeredById: string
     registeredAt?: Date | string
+    byeRounds?: ClanChampionshipRegistrationCreatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipMatchCreateManyEventInput = {
@@ -155516,6 +155567,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
     clan?: ClanUpdateOneWithoutChampionshipRegistrationsNestedInput
   }
 
@@ -155525,6 +155577,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipRegistrationUncheckedUpdateManyWithoutEventInput = {
@@ -155533,6 +155586,7 @@ export namespace Prisma {
     clanName?: StringFieldUpdateOperationsInput | string
     registeredById?: StringFieldUpdateOperationsInput | string
     registeredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    byeRounds?: ClanChampionshipRegistrationUpdatebyeRoundsInput | number[]
   }
 
   export type ClanChampionshipMatchUpdateWithoutEventInput = {

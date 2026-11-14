@@ -5571,10 +5571,14 @@
 			"lost": "P",
 			"diff": "Dif.",
 			"scoreFor": "Puntos a favor",
-			"points": "Pts"
+			"points": "Pts",
+			"buchholz": "Bch"
 		},
 		"calendar": "Calendario",
 		"round": "Jornada {round}",
+		"roundOf": "Ronda {round} / {total}",
+		"bye": "{clan} descansa (victoria)",
+		"nextRoundPending": "La siguiente ronda se sorteará al final de la ronda actual, entre clanes con puntuaciones cercanas.",
 		"versus": "contra",
 		"daysShort": "{days} d",
 		"noMatch": "Ningún partido en curso",

@@ -5573,10 +5573,14 @@
 			"lost": "D",
 			"diff": "Diff.",
 			"scoreFor": "Score",
-			"points": "Pts"
+			"points": "Pts",
+			"buchholz": "Bch"
 		},
 		"calendar": "Calendrier",
 		"round": "Journée {round}",
+		"roundOf": "Ronde {round} / {total}",
+		"bye": "{clan} est exempt (victoire)",
+		"nextRoundPending": "La ronde suivante sera tirée à la fin de la ronde en cours, entre clans de score proche.",
 		"versus": "contre",
 		"daysShort": "{days} j",
 		"noMatch": "Aucun match en cours",

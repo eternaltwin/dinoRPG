@@ -18,7 +18,14 @@ vi.mock('../../prisma.js', () => ({
 		$transaction: vi.fn(),
 		$queryRaw: vi.fn(),
 		clanEvent: { findFirst: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
-		clanChampionshipMatch: { findMany: vi.fn(), findUnique: vi.fn(), update: vi.fn(), count: vi.fn() },
+		clanChampionshipMatch: {
+			findMany: vi.fn(),
+			findUnique: vi.fn(),
+			update: vi.fn(),
+			count: vi.fn(),
+			createMany: vi.fn()
+		},
+		clanChampionshipRegistration: { findMany: vi.fn(), updateMany: vi.fn() },
 		clanChampionshipPiece: { findMany: vi.fn(), updateMany: vi.fn() },
 		dinoz: { updateMany: vi.fn() }
 	}
@@ -289,6 +296,33 @@ describe('championshipTick', () => {
 		p.clanChampionshipMatch.count.mockResolvedValue(0);
 		await championshipTick(endsAt);
 		expect(JSON.parse(p.clanEvent.update.mock.calls[0][0].data.config).phase).toBe('finished');
+	});
+
+	it('draws the next Swiss round once every match of the round is finished', async () => {
+		const swiss = {
+			...runningEvent(),
+			config: JSON.stringify({
+				...JSON.parse(runningEvent().config),
+				rounds: 3,
+				firstRoundStart: startsAt.toISOString()
+			})
+		};
+		const finished = (home: number, away: number) =>
+			match({ id: `m-${home}`, homeClanId: home, awayClanId: away, status: 'finished', homeScore: 1 });
+		p.clanEvent.findFirst.mockResolvedValue(swiss);
+		p.clanEvent.findUnique.mockResolvedValue(swiss);
+		p.clanChampionshipMatch.count.mockResolvedValue(0);
+		p.clanChampionshipMatch.findMany.mockImplementation(async ({ where }: any) =>
+			where.status ? [] : where.round === undefined ? [finished(1, 2), finished(3, 4)] : []
+		);
+		p.clanChampionshipRegistration.findMany.mockResolvedValue(
+			[1, 2, 3, 4].map(clanId => ({ clanId, clanName: `Clan ${clanId}`, byeRounds: [] }))
+		);
+		await championshipTick(endsAt);
+		const created = p.clanChampionshipMatch.createMany.mock.calls[0][0].data;
+		expect(created.map((m: any) => m.round)).toEqual([1, 1]);
+		expect(created.map((m: any) => [m.homeClanId, m.awayClanId].sort().join('-')).sort()).toEqual(['1-3', '2-4']);
+		expect(p.clanEvent.update).not.toHaveBeenCalled();
 	});
 
 	it('locks the match before re-reading it', async () => {

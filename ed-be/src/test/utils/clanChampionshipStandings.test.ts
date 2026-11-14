@@ -74,3 +74,40 @@ describe('computeStandings', () => {
 		expect(rows[0]).toMatchObject({ clanId: null, clanName: 'Gone', points: 3 });
 	});
 });
+
+describe('computeStandings with Swiss byes', () => {
+	it('counts a bye as a win without board score', () => {
+		const rows = computeStandings(
+			[match('A', 'B', 4, 2, 'finished')],
+			[{ clanId: idOf('C'), clanName: 'C', round: 0 }]
+		);
+		const c = rows.find(r => r.clanName === 'C');
+		expect(c).toMatchObject({ played: 1, won: 1, points: 3, scoreFor: 0, scoreAgainst: 0, buchholz: 0 });
+	});
+
+	it('sums the points of the opponents met as Buchholz', () => {
+		const rows = computeStandings([
+			match('A', 'B', 4, 2, 'finished'),
+			match('C', 'D', 4, 2, 'finished'),
+			match('A', 'C', 3, 1, 'finished'),
+			match('B', 'D', 3, 3, 'finished')
+		]);
+		const by = (n: string) => rows.find(r => r.clanName === n);
+		// A: 6 pts, B: 1, C: 3, D: 1
+		expect(by('A')?.buchholz).toBe(1 + 3);
+		expect(by('B')?.buchholz).toBe(6 + 1);
+		expect(by('C')?.buchholz).toBe(1 + 6);
+		expect(by('D')?.buchholz).toBe(3 + 1);
+	});
+
+	it('breaks a tie on points with the Buchholz before the score difference', () => {
+		// P and Q both win once; P beat the strong S (3 pts after beating T), Q beat the weak R by more
+		const rows = computeStandings([
+			match('S', 'T', 2, 1, 'finished'),
+			match('P', 'S', 2, 1, 'finished'),
+			match('Q', 'R', 20, 0, 'finished')
+		]);
+		const order = rows.map(r => r.clanName);
+		expect(order.indexOf('P')).toBeLessThan(order.indexOf('Q'));
+	});
+});
