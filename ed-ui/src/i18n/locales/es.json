@@ -4292,7 +4292,8 @@
 		"action": {
 			"edit": "Editar",
 			"exclude": "Expulsar",
-			"leave": "Salir del clan"
+			"leave": "Salir del clan",
+			"transferLeadership": "Ceder la corona"
 		},
 		"stat": {
 			"last_login": "Última conexión el {date}."

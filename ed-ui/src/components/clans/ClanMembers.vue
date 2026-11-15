@@ -102,6 +102,16 @@
 									theme: 'small'
 								}"
 							/>
+							<img
+								:src="getImgURL('icons', 'crown', true)"
+								alt="crown"
+								v-if="isLeader && !member.player?.leaderOf?.id"
+								@click="transferLeadership(member.player.id)"
+								v-tippy="{
+									content: $t('clansMembers.action.transferLeadership'),
+									theme: 'small'
+								}"
+							/>
 						</div>
 					</td>
 				</tr>
@@ -136,6 +146,7 @@ export default defineComponent({
 			clanMembersList: [] as ClanMember[],
 			joinRequestsList: [] as JoinRequestListResponse,
 			playerStore: playerStore(),
+			isLeader: false as boolean,
 			hasEditRight: false as boolean,
 			hasExcludeRight: false as boolean,
 			hasAcceptAndDenyRequestsRight: false as boolean,
@@ -218,6 +229,25 @@ export default defineComponent({
 				}
 			}
 		},
+		async transferLeadership(newLeaderId: string): Promise<void> {
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					await ClanService.transferLeadership(newLeaderId);
+					this.isLeader = false;
+					await this.getClanMembersList();
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
 		async leaveClan() {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
@@ -262,6 +292,7 @@ export default defineComponent({
 		this.hasExcludeRight = this.getHasRight(ClanMemberRight.MEMBER_EXCLUDE);
 		this.hasAcceptAndDenyRequestsRight = this.getHasRight(ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS);
 		this.selfMember = this.clanMembersList.find(member => member.player.id === this.playerStore.playerId);
+		this.isLeader = this.selfMember?.player.leaderOf?.id === +this.$route.params.id;
 		await this.getJoinRequestsList();
 	}
 });
