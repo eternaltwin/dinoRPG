@@ -4346,6 +4346,7 @@
 			"PLAYER_JOIN": "Un jugador se ha unido al clan.",
 			"PLAYER_LEAVE": "Este jugador decidió dejar el clan.",
 			"PLAYER_EXCLUSION": "Este jugador ha sido expulsado del clan.",
+			"LEADERSHIP_TRANSFER": "He designado a {newLeader} como nuevo líder del clan",
 			"CASTLE_BUILD": "He construido el castillo.",
 			"CASTLE_REBUILD": "He reconstruido el castillo.",
 			"WAR_ATTACKED": "Como oficial de guerra del clan {name}, ¡declaro la guerra contra tu clan!",
