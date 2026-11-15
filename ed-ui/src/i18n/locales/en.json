@@ -407,7 +407,7 @@
 		"initiative": "Initiative",
 		"energy": "Energy",
 		"energyRecovery": "Energy recovery",
-		"maxSummon": "Nombre maximum de renforts",
+		"maxSummon": "Maximum Number of Reinforcements",
 		"maxFollowers": "Maximum followers",
 		"armor": "Armor",
 		"armorBreak": "Perforation",
@@ -4472,7 +4472,7 @@
 			"shielded": "Shielded",
 			"blessed": "blessed",
 			"healing": "Healing",
-			"spikes": "Épineux"
+			"spikes": "Thorns"
 		},
 		"step": {
 			"timeLimit": "The fight will last at maximum {time} units of time.",
@@ -5677,7 +5677,7 @@
 			"previous": "Previous step",
 			"next": "Next step",
 			"play": "Play",
-			"pause": "Pause",
+			"pause": "Break",
 			"previousFight": "Previous fight",
 			"nextFight": "Next fight",
 			"speed": "Speed",
