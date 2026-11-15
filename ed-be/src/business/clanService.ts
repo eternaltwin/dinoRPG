@@ -20,6 +20,7 @@ import {
 	getClanBannerRequest,
 	getClanHistoryCountRequest,
 	getClanHistoryRequest,
+	getClanMemberByPlayer,
 	getClanMemberRequest,
 	getClanMembersListRequest,
 	getClanMessagesCountRequest,
@@ -37,16 +38,18 @@ import {
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
+	playerIsMember,
 	searchClansByName,
 	searchClansByNameRequest,
 	updateClanBannerRequest,
 	donateIngredientsToClan,
 	updateClanLanguagesRequest,
+	updateClanLeader,
 	updateClanMemberRequest,
 	updateClanPageRequest
 } from '../dao/clansDao.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
+import { addMoney, auth, getPlayerId, isPlayerLeaderOfClanRequest, removeMoney } from '../dao/playerDao.js';
 import { parseQuantityLines } from '../utils/quantityLines.js';
 import translate from '../utils/server/translate.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
@@ -61,6 +64,7 @@ import { isClanInActiveChampionship, isClanInRunningChampionship } from './clanC
 import { removePlayerFromBoards } from './clanChampionshipMatchService.js';
 import { kickPlayerFromWsChannels } from './serverEventService.js';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
+import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 
 /**
  * Get all the clans
@@ -508,6 +512,49 @@ export async function leaveClanSelf(req: Request) {
 	await removeFromBoardsIfLeft(member);
 
 	return member;
+}
+
+/**
+ *  Transfer clan leadership.
+ */
+export async function transferLeadership(req: Request) {
+	const authed = await auth(req);
+	const newLeaderId: string = req.body.newLeaderId;
+
+	const oldLeaderClanMember = await getClanMemberByPlayer(authed.id);
+	if (oldLeaderClanMember === null) {
+		throw new ExpectedError(`Player ${authed.name} does not have a clan`);
+	}
+	const clanId = oldLeaderClanMember.clanId;
+
+	const isLeader = await isPlayerLeaderOfClanRequest(authed.id, clanId);
+	if (!isLeader) {
+		throw new ExpectedError(`Player ${authed.name} is not the leader of clan ${clanId}`);
+	}
+
+	const newLeader = await getPlayerId(newLeaderId);
+	if (newLeader === null) {
+		throw new ExpectedError(`Player ${newLeaderId} does not exist`);
+	}
+
+	const isMember = await playerIsMember(clanId, newLeaderId);
+	if (!isMember) {
+		throw new ExpectedError(`Player ${newLeaderId} is not a member of clan ${clanId}`);
+	}
+
+	if (newLeaderId === authed.id) {
+		throw new ExpectedError(`Player ${authed.name} is already the leader of clan ${clanId}`);
+	}
+
+	await updateClanLeader(clanId, newLeaderId);
+
+	// By default the old leader will have all rights
+	await updateClanMemberRequest(
+		oldLeaderClanMember.id,
+		clanId,
+		Object.values(ClanMemberRight),
+		oldLeaderClanMember.nickname
+	);
 }
 
 /**

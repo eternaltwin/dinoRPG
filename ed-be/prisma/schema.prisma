@@ -1309,6 +1309,7 @@ enum NotificationSeverity {
   event
   newClanApply
   clanApplyAccepted
+  clanLeadershipTransfer
   message
   clanWar
 }
