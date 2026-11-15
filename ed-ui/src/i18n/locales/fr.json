@@ -4293,7 +4293,8 @@
 		"action": {
 			"edit": "Éditer",
 			"exclude": "Exclure",
-			"leave": "Quitter le clan"
+			"leave": "Quitter le clan",
+			"transferLeadership": "Céder la couronne"
 		},
 		"stat": {
 			"last_login": "Dernière connexion le {date}."
