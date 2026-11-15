@@ -3,6 +3,7 @@ import { StoreClan } from '@drpg/core/models/store/StoreClan';
 import { ClanService } from '../services';
 import { LocalesEnum } from '../i18n';
 import { playerStore } from './playerStore';
+import { Player } from '@drpg/prisma';
 
 export const clanStore = defineStore('clanStore', {
 	state: (): StoreClan => ({
@@ -32,6 +33,12 @@ export const clanStore = defineStore('clanStore', {
 			if (this.clan) {
 				this.clan.langs.splice(0);
 				this.clan.langs.push(...(await ClanService.updateClanLangs(clanId, languages)));
+			}
+		},
+		async updateLeader(newLeaderMemberId: number, player: Pick<Player, 'id' | 'name'>) {
+			await ClanService.transferLeadership(newLeaderMemberId);
+			if (this.clan) {
+				this.clan.leader = player;
 			}
 		},
 		updateBanner(bannerUrl: string): void {

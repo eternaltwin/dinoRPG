@@ -106,7 +106,7 @@
 								:src="getImgURL('icons', 'crown', true)"
 								alt="crown"
 								v-if="isLeader && !member.player?.leaderOf?.id"
-								@click="transferLeadership(member.id)"
+								@click="transferLeadership(member)"
 								v-tippy="{
 									content: $t('clansMembers.action.transferLeadership'),
 									theme: 'small'
@@ -137,6 +137,7 @@ import { errorHandler } from '../../utils/index.js';
 import { formatNumber } from '@drpg/core/utils/string';
 import DZButton from '../common/DZButton.vue';
 import DZUser from '../common/DZUser.vue';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClanMembers',
@@ -151,7 +152,8 @@ export default defineComponent({
 			hasExcludeRight: false as boolean,
 			hasAcceptAndDenyRequestsRight: false as boolean,
 			selfMember: undefined as ClanMember | undefined,
-			maxMembers: CLAN_MAX_MEMBERS_AMOUNT
+			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
+			clanStore: clanStore()
 		};
 	},
 	methods: {
@@ -229,7 +231,7 @@ export default defineComponent({
 				}
 			}
 		},
-		async transferLeadership(newLeaderMemberId: number): Promise<void> {
+		async transferLeadership(newLeaderMember: ClanMember): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: this.$t('popup.attention'),
@@ -239,7 +241,7 @@ export default defineComponent({
 			});
 			if (res) {
 				try {
-					await ClanService.transferLeadership(newLeaderMemberId);
+					await this.clanStore.updateLeader(newLeaderMember.id, newLeaderMember.player);
 					this.isLeader = false;
 					await this.getClanMembersList();
 				} catch (err) {
