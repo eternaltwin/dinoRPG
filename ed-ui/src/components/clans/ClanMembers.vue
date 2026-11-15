@@ -106,7 +106,7 @@
 								:src="getImgURL('icons', 'crown', true)"
 								alt="crown"
 								v-if="isLeader && !member.player?.leaderOf?.id"
-								@click="transferLeadership(member.player.id)"
+								@click="transferLeadership(member.id)"
 								v-tippy="{
 									content: $t('clansMembers.action.transferLeadership'),
 									theme: 'small'
@@ -229,7 +229,7 @@ export default defineComponent({
 				}
 			}
 		},
-		async transferLeadership(newLeaderId: string): Promise<void> {
+		async transferLeadership(newLeaderMemberId: number): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: this.$t('popup.attention'),
@@ -239,7 +239,7 @@ export default defineComponent({
 			});
 			if (res) {
 				try {
-					await ClanService.transferLeadership(newLeaderId);
+					await ClanService.transferLeadership(newLeaderMemberId);
 					this.isLeader = false;
 					await this.getClanMembersList();
 				} catch (err) {

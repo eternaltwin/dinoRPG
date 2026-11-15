@@ -371,17 +371,21 @@ routes.delete(`${commonPath}/member/self`, async (req: Request, res: Response) =
 	}
 });
 
-routes.put(`${commonPath}/leader`, [body('newLeaderId').exists().isUUID()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
+routes.put(
+	`${commonPath}/leader`,
+	[body('newLeaderMemberId').exists().isInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+		try {
+			const response = await transferLeadership(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-	try {
-		const response = await transferLeadership(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
-	}
-});
+);
 
 routes.get(
 	`${commonPath}/:clanId/pages`,

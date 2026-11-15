@@ -423,6 +423,7 @@ export async function getClanMemberRequest(id: number) {
 			},
 			select: {
 				id: true,
+				clanId: true,
 				nickname: true,
 				rights: true,
 				player: {
@@ -725,25 +726,6 @@ export async function getClanBannerRequest(clanId: number) {
 		});
 
 		return banner;
-	});
-}
-
-/**
- * Return true if the player is a member of the clan, false otherwise.
- * @param clanId The clan id
- * @param playerId The player id
- * @returns boolean
- */
-export async function playerIsMember(clanId: number, playerId: string): Promise<boolean> {
-	return withSpan(playerIsMember.name, async () => {
-		const member = await prisma.clanMember.count({
-			where: {
-				clanId,
-				playerId
-			}
-		});
-
-		return member > 0;
 	});
 }
 
