@@ -392,6 +392,29 @@ export async function clanJoinRequest(joinId: number) {
 	});
 }
 
+/**
+ * Return player member details if the player is a member of a clan, null otherwise.
+ * @param playerId The player id
+ * @returns ClanMember details or null
+ */
+export async function getClanMemberByPlayer(playerId: string) {
+	return withSpan(getClanMemberByPlayer.name, async () => {
+		const member = await prisma.clanMember.findUnique({
+			where: {
+				playerId
+			},
+			select: {
+				id: true,
+				nickname: true,
+				clanId: true,
+				rights: true
+			}
+		});
+
+		return member;
+	});
+}
+
 export async function getClanMemberRequest(id: number) {
 	return withSpan(getClanMemberRequest.name, async () => {
 		const members = await prisma.clanMember.findUnique({
@@ -702,6 +725,25 @@ export async function getClanBannerRequest(clanId: number) {
 		});
 
 		return banner;
+	});
+}
+
+/**
+ * Return true if the player is a member of the clan, false otherwise.
+ * @param clanId The clan id
+ * @param playerId The player id
+ * @returns boolean
+ */
+export async function playerIsMember(clanId: number, playerId: string): Promise<boolean> {
+	return withSpan(playerIsMember.name, async () => {
+		const member = await prisma.clanMember.count({
+			where: {
+				clanId,
+				playerId
+			}
+		});
+
+		return member > 0;
 	});
 }
 

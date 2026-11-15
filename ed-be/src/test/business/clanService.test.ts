@@ -20,6 +20,7 @@ vi.mock('../../dao/clansDao.js', () =>
 			'getClanBannerRequest',
 			'getClanHistoryCountRequest',
 			'getClanHistoryRequest',
+			'getClanMemberByPlayer',
 			'getClanMemberRequest',
 			'getClanMembersListRequest',
 			'getClanMessagesCountRequest',
@@ -36,12 +37,14 @@ vi.mock('../../dao/clansDao.js', () =>
 			'getRankingWarClansRequest',
 			'joinClanRequest',
 			'leaveClanSelfRequest',
+			'playerIsMember',
 			'playerHasRightRequest',
 			'searchClansByName',
 			'searchClansByNameRequest',
 			'updateClanBannerRequest',
 			'updateClanContribution',
 			'updateClanLanguagesRequest',
+			'updateClanLeader',
 			'updateClanMemberRequest',
 			'updateClanPageRequest',
 			'updateClanTreasure',
@@ -51,7 +54,13 @@ vi.mock('../../dao/clansDao.js', () =>
 );
 vi.mock('../../dao/clanMessageDao.js', () => ({ getDataForMessageDeletion: vi.fn() }));
 vi.mock('../../dao/notificationDao.js', () => ({ createNotification: vi.fn() }));
-vi.mock('../../dao/playerDao.js', () => ({ addMoney: vi.fn(), auth: vi.fn(), removeMoney: vi.fn() }));
+vi.mock('../../dao/playerDao.js', () => ({
+	addMoney: vi.fn(),
+	auth: vi.fn(),
+	removeMoney: vi.fn(),
+	isPlayerLeaderOfClanRequest: vi.fn(),
+	getPlayerId: vi.fn()
+}));
 vi.mock('../../dao/playerIngredientDao.js', () => ({
 	decreaseIngredientQuantity: vi.fn(),
 	getAllIngredientsDataRequest: vi.fn()
@@ -65,7 +74,7 @@ vi.mock('../../business/playerService.js', () => ({
 	isPlayerLeaderOfClan: vi.fn()
 }));
 vi.mock('../../prisma.js', () => ({
-	prisma: { clanCastle: { findUnique: vi.fn() }, clanMember: { findUnique: vi.fn() } }
+	prisma: { clanCastle: { findUnique: vi.fn() }, clanMember: { findUnique: vi.fn() }, clanHistory: { create: vi.fn() } }
 }));
 vi.mock('../../business/clanChampionshipMatchService.js', () => ({ removePlayerFromBoards: vi.fn() }));
 vi.mock('../../business/serverEventService.js', () => ({ kickPlayerFromWsChannels: vi.fn() }));
@@ -86,9 +95,11 @@ import * as svc from '../../business/clanService.js';
 
 const req = (params = {}, body = {}, file?: unknown) => makeRequest({ params, body, file } as never);
 
+const auth = { id: 'p1', name: 'Bob', clanId: 1 };
+
 beforeEach(() => {
 	vi.clearAllMocks();
-	vi.mocked(playerDao.auth).mockResolvedValue({ id: 'p1', name: 'Bob', clanId: 1 } as never);
+	vi.mocked(playerDao.auth).mockResolvedValue(auth as never);
 	vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(true as never);
 });
 
@@ -465,6 +476,57 @@ describe('checkMessageCanBeDeleted', () => {
 			authorId: 'other'
 		} as never);
 		await expect(svc.checkMessageCanBeDeleted(1, 'p1')).rejects.toThrow('not able to delete');
+	});
+});
+
+describe('transfer leadership', () => {
+	it('auth does not have a clan', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue(null);
+		await expect(svc.transferLeadership(req({}, { newLeaderId: '1' }))).rejects.toThrow('does not have a clan');
+		expect(clansDao.updateClanLeader).not.toHaveBeenCalled();
+	});
+	it('auth is not the leader', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue({ id: 1, clanId: 2 } as never);
+		vi.mocked(playerDao.isPlayerLeaderOfClanRequest).mockResolvedValue(false);
+		await expect(svc.transferLeadership(req({}, { newLeaderId: '1' }))).rejects.toThrow('is not the leader');
+		expect(clansDao.updateClanLeader).not.toHaveBeenCalled();
+	});
+	it('new leader not found', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue({ id: 1, clanId: 2 } as never);
+		vi.mocked(playerDao.isPlayerLeaderOfClanRequest).mockResolvedValue(true);
+		vi.mocked(playerDao.getPlayerId).mockResolvedValue(null);
+		const newLeaderId = '1';
+		await expect(svc.transferLeadership(req({}, { newLeaderId: newLeaderId }))).rejects.toThrow(
+			`Player ${newLeaderId} does not exist`
+		);
+		expect(clansDao.updateClanLeader).not.toHaveBeenCalled();
+	});
+	it('new leader is not a member of the clan', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue({ id: 1, clanId: 2 } as never);
+		vi.mocked(playerDao.isPlayerLeaderOfClanRequest).mockResolvedValue(true);
+		vi.mocked(playerDao.getPlayerId).mockResolvedValue({ id: 2, name: 'test' } as never);
+		vi.mocked(clansDao.playerIsMember).mockResolvedValue(false);
+		await expect(svc.transferLeadership(req({}, { newLeaderId: '1' }))).rejects.toThrow('is not a member of clan');
+		expect(clansDao.updateClanLeader).not.toHaveBeenCalled();
+	});
+	it('new leader is the current leader', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue({ id: 1, clanId: 2 } as never);
+		vi.mocked(playerDao.isPlayerLeaderOfClanRequest).mockResolvedValue(true);
+		vi.mocked(playerDao.getPlayerId).mockResolvedValue(auth as never);
+		vi.mocked(clansDao.playerIsMember).mockResolvedValue(true);
+		await expect(svc.transferLeadership(req({}, { newLeaderId: auth.id }))).rejects.toThrow(
+			'is already the leader of clan'
+		);
+		expect(clansDao.updateClanLeader).not.toHaveBeenCalled();
+	});
+	it('successful transfer', async () => {
+		vi.mocked(clansDao.getClanMemberByPlayer).mockResolvedValue({ id: 1, clanId: 2 } as never);
+		vi.mocked(playerDao.isPlayerLeaderOfClanRequest).mockResolvedValue(true);
+		vi.mocked(playerDao.getPlayerId).mockResolvedValue({ id: '2', name: 'test' } as never);
+		vi.mocked(clansDao.playerIsMember).mockResolvedValue(true);
+		vi.mocked(prisma.clanHistory.create);
+		await expect(svc.transferLeadership(req({}, { newLeaderId: '2' }))).resolves.not.toThrow();
+		expect(clansDao.updateClanLeader).toHaveBeenCalled();
 	});
 });
 

@@ -34,6 +34,7 @@ import {
 	leaveClanSelf,
 	searchClanByName,
 	searchClans,
+	transferLeadership,
 	updateClanBanner,
 	updateClanLanguages,
 	updateClanMember,
@@ -364,6 +365,18 @@ routes.delete(`${commonPath}/member/self`, async (req: Request, res: Response) =
 	}
 	try {
 		const response = await leaveClanSelf(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.put(`${commonPath}/leader`, [body('newLeaderId').exists().isUUID()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+	try {
+		const response = await transferLeadership(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
