@@ -424,6 +424,16 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
+				case NotificationSeverity.clanLeadershipTransfer:
+					return {
+						id: notification.id,
+						message: this.$t(`notification.clanLeadershipTransfer`, {
+							player: notification.message
+						}),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				case NotificationSeverity.clanWar:
 					// eslint-disable-next-line no-case-declarations
 					const clanWar = JSON.parse(notification.message);

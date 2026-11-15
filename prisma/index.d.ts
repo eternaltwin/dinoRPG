@@ -574,6 +574,7 @@ export const NotificationSeverity: {
   event: 'event',
   newClanApply: 'newClanApply',
   clanApplyAccepted: 'clanApplyAccepted',
+  clanLeadershipTransfer: 'clanLeadershipTransfer',
   message: 'message',
   clanWar: 'clanWar'
 };
