@@ -75,6 +75,7 @@ export default defineComponent({
 				case ClanHistoryType.WAR_DEFENDED:
 				case ClanHistoryType.WAR_WON:
 				case ClanHistoryType.WAR_STOLEN:
+				case ClanHistoryType.LEADERSHIP_TRANSFER:
 					if (message.length < 1) {
 						formated = {};
 					} else {

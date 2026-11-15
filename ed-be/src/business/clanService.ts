@@ -516,6 +516,8 @@ export async function leaveClanSelf(req: Request) {
 
 /**
  *  Transfer clan leadership.
+ * 	@param req
+ * 	@param req.body.newLeaderId {string} new leader player id
  */
 export async function transferLeadership(req: Request) {
 	const authed = await auth(req);
@@ -555,6 +557,16 @@ export async function transferLeadership(req: Request) {
 		Object.values(ClanMemberRight),
 		oldLeaderClanMember.nickname
 	);
+
+	await prisma.clanHistory.create({
+		data: {
+			clan: { connect: { id: clanId } },
+			author: { connect: { id: authed.id } },
+			type: ClanHistoryType[ClanHistoryType.LEADERSHIP_TRANSFER],
+			authorMessage: JSON.stringify({ newLeader: newLeader.name })
+		},
+		select: { id: true }
+	});
 }
 
 /**
