@@ -558,6 +558,8 @@ export async function transferLeadership(req: Request) {
 		oldLeaderClanMember.nickname
 	);
 
+	createNotification(newLeaderId, authed.name, NotificationSeverity.clanLeadershipTransfer);
+
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: clanId } },

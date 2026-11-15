@@ -5452,6 +5452,7 @@
 		"clanApply": "{name} souhaite rejoindre votre clan !",
 		"message": "Vous avez reçu un nouveau message.",
 		"clanApplyAccepted": "Le clan {name} a accepté votre demande.",
+		"clanLeadershipTransfer": "{player} t'a choisi comme nouveau chef de ton clan.",
 		"clanWar": {
 			"WAR_ATTACKED": "Nous sommes attaqués par {targetClan} !",
 			"WAR_START": "J'ai lancé une attaque contre le clan {targetClan} !",

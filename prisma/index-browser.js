@@ -1075,6 +1075,7 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   event: 'event',
   newClanApply: 'newClanApply',
   clanApplyAccepted: 'clanApplyAccepted',
+  clanLeadershipTransfer: 'clanLeadershipTransfer',
   message: 'message',
   clanWar: 'clanWar'
 };

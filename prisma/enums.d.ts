@@ -352,6 +352,7 @@ export const NotificationSeverity: {
   readonly event: 'event';
   readonly newClanApply: 'newClanApply';
   readonly clanApplyAccepted: 'clanApplyAccepted';
+  readonly clanLeadershipTransfer: 'clanLeadershipTransfer';
   readonly message: 'message';
   readonly clanWar: 'clanWar'
 };
@@ -370,6 +371,7 @@ export namespace NotificationSeverity {
   export type event = 'event';
   export type newClanApply = 'newClanApply';
   export type clanApplyAccepted = 'clanApplyAccepted';
+  export type clanLeadershipTransfer = 'clanLeadershipTransfer';
   export type message = 'message';
   export type clanWar = 'clanWar'
 }
