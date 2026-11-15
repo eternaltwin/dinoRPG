@@ -96,8 +96,8 @@ export const ClanService = {
 		const res = await http().delete(`/clan/member/self`);
 		return res.data;
 	},
-	async transferLeadership(newLeaderId: string) {
-		const res = await http().put(`/clan/leader`, { newLeaderId: newLeaderId });
+	async transferLeadership(newLeaderMemberId: number) {
+		const res = await http().put(`/clan/leader`, { newLeaderMemberId: newLeaderMemberId });
 		return res.data;
 	},
 	async getClanPages(clanId: number) {

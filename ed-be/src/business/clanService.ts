@@ -38,7 +38,6 @@ import {
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
-	playerIsMember,
 	searchClansByName,
 	searchClansByNameRequest,
 	updateClanBannerRequest,
@@ -517,11 +516,11 @@ export async function leaveClanSelf(req: Request) {
 /**
  *  Transfer clan leadership.
  * 	@param req
- * 	@param req.body.newLeaderId {string} new leader player id
+ * 	@param req.body.newLeaderMemberId {string} member id of the new leader
  */
 export async function transferLeadership(req: Request) {
 	const authed = await auth(req);
-	const newLeaderId: string = req.body.newLeaderId;
+	const newLeaderMemberId: number = req.body.newLeaderMemberId;
 
 	const oldLeaderClanMember = await getClanMemberByPlayer(authed.id);
 	if (oldLeaderClanMember === null) {
@@ -534,21 +533,20 @@ export async function transferLeadership(req: Request) {
 		throw new ExpectedError(`Player ${authed.name} is not the leader of clan ${clanId}`);
 	}
 
-	const newLeader = await getPlayerId(newLeaderId);
-	if (newLeader === null) {
-		throw new ExpectedError(`Player ${newLeaderId} does not exist`);
+	const newLeaderMember = await getClanMemberRequest(newLeaderMemberId);
+	if (newLeaderMember === null) {
+		throw new ExpectedError(`Member ${newLeaderMemberId} does not exist`);
 	}
 
-	const isMember = await playerIsMember(clanId, newLeaderId);
-	if (!isMember) {
-		throw new ExpectedError(`Player ${newLeaderId} is not a member of clan ${clanId}`);
+	if (newLeaderMember.clanId !== clanId) {
+		throw new ExpectedError(`Member ${newLeaderMemberId} is not a member of clan ${clanId}`);
 	}
 
-	if (newLeaderId === authed.id) {
+	if (newLeaderMember.player.id === authed.id) {
 		throw new ExpectedError(`Player ${authed.name} is already the leader of clan ${clanId}`);
 	}
 
-	await updateClanLeader(clanId, newLeaderId);
+	await updateClanLeader(clanId, newLeaderMember.player.id);
 
 	// By default the old leader will have all rights
 	await updateClanMemberRequest(
@@ -558,14 +556,14 @@ export async function transferLeadership(req: Request) {
 		oldLeaderClanMember.nickname
 	);
 
-	createNotification(newLeaderId, authed.name, NotificationSeverity.clanLeadershipTransfer);
+	createNotification(newLeaderMember.player.id, authed.name, NotificationSeverity.clanLeadershipTransfer);
 
 	await prisma.clanHistory.create({
 		data: {
 			clan: { connect: { id: clanId } },
 			author: { connect: { id: authed.id } },
 			type: ClanHistoryType[ClanHistoryType.LEADERSHIP_TRANSFER],
-			authorMessage: JSON.stringify({ newLeader: newLeader.name })
+			authorMessage: JSON.stringify({ newLeader: newLeaderMember.player.name })
 		},
 		select: { id: true }
 	});
