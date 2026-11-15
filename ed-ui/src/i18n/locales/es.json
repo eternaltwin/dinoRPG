@@ -5607,7 +5607,7 @@
 		"timeLeft": "Tiempo restante: {time}",
 		"nextTick": "Próximo tick en {time}",
 		"timeline": {
-			"label": "Cronología del partido: haz clic para ver el tablero en ese momento",
+			"label": "Cronología de la batalla: haz clic para ver el tablero en ese momento",
 			"live": "En directo",
 			"end": "Fin del partido",
 			"loading": "Cargando el historial…",
@@ -5691,7 +5691,7 @@
 			"closeFight": "Cerrar el combate",
 			"fightUnavailable": "Este combate ya no está disponible.",
 			"noDinoz": "Ningún Dinoz en juego",
-			"dinoz": "Dinoz",
+			"dinoz": "Dinos",
 			"state": "Estado",
 			"hp": "PV",
 			"hpValue": "{life} / {maxLife} PV",
