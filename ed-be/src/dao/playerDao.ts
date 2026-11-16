@@ -746,8 +746,7 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 											UnavailableReason.sacrificed,
 											UnavailableReason.unsacrificing,
 											UnavailableReason.selling,
-											UnavailableReason.unfreezing,
-											UnavailableReason.clanChampionship
+											UnavailableReason.unfreezing
 										]
 									}
 								}
