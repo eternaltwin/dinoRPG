@@ -29,6 +29,21 @@ describe('clanChampionship board rules', () => {
 		expect(scoreLine('west', a, b)).toBe(7);
 		expect(scoreLine('east', b, a)).toBe(19 - 9);
 	});
+	it('sharing a column counts as passing: each line stops before the enemy-held column', () => {
+		// west at 9 and 10, east at 9 and 10 (the screenshot case): west line 8, east line 19 - 11
+		const a = [
+			{ id: 1, clanId: 1, x: 9, y: 3 },
+			{ id: 2, clanId: 1, x: 10, y: 5 }
+		];
+		const b = [
+			{ id: 3, clanId: 2, x: 9, y: 0 },
+			{ id: 4, clanId: 2, x: 10, y: 8 },
+			{ id: 5, clanId: 2, x: 11, y: 1 }
+		];
+		const west = [{ id: 6, clanId: 1, x: 8, y: 2 }, ...a];
+		expect(scoreLine('west', west, b)).toBe(8);
+		expect(scoreLine('east', b, west)).toBe(19 - 11);
+	});
 	it('scoreLine is 0 without pieces', () => expect(scoreLine('west', [], [])).toBe(0));
 	it('east pieces are passed by west pieces with a greater x', () => {
 		expect(scoreLine('east', [{ id: 1, clanId: 2, x: 5, y: 0 }], [{ id: 2, clanId: 1, x: 6, y: 9 }])).toBe(0);
