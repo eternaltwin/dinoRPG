@@ -67,8 +67,11 @@
 										{{ $t('clanChampionship.replayView.showFight') }}
 									</button>
 									<RouterLink
-										:to="{ name: 'ReplayFight', params: { archive: entry.archiveId } }"
-										target="_blank"
+										:to="{
+											name: 'ReplayFight',
+											params: { archive: entry.archiveId },
+											query: { back: stepPath(entry.index) }
+										}"
 										data-testid="replay-history-fight-link"
 									>
 										{{ $t('clanChampionship.replayView.history.openFight') }}
@@ -81,7 +84,14 @@
 				<template v-else>
 					<div class="controls" data-testid="replay-controls">
 						<div class="buttons">
-							<button type="button" :title="$t('clanChampionship.replayView.first')" @click="goTo(0)">⏮</button>
+							<button
+								type="button"
+								:title="$t('clanChampionship.replayView.first')"
+								data-testid="replay-first"
+								@click="goTo(0)"
+							>
+								⏮
+							</button>
 							<button
 								type="button"
 								:title="$t('clanChampionship.replayView.previousFight')"
@@ -138,7 +148,7 @@
 								><input v-model="skipTicks" type="checkbox" /> {{ $t('clanChampionship.replayView.skipTicks') }}</label
 							>
 							<label
-								><input v-model="playFights" type="checkbox" />
+								><input v-model="playFights" type="checkbox" data-testid="replay-play-fights" />
 								{{ $t('clanChampionship.replayView.playFights') }}</label
 							>
 						</div>
@@ -225,7 +235,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { ReplayPieceStateCode } from '@drpg/core/models/clan/clanChampionship';
 import type {
@@ -254,6 +264,7 @@ const AFTER_FIGHT_MS = 800;
 const { ON_BOARD, LEFT, DEAD } = ReplayPieceStateCode;
 
 const route = useRoute();
+const router = useRouter();
 const { t, locale } = useI18n();
 const player = playerStore();
 
@@ -463,10 +474,14 @@ function stopPlaying() {
 	clearTimer();
 }
 
-function goTo(target: number | null) {
+/** A step reached by hand: its fight is played when asked (by default, when fights are played). */
+async function goTo(target: number | null, withFight = playFights.value) {
 	if (target === null) return;
 	stopPlaying();
 	index.value = Math.max(0, Math.min(frames.value.length - 1, target));
+	// After the index watcher, which closes the fight of the step left
+	await nextTick();
+	if (withFight && fightArchiveId.value) fightOpen.value = true;
 }
 
 /** The next step in that direction, past the tick-only ones when they are skipped. */
@@ -478,7 +493,7 @@ function neighbour(from: number, direction: 1 | -1): number | null {
 }
 
 function step(direction: 1 | -1) {
-	goTo(neighbour(index.value, direction));
+	void goTo(neighbour(index.value, direction));
 }
 
 function scheduleNext(delay = STEP_MS / speed.value) {
@@ -505,11 +520,8 @@ function advance() {
 
 /** Back to the board on that step, its fight open if asked. */
 async function showStep(target: number, withFight = false) {
-	goTo(target);
 	tab.value = 'board';
-	// After the index watcher, which closes the fight of a step reached by hand
-	await nextTick();
-	if (withFight && fightArchiveId.value) fightOpen.value = true;
+	await goTo(target, withFight);
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -533,9 +545,33 @@ function closeFight() {
 	if (playing.value) scheduleNext();
 }
 
-// A step reached by hand opens no fight by itself
+// Leaving a step by hand closes its fight; goTo opens the new one if asked
 watch(index, () => {
 	if (!playing.value) fightOpen.value = false;
+});
+
+/** The step in the URL (1-based), so that coming back from a fight lands on it. */
+function stepFromQuery(): number | null {
+	const raw = route.query.step;
+	return typeof raw === 'string' && /^[1-9]\d*$/.test(raw) ? Number(raw) - 1 : null;
+}
+
+/** No step on the last one of a live match: the reader follows the match. */
+function stepQuery(i: number): string | undefined {
+	const live = !!replay.value && !replay.value.omniscient && i >= frames.value.length - 1;
+	return live ? undefined : String(i + 1);
+}
+
+/** This replay on that step, for the way back from its fight. */
+function stepPath(i: number): string {
+	return router.resolve({ query: { ...route.query, step: stepQuery(i) } }).fullPath;
+}
+
+watch(index, i => {
+	if (!replay.value) return;
+	const step = stepQuery(i);
+	if (route.query.step === step) return;
+	void router.replace({ query: { ...route.query, step } });
 });
 
 function onKey(event: KeyboardEvent) {
@@ -582,9 +618,11 @@ onMounted(async () => {
 		loadError.value = true;
 		return;
 	}
-	// Live: start on the current board and keep up with it
+	// Back from a fight: on its step. Live: on the current board, kept up with
+	const requested = stepFromQuery();
+	if (requested !== null) index.value = Math.min(requested, Math.max(0, frames.value.length - 1));
+	else if (!replay.value.omniscient) index.value = Math.max(0, frames.value.length - 1);
 	if (!replay.value.omniscient) {
-		index.value = Math.max(0, frames.value.length - 1);
 		refreshTimer = setInterval(() => void refresh(), LIVE_REFRESH_MS);
 	}
 });

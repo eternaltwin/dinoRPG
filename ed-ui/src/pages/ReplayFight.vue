@@ -9,7 +9,11 @@
 		/>
 		<div v-if="backTo" class="back">
 			<RouterLink :to="backTo"
-				><DZButton back>{{ $t('clanChampionship.backToBoard') }}</DZButton></RouterLink
+				><DZButton back>{{
+					$t(
+						backTo.includes('/championship/replay/') ? 'clanChampionship.backToReplay' : 'clanChampionship.backToBoard'
+					)
+				}}</DZButton></RouterLink
 			>
 		</div>
 		<template v-if="fightTransformed">

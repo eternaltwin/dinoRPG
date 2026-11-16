@@ -689,10 +689,29 @@ test('a finished match replays every step with the state of both clans, fights i
 		await expect(rows.filter({ hasText: `Foe${suffix}` })).toContainText('70 / 100');
 		await expect(page.getByTestId(`board-cell-2-${y}`).getByTestId('board-piece-ap')).toHaveText('4');
 
+		// Fights are played: reaching the attack by hand plays its fight
 		await page.getByTestId('replay-next').click();
 		await expect(step).toContainText(`Mine${suffix} attaque Foe${suffix}`);
-		await page.getByTestId('replay-show-fight').click();
+		await expect(page).toHaveURL(/[?&]step=3/);
 		await expect(page.getByTestId('replay-fight').locator('canvas')).toBeVisible({ timeout: 20_000 });
+
+		// Unticked, the fight waits to be asked for
+		await page.getByTestId('replay-play-fights').uncheck();
+		await page.getByTestId('replay-first').click();
+		await page.getByTestId('replay-next-fight').click();
+		await expect(step).toContainText(`Mine${suffix} attaque Foe${suffix}`);
+		await expect(page.getByTestId('replay-fight')).toHaveCount(0);
+		await expect(page.getByTestId('replay-show-fight')).toBeVisible();
+
+		// The fight opened from the history comes back to its step
+		await page.getByTestId('replay-first').click();
+		await page.getByTestId('replay-tab-history').click();
+		const finishedEntries = page.getByTestId('replay-history-entry');
+		await finishedEntries.first().getByTestId('replay-history-fight-link').click();
+		await page.waitForURL(url => url.pathname.startsWith('/replay/'));
+		await page.getByRole('link', { name: 'Retour au replay' }).click();
+		await page.waitForURL(new RegExp(`/championship/replay/${match.id}\\?step=3$`));
+		await expect(step).toContainText('Étape 3 / 3');
 	} finally {
 		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
 		await db.clanEvent.delete({ where: { id: event.id } });

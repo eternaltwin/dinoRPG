@@ -5586,6 +5586,7 @@
 		"loadError": "Unable to load the board.",
 		"viewBoard": "View the board",
 		"backToBoard": "Back to the board",
+		"backToReplay": "Back to the replay",
 		"matchFinished": "Match finished",
 		"scoreLine": "Score line: {line}",
 		"quota": "Quota: {used}/{max}",

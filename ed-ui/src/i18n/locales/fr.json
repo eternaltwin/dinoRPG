@@ -5591,6 +5591,7 @@
 		"loadError": "Impossible de charger le damier.",
 		"viewBoard": "Voir le damier",
 		"backToBoard": "Retour au damier",
+		"backToReplay": "Retour au replay",
 		"matchFinished": "Match terminé",
 		"scoreLine": "Ligne de score : {line}",
 		"quota": "Quota : {used}/{max}",

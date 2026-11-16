@@ -5589,6 +5589,7 @@
 		"loadError": "No se pudo cargar el tablero.",
 		"viewBoard": "Ver el tablero",
 		"backToBoard": "Volver al tablero",
+		"backToReplay": "Volver a la repetición",
 		"matchFinished": "Partido terminado",
 		"scoreLine": "Línea de puntuación: {line}",
 		"quota": "Cupo: {used}/{max}",
