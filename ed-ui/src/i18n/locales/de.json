@@ -5591,7 +5591,7 @@
 		},
 		"calendar": "Spielplan",
 		"round": "Spieltag {round}",
-		"roundOf": "Runde {round} / {total}",
+		"roundOf": "Runde {round} / {total} (endet am {endDate})",
 		"bye": "{clan} hat spielfrei (Sieg)",
 		"nextRoundPending": "Die nächste Runde wird am Ende der laufenden zwischen Klans mit angrenzender Punktzahl ausgefochten.",
 		"versus": "gegen",
