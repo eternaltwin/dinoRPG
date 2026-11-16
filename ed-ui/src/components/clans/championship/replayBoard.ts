@@ -29,11 +29,14 @@ export function isWestClanOf(replay: MatchReplayDTO, clanId: number): boolean {
  */
 export function frameToBoard(replay: MatchReplayDTO, frame: ReplayFrameDTO, readerClanId?: number): MatchBoardDTO {
 	const dinozById = new Map(replay.dinoz.map(d => [d.dinozId, d]));
+	// A spectator (neither clan) sees west in the ally colour, so both teams stay apart on the board
+	const readerPlays =
+		readerClanId !== undefined && (readerClanId === replay.home.clanId || readerClanId === replay.away.clanId);
 	const pieces: BoardPieceDTO[] = frame.pieces
 		.filter(p => p[2] === ReplayPieceStateCode.ON_BOARD)
 		.map(([dinozId, clanId, , x, y, actionPoints, life, maxLife]) => {
 			const dinoz = dinozById.get(dinozId);
-			const ally = clanId === readerClanId;
+			const ally = readerPlays ? clanId === readerClanId : isWestClanOf(replay, clanId);
 			const piece: BoardPieceDTO = {
 				dinozId,
 				clanId,
@@ -46,7 +49,7 @@ export function frameToBoard(replay: MatchReplayDTO, frame: ReplayFrameDTO, read
 				level: dinoz?.level ?? 0,
 				playerName: dinoz?.playerName ?? ''
 			};
-			if (replay.omniscient || ally) Object.assign(piece, { life, maxLife, actionPoints });
+			if (replay.omniscient || clanId === readerClanId) Object.assign(piece, { life, maxLife, actionPoints });
 			return piece;
 		});
 	const side = (clan: ReplayClan, west: boolean): BoardSideDTO => ({
