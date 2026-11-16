@@ -1,6 +1,21 @@
 <template>
 	<div class="board-frame" :class="{ disabled }">
-		<div class="board" :style="{ '--size': BOARD_SIZE }">
+		<div class="board" :style="{ '--size': BOARD_SIZE }" @mouseleave="hovered = null">
+			<div v-for="side in ['top', 'bottom']" :key="side" class="coords columns" :class="side" aria-hidden="true">
+				<span v-for="(letter, x) in COLUMN_LABELS" :key="x" :class="{ current: hovered?.x === x }">{{ letter }}</span>
+			</div>
+			<div v-for="side in ['left', 'right']" :key="side" class="coords rows" :class="side" aria-hidden="true">
+				<span v-for="y in BOARD_SIZE" :key="y" :class="{ current: hovered?.y === y - 1 }">{{ y }}</span>
+			</div>
+			<div
+				v-if="hovered"
+				class="cell-tooltip"
+				data-testid="board-cell-tooltip"
+				aria-hidden="true"
+				:style="{ left: columnEdge(hovered.x + 0.5), top: columnEdge(hovered.y) }"
+			>
+				{{ cellLabel(hovered.x, hovered.y) }}
+			</div>
 			<template v-if="board.status !== 'scheduled'">
 				<div
 					class="score-line west"
@@ -26,6 +41,7 @@
 					attackable: cell.target === 'attack'
 				}"
 				@click="onCellClick(cell)"
+				@mouseenter="hovered = { x: cell.x, y: cell.y }"
 			>
 				<img
 					v-if="cell.blocked"
@@ -67,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { BOARD_SIZE, BoardDirection } from '@drpg/core/models/clan/clanChampionship';
 import type { BoardPieceDTO, MatchBoardDTO } from '@drpg/core/models/clan/clanChampionship';
@@ -76,6 +92,16 @@ import { playerStore } from '../../../store';
 import DinozIcon from './DinozIcon.vue';
 
 const ICON_SIZE = 40;
+
+/** Columns are lettered from the west, rows numbered from the north. */
+const COLUMN_LABELS = Array.from({ length: BOARD_SIZE }, (_, x) => String.fromCharCode(65 + x));
+
+function cellLabel(x: number, y: number): string {
+	return `${COLUMN_LABELS[x]}${y + 1}`;
+}
+
+/** Cell under the pointer: its coordinates are shown above it and lit on the rails. */
+const hovered = ref<{ x: number; y: number } | null>(null);
 
 // Widths relative to a cell keep the sprites at the same scale as each other
 const OBSTACLE_SPRITES = [
@@ -148,7 +174,7 @@ function showsState(p: BoardPieceDTO): boolean {
 }
 
 function pieceTitle(p: BoardPieceDTO): string {
-	const title = `${p.name} (${t('clanChampionship.level', { level: p.level })}) - ${p.playerName}`;
+	const title = `${cellLabel(p.x, p.y)} · ${p.name} (${t('clanChampionship.level', { level: p.level })}) - ${p.playerName}`;
 	if (!props.omniscient) return title;
 	return `${title}\n${t('clanChampionship.replayView.hpValue', { life: p.life ?? 0, maxLife: p.maxLife ?? 0 })} · ${t('clanChampionship.replayView.apValue', { ap: p.actionPoints ?? 0 })}`;
 }
@@ -247,9 +273,10 @@ $dirt: #a88c3a;
 $rim: #49652a;
 $chalk: #b4c088;
 $rim-width: 11px;
+$coords-width: 14px;
 
 .board-frame {
-	padding: 7px + $rim-width;
+	padding: 4px + $rim-width + $coords-width;
 	// Grainy dirt strip around the pitch
 	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .15 0 0 0 0 0 0 0 0 .7 -.05'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),
 		$dirt;
@@ -271,6 +298,72 @@ $rim-width: 11px;
 		0 0 3px ($rim-width + 1px) $rim;
 	background: radial-gradient(ellipse 34% 30% at 50% 50%, rgba(160, 145, 15, 0.85), rgba(160, 145, 15, 0) 100%),
 		radial-gradient(ellipse at 50% 50%, #637023, #4e6a22 75%);
+}
+.coords {
+	position: absolute;
+	display: grid;
+	color: rgba(45, 32, 8, 0.8);
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 1;
+	pointer-events: none;
+	user-select: none;
+	span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&.current {
+			color: #fff4c8;
+			text-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
+		}
+	}
+	&.columns {
+		left: 0;
+		right: 0;
+		height: $coords-width;
+		grid-template-columns: repeat(var(--size), 1fr);
+	}
+	&.rows {
+		top: 0;
+		bottom: 0;
+		width: $coords-width;
+		grid-template-rows: repeat(var(--size), 1fr);
+	}
+	&.top {
+		bottom: calc(100% + #{$rim-width});
+	}
+	&.bottom {
+		top: calc(100% + #{$rim-width});
+	}
+	&.left {
+		right: calc(100% + #{$rim-width});
+	}
+	&.right {
+		left: calc(100% + #{$rim-width});
+	}
+}
+.cell-tooltip {
+	position: absolute;
+	z-index: 2;
+	transform: translate(-50%, calc(-100% - 3px));
+	padding: 1px 5px;
+	border-radius: 4px;
+	background-color: rgba(20, 30, 60, 0.9);
+	color: #ffe9a8;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 14px;
+	white-space: nowrap;
+	pointer-events: none;
+	&::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 100%;
+		margin-left: -4px;
+		border: 4px solid transparent;
+		border-top-color: rgba(20, 30, 60, 0.9);
+	}
 }
 .score-line {
 	position: absolute;
