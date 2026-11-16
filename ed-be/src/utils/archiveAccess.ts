@@ -12,8 +12,8 @@ export function isClanChampionshipArchive(rawMetadata: string | null | undefined
 }
 
 /**
- * Clan championship fights are only readable by their participants, and by both clans once the match is over
- * (its replay). Throws the same error as a missing archive so existence is not revealed. Other archives are readable
+ * Clan championship fights are only readable by their participants, by both clans while the match is live and by
+ * anyone once it is over (its replay). Throws the same error as a missing archive so existence is not revealed. Other archives are readable
  * by anyone.
  */
 export async function assertCanReadArchive(
