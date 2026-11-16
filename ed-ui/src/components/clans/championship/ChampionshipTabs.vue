@@ -22,7 +22,10 @@
 					<DinozIcon :display="p.display" :size="32" />
 					<span class="name">{{ p.name }}</span>
 					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
-					<span class="muted" data-testid="clan-piece-owner">{{ p.playerName }}</span>
+					<span class="owner">
+						<OnlineDot :playerId="p.playerId" />
+						<span class="muted" data-testid="clan-piece-owner">{{ p.playerName }}</span>
+					</span>
 				</li>
 			</ul>
 			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
@@ -75,7 +78,10 @@
 					<div>
 						<strong>{{ selected.name }}</strong>
 						<div>{{ $t('clanChampionship.level', { level: selected.level }) }}</div>
-						<div v-if="!selected.mine" class="muted" data-testid="selection-owner">{{ selected.playerName }}</div>
+						<div v-if="!selected.mine" class="owner">
+							<OnlineDot :playerId="selected.playerId" />
+							<span class="muted" data-testid="selection-owner">{{ selected.playerName }}</span>
+						</div>
 						<div v-if="selected.life !== undefined" data-testid="selection-hp">
 							<span v-html="formatContent($t('clanChampionship.hp'))" /> : {{ selected.life }}/{{ selected.maxLife }}
 						</div>
@@ -158,6 +164,7 @@ import DinozIcon from './DinozIcon.vue';
 import DinozEquip from '../../dinoz/DinozEquip.vue';
 import InventoryTab from '../../common/InventoryTab.vue';
 import ClanChat from '../ClanChat.vue';
+import OnlineDot from '../OnlineDot.vue';
 
 const props = defineProps<{ board: MatchBoardDTO; selectedDinozId: number | null; pending: boolean }>();
 const emit = defineEmits<{
@@ -347,6 +354,11 @@ function formatDate(d: Date | string): string {
 		&.grey {
 			opacity: 0.55;
 		}
+		.owner {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+		}
 		&.clickable {
 			cursor: pointer;
 		}
@@ -371,6 +383,11 @@ h4 {
 	flex-wrap: wrap;
 	strong {
 		color: inherit;
+	}
+	.owner {
+		display: flex;
+		align-items: center;
+		gap: 4px;
 	}
 	// Same background as the dinoz page tab panel: the inventory rows use white text
 	.inventory-panel {

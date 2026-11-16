@@ -14,7 +14,7 @@ import { Auth, auth, authPlayer, getClanIdAndNameFromPlayerId } from '../dao/pla
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsMsgRequest } from '@drpg/core/models/serverEvents/WsMsgRequest';
-import { WsClanReadyMessage, WsClanRequest } from '@drpg/core/models/serverEvents/WsClanSocket';
+import { WsClanPresenceMessage, WsClanReadyMessage, WsClanRequest } from '@drpg/core/models/serverEvents/WsClanSocket';
 import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
 import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
 import { WsMsgResponseDeletion } from '@drpg/core/models/serverEvents/WsMsgResponseDeletion';
@@ -234,6 +234,40 @@ export function sendWsReady(ws: WebSocketCustom): void {
 	if (ws.readyState !== WebSocket.OPEN) return;
 	const message: WsClanReadyMessage = { type: 'ready' };
 	ws.send(JSON.stringify(message));
+	recordWsOut(ws.id);
+	sendPresenceOnReady(ws);
+}
+
+function isClanChannel(channelName: string): boolean {
+	return channelName.startsWith(`${WsChannel.CLAN_FORUM}.`);
+}
+
+function presenceOf(members: WsChannelData[]): WsClanPresenceMessage {
+	return { type: 'presence', playerIds: [...new Set(members.map(member => member.playerId))] };
+}
+
+/** Tells the whole clan who is online now. Does nothing for another kind of channel or an empty one. */
+function publishPresence(channelName: string): void {
+	const members = wsChannels.get(channelName);
+	if (!isClanChannel(channelName) || !members) return;
+	publishToWsChannel(channelName, presenceOf(members));
+}
+
+/**
+ * A ready connection learns who is online. The rest of the clan is told only when its player was not online yet:
+ * another tab of the same player changes nothing for them.
+ */
+function sendPresenceOnReady(ws: WebSocketCustom): void {
+	const entry = [...wsChannels.entries()].find(([, members]) => members.some(m => m.connectionId === ws.id));
+	if (!entry || !isClanChannel(entry[0])) return;
+	const [channelName, members] = entry;
+	const self = members.find(member => member.connectionId === ws.id)!;
+	const alreadyOnline = members.some(m => m.playerId === self.playerId && m.connectionId !== ws.id);
+	if (!alreadyOnline) {
+		publishPresence(channelName);
+		return;
+	}
+	ws.send(JSON.stringify(presenceOf(members)));
 	recordWsOut(ws.id);
 }
 
@@ -555,6 +589,7 @@ export function kickPlayerFromWsChannels(playerId: string, channelPrefixes: stri
 		const remaining = members.filter(user => user.playerId !== playerId);
 		if (remaining.length === 0) wsChannels.delete(channelName);
 		else wsChannels.set(channelName, remaining);
+		publishPresence(channelName);
 
 		webSocketServer?.clients.forEach(client => {
 			if (kicked.some(user => user.connectionId === client.id)) client.close();
@@ -588,9 +623,13 @@ function removeUserFromWsChannel(channel: ChannelInfos, wsId: string) {
 
 	if (usersInChannel.length === 0) {
 		wsChannels.delete(channel.channelName);
-	} else {
-		wsChannels.set(channel.channelName, usersInChannel);
+		return;
 	}
+	wsChannels.set(channel.channelName, usersInChannel);
+
+	// The player went offline only if it was their last connection to the channel
+	const leaving = channel.members.find(user => user.connectionId === wsId);
+	if (leaving && !usersInChannel.some(user => user.playerId === leaving.playerId)) publishPresence(channel.channelName);
 }
 
 /**

@@ -304,11 +304,45 @@ describe('clan socket', () => {
 		expect(mate.client.close).not.toHaveBeenCalled();
 		expect(otherClan.client.close).not.toHaveBeenCalled();
 
-		// Removed from the map: nothing is delivered to it any more.
+		// Removed from the map: nothing is delivered to it any more. The clan learns it went offline.
 		publishToWsChannel(`${WsChannel.CLAN_FORUM}.1`, { a: 1 });
 		expect(kicked.client.send).not.toHaveBeenCalled();
-		expect(mate.client.send).toHaveBeenCalledTimes(1);
+		expect(sent(mate.client)).toEqual([{ type: 'presence', playerIds: ['p-mate'] }, { a: 1 }]);
 		for (const c of [mate, otherClan]) disconnectWsUser(c.ws);
+	});
+
+	it('tells a ready connection who is online, and the clan only when a player comes online', async () => {
+		const a = await connect('p-on1', '2.0.5.1', 30);
+		const b = await connect('p-on2', '2.0.5.2', 30);
+		const otherClan = await connect('p-on3', '2.0.5.3', 31);
+		setWebSocketServer({ clients: new Set([a.client, b.client, otherClan.client]) } as never);
+		const ready = (c: { ws: any; client: any }) => sendWsReady(Object.assign(c.ws, c.client));
+
+		ready(a);
+		ready(b);
+		const both = { type: 'presence', playerIds: ['p-on1', 'p-on2'] };
+		expect(sent(a.client)).toEqual([{ type: 'ready' }, both, both]);
+		// b was registered, not ready yet, when a came online: a client keeps a presence received before its ready
+		expect(sent(b.client)).toEqual([both, { type: 'ready' }, both]);
+		expect(otherClan.client.send).not.toHaveBeenCalled();
+
+		// A second tab of an online player: only that tab is told
+		const secondTab = await connect('p-on1', '2.0.5.4', 30);
+		setWebSocketServer({ clients: new Set([a.client, b.client, secondTab.client]) } as never);
+		a.client.send.mockClear();
+		b.client.send.mockClear();
+		ready(secondTab);
+		expect(sent(secondTab.client)).toEqual([{ type: 'ready' }, both]);
+		expect(a.client.send).not.toHaveBeenCalled();
+		expect(b.client.send).not.toHaveBeenCalled();
+
+		// Closing one of two tabs changes nothing; closing the last one does
+		disconnectWsUser(secondTab.ws);
+		expect(b.client.send).not.toHaveBeenCalled();
+		disconnectWsUser(a.ws);
+		expect(sent(b.client)).toEqual([{ type: 'presence', playerIds: ['p-on2'] }]);
+
+		for (const c of [b, otherClan]) disconnectWsUser(c.ws);
 	});
 
 	it('snapshots the live connections with their traffic, without the connexion token', async () => {

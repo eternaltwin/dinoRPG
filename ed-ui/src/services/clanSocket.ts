@@ -1,6 +1,11 @@
 import { ref } from 'vue';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
-import { WsClanAction, WsClanCalls, WsClanResponse } from '@drpg/core/models/serverEvents/WsClanSocket';
+import {
+	WsClanAction,
+	WsClanCalls,
+	WsClanPresenceMessage,
+	WsClanResponse
+} from '@drpg/core/models/serverEvents/WsClanSocket';
 import { ServerEventsService } from './ServerEventsService.js';
 import { WsRequestError } from '../utils/WsRequestError.js';
 
@@ -15,6 +20,8 @@ type ReadyWaiter = { resolve(): void; reject(err: Error): void };
 
 /** Whether the server listens to the connection, i.e. after its `ready` message. */
 const connected = ref(false);
+/** Members of the clan who have the game open, as last pushed by the server. Empty while disconnected. */
+const onlinePlayerIds = ref<ReadonlySet<string>>(new Set());
 
 const listeners = new Set<Listener>();
 const readyListeners = new Set<() => void>();
@@ -44,6 +51,7 @@ function dropSocket() {
 		}
 	}
 	connected.value = false;
+	onlinePlayerIds.value = new Set();
 }
 
 /** What was sent may or may not have been handled: it is refused here, never sent again by itself. */
@@ -81,6 +89,11 @@ function onMessage(raw: string) {
 		readyListeners.forEach(listener => listener());
 		return;
 	}
+	// May come just before `ready`: the server tells the clan as soon as the connection is registered
+	if (message?.type === 'presence') {
+		onlinePlayerIds.value = new Set((message as unknown as WsClanPresenceMessage).playerIds);
+		return;
+	}
 	if (message?.type === 'response') {
 		const response = message as unknown as WsClanResponse;
 		const request = pending.get(response.requestId);
@@ -113,6 +126,7 @@ async function connect() {
 		ws.onclose = () => {
 			if (gen !== generation) return;
 			connected.value = false;
+			onlinePlayerIds.value = new Set();
 			socket = null;
 			rejectPending();
 			scheduleRetry(gen);
@@ -152,6 +166,13 @@ function subscribe<T>(set: Set<T>, listener: T): () => void {
  */
 export const clanSocket = {
 	connected,
+	onlinePlayerIds,
+
+	/** Whether a member of the clan has the game open; null when unknown (socket not connected). */
+	isOnline(playerId: string): boolean | null {
+		if (!connected.value) return null;
+		return onlinePlayerIds.value.has(playerId);
+	},
 
 	/** Follows the player's clan: connects, moves to the new clan's channel, or closes when `newClanId` is null. */
 	follow(newClanId: number | null): void {
