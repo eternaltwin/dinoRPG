@@ -12,11 +12,11 @@ Sobald eine Meisterschaft begonnen hat, kann kein Klan in der Rangliste platzier
 
 Die Meisterschaft wird im **Schweizer System** in 48-Stunden-Schlachten ausgetragen. Alle Klane beginnen mit 0 Punkten. Ein Sieg beschert 3 Punkte, ein Unentschieden 1 und eine Niederlage 0 Punkte.
 
-In jeder Runde tritt jeder Klan gegen einen Klan mit ähnlicher Punktzahl an, wobei möglichst vermieden wird, zweimal auf denselben Gegner zu treffen. Die erste Runde wird ausgelost, jede weitere am Ende der vorherigen. Die Anzahl der Runden hängt von der Anzahl der angemeldeten Klane ab: mindestens 3, eine mehr bei jeder Verdoppelung der Klananzahl (8 Klane: 3 Runden, 16 Klane: 4 Runden, 32 Klane: 5 Runden...).
+In jeder Runde tritt jeder Klan gegen einen Klan mit angrenzender Punktzahl an, wobei möglichst vermieden wird, zweimal auf den gleichen Gegner zu treffen. Die erste Runde wird per Zufallsprinzip bestimmt. Jede weitere folgt nach Ende der vorherigen. Die Anzahl der Runden hängt von der Anzahl der angemeldeten Klane ab: Mindestens 3. Diese werden bei Verdoppelung der Klananzahl ebenfalls verdoppelt (8 Klane: 3 Runden, 16 Klane: 4 Runden, 32 Klane: 5 Runden usw.)
 
-Bei einer ungeraden Anzahl von Klanen hat in jeder Runde ein Klan spielfrei: Er spielt nicht und erhält die 3 Punkte eines Sieges. Das Freilos geht an den am schlechtesten platzierten Klan, der noch keines hatte.
+Bei einer ungeraden Anzahl von Klanen hat in jeder Runde ein Klan spielfrei: Er spielt nicht und erhält die 3 Punkte eines Sieges. Der am schlechtesten platzierte Klan, der noch kein spielfrei hatte, erhält es.
 
-Nach der letzten Runde ergibt sich die Rangliste aus den erzielten Punkten. Bei Gleichstand entscheidet die **Buchholz-Wertung** (die Summe der Punkte der Gegner), dann die Punktedifferenz und schließlich die erzielten Punkte.
+Nach der letzten Runde ergibt sich die Rangliste aus den erzielten Punkten. Bei Gleichstand entscheidet die **Buchholz-Wertung** (die Punktzahlsumme der Gegner), dann die Punktzahldifferenz und schließlich die erzielten Punkte.
 
 # Das Schlachtfeld
 
