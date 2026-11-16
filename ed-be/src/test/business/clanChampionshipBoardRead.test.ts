@@ -220,7 +220,7 @@ describe('getMyMatchBoard', () => {
 		});
 	});
 
-	it('exposes the journal: archiveId only for participants, newest first, capped at 50', async () => {
+	it('exposes the journal: archiveId of every fight, newest first, capped at 50', async () => {
 		p.clanChampionshipPiece.findMany.mockResolvedValue([]);
 		const row = (id: number, players: string[]) => ({
 			id,
@@ -247,7 +247,7 @@ describe('getMyMatchBoard', () => {
 				deadDinozIds: [2],
 				archiveId: 'arch-2'
 			},
-			expect.objectContaining({ id: 1, archiveId: null, participantCount: 3 })
+			expect.objectContaining({ id: 1, archiveId: 'arch-1', participantCount: 3 })
 		]);
 	});
 });
@@ -278,10 +278,10 @@ describe('getMatchFights', () => {
 		expect(fights.map(f => f.id)).toEqual([119, 118]);
 	});
 
-	it('hides the archive of a fight the reader did not take part in', async () => {
+	it('links the archive of every fight, the reader took part in it or not', async () => {
 		p.clanChampionshipFight.findMany.mockResolvedValue([row(119, [ME]), row(118, ['foe'])]);
 		const fights = await getMatchFights(await auth(makeRequest()), MATCH_ID, 120);
-		expect(fights.map(f => f.archiveId)).toEqual(['arch-119', null]);
+		expect(fights.map(f => f.archiveId)).toEqual(['arch-119', 'arch-118']);
 	});
 
 	it('refuses a match the reader clan does not play', async () => {

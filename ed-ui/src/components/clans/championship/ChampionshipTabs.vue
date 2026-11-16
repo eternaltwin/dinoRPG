@@ -122,7 +122,6 @@
 						})
 					}}</span>
 					<RouterLink
-						v-if="f.archiveId !== null"
 						:to="{ name: 'ReplayFight', params: { archive: f.archiveId }, query: { back: route.fullPath } }"
 						>{{ $t('clanChampionship.replay') }}</RouterLink
 					>

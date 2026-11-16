@@ -105,8 +105,8 @@ export interface FightJournalEntryDTO {
 	attackerWon: boolean;
 	participantCount: number;
 	deadDinozIds: number[];
-	/** Only set when the reader took part in the fight. */
-	archiveId: string | null;
+	/** The journal is read by the two clans only, who may replay any fight of their match. */
+	archiveId: string;
 }
 
 export interface MatchBoardDTO {

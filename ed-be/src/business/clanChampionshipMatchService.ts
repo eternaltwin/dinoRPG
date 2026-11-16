@@ -723,13 +723,12 @@ type JournalRow = {
 	attackerClanId: number;
 	attackerWon: boolean;
 	participantDinozIds: number[];
-	participantPlayerIds: string[];
 	deadDinozIds: number[];
 	archiveId: string;
 };
 
-/** A journal line; the archive is only linked for a fight the reader took part in. */
-function toJournalEntry(f: JournalRow, readerId: string): FightJournalEntryDTO {
+/** A journal line; both clans of the match may replay any of its fights (see `assertCanReadArchive`). */
+function toJournalEntry(f: JournalRow): FightJournalEntryDTO {
 	return {
 		id: f.id,
 		createdAt: f.createdAt,
@@ -737,7 +736,7 @@ function toJournalEntry(f: JournalRow, readerId: string): FightJournalEntryDTO {
 		attackerWon: f.attackerWon,
 		participantCount: f.participantDinozIds.length,
 		deadDinozIds: f.deadDinozIds,
-		archiveId: f.participantPlayerIds.includes(readerId) ? f.archiveId : null
+		archiveId: f.archiveId
 	};
 }
 
@@ -756,7 +755,7 @@ export async function getMatchFights(authed: Auth, matchId: string, before: numb
 		orderBy: { id: 'desc' },
 		take: JOURNAL_PAGE_SIZE
 	});
-	return journal.map(f => toJournalEntry(f, authed.id));
+	return journal.map(f => toJournalEntry(f));
 }
 
 /** The reader's clan board: its live match, else its latest finished match of the active championship. */
@@ -838,7 +837,7 @@ export async function getMyMatchBoard(authed: Auth): Promise<MatchBoardDTO | nul
 		orderBy: { id: 'desc' },
 		take: JOURNAL_PAGE_SIZE
 	});
-	const fights = journal.map(f => toJournalEntry(f, authed.id));
+	const fights = journal.map(f => toJournalEntry(f));
 
 	return {
 		matchId: match.id,
