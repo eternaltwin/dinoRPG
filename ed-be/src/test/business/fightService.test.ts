@@ -504,18 +504,18 @@ describe('replayFight', () => {
 			const result = await replayFight(req({ archiveId: 'a1' }));
 			expect(result.id).toBe('a1');
 		});
-		it('hides the replay from a non-participant', async () => {
+		it('hides the replay from a non-participant before the match is played', async () => {
 			cdcArchive();
 			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(['p2']);
 			await expect(replayFight(req({ archiveId: 'a1' }))).rejects.toThrow('No replay found.');
 		});
-		it('shows the replay to a clan of the finished match (match replay)', async () => {
+		it('shows the replay to anyone once the match is played (match replay)', async () => {
 			cdcArchive();
 			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(['p2']);
 			vi.mocked(isClanChampionshipFightReplayable).mockResolvedValueOnce(true);
 			const result = await replayFight(req({ archiveId: 'a1' }));
 			expect(result.id).toBe('a1');
-			expect(isClanChampionshipFightReplayable).toHaveBeenCalledWith('a1', 'p1');
+			expect(isClanChampionshipFightReplayable).toHaveBeenCalledWith('a1');
 		});
 		it('hides the replay when there is no journal row', async () => {
 			cdcArchive();

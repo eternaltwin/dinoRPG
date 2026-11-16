@@ -165,14 +165,14 @@ describe('getMatchReplay', () => {
 			frame(3, [{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: 'arch', outcome: 0, deadDinozIds: [] }])
 		];
 
-		it.each([9, null])('while live, hides both clans: life, action points, heals and fight archives (%s)', async c => {
+		it.each([9, null])('while live, hides both clans: life, action points and heals, not the fights (%s)', async c => {
 			p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'live', winnerClanId: null }));
 			p.clanChampionshipFrame.findMany.mockResolvedValue(frames());
 			const replay = await getMatchReplay(authed(c), MATCH_ID);
 			expect(replay.omniscient).toBe(false);
 			expect(replay.frames.map(f => f.version)).toEqual([2, 3]);
 			expect(replay.frames[1].events).toEqual([
-				{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: '', outcome: 0, deadDinozIds: [] }
+				{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: 'arch', outcome: 0, deadDinozIds: [] }
 			]);
 			for (const f of replay.frames) {
 				expect(f.pieces).toEqual([

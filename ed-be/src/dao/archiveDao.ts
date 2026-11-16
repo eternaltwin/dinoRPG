@@ -180,19 +180,15 @@ export async function getClanChampionshipFightParticipants(archiveId: string): P
 }
 
 /**
- * True when the match replay shows this clan championship fight to the player: once the match is over, to anyone (the
- * omniscient replay is open to every player); while it is live, to the two clans only.
+ * True when the match replay shows this clan championship fight: to any player as soon as the match is played (live or
+ * finished), never before.
  */
-export async function isClanChampionshipFightReplayable(archiveId: string, playerId: string): Promise<boolean> {
+export async function isClanChampionshipFightReplayable(archiveId: string): Promise<boolean> {
 	return withSpan(isClanChampionshipFightReplayable.name, async () => {
 		const row = await prisma.clanChampionshipFight.findUnique({
 			where: { archiveId },
-			select: { match: { select: { status: true, homeClanId: true, awayClanId: true } } }
+			select: { match: { select: { status: true } } }
 		});
-		if (!row || row.match.status === ClanChampionshipMatchStatus.scheduled) return false;
-		if (row.match.status === ClanChampionshipMatchStatus.finished) return true;
-		const member = await prisma.clanMember.findUnique({ where: { playerId }, select: { clanId: true } });
-		if (!member) return false;
-		return member.clanId === row.match.homeClanId || member.clanId === row.match.awayClanId;
+		return !!row && row.match.status !== ClanChampionshipMatchStatus.scheduled;
 	});
 }

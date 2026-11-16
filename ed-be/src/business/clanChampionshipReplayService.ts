@@ -91,12 +91,11 @@ type FrameRow = { pieces: unknown; events: unknown };
 
 /**
  * A live frame as the reader's clan sees the board: no life nor action points of the enemy, no enemy heal (a frame
- * made only of those is left out). The fights stay watchable by the two clans; a spectator (`null`) has no side: both
- * are the enemy, and gets no fight archive.
+ * made only of those is left out). A spectator (`null`) has no side: both are the enemy. The fights stay watchable by
+ * anyone.
  */
 function hideEnemyState<F extends FrameRow>(frame: F, readerClanId: number | null): F[] {
 	const events = (frame.events as ReplayEvent[]).flatMap((e): ReplayEvent[] => {
-		if (e.type === 'attack' && readerClanId === null) return [{ ...e, archiveId: '' }];
 		if (e.type === 'heal' && !ownedBy(frame, e.dinozId, readerClanId)) return [];
 		return [e];
 	});
