@@ -136,7 +136,7 @@
 			"default": "./index.js"
 		}
 	},
-	"version": "0.20.2",
+	"version": "0.20.3",
 	"sideEffects": false,
 	"dependencies": {
 		"@prisma/client-runtime-utils": "^7.10.0"
