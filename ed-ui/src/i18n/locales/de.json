@@ -4298,7 +4298,7 @@
 			"edit": "Anpassen",
 			"exclude": "Ausschließen",
 			"leave": "Klan verlassen",
-			"transferLeadership": "Céder la couronne"
+			"transferLeadership": "Krone abgeben"
 		},
 		"stat": {
 			"last_login": "Zuletzt eingeloggt: {date}"
@@ -4352,7 +4352,7 @@
 			"PLAYER_JOIN": "Ein Spieler ist dem Klan beigetreten.",
 			"PLAYER_LEAVE": "Dieser Spieler hat beschlossen, den Klan zu verlassen.",
 			"PLAYER_EXCLUSION": "Dieser Spieler wurde aus dem Klan ausgeschlossen.",
-			"LEADERSHIP_TRANSFER": "J'ai désigné {newLeader} comme nouveau chef du clan.",
+			"LEADERSHIP_TRANSFER": "Ich habe {newLeader} zum neuen Anführer des Klans erklärt.",
 			"CASTLE_BUILD": "Ich habe die Burg errichtet.",
 			"CASTLE_REBUILD": "Ich habe die Burg wiederaufgebaut.",
 			"WAR_ATTACKED": "Als amtierender Kriegsoffizier von Klan {name} habe ich eurem Klan den Krieg erklärt!",
@@ -5465,7 +5465,7 @@
 		"clanApply": "{name} möchte deinem Klan beitreten!",
 		"message": "Du hast eine neue Nachricht erhalten.",
 		"clanApplyAccepted": "Der Klan {name} hat deine Anfrage angenommen.",
-		"clanLeadershipTransfer": "{player} t'a choisi comme nouveau chef de ton clan.",
+		"clanLeadershipTransfer": "{player} hat dich zum neuen Anführer eures Klans ernannt.",
 		"clanWar": {
 			"WAR_ATTACKED": "Der Klan „{targetClan}“ hat uns den Krieg erklärt!",
 			"WAR_START": "Ich habe dem Klan „{targetClan}“ den Krieg erklärt!",
@@ -5593,7 +5593,7 @@
 		"round": "Spieltag {round}",
 		"roundOf": "Runde {round} / {total}",
 		"bye": "{clan} hat spielfrei (Sieg)",
-		"nextRoundPending": "Die nächste Runde wird am Ende der laufenden Runde zwischen Clans mit ähnlicher Punktzahl ausgelost.",
+		"nextRoundPending": "Die nächste Runde wird am Ende der laufenden zwischen Klans mit angrenzender Punktzahl ausgefochten.",
 		"versus": "gegen",
 		"daysShort": "{days} T",
 		"noMatch": "Keine Partie im Gange",
@@ -5639,7 +5639,7 @@
 		"enter": "Betreten",
 		"leave": "Verlassen",
 		"noEligible": "Kein Dinoz zum Betreten verfügbar.",
-		"elsewhere": "{count} Dinoz anderswo",
+		"elsewhere": "{count} Dinoz nicht vor Ort",
 		"onBoard": "Auf dem Spielfeld",
 		"noneOnBoard": "Keine Dinoz auf dem Spielfeld.",
 		"hp": ":pv:",
