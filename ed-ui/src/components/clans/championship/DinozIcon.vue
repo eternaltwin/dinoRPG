@@ -53,8 +53,12 @@ import { loadDinorpgAnimations } from '../../../utils/dinorpgAnimations.js';
 const props = defineProps<{ display: string; size: number; flip?: boolean }>();
 const src = ref<string | undefined>();
 
+// The same dinoz is drawn facing both ways (west pieces are flipped): the orientation is part of the key
+const keyOf = (display: string, flip: boolean) => `${display}|${flip ? 1 : 0}`;
+
 function renderImage(display: string, flip: boolean): Promise<string | null> {
-	let promise = inFlight.get(display);
+	const key = keyOf(display, flip);
+	let promise = inFlight.get(key);
 	if (!promise) {
 		// Loaded on demand: a static import put the whole animation library in the entry chunk
 		promise = loadDinorpgAnimations().then(
@@ -73,7 +77,7 @@ function renderImage(display: string, flip: boolean): Promise<string | null> {
 						d.toRawImage(
 							value => {
 								void trimToContent(value).then(trimmed => {
-									cache.set(display, trimmed);
+									cache.set(key, trimmed);
 									resolve(trimmed);
 								});
 							},
@@ -86,8 +90,8 @@ function renderImage(display: string, flip: boolean): Promise<string | null> {
 				})
 		);
 		// A failed load of the library shows no image, like a failed render
-		promise = promise.catch(() => null).finally(() => inFlight.delete(display));
-		inFlight.set(display, promise);
+		promise = promise.catch(() => null).finally(() => inFlight.delete(key));
+		inFlight.set(key, promise);
 	}
 	return promise;
 }
@@ -95,18 +99,18 @@ function renderImage(display: string, flip: boolean): Promise<string | null> {
 async function render() {
 	const display = props.display;
 	const flip = props.flip ?? false;
-	const cached = cache.get(display);
+	const cached = cache.get(keyOf(display, flip));
 	if (cached) {
 		src.value = cached;
 		return;
 	}
 	const value = await renderImage(display, flip);
 	// The piece may show another dinoz by now
-	if (value && display === props.display) src.value = value;
+	if (value && display === props.display && flip === (props.flip ?? false)) src.value = value;
 }
 
 onMounted(render);
-watch(() => props.display, render);
+watch(() => [props.display, props.flip], render);
 </script>
 
 <style lang="scss" scoped>

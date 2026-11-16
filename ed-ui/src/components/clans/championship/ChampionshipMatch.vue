@@ -213,7 +213,8 @@ async function refetch(retry = true) {
 			board.value = result;
 		}
 		const sel = selectedDinozId.value;
-		if (sel !== null && !board.value?.pieces.some(p => p.dinozId === sel && p.mine)) selectedDinozId.value = null;
+		if (sel !== null && !board.value?.pieces.some(p => p.dinozId === sel && (p.mine || p.ally)))
+			selectedDinozId.value = null;
 	} catch (e) {
 		if (unmounted) return;
 		// Keep the last board: only flag the failure, then retry once

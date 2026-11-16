@@ -5640,7 +5640,9 @@
 			"busy": "Nicht verfügbar"
 		},
 		"replayMatch": "Partie erneut ansehen",
+		"watchLive": "Live ansehen",
 		"replayView": {
+			"liveNotice": "Live: LP und AP bleiben bis zum Ende der Partie verborgen. Das Spielfeld wird alle 15 Sekunden aktualisiert.",
 			"back": "Zurück zur Meisterschaft",
 			"loadError": "Die Wiederholung dieser Partie kann nicht geladen werden.",
 			"noFrames": "Diese Partie wurde gespielt, bevor Wiederholungen aufgezeichnet wurden: es gibt nichts anzusehen.",

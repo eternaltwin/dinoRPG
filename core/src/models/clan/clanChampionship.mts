@@ -82,6 +82,9 @@ export interface BoardPieceDTO {
 	life?: number;
 	maxLife?: number;
 	actionPoints?: number;
+	/** Equipped items, of the reader's clan pieces only. */
+	items?: number[];
+	maxItems?: number;
 	playerName: string;
 }
 

@@ -60,9 +60,16 @@
 						<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
 						<div v-if="canReplay(m)">
 							<RouterLink
-								:to="{ name: 'ClanChampionshipReplay', params: { id: playerStore.clanId, matchId: m.id } }"
+								:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
 								data-testid="match-replay-link"
 								>{{ $t('clanChampionship.replayMatch') }}</RouterLink
+							>
+						</div>
+						<div v-else-if="canWatchLive(m)">
+							<RouterLink
+								:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
+								data-testid="match-live-link"
+								>{{ $t('clanChampionship.watchLive') }}</RouterLink
 							>
 						</div>
 					</td>
@@ -153,10 +160,14 @@ export default defineComponent({
 		byesOf(round: number): ClanChampionshipDTO['byes'] {
 			return (this.championship?.byes ?? []).filter(b => b.round === round);
 		},
-		/** The replay is open to both clans of a finished match. */
+		/** The replay of a finished match, omniscient, is open to every player. */
 		canReplay(m: ClanChampionshipMatchDTO): boolean {
+			return m.status === 'finished';
+		},
+		/** A live match is watched from its board by its clans, and from the replay (no life nor AP) by the others. */
+		canWatchLive(m: ClanChampionshipMatchDTO): boolean {
 			const clanId = this.playerStore.clanId;
-			return m.status === 'finished' && clanId !== undefined && (m.homeClan.id === clanId || m.awayClan.id === clanId);
+			return m.status === 'live' && (clanId === undefined || (m.homeClan.id !== clanId && m.awayClan.id !== clanId));
 		},
 		formatDate(d: Date | string): string {
 			return new Date(d).toLocaleString(this.$i18n.locale, { dateStyle: 'short', timeStyle: 'short' });

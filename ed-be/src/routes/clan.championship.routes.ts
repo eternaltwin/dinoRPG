@@ -20,7 +20,8 @@ List of endpoints
 GET 				/
 	Get the current championship (or null)
 GET 				/match/:matchId/replay
-	Get the replay of a match of the player's clan: omniscient once over, as the board shows it while live
+	Get the replay of any match: omniscient once over; while live, as the reader's board shows it (a spectator sees
+	no life nor action points of either clan)
  */
 
 routes.get(`${commonPath}/`, async (req: Request, res: Response) => {

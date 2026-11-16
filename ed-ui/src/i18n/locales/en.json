@@ -5640,7 +5640,9 @@
 			"busy": "Unavailable"
 		},
 		"replayMatch": "Replay the match",
+		"watchLive": "Watch live",
 		"replayView": {
+			"liveNotice": "Live: life and action points stay hidden until the match is over. The board updates every 15 seconds.",
 			"back": "Back to the championship",
 			"loadError": "Unable to load the replay of this match.",
 			"noFrames": "This match was played before replays were recorded: there is nothing to replay.",

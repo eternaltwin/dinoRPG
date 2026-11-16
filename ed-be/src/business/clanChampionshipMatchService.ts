@@ -16,7 +16,7 @@ import { ClanChampionshipEventConfig } from '@drpg/core/models/clan/clanEventCon
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { CLAN_CHAMPIONSHIP_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
 import { FightOutcome, FightProcessResult } from '@drpg/core/models/fight/FightResult';
-import { calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
+import { backpackSlot, calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
 	ClanChampionshipMatchStatus,
@@ -777,7 +777,10 @@ export async function getMyMatchBoard(authed: Auth): Promise<MatchBoardDTO | nul
 					level: true,
 					life: true,
 					maxLife: true,
-					player: { select: { name: true } }
+					items: { select: { itemId: true } },
+					skills: { select: { skillId: true } },
+					status: { select: { statusId: true } },
+					player: { select: { name: true, engineer: true } }
 				}
 			}
 		}
@@ -823,6 +826,8 @@ export async function getMyMatchBoard(authed: Auth): Promise<MatchBoardDTO | nul
 			dto.life = p.dinoz.life;
 			dto.maxLife = p.dinoz.maxLife;
 			dto.actionPoints = p.actionPoints;
+			dto.items = p.dinoz.items.map(i => i.itemId);
+			dto.maxItems = backpackSlot(p.dinoz.player?.engineer ?? false, { id: p.dinozId, ...p.dinoz });
 		}
 		return dto;
 	});
