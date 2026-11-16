@@ -59,6 +59,10 @@ import * as playerDao from '../../dao/playerDao.js';
 import { addStatusToDinoz } from '../../dao/dinozStatusDao.js';
 import TournamentManager from '../../utils/tournamentManager.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { addSkillToDinoz } from '../../dao/dinozSkillDao.js';
+import { getRace } from '@drpg/core/utils/DinozUtils';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import {
 	getLearnableAndUnlockableSkills,
 	learnSkill,
@@ -243,6 +247,18 @@ describe('reincarnate', () => {
 		vi.mocked(dinozDao.getAllDinozWithSkills).mockResolvedValue([] as never);
 		await reincarnate(req({ id: '1' }));
 		expect(addStatusToDinoz).toHaveBeenCalledWith(1, DinozStatusId.REINCARNATION);
+	});
+	it('keeps the demon skill of a race without native skill', async () => {
+		// Moueffe has no native skill: its demon skill used to be skipped
+		vi.mocked(getRace).mockReturnValueOnce(raceList[RaceEnum.MOUEFFE]);
+		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(
+			reincarnatable({ status: [{ statusId: DinozStatusId.DEMON }] }) as never
+		);
+		vi.mocked(playerDao.getPlayerUSkills).mockResolvedValue({ id: 'p1' } as never);
+		vi.mocked(dinozDao.getAllDinozWithSkills).mockResolvedValue([] as never);
+		await reincarnate(req({ id: '1' }));
+		expect(addSkillToDinoz).toHaveBeenCalledWith(1, Skill.FORCE_DE_LUMIERE);
+		expect(addStatusToDinoz).toHaveBeenCalledWith(1, DinozStatusId.DEMON);
 	});
 	it('looks the dinoz up among the dinoz of the caller only', async () => {
 		vi.mocked(dinozDao.getDinozToReincarnate).mockResolvedValue(null as never);

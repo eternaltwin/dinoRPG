@@ -582,14 +582,13 @@ export async function reincarnate(req: Request) {
 	await removeAllSkillFromDinoz(dinoz.id);
 
 	const promises = [];
-	if (race.skills && race.skills.length > 0) {
-		for (const skill of race.skills) {
+	for (const skill of race.skills ?? []) {
+		promises.push(addSkillToDinoz(dinoz.id, skill));
+	}
+	// Independent from the native skills: some races (moueffe, planaille…) only have a demon skill
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.DEMON)) {
+		for (const skill of race.demon?.skills ?? []) {
 			promises.push(addSkillToDinoz(dinoz.id, skill));
-		}
-		if (race.demon && race.demon.skills && dinoz.status.some(s => s.statusId === DinozStatusId.DEMON)) {
-			for (const skill of race.demon?.skills) {
-				promises.push(addSkillToDinoz(dinoz.id, skill));
-			}
 		}
 	}
 	promises.push(removeAllStatusFromDinoz(dinoz.id));
