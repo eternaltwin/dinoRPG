@@ -4238,6 +4238,10 @@
 				"castleDestroyed": "Le château est détruit, reconstruisez-le d'abord",
 				"castleFullLife": "Le château est déjà complètement réparé."
 			}
+		},
+		"presence": {
+			"online": "En ligne",
+			"offline": "Hors ligne"
 		}
 	},
 	"clansList": {

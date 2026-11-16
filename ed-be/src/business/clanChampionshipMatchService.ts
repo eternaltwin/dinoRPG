@@ -823,6 +823,7 @@ export async function getMyMatchBoard(authed: Auth): Promise<MatchBoardDTO | nul
 			playerName: p.dinoz.player?.name ?? ''
 		};
 		if (mine || ally) {
+			dto.playerId = p.playerId;
 			dto.life = p.dinoz.life;
 			dto.maxLife = p.dinoz.maxLife;
 			dto.actionPoints = p.actionPoints;

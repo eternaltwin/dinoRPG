@@ -4237,6 +4237,10 @@
 				"castleDestroyed": "Your castle is destroyed, build it back first.",
 				"castleFullLife": "Your castle is already fully repaired."
 			}
+		},
+		"presence": {
+			"online": "Online",
+			"offline": "Offline"
 		}
 	},
 	"clansList": {

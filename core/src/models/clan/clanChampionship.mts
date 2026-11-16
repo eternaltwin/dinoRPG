@@ -85,6 +85,8 @@ export interface BoardPieceDTO {
 	/** Equipped items, of the reader's clan pieces only. */
 	items?: number[];
 	maxItems?: number;
+	/** Owner of the reader's clan pieces only, e.g. to show whether they are online. */
+	playerId?: string;
 	playerName: string;
 }
 

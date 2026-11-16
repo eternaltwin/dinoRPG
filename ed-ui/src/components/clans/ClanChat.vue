@@ -13,6 +13,7 @@
 				data-testid="chat-message"
 			>
 				<div class="head">
+					<OnlineDot v-if="msg.author" :playerId="msg.author.id" />
 					<RouterLink v-if="msg.author" class="author" :to="{ name: 'Account', params: { id: msg.author.id } }">
 						<img v-if="isLeader(msg)" src="\src\assets\icons\crown.png" alt="" />
 						{{ msg.author.name }}
@@ -67,6 +68,7 @@ import { sanitizeHtml } from '../../utils/sanitizeHtml';
 import { confirm } from '../../mixin/confirmPlugin';
 import DZButton from '../common/DZButton.vue';
 import MarktwinEditor from '../common/MarktwinEditor.vue';
+import OnlineDot from './OnlineDot.vue';
 
 /** Size of a page of `GET /clan/:id/messages/:page`. */
 const PAGE_SIZE = 20;

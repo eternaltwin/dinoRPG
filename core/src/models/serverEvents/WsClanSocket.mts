@@ -48,4 +48,14 @@ export type WsClanResponse<A extends WsClanAction = WsClanAction> =
 /** Sent once the server listens to the connection: anything a client sends earlier would be lost. */
 export type WsClanReadyMessage = { type: 'ready' };
 
-export type WsClanPushMessage = WsClanReadyMessage | BoardChangedMessage | ChampionshipChangedMessage;
+/**
+ * The members of the clan who have the game open, i.e. at least one clan socket. Sent to a connection once it is ready,
+ * then to the whole clan each time a member comes or goes.
+ */
+export type WsClanPresenceMessage = { type: 'presence'; playerIds: string[] };
+
+export type WsClanPushMessage =
+	| WsClanReadyMessage
+	| WsClanPresenceMessage
+	| BoardChangedMessage
+	| ChampionshipChangedMessage;

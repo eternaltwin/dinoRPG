@@ -4237,6 +4237,10 @@
 				"castleDestroyed": "Eure Burg ist zerstört – diese muss zunächst wiederaufgebaut werden",
 				"castleFullLife": "Eure Burg hat bereits die maximalen Lebenspunkte"
 			}
+		},
+		"presence": {
+			"online": "Online",
+			"offline": "Offline"
 		}
 	},
 	"clansList": {

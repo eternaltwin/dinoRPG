@@ -4237,6 +4237,10 @@
 				"castleDestroyed": "El castillo está destruido, primero debes reconstruirlo",
 				"castleFullLife": "El castillo ya está completamente reparado."
 			}
+		},
+		"presence": {
+			"online": "En línea",
+			"offline": "Desconectado"
 		}
 	},
 	"clansList": {

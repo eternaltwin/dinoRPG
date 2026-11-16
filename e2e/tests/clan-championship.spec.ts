@@ -540,6 +540,16 @@ test('clan members talk in real time in the chat tab of the board', async ({
 		// Same messages as the clan forum
 		const saved = await db.clanMessage.findMany({ where: { clanId: clanA.id }, orderBy: { id: 'asc' } });
 		expect(saved.map(m => m.authorId)).toEqual([mate.id, player.id]);
+
+		// Both have the game open; the mate goes offline when closing it
+		const mateDot = page.getByTestId('chat-message').first().getByTestId('online-dot');
+		await expect(mateDot).toHaveAttribute('data-online', 'true');
+		await expect(page.getByTestId('chat-message').last().getByTestId('online-dot')).toHaveAttribute(
+			'data-online',
+			'true'
+		);
+		await matePage.close();
+		await expect(mateDot).toHaveAttribute('data-online', 'false');
 	} finally {
 		await mateContext.close();
 		await db.clanEvent.delete({ where: { id: event.id } });
