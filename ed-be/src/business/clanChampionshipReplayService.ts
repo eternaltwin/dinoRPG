@@ -18,7 +18,7 @@ import { isWestClan, westIsHomeOf } from './clanChampionshipMatchService.js';
  * The whole match, frame by frame, to any player, whatever the championship. Once the match is over, both clans'
  * life and action points (omniscient); while it is live, only what a board of the reader's clan would show: to one of
  * the two clans, the enemy's life and action points are zeroed, its heals left out; to a spectator, those of both
- * clans. No fight archive is given while live.
+ * clans. While live, the fight archives are given to the two clans only (a spectator could not read them).
  */
 export async function getMatchReplay(authed: Auth, matchId: string): Promise<MatchReplayDTO> {
 	const unavailable = () => new ExpectedError(translate('clanChampionship.replayUnavailable', authed));
@@ -91,11 +91,12 @@ type FrameRow = { pieces: unknown; events: unknown };
 
 /**
  * A live frame as the reader's clan sees the board: no life nor action points of the enemy, no enemy heal (a frame
- * made only of those is left out) and no fight archive. A spectator (`null`) has no side: both are the enemy.
+ * made only of those is left out). The fights stay watchable by the two clans; a spectator (`null`) has no side: both
+ * are the enemy, and gets no fight archive.
  */
 function hideEnemyState<F extends FrameRow>(frame: F, readerClanId: number | null): F[] {
 	const events = (frame.events as ReplayEvent[]).flatMap((e): ReplayEvent[] => {
-		if (e.type === 'attack') return [{ ...e, archiveId: '' }];
+		if (e.type === 'attack' && readerClanId === null) return [{ ...e, archiveId: '' }];
 		if (e.type === 'heal' && !ownedBy(frame, e.dinozId, readerClanId)) return [];
 		return [e];
 	});

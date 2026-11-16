@@ -24,150 +24,207 @@
 			<template v-else-if="board && frame">
 				<ChampionshipScoreBar :west="board.west" :east="board.east" />
 
-				<div class="controls" data-testid="replay-controls">
-					<div class="buttons">
-						<button type="button" :title="$t('clanChampionship.replayView.first')" @click="goTo(0)">⏮</button>
-						<button
-							type="button"
-							:title="$t('clanChampionship.replayView.previousFight')"
-							:disabled="previousFightIndex === null"
-							@click="goTo(previousFightIndex)"
-						>
-							⚔◀
+				<ul class="tab-list" data-testid="replay-tabs">
+					<li v-for="name in TABS" :key="name" :class="{ active: tab === name }">
+						<button type="button" :data-testid="`replay-tab-${name}`" @click="tab = name">
+							{{ $t(`clanChampionship.replayView.tabs.${name}`) }}
 						</button>
-						<button type="button" :title="$t('clanChampionship.replayView.previous')" @click="step(-1)">◀</button>
-						<button
-							type="button"
-							class="play"
-							data-testid="replay-play"
-							:title="$t(playing ? 'clanChampionship.replayView.pause' : 'clanChampionship.replayView.play')"
-							@click="togglePlay"
-						>
-							{{ playing ? '⏸' : '▶' }}
-						</button>
-						<button
-							type="button"
-							:title="$t('clanChampionship.replayView.next')"
-							data-testid="replay-next"
-							@click="step(1)"
-						>
-							▶|
-						</button>
-						<button
-							type="button"
-							:title="$t('clanChampionship.replayView.nextFight')"
-							:disabled="nextFightIndex === null"
-							data-testid="replay-next-fight"
-							@click="goTo(nextFightIndex)"
-						>
-							▶⚔
-						</button>
-						<button type="button" :title="$t('clanChampionship.replayView.last')" @click="goTo(frames.length - 1)">
-							⏭
-						</button>
-						<select v-model.number="speed" :title="$t('clanChampionship.replayView.speed')">
-							<option v-for="s in SPEEDS" :key="s" :value="s">×{{ s }}</option>
-						</select>
-					</div>
-					<input
-						v-model.number="index"
-						class="timeline"
-						type="range"
-						min="0"
-						:max="frames.length - 1"
-						data-testid="replay-timeline"
-						@input="stopPlaying"
-					/>
+					</li>
+				</ul>
+
+				<div v-if="tab === 'history'" class="history" data-testid="replay-history">
 					<div class="options">
+						<label
+							><input v-model="historyFightsOnly" type="checkbox" />
+							{{ $t('clanChampionship.replayView.history.fightsOnly') }}</label
+						>
 						<label
 							><input v-model="skipTicks" type="checkbox" /> {{ $t('clanChampionship.replayView.skipTicks') }}</label
 						>
-						<label
-							><input v-model="playFights" type="checkbox" /> {{ $t('clanChampionship.replayView.playFights') }}</label
+					</div>
+					<p v-if="history.length === 0" class="empty">{{ $t('clanChampionship.replayView.history.empty') }}</p>
+					<ol v-else class="entries">
+						<li
+							v-for="entry in history"
+							:key="entry.index"
+							:class="{ current: entry.index === index, fight: entry.archiveId !== null }"
+							data-testid="replay-history-entry"
 						>
-					</div>
-				</div>
-
-				<div class="step" data-testid="replay-step">
-					<div class="when">
-						<strong>{{ $t('clanChampionship.replayView.step', { step: index + 1, total: frames.length }) }}</strong>
-						<span>{{ formatDate(frame.at) }} ({{ elapsed(frame.at) }})</span>
-					</div>
-					<ul class="events">
-						<li v-for="(event, i) in frame.events" :key="i" :class="event.type" data-testid="replay-event">
-							{{ describe(event) }}
+							<div class="when">
+								<strong>{{ elapsed(entry.frame.at) }}</strong>
+								<span>{{ formatDate(entry.frame.at) }}</span>
+								<span class="score">{{ entry.frame.homeScore }} – {{ entry.frame.awayScore }}</span>
+							</div>
+							<ul class="events">
+								<li v-for="(event, i) in entry.frame.events" :key="i" :class="event.type">{{ describe(event) }}</li>
+							</ul>
+							<div class="actions">
+								<button type="button" data-testid="replay-history-show" @click="showStep(entry.index)">
+									{{ $t('clanChampionship.replayView.history.showStep') }}
+								</button>
+								<template v-if="entry.archiveId">
+									<button type="button" data-testid="replay-history-fight" @click="showStep(entry.index, true)">
+										{{ $t('clanChampionship.replayView.showFight') }}
+									</button>
+									<RouterLink
+										:to="{ name: 'ReplayFight', params: { archive: entry.archiveId } }"
+										target="_blank"
+										data-testid="replay-history-fight-link"
+									>
+										{{ $t('clanChampionship.replayView.history.openFight') }}
+									</RouterLink>
+								</template>
+							</div>
 						</li>
-					</ul>
-					<DZButton v-if="fightArchiveId && !fightOpen" data-testid="replay-show-fight" @click="fightOpen = true">
-						{{ $t('clanChampionship.replayView.showFight') }}
-					</DZButton>
+					</ol>
 				</div>
-
-				<div v-if="fightArchiveId && fightOpen" class="fight">
-					<ChampionshipReplayFight
-						:key="`${index}-${fightArchiveId}`"
-						:archiveId="fightArchiveId"
-						@ended="onFightEnded"
-					/>
-					<DZButton @click="closeFight">{{ $t('clanChampionship.replayView.closeFight') }}</DZButton>
-				</div>
-
-				<ChampionshipBoard
-					:board="board"
-					:selectedDinozId="null"
-					:disabled="true"
-					:omniscient="replay.omniscient"
-					:highlighted="actors"
-				/>
-
-				<div class="rosters" data-testid="replay-rosters">
-					<div v-for="side in rosters" :key="side.key" class="roster" :class="side.key">
-						<h4>{{ side.name }}</h4>
-						<p v-if="side.rows.length === 0" class="empty">{{ $t('clanChampionship.replayView.noDinoz') }}</p>
-						<table v-else>
-							<tr>
-								<th></th>
-								<th>{{ $t('clanChampionship.replayView.dinoz') }}</th>
-								<th>{{ $t('clanChampionship.replayView.state') }}</th>
-								<th>{{ $t('clanChampionship.replayView.hp') }}</th>
-								<th>{{ $t('clanChampionship.ap') }}</th>
-							</tr>
-							<tr
-								v-for="row in side.rows"
-								:key="row.dinozId"
-								:class="{ actor: actors.includes(row.dinozId), dead: row.state === DEAD, left: row.state === LEFT }"
-								data-testid="replay-roster-row"
+				<template v-else>
+					<div class="controls" data-testid="replay-controls">
+						<div class="buttons">
+							<button type="button" :title="$t('clanChampionship.replayView.first')" @click="goTo(0)">⏮</button>
+							<button
+								type="button"
+								:title="$t('clanChampionship.replayView.previousFight')"
+								:disabled="previousFightIndex === null"
+								@click="goTo(previousFightIndex)"
 							>
-								<td class="icon">
-									<DinozIcon v-if="row.display" :display="row.display" :size="28" :flip="side.key === 'west'" />
-								</td>
-								<td>
-									<div class="name">{{ row.name }}</div>
-									<div class="player">{{ row.playerName }}</div>
-								</td>
-								<td class="state">{{ stateLabel(row) }}</td>
-								<td v-if="row.hidden" class="life">?</td>
-								<td v-else class="life">
-									<div class="hp">
-										<div class="hp-fill" :style="{ width: `${percent(row.life, row.maxLife)}%` }" />
-									</div>
-									<span>{{ row.life }} / {{ row.maxLife }}</span>
-									<span v-if="row.lifeDelta" class="delta" :class="row.lifeDelta > 0 ? 'up' : 'down'">
-										{{ row.lifeDelta > 0 ? '+' : '' }}{{ row.lifeDelta }}
-									</span>
-								</td>
-								<td class="ap">{{ row.state !== ON_BOARD ? '–' : row.hidden ? '?' : row.actionPoints }}</td>
-							</tr>
-						</table>
+								⚔◀
+							</button>
+							<button type="button" :title="$t('clanChampionship.replayView.previous')" @click="step(-1)">◀</button>
+							<button
+								type="button"
+								class="play"
+								data-testid="replay-play"
+								:title="$t(playing ? 'clanChampionship.replayView.pause' : 'clanChampionship.replayView.play')"
+								@click="togglePlay"
+							>
+								{{ playing ? '⏸' : '▶' }}
+							</button>
+							<button
+								type="button"
+								:title="$t('clanChampionship.replayView.next')"
+								data-testid="replay-next"
+								@click="step(1)"
+							>
+								▶|
+							</button>
+							<button
+								type="button"
+								:title="$t('clanChampionship.replayView.nextFight')"
+								:disabled="nextFightIndex === null"
+								data-testid="replay-next-fight"
+								@click="goTo(nextFightIndex)"
+							>
+								▶⚔
+							</button>
+							<button type="button" :title="$t('clanChampionship.replayView.last')" @click="goTo(frames.length - 1)">
+								⏭
+							</button>
+							<select v-model.number="speed" :title="$t('clanChampionship.replayView.speed')">
+								<option v-for="s in SPEEDS" :key="s" :value="s">×{{ s }}</option>
+							</select>
+						</div>
+						<input
+							v-model.number="index"
+							class="timeline"
+							type="range"
+							min="0"
+							:max="frames.length - 1"
+							data-testid="replay-timeline"
+							@input="stopPlaying"
+						/>
+						<div class="options">
+							<label
+								><input v-model="skipTicks" type="checkbox" /> {{ $t('clanChampionship.replayView.skipTicks') }}</label
+							>
+							<label
+								><input v-model="playFights" type="checkbox" />
+								{{ $t('clanChampionship.replayView.playFights') }}</label
+							>
+						</div>
 					</div>
-				</div>
+
+					<div class="step" data-testid="replay-step">
+						<div class="when">
+							<strong>{{ $t('clanChampionship.replayView.step', { step: index + 1, total: frames.length }) }}</strong>
+							<span>{{ formatDate(frame.at) }} ({{ elapsed(frame.at) }})</span>
+						</div>
+						<ul class="events">
+							<li v-for="(event, i) in frame.events" :key="i" :class="event.type" data-testid="replay-event">
+								{{ describe(event) }}
+							</li>
+						</ul>
+						<DZButton v-if="fightArchiveId && !fightOpen" data-testid="replay-show-fight" @click="fightOpen = true">
+							{{ $t('clanChampionship.replayView.showFight') }}
+						</DZButton>
+					</div>
+
+					<div v-if="fightArchiveId && fightOpen" class="fight">
+						<ChampionshipReplayFight
+							:key="`${index}-${fightArchiveId}`"
+							:archiveId="fightArchiveId"
+							@ended="onFightEnded"
+						/>
+						<DZButton @click="closeFight">{{ $t('clanChampionship.replayView.closeFight') }}</DZButton>
+					</div>
+
+					<ChampionshipBoard
+						:board="board"
+						:selectedDinozId="null"
+						:disabled="true"
+						:omniscient="replay.omniscient"
+						:highlighted="actors"
+					/>
+
+					<div class="rosters" data-testid="replay-rosters">
+						<div v-for="side in rosters" :key="side.key" class="roster" :class="side.key">
+							<h4>{{ side.name }}</h4>
+							<p v-if="side.rows.length === 0" class="empty">{{ $t('clanChampionship.replayView.noDinoz') }}</p>
+							<table v-else>
+								<tr>
+									<th></th>
+									<th>{{ $t('clanChampionship.replayView.dinoz') }}</th>
+									<th>{{ $t('clanChampionship.replayView.state') }}</th>
+									<th>{{ $t('clanChampionship.replayView.hp') }}</th>
+									<th>{{ $t('clanChampionship.ap') }}</th>
+								</tr>
+								<tr
+									v-for="row in side.rows"
+									:key="row.dinozId"
+									:class="{ actor: actors.includes(row.dinozId), dead: row.state === DEAD, left: row.state === LEFT }"
+									data-testid="replay-roster-row"
+								>
+									<td class="icon">
+										<DinozIcon v-if="row.display" :display="row.display" :size="28" :flip="side.key === 'west'" />
+									</td>
+									<td>
+										<div class="name">{{ row.name }}</div>
+										<div class="player">{{ row.playerName }}</div>
+									</td>
+									<td class="state">{{ stateLabel(row) }}</td>
+									<td v-if="row.hidden" class="life">?</td>
+									<td v-else class="life">
+										<div class="hp">
+											<div class="hp-fill" :style="{ width: `${percent(row.life, row.maxLife)}%` }" />
+										</div>
+										<span>{{ row.life }} / {{ row.maxLife }}</span>
+										<span v-if="row.lifeDelta" class="delta" :class="row.lifeDelta > 0 ? 'up' : 'down'">
+											{{ row.lifeDelta > 0 ? '+' : '' }}{{ row.lifeDelta }}
+										</span>
+									</td>
+									<td class="ap">{{ row.state !== ON_BOARD ? '–' : row.hidden ? '?' : row.actionPoints }}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</template>
 			</template>
 		</template>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { ReplayPieceStateCode } from '@drpg/core/models/clan/clanChampionship';
@@ -190,6 +247,8 @@ import DinozIcon from './DinozIcon.vue';
 import { eastClanOf, frameActors, frameToBoard, isWestClanOf, westClanOf } from './replayBoard';
 
 const SPEEDS = [1, 2, 4, 8];
+const TABS = ['board', 'history'] as const;
+type ReplayTab = (typeof TABS)[number];
 const STEP_MS = 1500;
 const AFTER_FIGHT_MS = 800;
 const { ON_BOARD, LEFT, DEAD } = ReplayPieceStateCode;
@@ -206,6 +265,8 @@ const speed = ref(1);
 const skipTicks = ref(true);
 const playFights = ref(true);
 const fightOpen = ref(false);
+const tab = ref<ReplayTab>('board');
+const historyFightsOnly = ref(false);
 let timer: ReturnType<typeof setTimeout> | null = null;
 
 const frames = computed<ReplayFrameDTO[]>(() => replay.value?.frames ?? []);
@@ -247,6 +308,21 @@ const fightArchiveId = computed<string | null>(() => {
 	const attack = frame.value?.events.find(e => e.type === 'attack');
 	return attack?.type === 'attack' ? attack.archiveId : null;
 });
+
+/** The first fight of a step, if it can be watched ('' when its archive is kept from the reader). */
+function archiveOf(f: ReplayFrameDTO): string | null {
+	const attack = f.events.find(e => e.type === 'attack');
+	return attack?.type === 'attack' && attack.archiveId ? attack.archiveId : null;
+}
+
+/** The match log, latest step first: what happened at each step, and its fight. */
+const history = computed(() =>
+	frames.value
+		.map((f, i) => ({ index: i, frame: f, archiveId: archiveOf(f) }))
+		.filter(e => !skipTicks.value || !isTickOnly(e.frame))
+		.filter(e => !historyFightsOnly.value || e.frame.events.some(ev => ev.type === 'attack'))
+		.reverse()
+);
 
 const fightIndexes = computed(() =>
 	frames.value.flatMap((f, i) => (f.events.some(e => e.type === 'attack') ? [i] : []))
@@ -427,6 +503,16 @@ function advance() {
 	scheduleNext();
 }
 
+/** Back to the board on that step, its fight open if asked. */
+async function showStep(target: number, withFight = false) {
+	goTo(target);
+	tab.value = 'board';
+	// After the index watcher, which closes the fight of a step reached by hand
+	await nextTick();
+	if (withFight && fightArchiveId.value) fightOpen.value = true;
+	window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function togglePlay() {
 	if (playing.value) {
 		stopPlaying();
@@ -456,7 +542,7 @@ function onKey(event: KeyboardEvent) {
 	const target = event.target as HTMLElement | null;
 	if (target && (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target.tagName) || target.isContentEditable))
 		return;
-	if (event.ctrlKey || event.metaKey || event.altKey || !frames.value.length) return;
+	if (event.ctrlKey || event.metaKey || event.altKey || !frames.value.length || tab.value !== 'board') return;
 	if (event.key === 'ArrowRight') step(1);
 	else if (event.key === 'ArrowLeft') step(-1);
 	else if (event.key === ' ') togglePlay();
@@ -532,6 +618,111 @@ onBeforeUnmount(() => {
 .message {
 	text-align: center;
 	font-weight: bold;
+}
+.tab-list {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #d19860;
+	button {
+		display: block;
+		padding: 5px 12px;
+		border: 0;
+		background: transparent;
+		font: inherit;
+		color: white;
+		cursor: pointer;
+	}
+	li.active button {
+		background: #fbe7c5;
+		color: #4a2a1a;
+	}
+}
+.history {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	.options {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		font-size: 12px;
+	}
+	.empty {
+		text-align: center;
+		font-style: italic;
+	}
+	.entries {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		max-height: 600px;
+		overflow-y: auto;
+	}
+	.entries > li {
+		padding: 4px 6px;
+		border-left: 3px solid transparent;
+		border-radius: 4px;
+		background-color: rgba(0, 0, 0, 0.08);
+		&.fight {
+			border-left-color: #c0281a;
+		}
+		&.current {
+			background-color: rgba(245, 197, 24, 0.3);
+		}
+	}
+	.when {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		font-size: 11px;
+		strong {
+			color: #874b2e;
+		}
+		.score {
+			margin-left: auto;
+			font-weight: bold;
+		}
+	}
+	.events {
+		margin: 2px 0;
+		padding: 0;
+		list-style: none;
+		font-size: 12px;
+		li.attack,
+		li.end {
+			font-weight: bold;
+		}
+		li.tick {
+			font-style: italic;
+			opacity: 0.8;
+		}
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+		font-size: 11px;
+		button {
+			padding: 1px 6px;
+			border: 1px solid #874b2e;
+			border-radius: 4px;
+			background: linear-gradient(180deg, #fce3bc 0%, #e0b878 100%);
+			color: #5a2d10;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		a {
+			color: #874b2e;
+			font-weight: bold;
+		}
+	}
 }
 .controls {
 	display: flex;

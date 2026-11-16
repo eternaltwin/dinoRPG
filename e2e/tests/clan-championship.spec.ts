@@ -654,6 +654,18 @@ test('a finished match replays every step with the state of both clans, fights i
 		await page.getByTestId(`board-cell-2-${y}`).click();
 		await page.waitForURL(/\/replay\//);
 
+		// Still live: the history logs every step, latest first, and its fight can be watched
+		await page.goto(`/clan/${clanA.id}/championship/replay/${match.id}`);
+		await expect(page.getByTestId('replay-live')).toBeVisible();
+		await page.getByTestId('replay-tab-history').click();
+		const entries = page.getByTestId('replay-history-entry');
+		await expect(entries).toHaveCount(3);
+		await expect(entries.first()).toContainText(`Mine${suffix} attaque Foe${suffix}`);
+		await expect(entries.last()).toContainText(`Mine${suffix} entre sur le damier`);
+		await expect(entries.first().getByTestId('replay-history-fight-link')).toHaveAttribute('href', /\/replay\/.+/);
+		await entries.first().getByTestId('replay-history-fight').click();
+		await expect(page.getByTestId('replay-fight').locator('canvas')).toBeVisible({ timeout: 20_000 });
+
 		// The match is over: the replay opens to both clans
 		await db.clanChampionshipMatch.update({ where: { id: match.id }, data: { status: 'finished' } });
 		const frames = await db.clanChampionshipFrame.findMany({

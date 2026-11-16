@@ -179,14 +179,14 @@ export async function getClanChampionshipFightParticipants(archiveId: string): P
 	});
 }
 
-/** True when the player's clan played the (finished) match of this clan championship fight: the match replay shows it. */
+/** True when the player's clan plays (live) or played (finished) the match of this clan championship fight: the match replay shows it. */
 export async function isClanChampionshipFightReplayable(archiveId: string, playerId: string): Promise<boolean> {
 	return withSpan(isClanChampionshipFightReplayable.name, async () => {
 		const row = await prisma.clanChampionshipFight.findUnique({
 			where: { archiveId },
 			select: { match: { select: { status: true, homeClanId: true, awayClanId: true } } }
 		});
-		if (!row || row.match.status !== ClanChampionshipMatchStatus.finished) return false;
+		if (!row || row.match.status === ClanChampionshipMatchStatus.scheduled) return false;
 		const member = await prisma.clanMember.findUnique({ where: { playerId }, select: { clanId: true } });
 		if (!member) return false;
 		return member.clanId === row.match.homeClanId || member.clanId === row.match.awayClanId;

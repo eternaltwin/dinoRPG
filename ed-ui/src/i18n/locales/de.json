@@ -5646,6 +5646,16 @@
 		"replayMatch": "Partie erneut ansehen",
 		"watchLive": "Live ansehen",
 		"replayView": {
+			"tabs": {
+				"board": "Spielbrett",
+				"history": "Verlauf"
+			},
+			"history": {
+				"fightsOnly": "Nur Kämpfe",
+				"empty": "Kein Schritt anzuzeigen.",
+				"showStep": "Auf dem Spielbrett zeigen",
+				"openFight": "Kampf öffnen ↗"
+			},
 			"liveNotice": "Live: LP und AP bleiben bis zum Ende der Partie verborgen. Das Spielfeld wird alle 15 Sekunden aktualisiert.",
 			"back": "Zurück zur Meisterschaft",
 			"loadError": "Die Wiederholung dieser Partie kann nicht geladen werden.",

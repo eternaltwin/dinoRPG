@@ -111,7 +111,7 @@ describe('getMatchReplay', () => {
 			{ dinozId: 20, name: '?', display: '', level: 0, playerName: '' }
 		]);
 	});
-	it('while live, hides the enemy life, action points, heals and fight archives', async () => {
+	it('while live, hides the enemy life, action points and heals but keeps the fight archives', async () => {
 		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'live', winnerClanId: null }));
 		const pieces = [
 			[10, HOME, 0, 0, 3, 2, 80, 100],
@@ -136,7 +136,7 @@ describe('getMatchReplay', () => {
 		// The enemy heal is left out, the own one kept
 		expect(replay.frames.map(f => f.version)).toEqual([1, 3]);
 		expect(replay.frames[1].events).toEqual([
-			{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: '', outcome: 0, deadDinozIds: [] }
+			{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: 'arch', outcome: 0, deadDinozIds: [] }
 		]);
 		for (const f of replay.frames) {
 			expect(f.pieces).toEqual([

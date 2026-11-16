@@ -5649,6 +5649,16 @@
 		"replayMatch": "Volver a ver el partido",
 		"watchLive": "Ver en directo",
 		"replayView": {
+			"tabs": {
+				"board": "Tablero",
+				"history": "Historial"
+			},
+			"history": {
+				"fightsOnly": "Solo combates",
+				"empty": "Ningún paso que mostrar.",
+				"showStep": "Ver en el tablero",
+				"openFight": "Abrir el combate ↗"
+			},
 			"liveNotice": "En directo: los PV y los PA permanecen ocultos hasta el final del partido. El tablero se actualiza cada 15 segundos.",
 			"back": "Volver al campeonato",
 			"loadError": "No se puede cargar la repetición de este partido.",
