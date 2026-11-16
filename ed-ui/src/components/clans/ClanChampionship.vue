@@ -35,7 +35,7 @@
 					<th class="dinoz-header" colspan="4">
 						{{
 							championship.totalRounds
-								? $t('clanChampionship.roundOf', { round: round.round + 1, total: championship.totalRounds })
+								? $t('clanChampionship.roundOf', { round: round.round + 1, total: championship.totalRounds, endDate: formatDate(round.matches[0].endsAt) })
 								: $t('clanChampionship.round', { round: round.round + 1 })
 						}}
 					</th>
@@ -53,8 +53,6 @@
 						<span v-else>{{ m.awayClan.name }}</span>
 						<div v-if="isMine(m) && m.placeId !== null" class="place">{{ placeName(m.placeId) }}</div>
 					</td>
-					<td>{{ formatDate(m.startsAt) }}</td>
-					<td>{{ formatDate(m.endsAt) }}</td>
 					<td>
 						<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
 						<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
