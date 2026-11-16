@@ -1,5 +1,4 @@
 export class LiveStats {
-	public connectedPlayers = new Set();
 	public totalPlayers = 0;
 	public totalDinoz = 0;
 
@@ -19,19 +18,12 @@ export class LiveStats {
 		this.totalPlayers--;
 	}
 
-	public addConnectedPlayers(playerId: string) {
-		this.connectedPlayers.add(playerId);
-	}
-
-	public removeConnectedPlayers(playerId: string) {
-		this.connectedPlayers.delete(playerId);
-	}
-
-	public summary() {
+	/** The connected players count lives with the SSE channels: see countConnectedSsePlayers. */
+	public summary(connectedPlayers: number) {
 		return {
 			totalDinoz: this.totalDinoz,
 			totalPlayers: this.totalPlayers,
-			connectedPlayers: this.connectedPlayers.size
+			connectedPlayers
 		};
 	}
 }

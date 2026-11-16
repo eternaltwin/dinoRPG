@@ -3,7 +3,11 @@ import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 
 vi.mock('../../context.js', () => ({
-	GLOBAL: { liveStats: { addConnectedPlayers: vi.fn(), removeConnectedPlayers: vi.fn() } },
+	GLOBAL: {
+		liveStats: {
+			summary: vi.fn((connectedPlayers: number) => ({ totalDinoz: 0, totalPlayers: 0, connectedPlayers }))
+		}
+	},
 	LOGGER: { warn: vi.fn(), log: vi.fn(), error: vi.fn(), info: vi.fn() }
 }));
 vi.mock('../../dao/playerDao.js', () => ({
@@ -39,7 +43,9 @@ import {
 	publishToWsChannelFamily,
 	sendWsReady,
 	kickPlayerFromWsChannels,
-	getServerEventsSnapshot
+	getServerEventsSnapshot,
+	countConnectedSsePlayers,
+	getLiveStatsSummary
 } from '../../business/serverEventService.js';
 
 function reqFor(channel: string) {
@@ -167,6 +173,56 @@ describe('SSE helpers', () => {
 		await sendSseMessageToUserInChannel('sse-player', SseChannel.NOTIFICATION, { hello: true });
 		expect((res as { write: ReturnType<typeof vi.fn> }).write).toHaveBeenCalled();
 		await disconnectSseUser({ url: `/sse?ticket=${ticketDto.ticket}` } as never);
+	});
+});
+
+describe('connected players count', () => {
+	const ua = 'jest';
+	const ip = '8.8.8.8';
+
+	async function openSse(playerId: string) {
+		vi.mocked(auth).mockResolvedValue({ id: playerId } as never);
+		const { ticket } = await authenticate(
+			{
+				body: { channel: SseChannel.NOTIFICATION },
+				socket: { remoteAddress: ip },
+				headers: { 'user-agent': ua }
+			} as never,
+			ServerEventType.SSE
+		);
+		const res = { write: vi.fn(), writableEnded: false, socket: { destroyed: false } };
+		await connectUserToSseChannel(
+			{ url: `/sse?ticket=${ticket}`, socket: { remoteAddress: ip }, headers: { 'user-agent': ua } } as never,
+			res as never
+		);
+		return { res, close: () => disconnectSseUser({ url: `/sse?ticket=${ticket}` } as never) };
+	}
+
+	it('counts a player with several tabs once and drops them when the last tab closes', async () => {
+		const base = countConnectedSsePlayers();
+		const tab1 = await openSse('count-multi');
+		const tab2 = await openSse('count-multi');
+		expect(countConnectedSsePlayers()).toBe(base + 1);
+		await tab1.close();
+		expect(countConnectedSsePlayers()).toBe(base + 1);
+		await tab2.close();
+		expect(countConnectedSsePlayers()).toBe(base);
+	});
+
+	it('does not count a stream whose socket died before its close event', async () => {
+		const base = countConnectedSsePlayers();
+		const stream = await openSse('count-dead');
+		expect(countConnectedSsePlayers()).toBe(base + 1);
+		stream.res.socket.destroyed = true;
+		expect(countConnectedSsePlayers()).toBe(base);
+		await stream.close();
+		expect(countConnectedSsePlayers()).toBe(base);
+	});
+
+	it('pushes the derived count in the live stats summary', async () => {
+		const stream = await openSse('count-summary');
+		expect(getLiveStatsSummary().connectedPlayers).toBe(countConnectedSsePlayers());
+		await stream.close();
 	});
 });
 

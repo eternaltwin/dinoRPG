@@ -30,6 +30,7 @@ import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { WsReadyStateName } from '@drpg/core/models/admin/ServerEventsMonitoring';
+import { LiveStatsType } from '@drpg/core/models/store/LiveStats';
 
 const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
@@ -83,12 +84,7 @@ setInterval(() => {
 	}
 
 	for (const [channelName, users] of sseChannels.entries()) {
-		const activeUsers = users.filter(user => {
-			if (user.res.writableEnded || !user.res.socket || user.res.socket.destroyed) {
-				return false;
-			}
-			return true;
-		});
+		const activeUsers = users.filter(user => isSseResponseOpen(user.res));
 
 		if (activeUsers.length === 0) {
 			sseChannels.delete(channelName);
@@ -97,6 +93,28 @@ setInterval(() => {
 		}
 	}
 }, 60000);
+
+function isSseResponseOpen(res: Response): boolean {
+	return !res.writableEnded && !!res.socket && !res.socket.destroyed;
+}
+
+/**
+ * Number of distinct players holding at least one open SSE stream. Derived from the channels themselves, so it cannot
+ * drift from them whichever path (close event or garbage collector) removed a stream.
+ */
+export function countConnectedSsePlayers(): number {
+	const players = new Set<string>();
+	for (const users of sseChannels.values()) {
+		for (const user of users) {
+			if (isSseResponseOpen(user.res)) players.add(user.playerId);
+		}
+	}
+	return players.size;
+}
+
+export function getLiveStatsSummary(): LiveStatsType {
+	return GLOBAL.liveStats.summary(countConnectedSsePlayers());
+}
 
 export async function authenticate(req: Request, serverEventType: ServerEventType): Promise<ServerEventTicketDto> {
 	const authed = await auth(req);
@@ -675,8 +693,6 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
 
 	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
-	GLOBAL.liveStats.addConnectedPlayers(ticket.playerId);
-
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
 
@@ -699,24 +715,12 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 
 	const channelData = sseChannels.get(channelName);
 	if (channelData) {
-		const departingPlayer = channelData.find(p => p.ticketUuid === ticketUuid);
-
 		const usersLeftInChannel = channelData.filter(player => player.ticketUuid !== ticketUuid);
 
 		if (usersLeftInChannel.length === 0) {
 			sseChannels.delete(channelName);
 		} else {
 			sseChannels.set(channelName, usersLeftInChannel);
-		}
-
-		if (departingPlayer) {
-			const isStillConnectedElsewhere = Array.from(sseChannels.values()).some(channel =>
-				channel.some(p => p.playerId === departingPlayer.playerId)
-			);
-
-			if (!isStillConnectedElsewhere) {
-				GLOBAL.liveStats.removeConnectedPlayers(departingPlayer.playerId);
-			}
 		}
 	}
 
@@ -839,7 +843,7 @@ export function getServerEventsSnapshot(): RawServerEventsSnapshot {
 				connectedAt: member.connectedAt,
 				messagesOut: member.messagesOut,
 				lastMessageOutAt: member.lastMessageOutAt,
-				open: !member.res.writableEnded && !!member.res.socket && !member.res.socket.destroyed
+				open: isSseResponseOpen(member.res)
 			}))
 		)
 	};

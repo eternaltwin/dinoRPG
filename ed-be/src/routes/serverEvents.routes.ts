@@ -1,12 +1,16 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
-import { authenticate, connectUserToSseChannel, disconnectSseUser } from '../business/serverEventService.js';
+import {
+	authenticate,
+	connectUserToSseChannel,
+	disconnectSseUser,
+	getLiveStatsSummary
+} from '../business/serverEventService.js';
 import { body, header, validationResult } from 'express-validator';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import sendError from '../utils/server/sendErrors.js';
-import { GLOBAL } from '../context.js';
 import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 
 const routes: Router = Router();
@@ -54,7 +58,7 @@ routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 
 	const sendUpdate = () => {
 		if (!res.writableEnded) {
-			const data = JSON.stringify({ type: SseDataEnum.LIVE_STATS, live_stats: GLOBAL.liveStats.summary() });
+			const data = JSON.stringify({ type: SseDataEnum.LIVE_STATS, live_stats: getLiveStatsSummary() });
 			res.write(`data: ${data}\n\n`);
 		}
 	};

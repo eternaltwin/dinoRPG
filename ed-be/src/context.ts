@@ -111,8 +111,7 @@ export class ServerContext {
 		const totalDinoz = await this.prisma.dinoz.count();
 		this.liveStats = new LiveStats({
 			totalDinoz: totalDinoz,
-			totalPlayers: totalPlayers,
-			connectedPlayers: new Set()
+			totalPlayers: totalPlayers
 		});
 	}
 }
