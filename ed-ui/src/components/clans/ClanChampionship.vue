@@ -35,7 +35,11 @@
 					<th class="dinoz-header" colspan="4">
 						{{
 							championship.totalRounds
-								? $t('clanChampionship.roundOf', { round: round.round + 1, total: championship.totalRounds, endDate: formatDate(round.matches[0].endsAt) })
+								? $t('clanChampionship.roundOf', {
+										round: round.round + 1,
+										total: championship.totalRounds,
+										endDate: formatDate(round.matches[0].endsAt)
+									})
 								: $t('clanChampionship.round', { round: round.round + 1 })
 						}}
 					</th>
