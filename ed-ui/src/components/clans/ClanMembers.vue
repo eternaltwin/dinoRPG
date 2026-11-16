@@ -244,6 +244,7 @@ export default defineComponent({
 					await this.clanStore.updateLeader(newLeaderMember.id, newLeaderMember.player);
 					this.isLeader = false;
 					await this.getClanMembersList();
+					this.selfMember = this.clanMembersList.find(member => member.player.id === this.playerStore.playerId);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
