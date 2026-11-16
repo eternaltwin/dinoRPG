@@ -681,6 +681,126 @@ test('a finished match replays every step with the state of both clans, fights i
 	}
 });
 
+test('a player of no clan of the match watches it live without life nor AP, then omniscient once over', async ({
+	page,
+	player,
+	createPlayer,
+	db
+}) => {
+	test.setTimeout(60_000);
+	const suffix = player.id.slice(0, 8);
+	const home = await createPlayer();
+	const away = await createPlayer();
+	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: home.id } });
+	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: away.id } });
+	await db.clanMember.create({ data: { clanId: clanA.id, playerId: home.id, rights: [] } });
+	await db.clanMember.create({ data: { clanId: clanB.id, playerId: away.id, rights: [] } });
+	await db.player.update({ where: { id: home.id }, data: { clanId: clanA.id } });
+	await db.player.update({ where: { id: away.id }, data: { clanId: clanB.id } });
+
+	const dinozData = (name: string, playerId: string) => ({
+		name,
+		raceId: 1,
+		level: 1,
+		nextUpElementId: 1,
+		nextUpAltElementId: 2,
+		placeId: PLACE_ID,
+		canChangeName: false,
+		display: 'A093Rmo7JM3f2000',
+		life: 100,
+		maxLife: 100,
+		experience: 0,
+		nbrUpFire: 0,
+		nbrUpWood: 0,
+		nbrUpWater: 0,
+		nbrUpLightning: 0,
+		nbrUpAir: 0,
+		playerId
+	});
+	const homeDinoz = await db.dinoz.create({ data: dinozData(`Home${suffix}`, home.id) });
+	const awayDinoz = await db.dinoz.create({ data: dinozData(`Away${suffix}`, away.id) });
+
+	const now = Date.now();
+	const event = await db.clanEvent.create({
+		data: {
+			eventType: 'championship',
+			startDate: new Date(now - DAY),
+			endDate: new Date(now + 7 * DAY),
+			config: JSON.stringify({
+				eventType: 'championship',
+				places: [PLACE_ID],
+				registrationEnd: new Date(now - 2 * 60 * MINUTE).toISOString(),
+				phase: 'running'
+			})
+		}
+	});
+	const match = await db.clanChampionshipMatch.create({
+		data: {
+			eventId: event.id,
+			round: 0,
+			homeClanId: clanA.id,
+			awayClanId: clanB.id,
+			homeClanName: clanA.name,
+			awayClanName: clanB.name,
+			startsAt: new Date(now - 5 * MINUTE),
+			endsAt: new Date(now + 2 * DAY),
+			placeId: PLACE_ID,
+			westClanId: clanA.id,
+			obstacles: [],
+			status: 'live',
+			ticksApplied: 0,
+			version: 1
+		}
+	});
+	await db.clanChampionshipFrame.create({
+		data: {
+			matchId: match.id,
+			version: 1,
+			events: [{ type: 'enter', dinozId: awayDinoz.id, x: 9, y: 3 }],
+			homeScore: 0,
+			awayScore: 0,
+			ticksApplied: 0,
+			pieces: [
+				[homeDinoz.id, clanA.id, 0, 0, 3, 2, 80, 100],
+				[awayDinoz.id, clanB.id, 0, 9, 3, 4, 70, 100]
+			]
+		}
+	});
+
+	try {
+		// The reader belongs to neither clan: no board of its own, the live replay instead
+		await page.goto(`/clan/${clanA.id}/championship`);
+		await expect(page.getByTestId('match-replay-link')).toHaveCount(0);
+		await page.getByTestId('match-live-link').click();
+		await page.waitForURL(`**/championship/replay/${match.id}`);
+		await expect(page.getByTestId('replay-live')).toBeVisible();
+		const rows = page.getByTestId('replay-roster-row');
+		await expect(rows).toHaveCount(2);
+		for (const name of [`Home${suffix}`, `Away${suffix}`]) {
+			await expect(rows.filter({ hasText: name })).toContainText('?');
+		}
+		await expect(rows.filter({ hasText: `Home${suffix}` })).not.toContainText('80 / 100');
+		await expect(rows.filter({ hasText: `Away${suffix}` })).not.toContainText('70 / 100');
+		await expect(page.getByTestId('board-piece-ap')).toHaveCount(0);
+
+		// Once over, the same reader replays it omniscient
+		await db.clanChampionshipMatch.update({ where: { id: match.id }, data: { status: 'finished' } });
+		await page.goto(`/clan/${clanA.id}/championship`);
+		await expect(page.getByTestId('match-live-link')).toHaveCount(0);
+		await page.getByTestId('match-replay-link').click();
+		await page.waitForURL(`**/championship/replay/${match.id}`);
+		await expect(page.getByTestId('replay-live')).toHaveCount(0);
+		await expect(rows.filter({ hasText: `Home${suffix}` })).toContainText('80 / 100');
+		await expect(rows.filter({ hasText: `Away${suffix}` })).toContainText('70 / 100');
+	} finally {
+		await db.clanEvent.delete({ where: { id: event.id } });
+		await db.dinoz.deleteMany({ where: { playerId: { in: [home.id, away.id] } } });
+		await db.player.updateMany({ where: { id: { in: [home.id, away.id] } }, data: { clanId: null } });
+		await db.clanMember.deleteMany({ where: { clanId: { in: [clanA.id, clanB.id] } } });
+		await db.clan.deleteMany({ where: { id: { in: [clanA.id, clanB.id] } } });
+	}
+});
+
 test('the timeline under a live board shows it as it was at the instant clicked, without the enemy state', async ({
 	page,
 	player,

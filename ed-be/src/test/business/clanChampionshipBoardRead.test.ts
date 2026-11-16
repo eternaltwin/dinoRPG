@@ -74,7 +74,17 @@ const piece = (id: number, clanId: number, playerId: string, o: Record<string, u
 	x: 0,
 	y: id,
 	actionPoints: 2,
-	dinoz: { name: `d${id}`, display: 'disp', level: 3, life: 8, maxLife: 10, player: { name: `p-${playerId}` } },
+	dinoz: {
+		name: `d${id}`,
+		display: 'disp',
+		level: 3,
+		life: 8,
+		maxLife: 10,
+		items: [{ itemId: 7 }],
+		skills: [],
+		status: [],
+		player: { name: `p-${playerId}`, engineer: false }
+	},
 	...o
 });
 
@@ -118,12 +128,15 @@ describe('getMyMatchBoard', () => {
 			life: 8,
 			maxLife: 10,
 			actionPoints: 2,
+			items: [7],
+			maxItems: 2,
 			playerName: 'p-mate'
 		});
 		expect(enemy).toMatchObject({ mine: false, ally: false, name: 'd3', display: 'disp', level: 3 });
 		expect(enemy).not.toHaveProperty('life');
 		expect(enemy).not.toHaveProperty('maxLife');
 		expect(enemy).not.toHaveProperty('actionPoints');
+		expect(enemy).not.toHaveProperty('items');
 	});
 
 	it('maps west/east, scores, score lines and quota', async () => {

@@ -22,6 +22,7 @@
 					<DinozIcon :display="p.display" :size="32" />
 					<span class="name">{{ p.name }}</span>
 					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
+					<span class="muted" data-testid="clan-piece-owner">{{ p.playerName }}</span>
 				</li>
 			</ul>
 			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
@@ -74,6 +75,7 @@
 					<div>
 						<strong>{{ selected.name }}</strong>
 						<div>{{ $t('clanChampionship.level', { level: selected.level }) }}</div>
+						<div v-if="!selected.mine" class="muted" data-testid="selection-owner">{{ selected.playerName }}</div>
 						<div v-if="selected.life !== undefined" data-testid="selection-hp">
 							<span v-html="formatContent($t('clanChampionship.hp'))" /> : {{ selected.life }}/{{ selected.maxLife }}
 						</div>
@@ -81,7 +83,13 @@
 							{{ $t('clanChampionship.ap') }} : {{ selected.actionPoints }}
 						</div>
 					</div>
-					<template v-if="!finished">
+					<DinozEquip
+						v-if="!selected.mine"
+						:items="selected.items ?? []"
+						:maxItems="selected.maxItems ?? 0"
+						data-testid="selection-equip"
+					/>
+					<template v-else-if="!finished">
 						<DinozEquip :dinozId="selected.dinozId" />
 						<div class="inventory-panel" data-testid="selection-inventory">
 							<InventoryTab :dinozId="selected.dinozId" healOnly silent @itemUsed="emit('itemUsed', $event)" />
@@ -228,7 +236,7 @@ async function loadMore(): Promise<void> {
 const finished = computed(() => props.board.status === 'finished');
 const clanPieces = computed(() => props.board.pieces.filter(p => p.mine || p.ally));
 const myPieces = computed(() => props.board.pieces.filter(p => p.mine));
-const selected = computed(() => myPieces.value.find(p => p.dinozId === props.selectedDinozId) ?? null);
+const selected = computed(() => clanPieces.value.find(p => p.dinozId === props.selectedDinozId) ?? null);
 
 watch(
 	() => props.selectedDinozId,
@@ -263,7 +271,7 @@ const elsewhere = computed(() => candidates.value.filter(c => c.reason === 'wron
 
 const canLeave = computed(() => {
 	const s = selected.value;
-	if (!s || finished.value) return false;
+	if (!s || !s.mine || finished.value) return false;
 	return s.x === (s.clanId === props.board.west.clanId ? 0 : BOARD_SIZE - 1);
 });
 

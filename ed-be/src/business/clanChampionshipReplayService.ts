@@ -15,21 +15,22 @@ import translate from '../utils/server/translate.js';
 import { isWestClan, westIsHomeOf } from './clanChampionshipMatchService.js';
 
 /**
- * The whole match, frame by frame, only to the two clans that played it, whatever the championship. Once the match
- * is over, both clans' life and action points; while it is live, only what the board shows the reader: the enemy's
- * life and action points are zeroed, its heals left out, and no fight archive is given.
+ * The whole match, frame by frame, to any player, whatever the championship. Once the match is over, both clans'
+ * life and action points (omniscient); while it is live, only what a board of the reader's clan would show: to one of
+ * the two clans, the enemy's life and action points are zeroed, its heals left out; to a spectator, those of both
+ * clans. No fight archive is given while live.
  */
 export async function getMatchReplay(authed: Auth, matchId: string): Promise<MatchReplayDTO> {
 	const unavailable = () => new ExpectedError(translate('clanChampionship.replayUnavailable', authed));
-	const clanId = authed.clanId;
-	if (clanId === null || clanId === undefined) throw unavailable();
 	const match = await prisma.clanChampionshipMatch.findUnique({ where: { id: matchId } });
-	if (!match || (match.homeClanId !== clanId && match.awayClanId !== clanId)) throw unavailable();
-	if (match.status === ClanChampionshipMatchStatus.scheduled) throw unavailable();
+	if (!match || match.status === ClanChampionshipMatchStatus.scheduled) throw unavailable();
 	const omniscient = match.status === ClanChampionshipMatchStatus.finished;
+	// A spectator (another clan, or none) sees no side as its own
+	const playing = authed.clanId === match.homeClanId || authed.clanId === match.awayClanId;
+	const readerClanId = playing ? (authed.clanId ?? null) : null;
 
 	const rows = await prisma.clanChampionshipFrame.findMany({ where: { matchId }, orderBy: { version: 'asc' } });
-	const visible = omniscient ? rows : rows.flatMap(f => hideEnemyState(f, clanId));
+	const visible = omniscient ? rows : rows.flatMap(f => hideEnemyState(f, readerClanId));
 	const frames: ReplayFrameDTO[] = visible.map(f => {
 		const pieces = f.pieces as unknown as ReplayPieceState[];
 		const board = pieces
@@ -90,9 +91,9 @@ type FrameRow = { pieces: unknown; events: unknown };
 
 /**
  * A live frame as the reader's clan sees the board: no life nor action points of the enemy, no enemy heal (a frame
- * made only of those is left out) and no fight archive.
+ * made only of those is left out) and no fight archive. A spectator (`null`) has no side: both are the enemy.
  */
-function hideEnemyState<F extends FrameRow>(frame: F, readerClanId: number): F[] {
+function hideEnemyState<F extends FrameRow>(frame: F, readerClanId: number | null): F[] {
 	const events = (frame.events as ReplayEvent[]).flatMap((e): ReplayEvent[] => {
 		if (e.type === 'attack') return [{ ...e, archiveId: '' }];
 		if (e.type === 'heal' && !ownedBy(frame, e.dinozId, readerClanId)) return [];
@@ -105,6 +106,6 @@ function hideEnemyState<F extends FrameRow>(frame: F, readerClanId: number): F[]
 	return [{ ...frame, events, pieces }];
 }
 
-function ownedBy(frame: FrameRow, dinozId: number, clanId: number): boolean {
+function ownedBy(frame: FrameRow, dinozId: number, clanId: number | null): boolean {
 	return (frame.pieces as ReplayPieceState[]).some(p => p[0] === dinozId && p[1] === clanId);
 }

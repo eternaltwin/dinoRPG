@@ -15,6 +15,9 @@
 				{{ $t('clanChampionship.versus') }} {{ replay.away.name }}
 				<span v-if="replay.placeId !== null" class="place">· {{ placeName(replay.placeId) }}</span>
 			</h3>
+			<p v-if="!replay.omniscient" class="message" data-testid="replay-live">
+				{{ $t('clanChampionship.replayView.liveNotice') }}
+			</p>
 			<p v-if="frames.length === 0" class="message" data-testid="replay-empty">
 				{{ $t('clanChampionship.replayView.noFrames') }}
 			</p>
@@ -143,7 +146,8 @@
 									<div class="player">{{ row.playerName }}</div>
 								</td>
 								<td class="state">{{ stateLabel(row) }}</td>
-								<td class="life">
+								<td v-if="row.hidden" class="life">?</td>
+								<td v-else class="life">
 									<div class="hp">
 										<div class="hp-fill" :style="{ width: `${percent(row.life, row.maxLife)}%` }" />
 									</div>
@@ -152,7 +156,7 @@
 										{{ row.lifeDelta > 0 ? '+' : '' }}{{ row.lifeDelta }}
 									</span>
 								</td>
-								<td class="ap">{{ row.state === ON_BOARD ? row.actionPoints : '–' }}</td>
+								<td class="ap">{{ row.state !== ON_BOARD ? '–' : row.hidden ? '?' : row.actionPoints }}</td>
 							</tr>
 						</table>
 					</div>
@@ -216,7 +220,8 @@ function isWest(clanId: number): boolean {
 	return !!replay.value && isWestClanOf(replay.value, clanId);
 }
 
-const readerIsWest = computed(() => player.clanId !== undefined && westClan.value?.clanId === player.clanId);
+/** A spectator (neither clan) gets the original colours, as if west were its side. */
+const readerIsWest = computed(() => player.clanId === undefined || eastClan.value?.clanId !== player.clanId);
 const rootStyle = computed(() => {
 	const mine = '#3fd8c4';
 	const enemy = '#f0762a';
@@ -261,6 +266,8 @@ interface RosterRow {
 	life: number;
 	maxLife: number;
 	lifeDelta: number;
+	/** Life and action points kept from the reader while the match is live */
+	hidden: boolean;
 }
 
 const rosters = computed(() => {
@@ -283,7 +290,8 @@ const rosters = computed(() => {
 				actionPoints,
 				life,
 				maxLife,
-				lifeDelta: previous === undefined ? 0 : life - previous
+				lifeDelta: previous === undefined ? 0 : life - previous,
+				hidden: !replay.value?.omniscient && clanId !== player.clanId
 			};
 		}
 	);
@@ -456,17 +464,48 @@ function onKey(event: KeyboardEvent) {
 	event.preventDefault();
 }
 
+/** While the match is live, the replay is fetched again now and then; a reader on the last step follows the new ones. */
+const LIVE_REFRESH_MS = 15000;
+let refreshTimer: ReturnType<typeof setInterval> | null = null;
+
+function stopRefreshing() {
+	if (refreshTimer) clearInterval(refreshTimer);
+	refreshTimer = null;
+}
+
+async function refresh() {
+	if (document.visibilityState !== 'visible') return;
+	const following = index.value >= frames.value.length - 1;
+	try {
+		const result = await ClanChampionshipService.getReplay(String(route.params.matchId));
+		if (refreshTimer === null) return;
+		replay.value = result;
+	} catch {
+		return;
+	}
+	if (following) index.value = Math.max(0, frames.value.length - 1);
+	else index.value = Math.min(index.value, Math.max(0, frames.value.length - 1));
+	if (replay.value.omniscient) stopRefreshing();
+}
+
 onMounted(async () => {
 	window.addEventListener('keydown', onKey);
 	try {
 		replay.value = await ClanChampionshipService.getReplay(String(route.params.matchId));
 	} catch {
 		loadError.value = true;
+		return;
+	}
+	// Live: start on the current board and keep up with it
+	if (!replay.value.omniscient) {
+		index.value = Math.max(0, frames.value.length - 1);
+		refreshTimer = setInterval(() => void refresh(), LIVE_REFRESH_MS);
 	}
 });
 onBeforeUnmount(() => {
 	window.removeEventListener('keydown', onKey);
 	clearTimer();
+	stopRefreshing();
 });
 </script>
 

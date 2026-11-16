@@ -2,7 +2,8 @@
 	<div class="equip">
 		<template v-for="(item, index) in getInventory" :key="index">
 			<Tippy
-				@click="unequip(item)"
+				@click="!readonly && unequip(item)"
+				:class="{ readonly }"
 				theme="normal"
 				tag="img"
 				v-if="item"
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils';
 import { InventoryService } from '../../services';
@@ -35,13 +36,22 @@ export default defineComponent({
 	name: 'DinozEquip',
 	props: {
 		// Dinoz to show. Defaults to the current one, whose id is in the route (dinoz page).
-		dinozId: { type: Number, default: undefined }
+		dinozId: { type: Number, default: undefined },
+		// Equipment of a dinoz the player does not own (clan championship): shown read only
+		items: { type: Array as PropType<number[]>, default: undefined },
+		maxItems: { type: Number, default: undefined }
 	},
 	computed: {
 		itemList() {
 			return itemList;
 		},
+		readonly(): boolean {
+			return this.items !== undefined;
+		},
 		getInventory(): number[] {
+			if (this.items !== undefined) {
+				return this.items.concat(new Array(Math.max(0, (this.maxItems ?? 0) - this.items.length)).fill(undefined));
+			}
 			const store = useDinozStore();
 			const dinoz =
 				this.dinozId === undefined ? store.getCurrentDinoz : store.getDinozList.find(d => d.id === this.dinozId);
@@ -92,7 +102,7 @@ export default defineComponent({
 		height: auto;
 		max-width: 100%;
 		max-height: 100%;
-		&:hover {
+		&:hover:not(.readonly) {
 			outline: 1px solid white;
 			cursor: pointer;
 		}

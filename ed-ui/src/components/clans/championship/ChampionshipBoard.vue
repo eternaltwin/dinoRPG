@@ -212,6 +212,11 @@ function onCellClick(cell: Cell) {
 		emit('select', cell.piece.dinozId);
 		return;
 	}
+	// A clan mate's dinoz: selected to look at it, it cannot be moved
+	if (cell.piece?.ally) {
+		emit('select', cell.piece.dinozId);
+		return;
+	}
 	if (cell.direction) emit('move', cell.direction);
 }
 
@@ -343,7 +348,8 @@ $rim-width: 11px;
 		background-color: color-mix(in srgb, var(--cdc-mine) 55%, transparent);
 		box-shadow: 0 0 0 1.5px var(--cdc-mine);
 	}
-	&.own {
+	&.own,
+	&.ally {
 		cursor: pointer;
 	}
 	&.exhausted :deep(.dinoz-icon) {

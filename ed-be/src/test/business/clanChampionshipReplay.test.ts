@@ -54,11 +54,12 @@ beforeEach(() => {
 });
 
 describe('getMatchReplay', () => {
-	it('refuses a reader without clan, of another clan, or before the start of the match', async () => {
-		await expect(getMatchReplay(authed(null), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
-		await expect(getMatchReplay(authed(9), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
+	it('refuses an unknown match, or one not started yet', async () => {
+		p.clanChampionshipMatch.findUnique.mockResolvedValue(null);
+		await expect(getMatchReplay(authed(HOME), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
 		p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'scheduled' }));
 		await expect(getMatchReplay(authed(HOME), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
+		await expect(getMatchReplay(authed(9), MATCH_ID)).rejects.toThrow('clanChampionship.replayUnavailable');
 		expect(p.clanChampionshipFrame.findMany).not.toHaveBeenCalled();
 	});
 
@@ -143,6 +144,52 @@ describe('getMatchReplay', () => {
 				[20, AWAY, 0, 9, 3, 0, 0, 0]
 			]);
 		}
+	});
+	describe('to a spectator (another clan or none)', () => {
+		const pieces = [
+			[10, HOME, 0, 0, 3, 2, 80, 100],
+			[20, AWAY, 0, 9, 3, 1, 60, 90]
+		];
+		const frame = (version: number, events: unknown[]) => ({
+			version,
+			createdAt: new Date('2026-11-23T18:10:00.000Z'),
+			events,
+			homeScore: 0,
+			awayScore: 0,
+			ticksApplied: 1,
+			pieces
+		});
+		const frames = () => [
+			frame(1, [{ type: 'heal', dinozId: 10, life: 80 }]),
+			frame(2, [{ type: 'move', dinozId: 20, x: 8, y: 3 }]),
+			frame(3, [{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: 'arch', outcome: 0, deadDinozIds: [] }])
+		];
+
+		it.each([9, null])('while live, hides both clans: life, action points, heals and fight archives (%s)', async c => {
+			p.clanChampionshipMatch.findUnique.mockResolvedValue(match({ status: 'live', winnerClanId: null }));
+			p.clanChampionshipFrame.findMany.mockResolvedValue(frames());
+			const replay = await getMatchReplay(authed(c), MATCH_ID);
+			expect(replay.omniscient).toBe(false);
+			expect(replay.frames.map(f => f.version)).toEqual([2, 3]);
+			expect(replay.frames[1].events).toEqual([
+				{ type: 'attack', dinozId: 10, targetDinozId: 20, archiveId: '', outcome: 0, deadDinozIds: [] }
+			]);
+			for (const f of replay.frames) {
+				expect(f.pieces).toEqual([
+					[10, HOME, 0, 0, 3, 0, 0, 0],
+					[20, AWAY, 0, 9, 3, 0, 0, 0]
+				]);
+			}
+		});
+
+		it.each([9, null])('once over, gets the omniscient replay (%s)', async c => {
+			p.clanChampionshipFrame.findMany.mockResolvedValue(frames());
+			const replay = await getMatchReplay(authed(c), MATCH_ID);
+			expect(replay.omniscient).toBe(true);
+			expect(replay.frames.map(f => f.version)).toEqual([1, 2, 3]);
+			expect(replay.frames[2].events[0]).toMatchObject({ archiveId: 'arch' });
+			expect(replay.frames[0].pieces).toEqual(pieces);
+		});
 	});
 });
 

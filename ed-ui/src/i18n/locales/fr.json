@@ -5645,7 +5645,9 @@
 			"busy": "Indisponible"
 		},
 		"replayMatch": "Revoir le match",
+		"watchLive": "Regarder en direct",
 		"replayView": {
+			"liveNotice": "En direct : les PV et les PA restent cachés jusqu'à la fin du match. Le plateau se met à jour toutes les 15 secondes.",
 			"back": "Retour au championnat",
 			"loadError": "Impossible de charger le replay de ce match.",
 			"noFrames": "Ce match a été joué avant l'enregistrement des replays : il n'y a rien à revoir.",
