@@ -280,6 +280,11 @@ const router = createRouter({
 							component: () => import('../components/admin/ScheduledJobs.vue')
 						},
 						{
+							path: 'websockets',
+							name: 'WebSockets',
+							component: () => import('../components/admin/ServerEventsMonitoring.vue')
+						},
+						{
 							path: 'poll',
 							name: 'Polls',
 							component: () => import('../components/admin/PollEdit.vue')

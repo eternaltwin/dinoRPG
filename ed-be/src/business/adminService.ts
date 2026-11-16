@@ -16,6 +16,13 @@ import { ClanEventType, LogType, NotificationSeverity } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
+import { getServerEventsSnapshot } from './serverEventService.js';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
+import {
+	ServerEventsMonitoring,
+	WsConnectionMonitoring,
+	WsReadyStateName
+} from '@drpg/core/models/admin/ServerEventsMonitoring';
 import translate from '../utils/server/translate.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { calculateFightBetweenPlayers } from './fightService.js';
@@ -1364,4 +1371,107 @@ export async function deleteDungeonAdmin(req: Request) {
 
 export async function listDungeons() {
 	return listDungeonsCatalog();
+}
+
+const toIso = (timestamp: number | null | undefined): string | null =>
+	timestamp === null || timestamp === undefined ? null : new Date(timestamp).toISOString();
+
+/** `WsClanForum.<clanId>` → `<clanId>`; null for any other channel. */
+function clanIdFromChannel(channel: string | null | undefined): number | null {
+	if (!channel?.startsWith(`${WsChannel.CLAN_FORUM}.`)) return null;
+	const clanId = Number(channel.slice(WsChannel.CLAN_FORUM.length + 1));
+	return Number.isInteger(clanId) ? clanId : null;
+}
+
+/** The live WebSocket and SSE connections, with the names of their players and clans. */
+export async function getServerEventsMonitoring(): Promise<ServerEventsMonitoring> {
+	const snapshot = getServerEventsSnapshot();
+
+	const playerIds = new Set<string>();
+	const clanIds = new Set<number>();
+	for (const connection of snapshot.wsConnections) {
+		if (connection.stats) playerIds.add(connection.stats.playerId);
+	}
+	for (const channel of snapshot.wsChannels) {
+		channel.members.forEach(member => playerIds.add(member.playerId));
+		const clanId = clanIdFromChannel(channel.channel);
+		if (clanId !== null) clanIds.add(clanId);
+	}
+	snapshot.sseConnections.forEach(connection => playerIds.add(connection.playerId));
+
+	const [players, clans] = await Promise.all([
+		prisma.player.findMany({ where: { id: { in: [...playerIds] } }, select: { id: true, name: true } }),
+		prisma.clan.findMany({ where: { id: { in: [...clanIds] } }, select: { id: true, name: true } })
+	]);
+	const playerNames = new Map(players.map(player => [player.id, player.name]));
+	const clanNames = new Map(clans.map(clan => [clan.id, clan.name]));
+
+	const connections: WsConnectionMonitoring[] = snapshot.wsConnections.map(connection => {
+		const stats = connection.stats;
+		const clanId = clanIdFromChannel(stats?.channel);
+		return {
+			connectionId: connection.connectionId,
+			readyState: connection.readyState,
+			isAlive: connection.isAlive,
+			bufferedAmount: connection.bufferedAmount,
+			channel: stats?.channel ?? null,
+			clanId,
+			clanName: clanId === null ? null : (clanNames.get(clanId) ?? null),
+			playerId: stats?.playerId ?? null,
+			playerName: stats ? (playerNames.get(stats.playerId) ?? null) : null,
+			ip: stats?.ip ?? null,
+			userAgent: stats?.userAgent ?? null,
+			connectedAt: toIso(stats?.connectedAt),
+			lastPingAt: toIso(stats?.lastPingAt),
+			lastPongAt: toIso(stats?.lastPongAt),
+			messagesIn: stats?.messagesIn ?? 0,
+			messagesOut: stats?.messagesOut ?? 0,
+			lastMessageInAt: toIso(stats?.lastMessageInAt),
+			lastMessageOutAt: toIso(stats?.lastMessageOutAt),
+			orphan: connection.orphan
+		};
+	});
+
+	const byState: Record<WsReadyStateName, number> = { CONNECTING: 0, OPEN: 0, CLOSING: 0, CLOSED: 0 };
+	connections.forEach(connection => byState[connection.readyState]++);
+
+	return {
+		generatedAt: new Date().toISOString(),
+		wsServerRunning: snapshot.wsServerRunning,
+		pendingTickets: snapshot.pendingTickets,
+		ws: {
+			total: connections.length,
+			byState,
+			uniquePlayers: new Set(connections.map(connection => connection.playerId).filter(Boolean)).size,
+			channels: snapshot.wsChannels
+				.map(channel => {
+					const clanId = clanIdFromChannel(channel.channel);
+					return {
+						channel: channel.channel,
+						clanId,
+						clanName: clanId === null ? null : (clanNames.get(clanId) ?? null),
+						members: channel.members.length,
+						players: new Set(channel.members.map(member => member.playerId)).size,
+						ghostMembers: channel.ghostMembers
+					};
+				})
+				.sort((a, b) => b.members - a.members),
+			connections
+		},
+		sse: {
+			total: snapshot.sseConnections.length,
+			uniquePlayers: new Set(snapshot.sseConnections.map(connection => connection.playerId)).size,
+			connections: snapshot.sseConnections.map(connection => ({
+				channel: connection.channel,
+				playerId: connection.playerId,
+				playerName: playerNames.get(connection.playerId) ?? null,
+				ip: connection.ip,
+				userAgent: connection.userAgent,
+				connectedAt: toIso(connection.connectedAt),
+				open: connection.open,
+				messagesOut: connection.messagesOut,
+				lastMessageOutAt: toIso(connection.lastMessageOutAt)
+			}))
+		}
+	};
 }
