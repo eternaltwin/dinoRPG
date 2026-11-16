@@ -33,12 +33,14 @@
 				@step="onStep"
 				@live="historyAt = null"
 			/>
-			<div v-if="board.status === 'finished'" class="replay-link">
+			<div v-if="board.status !== 'scheduled'" class="replay-link">
 				<RouterLink
 					:to="{ name: 'ClanChampionshipReplay', params: { id: route.params.id, matchId: board.matchId } }"
 					data-testid="board-replay-link"
 				>
-					<DZButton>{{ $t('clanChampionship.replayMatch') }}</DZButton>
+					<DZButton>{{
+						$t(board.status === 'live' ? 'clanChampionship.watchLive' : 'clanChampionship.replayMatch')
+					}}</DZButton>
 				</RouterLink>
 			</div>
 			<ChampionshipTabs
