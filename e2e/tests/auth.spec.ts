@@ -45,3 +45,45 @@ test('logging in opens a single notification stream', async ({ page, player }) =
 	expect(sseAuthentications).toHaveLength(1);
 	await expect(page.getByText('Too many requests')).toHaveCount(0);
 });
+
+function countSse(page: import('@playwright/test').Page) {
+	const counts = { authentications: 0, streams: 0 };
+	page.on('request', request => {
+		const url = request.url();
+		if (request.method() === 'POST' && url.endsWith('/server-events/sse/authenticate')) counts.authentications++;
+		if (request.method() === 'GET' && url.includes('/server-events/events?ticket=')) counts.streams++;
+	});
+	return counts;
+}
+
+test('reloading the page opens the notification stream again', async ({ page, player }) => {
+	await page.goto('/');
+	await expect(page.locator('#accountList .money')).toBeVisible();
+
+	// The player store survives the reload, so nothing changes in it: the stream must open anyway.
+	const counts = countSse(page);
+	await page.reload();
+	await expect(page.locator('#accountList .money')).toBeVisible();
+
+	await expect.poll(() => counts.streams).toBe(1);
+	expect(counts.authentications).toBe(1);
+});
+
+test('the notification stream comes back after it drops', async ({ page, player }) => {
+	let dropped = 0;
+	await page.route('**/server-events/events?ticket=*', async route => {
+		if (dropped < 2) {
+			dropped++;
+			return route.abort();
+		}
+		return route.continue();
+	});
+	const counts = countSse(page);
+
+	await page.goto('/');
+	await expect(page.locator('#accountList .money')).toBeVisible();
+
+	// Each drop asks for a fresh ticket: the one in the URL of the dropped stream was consumed.
+	await expect.poll(() => counts.authentications, { timeout: 15_000 }).toBe(3);
+	await expect.poll(() => counts.streams).toBe(3);
+});

@@ -53,11 +53,9 @@ import { localStore, playerStore, sessionStore, useMenuStore } from '../../store
 import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
-import { ServerEventsService } from '../../services/ServerEventsService';
 import { clanSocket } from '../../services/clanSocket';
-import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { notificationStream } from '../../services/notificationStream';
 import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
-import { errorHandler } from '../../utils';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -69,9 +67,7 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			time: '' as string,
 			notification: 0 as number,
-			eventSource: null as EventSource | null,
-			sseWatchdog: null as ReturnType<typeof setTimeout> | null,
-			SSE_TIMEOUT_MS: 45_000
+			stopListeningSse: null as (() => void) | null
 		};
 	},
 	computed: {
@@ -104,79 +100,40 @@ export default defineComponent({
 		openDinoz() {
 			useMenuStore().setDinozMenuOpened(true);
 		},
-		async startSseForNotification(retryCount = 0): Promise<void> {
-			if (!this.playerStore.getPlayerId || !this.playerStore.getTosAccepted) {
-				this.eventSource?.close();
-				if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
-				return;
-			}
-
-			const MAX_RETRIES = 5;
-			const BASE_DELAY_MS = 1000;
-
-			try {
-				const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
-				this.eventSource = await ServerEventsService.connectToSse(ticket);
-				this.resetWatchdog();
-				this.eventSource.onmessage = (message: MessageEvent<string>) => {
-					this.resetWatchdog();
-					retryCount = 0;
-					const data = JSON.parse(message.data) as SseData;
-					switch (data.type) {
-						case SseDataEnum.LIVE_STATS:
-							this.sessionStore.setLiveStats(data.live_stats);
-							break;
-						case SseDataEnum.NOTIFICATIONS:
-							this.playerStore.addNotification(data.notifications);
-							break;
-						case SseDataEnum.CLAN_WAR:
-							this.$toast.warning(this.$t(`toast.clan_war`, data.war));
-							break;
-						case SseDataEnum.CLAN_PROSPECTOR:
-							if (data.prospector.standing) {
-								this.$toast.success(this.$t(`toast.clan_prospector_reward`, data.prospector));
-							} else {
-								this.$toast.warning(this.$t(`toast.clan_prospector_penalty`, data.prospector));
-							}
-							break;
-						default:
-							console.log(data);
-							console.error('Not handled SSE data type');
-							break;
+		handleSseData(data: SseData): void {
+			switch (data.type) {
+				case SseDataEnum.LIVE_STATS:
+					this.sessionStore.setLiveStats(data.live_stats);
+					break;
+				case SseDataEnum.NOTIFICATIONS:
+					this.playerStore.addNotification(data.notifications);
+					break;
+				case SseDataEnum.CLAN_WAR:
+					this.$toast.warning(this.$t(`toast.clan_war`, data.war));
+					break;
+				case SseDataEnum.CLAN_PROSPECTOR:
+					if (data.prospector.standing) {
+						this.$toast.success(this.$t(`toast.clan_prospector_reward`, data.prospector));
+					} else {
+						this.$toast.warning(this.$t(`toast.clan_prospector_penalty`, data.prospector));
 					}
-				};
-				this.eventSource.onerror = () => {
-					this.eventSource?.close();
-					if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
-					if (retryCount >= MAX_RETRIES) {
-						console.error('SSE : nombre maximum de tentatives atteint');
-						return;
-					}
-					const delay = BASE_DELAY_MS * Math.pow(2, retryCount);
-					setTimeout(() => {
-						this.startSseForNotification(retryCount + 1);
-					}, delay);
-				};
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
+					break;
+				default:
+					console.error('Not handled SSE data type', data);
+					break;
 			}
-		},
-		resetWatchdog(): void {
-			if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
-
-			this.sseWatchdog = setTimeout(() => {
-				console.warn('SSE : timeout, reconnexion...');
-				this.eventSource?.close();
-				this.startSseForNotification();
-			}, this.SSE_TIMEOUT_MS);
 		}
 	},
 	watch: {
 		'playerStore.getNotificationsCounter': function (notification: number) {
 			this.notification = notification;
 		},
-		ssePlayerId() {
-			this.startSseForNotification();
+		ssePlayerId: {
+			// The player store survives a reload: the id is already there when the page mounts
+			immediate: true,
+			handler(playerId: string | null) {
+				notificationStream.follow(playerId);
+			}
 		},
 		socketClanId: {
 			immediate: true,
@@ -185,6 +142,9 @@ export default defineComponent({
 			}
 		}
 	},
+	created() {
+		this.stopListeningSse = notificationStream.onMessage(this.handleSseData);
+	},
 	mounted() {
 		this.notification = this.playerStore.getNotificationsCounter;
 		setInterval(() => {
@@ -192,8 +152,8 @@ export default defineComponent({
 		}, 1000);
 	},
 	unmounted() {
-		if (this.sseWatchdog) clearTimeout(this.sseWatchdog);
-		this.eventSource?.close();
+		this.stopListeningSse?.();
+		notificationStream.follow(null);
 		clanSocket.follow(null);
 	}
 });
