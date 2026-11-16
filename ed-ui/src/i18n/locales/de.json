@@ -5593,7 +5593,7 @@
 		"round": "Spieltag {round}",
 		"roundOf": "Runde {round} / {total} (endet am {endDate})",
 		"bye": "{clan} hat spielfrei (Sieg)",
-		"nextRoundPending": "Die nächste Runde wird am Ende der laufenden zwischen Klans mit angrenzender Punktzahl ausgefochten.",
+		"nextRoundPending": "Die nächste Runde wird am Ende der laufenden zwischen den Klanen mit angrenzender Punktzahl ausgefochten.",
 		"versus": "gegen",
 		"daysShort": "{days} T",
 		"noMatch": "Keine Partie im Gange",
@@ -5662,13 +5662,13 @@
 		"watchLive": "Aufzeichnung ansehen",
 		"replayView": {
 			"tabs": {
-				"board": "Spielbrett",
+				"board": "Spielfeld",
 				"history": "Verlauf"
 			},
 			"history": {
 				"fightsOnly": "Nur Kämpfe",
 				"empty": "Kein Schritt anzuzeigen.",
-				"showStep": "Auf dem Spielbrett zeigen",
+				"showStep": "Auf dem Spielfeld zeigen",
 				"openFight": "Kampf öffnen ↗"
 			},
 			"liveNotice": "Live: LP und AP bleiben bis zum Ende der Partie verborgen. Das Spielfeld wird alle 15 Sekunden aktualisiert.",
