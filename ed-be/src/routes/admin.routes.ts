@@ -16,6 +16,7 @@ import {
 	getAdminDashBoard,
 	getAllSecrets,
 	getJobs,
+	getServerEventsMonitoring,
 	getMultiIps,
 	getOngoingEvent,
 	createSeededDungeon,
@@ -525,6 +526,15 @@ routes.get(`${commonPath}/jobs`, checkRole([AdminRole.ADMIN]), async (req: Reque
 
 	try {
 		const response = await getJobs();
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/server-events`, checkRole([AdminRole.ADMIN]), async (_req: Request, res: Response) => {
+	try {
+		const response = await getServerEventsMonitoring();
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

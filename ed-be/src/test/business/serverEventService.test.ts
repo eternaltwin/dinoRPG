@@ -38,7 +38,8 @@ import {
 	publishToWsChannel,
 	publishToWsChannelFamily,
 	sendWsReady,
-	kickPlayerFromWsChannels
+	kickPlayerFromWsChannels,
+	getServerEventsSnapshot
 } from '../../business/serverEventService.js';
 
 function reqFor(channel: string) {
@@ -308,5 +309,46 @@ describe('clan socket', () => {
 		expect(kicked.client.send).not.toHaveBeenCalled();
 		expect(mate.client.send).toHaveBeenCalledTimes(1);
 		for (const c of [mate, otherClan]) disconnectWsUser(c.ws);
+	});
+
+	it('snapshots the live connections with their traffic, without the connexion token', async () => {
+		const a = await connect('p-snap', '2.0.4.1', 20);
+		const orphan = { id: 'orphan-id', readyState: WebSocket.OPEN, isAlive: true, bufferedAmount: 0, send: vi.fn() };
+		const pending = { id: '', readyState: WebSocket.CONNECTING, isAlive: true, bufferedAmount: 0 };
+		Object.assign(a.client, { isAlive: true, bufferedAmount: 12 });
+		setWebSocketServer({ clients: new Set([a.client, orphan, pending]) } as never);
+
+		publishToWsChannel(`${WsChannel.CLAN_FORUM}.20`, { type: 'x' });
+		vi.mocked(answerClanSocketRequest).mockResolvedValue({ requestId: 'r' } as never);
+		await processWsIncomingMessage(
+			{ clients: new Set([a.client]) } as never,
+			a.ws.id,
+			Buffer.from('{"requestId":"r"}')
+		);
+		setWsConnectionToAlive(a.ws);
+
+		const snapshot = getServerEventsSnapshot();
+		const connection = snapshot.wsConnections.find(c => c.connectionId === a.ws.id);
+		expect(connection).toMatchObject({ readyState: 'OPEN', bufferedAmount: 12, orphan: false });
+		expect(connection?.stats).toMatchObject({
+			playerId: 'p-snap',
+			channel: `${WsChannel.CLAN_FORUM}.20`,
+			ip: '2.0.4.1',
+			messagesIn: 1,
+			messagesOut: 2
+		});
+		expect(connection?.stats?.lastPongAt).toBeTypeOf('number');
+		expect(snapshot.wsConnections.find(c => c.connectionId === 'orphan-id')?.orphan).toBe(true);
+		expect(snapshot.wsConnections.find(c => c.connectionId === null)?.readyState).toBe('CONNECTING');
+		const channel = snapshot.wsChannels.find(c => c.channel === `${WsChannel.CLAN_FORUM}.20`);
+		expect(channel).toEqual({
+			channel: `${WsChannel.CLAN_FORUM}.20`,
+			members: [{ connectionId: a.ws.id, playerId: 'p-snap' }],
+			ghostMembers: 0
+		});
+		expect(JSON.stringify(snapshot)).not.toContain('token-p-snap');
+
+		disconnectWsUser(a.ws);
+		expect(getServerEventsSnapshot().wsConnections.find(c => c.connectionId === a.ws.id)?.stats).toBeNull();
 	});
 });

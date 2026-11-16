@@ -38,6 +38,9 @@
 		<li v-if="playerStore().getRole === AdminRole.ADMIN">
 			<RouterLink to="/admin/jobs"> Jobs </RouterLink>
 		</li>
+		<li v-if="playerStore().getRole === AdminRole.ADMIN">
+			<RouterLink to="/admin/websockets"> WebSockets </RouterLink>
+		</li>
 		<li>
 			<RouterLink to="/admin/poll"> Polls </RouterLink>
 		</li>

@@ -7,6 +7,7 @@ import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { Jobs } from '@drpg/core/models/admin/jobs';
+import { ServerEventsMonitoring } from '@drpg/core/models/admin/ServerEventsMonitoring';
 import { IPList, suspectedPlayer } from '@drpg/core/models/admin/IPList';
 import { ChampionshipForm } from '@drpg/core/models/clan/clanChampionship';
 import { EventForm, OngoingEvent } from '@drpg/core/models/clan/clanEventConfig';
@@ -218,6 +219,10 @@ export const AdminService = {
 	},
 	async getScheduledJobs(): Promise<Jobs[]> {
 		const res = await http().get(`/admin/jobs`);
+		return res.data;
+	},
+	async getServerEventsMonitoring(): Promise<ServerEventsMonitoring> {
+		const res = await http().get(`/admin/server-events`);
 		return res.data;
 	},
 	async getMultiIPs(page: number): Promise<IPList[]> {

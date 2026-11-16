@@ -29,12 +29,36 @@ import { UUID } from 'node:crypto';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { WsReadyStateName } from '@drpg/core/models/admin/ServerEventsMonitoring';
 
 const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
 let webSocketServer: WebSocketServerCustom | undefined;
+
+/** What the admin panel shows about a WebSocket connection, kept from its registration to its disconnection. */
+interface WsConnectionStats {
+	channel: string;
+	playerId: string;
+	ip: string;
+	userAgent: string;
+	connectedAt: number;
+	lastPingAt: number | null;
+	lastPongAt: number | null;
+	messagesIn: number;
+	messagesOut: number;
+	lastMessageInAt: number | null;
+	lastMessageOutAt: number | null;
+}
+const wsStats = new Map<string, WsConnectionStats>();
+
+function recordWsOut(connectionId: string): void {
+	const stats = wsStats.get(connectionId);
+	if (!stats) return;
+	stats.messagesOut++;
+	stats.lastMessageOutAt = Date.now();
+}
 
 /** Registers the running WebSocket server, so that services can push to channels without holding it. */
 export function setWebSocketServer(wss: WebSocketServerCustom): void {
@@ -184,7 +208,20 @@ export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingM
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
 
-	await putUserInWsChannel(ticket, ws.id);
+	const channelName = await putUserInWsChannel(ticket, ws.id);
+	wsStats.set(ws.id, {
+		channel: channelName,
+		playerId: ticket.playerId,
+		ip: ticket.ipAddress,
+		userAgent: ticket.userAgent,
+		connectedAt: Date.now(),
+		lastPingAt: null,
+		lastPongAt: null,
+		messagesIn: 0,
+		messagesOut: 0,
+		lastMessageInAt: null,
+		lastMessageOutAt: null
+	});
 }
 
 /**
@@ -197,6 +234,7 @@ export function sendWsReady(ws: WebSocketCustom): void {
 	if (ws.readyState !== WebSocket.OPEN) return;
 	const message: WsClanReadyMessage = { type: 'ready' };
 	ws.send(JSON.stringify(message));
+	recordWsOut(ws.id);
 }
 
 /**
@@ -243,7 +281,7 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
+async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<string> {
 	const { channelName } = await getChannelTarget(ticket);
 
 	const channel: WsChannelData[] | undefined = wsChannels.get(channelName);
@@ -258,6 +296,7 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
 	} else {
 		wsChannels.set(channelName, [member]);
 	}
+	return channelName;
 }
 
 /**
@@ -274,7 +313,16 @@ async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string
 	ticketToChannelMap.set(ticketUuid, channelName);
 
 	const channel = sseChannels.get(channelName) || [];
-	channel.push({ ticketUuid, playerId: ticket.playerId, res });
+	channel.push({
+		ticketUuid,
+		playerId: ticket.playerId,
+		res,
+		ip: ticket.ipAddress,
+		userAgent: ticket.userAgent,
+		connectedAt: Date.now(),
+		messagesOut: 0,
+		lastMessageOutAt: null
+	});
 	sseChannels.set(channelName, channel);
 }
 
@@ -305,6 +353,11 @@ export async function processWsIncomingMessage(
 	wsId: string,
 	bufferedMessage: RawData
 ): Promise<void> {
+	const stats = wsStats.get(wsId);
+	if (stats) {
+		stats.messagesIn++;
+		stats.lastMessageInAt = Date.now();
+	}
 	const channel: ChannelInfos = getWsChannelDetailsFromConnectionId(wsId);
 
 	const message = getMessageFromString(bufferedMessage);
@@ -427,6 +480,7 @@ function sendMessageToPeopleInWsChannel(
 		}
 
 		client.send(Buffer.from(JSON.stringify(message)), { binary: false });
+		recordWsOut(client.id);
 	});
 }
 
@@ -434,7 +488,10 @@ function sendMessageToPeopleInWsChannel(
 function sendMessageToWsConnection(wss: WebSocketServerCustom, wsId: string, message: object): void {
 	for (const client of wss.clients) {
 		if (client.id !== wsId) continue;
-		if (client.readyState === WebSocket.OPEN) client.send(Buffer.from(JSON.stringify(message)), { binary: false });
+		if (client.readyState === WebSocket.OPEN) {
+			client.send(Buffer.from(JSON.stringify(message)), { binary: false });
+			recordWsOut(client.id);
+		}
 		return;
 	}
 }
@@ -452,6 +509,7 @@ export function publishToWsChannel(channelName: string, message: object): void {
 	webSocketServer.clients.forEach(client => {
 		if (client.readyState !== WebSocket.OPEN || !members.some(user => user.connectionId === client.id)) return;
 		client.send(payload, { binary: false });
+		recordWsOut(client.id);
 	});
 }
 
@@ -470,7 +528,9 @@ export function publishToWsChannelFamily(prefix: string, message: object): void 
 	if (connectionIds.size === 0) return;
 	const payload = Buffer.from(JSON.stringify(message));
 	webSocketServer.clients.forEach(client => {
-		if (client.readyState === WebSocket.OPEN && connectionIds.has(client.id)) client.send(payload, { binary: false });
+		if (client.readyState !== WebSocket.OPEN || !connectionIds.has(client.id)) return;
+		client.send(payload, { binary: false });
+		recordWsOut(client.id);
 	});
 }
 
@@ -508,6 +568,7 @@ export function kickPlayerFromWsChannels(playerId: string, channelPrefixes: stri
  * @param ws -> The WebSocket connection
  */
 export function disconnectWsUser(ws: WebSocketCustom): void {
+	wsStats.delete(ws.id);
 	// A connection already removed (kicked) has nothing left to clean.
 	const known = [...wsChannels.values()].some(members => members.some(user => user.connectionId === ws.id));
 	if (!known) return;
@@ -547,6 +608,8 @@ export function checkIfWsClientsAreAlive(wss: WebSocketServerCustom): void {
 		}
 
 		ws.isAlive = false;
+		const stats = wsStats.get(ws.id);
+		if (stats) stats.lastPingAt = Date.now();
 		ws.ping();
 	});
 }
@@ -558,6 +621,8 @@ export function checkIfWsClientsAreAlive(wss: WebSocketServerCustom): void {
  */
 export function setWsConnectionToAlive(ws: WebSocketCustom): void {
 	ws.isAlive = true;
+	const stats = wsStats.get(ws.id);
+	if (stats) stats.lastPongAt = Date.now();
 }
 
 /**
@@ -648,6 +713,8 @@ export async function sendSseMessageToUserInChannel(
 	// Send message
 	const data = `data: ${JSON.stringify(message)}\n\n`;
 	player.res.write(data);
+	player.messagesOut++;
+	player.lastMessageOutAt = Date.now();
 }
 
 /**
@@ -663,4 +730,78 @@ function getTicketFromUrl(req: Request | IncomingMessage): string {
 	}
 
 	return ticket;
+}
+
+const WS_READY_STATES: WsReadyStateName[] = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'];
+
+export interface RawWsConnection {
+	connectionId: string | null;
+	readyState: WsReadyStateName;
+	isAlive: boolean;
+	bufferedAmount: number;
+	stats: WsConnectionStats | null;
+	orphan: boolean;
+}
+
+export interface RawServerEventsSnapshot {
+	wsServerRunning: boolean;
+	pendingTickets: { websocket: number; sse: number; oldestAgeMs: number | null };
+	wsConnections: RawWsConnection[];
+	wsChannels: { channel: string; members: Pick<WsChannelData, 'connectionId' | 'playerId'>[]; ghostMembers: number }[];
+	sseConnections: (Omit<SseChannelData, 'res' | 'ticketUuid'> & { channel: string; open: boolean })[];
+}
+
+/**
+ * Everything the server knows about its live connections, for the admin panel. Read-only: it changes nothing.
+ */
+export function getServerEventsSnapshot(): RawServerEventsSnapshot {
+	const now = Date.now();
+	const tickets = [...activeTickets.values()];
+	const oldestTicket = tickets.reduce<number | null>(
+		(oldest, ticket) => (oldest === null || ticket.timestamp < oldest ? ticket.timestamp : oldest),
+		null
+	);
+
+	const channelMemberIds = new Set<string>();
+	for (const members of wsChannels.values()) members.forEach(member => channelMemberIds.add(member.connectionId));
+
+	const clients = webSocketServer ? [...webSocketServer.clients] : [];
+	const liveIds = new Set(clients.map(client => client.id).filter(Boolean));
+
+	const wsConnections: RawWsConnection[] = clients.map(client => ({
+		connectionId: client.id || null,
+		readyState: WS_READY_STATES[client.readyState] ?? 'CLOSED',
+		isAlive: client.isAlive !== false,
+		bufferedAmount: client.bufferedAmount ?? 0,
+		stats: (client.id && wsStats.get(client.id)) || null,
+		orphan: !!client.id && !channelMemberIds.has(client.id)
+	}));
+
+	return {
+		wsServerRunning: webSocketServer !== undefined,
+		pendingTickets: {
+			websocket: tickets.filter(ticket => ticket.type === ServerEventType.WEBSOCKET).length,
+			sse: tickets.filter(ticket => ticket.type === ServerEventType.SSE).length,
+			oldestAgeMs: oldestTicket === null ? null : now - oldestTicket
+		},
+		wsConnections,
+		wsChannels: [...wsChannels.entries()].map(([channel, members]) => ({
+			channel,
+			// The connexion token stays here.
+			members: members.map(({ connectionId, playerId }) => ({ connectionId, playerId })),
+			ghostMembers: members.filter(member => !liveIds.has(member.connectionId)).length
+		})),
+		sseConnections: [...sseChannels.entries()].flatMap(([channel, members]) =>
+			members.map(member => ({
+				channel,
+				playerId: member.playerId,
+				ip: member.ip,
+				userAgent: member.userAgent,
+				connectedAt: member.connectedAt,
+				messagesOut: member.messagesOut,
+				lastMessageOutAt: member.lastMessageOutAt,
+				open: !member.res.writableEnded && !!member.res.socket && !member.res.socket.destroyed
+			}))
+		)
+	};
 }
