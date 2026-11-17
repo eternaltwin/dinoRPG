@@ -4298,7 +4298,7 @@
 			"edit": "Editar",
 			"exclude": "Expulsar",
 			"leave": "Salir del clan",
-			"transferLeadership": "Nommer un nouveau chef"
+			"transferLeadership": "Designar un nuevo líder"
 		},
 		"stat": {
 			"last_login": "Última conexión el {date}."
@@ -5704,10 +5704,10 @@
 				"tick": "{ticks} turno(s) de juego: puntos de acción repartidos y marcador actualizado.",
 				"end": "Fin de la batalla con victoria de {clan}.",
 				"endDraw": "Fin de la batalla con empate.",
-				"enter": "{dinoz} est entré sur le damier en ({x}, {y}).",
-				"leave": "{dinoz} a quitté le damier.",
-				"move": "{dinoz} s'est déplacé en ({x}, {y}).",
-				"attack": "{dinoz} a attaqué {target} : {outcome}.",
+				"enter": "{dinoz} entró en el tablero en ({x}, {y}).",
+				"leave": "{dinoz} salió del tablero.",
+				"move": "{dinoz} se movió a ({x}, {y}).",
+				"attack": "{dinoz} atacó a {target}: {outcome}.",
 				"deaths": "Muertos: {names}.",
 				"heal": "{dinoz} se cura ({life} PV).",
 				"withdrawn": "Retirados del tablero (el jugador dejó el clan): {names}."
