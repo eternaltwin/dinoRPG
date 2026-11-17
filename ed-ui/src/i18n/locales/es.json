@@ -4298,7 +4298,7 @@
 			"edit": "Editar",
 			"exclude": "Expulsar",
 			"leave": "Salir del clan",
-			"transferLeadership": "Ceder la corona"
+			"transferLeadership": "Nommer un nouveau chef"
 		},
 		"stat": {
 			"last_login": "Última conexión el {date}."
@@ -5667,11 +5667,11 @@
 			},
 			"history": {
 				"fightsOnly": "Solo combates",
-				"empty": "Ningún paso que mostrar.",
+				"empty": "Ningún paso para mostrar.",
 				"showStep": "Ver en el tablero",
 				"openFight": "Abrir el combate ↗"
 			},
-			"liveNotice": "En directo: los PV y los PA permanecen ocultos hasta el final del partido. El tablero se actualiza cada 15 segundos.",
+			"liveNotice": "En vivo: los PV y los PA permanecen ocultos hasta el final del partido. El tablero se actualiza cada 15 segundos.",
 			"back": "Volver al campeonato",
 			"loadError": "No se puede cargar la repetición de esta batalla.",
 			"noFrames": "Esta batalla se dio antes de que se grabaran las repeticiones: no hay nada que ver.",
@@ -5704,10 +5704,10 @@
 				"tick": "{ticks} turno(s) de juego: puntos de acción repartidos y marcador actualizado.",
 				"end": "Fin de la batalla con victoria de {clan}.",
 				"endDraw": "Fin de la batalla con empate.",
-				"enter": "{dinoz} entra en el tablero en ({x}, {y}).",
-				"leave": "{dinoz} sale del tablero.",
-				"move": "{dinoz} se mueve a ({x}, {y}).",
-				"attack": "{dinoz} ataca a {target}: {outcome}.",
+				"enter": "{dinoz} est entré sur le damier en ({x}, {y}).",
+				"leave": "{dinoz} a quitté le damier.",
+				"move": "{dinoz} s'est déplacé en ({x}, {y}).",
+				"attack": "{dinoz} a attaqué {target} : {outcome}.",
 				"deaths": "Muertos: {names}.",
 				"heal": "{dinoz} se cura ({life} PV).",
 				"withdrawn": "Retirados del tablero (el jugador dejó el clan): {names}."
