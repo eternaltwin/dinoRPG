@@ -4298,7 +4298,7 @@
 			"edit": "Anpassen",
 			"exclude": "Ausschließen",
 			"leave": "Klan verlassen",
-			"transferLeadership": "Krone abgeben"
+			"transferLeadership": "Nommer un nouveau chef"
 		},
 		"stat": {
 			"last_login": "Zuletzt eingeloggt: {date}"
@@ -5704,10 +5704,10 @@
 				"tick": "{ticks} Spielrunde(n): Aktionspunkte verteilt und Punkte gezählt.",
 				"end": "Ende der Partie. {clan} gewinnt.",
 				"endDraw": "Partie endet mit einem Unentschieden.",
-				"enter": "{dinoz} betritt das Spielfeld auf ({x}, {y}).",
-				"leave": "{dinoz} verlässt das Spielfeld.",
-				"move": "{dinoz} bewegt sich zu ({x}, {y}).",
-				"attack": "{dinoz} greift {target} an: {outcome}.",
+				"enter": "{dinoz} est entré sur le damier en ({x}, {y}).",
+				"leave": "{dinoz} a quitté le damier.",
+				"move": "{dinoz} s'est déplacé en ({x}, {y}).",
+				"attack": "{dinoz} a attaqué {target} : {outcome}.",
 				"deaths": "Tot: {names}.",
 				"heal": "{dinoz} wird geheilt ({life} LP).",
 				"withdrawn": "Vom Spielfeld genommen (Spieler hat den Klan verlassen): {names}."
