@@ -4298,7 +4298,7 @@
 			"edit": "Éditer",
 			"exclude": "Exclure",
 			"leave": "Quitter le clan",
-			"transferLeadership": "Céder la couronne"
+			"transferLeadership": "Nommer un nouveau chef"
 		},
 		"stat": {
 			"last_login": "Dernière connexion le {date}."
@@ -5704,10 +5704,10 @@
 				"tick": "{ticks} tour(s) de jeu : points d'action distribués et score compté.",
 				"end": "Fin du match, victoire de {clan}.",
 				"endDraw": "Fin du match, match nul.",
-				"enter": "{dinoz} entre sur le damier en ({x}, {y}).",
-				"leave": "{dinoz} quitte le damier.",
-				"move": "{dinoz} se déplace en ({x}, {y}).",
-				"attack": "{dinoz} attaque {target} : {outcome}.",
+				"enter": "{dinoz} est entré sur le damier en ({x}, {y}).",
+				"leave": "{dinoz} a quitté le damier.",
+				"move": "{dinoz} s'est déplacé en ({x}, {y}).",
+				"attack": "{dinoz} a attaqué {target} : {outcome}.",
 				"deaths": "Morts : {names}.",
 				"heal": "{dinoz} est soigné ({life} PV).",
 				"withdrawn": "Retirés du damier (joueur parti du clan) : {names}."
