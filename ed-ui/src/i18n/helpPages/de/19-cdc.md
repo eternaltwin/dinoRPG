@@ -32,7 +32,7 @@ Oben siehst du den aktuellen **Punktestand** der Schlacht und unten die verbleib
 
 Dinoz, die sich der Schlacht angeschlossen haben, können sich um ein Feld bewegen und müssen daraufhin zunächst eine bestimmte Anzahl von Minuten warten, bevor sie sich erneut bewegen können. Es ist möglich, Aktionen anzusammeln, wenn man sie nicht sofort verwendet.
 
-Alle sich auf dem Schlachtfeld befindlichen Dinoz erhalten alle 10 Minuten eine Aktion.
+Alle sich auf dem Schlachtfeld befindlichen Dinoz erhalten alle 20 Minuten eine Aktion.
 
 Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,  Ein Dinoz kann nur von seinem Besitzer bewegt werden.
 
@@ -44,7 +44,7 @@ Eine gute Organisation zwischen Klanmitgliedern ist notwendig, um einen Sieg zu 
 
 Wie in der Schlachtdarstellung zu sehen ist, hat jeder Klan eine **Punktelinie**: Blau für den Klan links und rot für den Klan rechts.
 
-Alle _10 Minuten_ erhalten die Klane Punkte, deren Menge auf dem Voranschreiten der Punktelinie basiert. Im obigen Beispiel würde also der Klan auf der linken Seite (blaue Linie) 2 Punkte und der Klan auf der rechten Seite (rote Linie) 4 Punkte erhalten.
+Alle _20 Minuten_ erhalten die Klane Punkte, deren Menge auf dem Voranschreiten der Punktelinie basiert. Im obigen Beispiel würde also der Klan auf der linken Seite (blaue Linie) 2 Punkte und der Klan auf der rechten Seite (rote Linie) 4 Punkte erhalten.
 
 Die Punktelinie wird wie folgt positioniert: Sie zeigt die Position des ersten Dinoz des Klans an, dem kein Dinoz des gegnerischen Klans gegenübergetreten ist.
 
@@ -64,4 +64,4 @@ Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, de
 
 Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann auch freiwillig die Schlacht verlassen, indem er zur Startspalte seines Klans zurückkehrt. Danach kann er die Schlacht auch erneut betreten.
 
-Gegenstände können von Dinoz während der Schlacht jederzeit angelegt, ausgetauscht und benutzt werden.
+Gegenstände können von Dinoz während der Schlacht jederzeit angelegt und abgelegt werden. Auf dem Schlachtfeld kann jedoch kein Gegenstand benutzt werden: Um deinen Dinoz zu heilen, muss er die Schlacht zuerst verlassen.

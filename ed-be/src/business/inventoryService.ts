@@ -57,7 +57,6 @@ import { isOnHealingCell, leaveDungeonIfDead, markHealingCellUsed } from './dung
 import UnavailableReason = $Enums.UnavailableReason;
 import { randomUUID } from 'crypto';
 import { GLOBAL, LOGGER } from '../context.js';
-import { recordBoardHeal } from './clanChampionshipMatchService.js';
 import { rewarder } from '../utils/rewarder.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
@@ -120,8 +119,7 @@ const CAN_STILL_USE_ITEMS: UnavailableReason[] = [
 	UnavailableReason.defending,
 	UnavailableReason.restingAttack,
 	UnavailableReason.unsacrificing,
-	UnavailableReason.unfreezing,
-	UnavailableReason.clanChampionship
+	UnavailableReason.unfreezing
 ];
 
 export async function useItem(req: Request) {
@@ -144,19 +142,15 @@ export async function useItem(req: Request) {
 	}
 	// For some specific unavailable reasons, the Dinoz cannot use an item:
 	if (dinoz.unavailableReason && !CAN_STILL_USE_ITEMS.includes(dinoz.unavailableReason)) {
-		healingZone = await isOnHealingCell(dinoz);
 		if (dinoz.unavailableReason !== UnavailableReason.dungeon) {
-			// No item can be used if the Dinoz is unavailable (minus the exceptions)
+			// No item can be used if the Dinoz is unavailable (minus the exceptions), a clan championship board included
 			throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
-		} else if (!healingZone && item.itemId !== Item.POTION_IRMA) {
+		}
+		healingZone = await isOnHealingCell(dinoz);
+		if (!healingZone && item.itemId !== Item.POTION_IRMA) {
 			// Only item usable in a dungeon outside of a healing zone are irma potions
 			throw new ExpectedError(translate('dungeon.notHealing', authed));
 		}
-	}
-
-	// A Dinoz locked on the clan championship board can only be healed
-	if (dinoz.unavailableReason === UnavailableReason.clanChampionship && item.effect?.category !== ItemEffect.HEAL) {
-		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 
 	// If player found is different from player who do the request, throw exception
@@ -238,11 +232,6 @@ export async function useItem(req: Request) {
 				// once they walk off it.
 				if (healingZone) {
 					await markHealingCellUsed(dinoz);
-				}
-				if (dinoz.unavailableReason === UnavailableReason.clanChampionship) {
-					await recordBoardHeal(dinoz.id).catch(err =>
-						LOGGER.error(`Cannot record the board heal of dinoz ${dinoz.id}`, err)
-					);
 				}
 				break;
 			case ItemEffect.RESURRECT:

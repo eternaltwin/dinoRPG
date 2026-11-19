@@ -111,8 +111,8 @@ export default defineComponent({
 	props: {
 		// Dinoz the items are used on. Defaults to the current one, whose id is in the route (dinoz page).
 		dinozId: { type: Number, default: undefined },
-		// A dinoz locked on the clan championship board can only be healed (see useItem in ed-be)
-		healOnly: { type: Boolean, default: false },
+		// A dinoz locked on the clan championship board can only equip items, not use them (see useItem in ed-be)
+		equipOnly: { type: Boolean, default: false },
 		// Loads the items without the full page loader, which blocks the page it is embedded in
 		silent: { type: Boolean, default: false }
 	},
@@ -137,7 +137,7 @@ export default defineComponent({
 	},
 	methods: {
 		canUse(item: ItemFiche): boolean {
-			return item.canBeUsedNow && (!this.healOnly || item.effect?.category === ItemEffect.HEAL);
+			return item.canBeUsedNow && !this.equipOnly;
 		},
 		goToItemShop() {
 			this.$router.push({

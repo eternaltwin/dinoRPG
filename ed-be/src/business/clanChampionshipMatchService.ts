@@ -56,7 +56,7 @@ import { publishBoardChanged, publishChampionshipChanged } from './clanChampions
 
 const HOUR_MS = 60 * 60 * 1000;
 const TICK_MS = BOARD_TICK_MINUTES * 60 * 1000;
-const MAX_TICKS = 288;
+const MAX_TICKS = (2 * 24 * 60) / BOARD_TICK_MINUTES;
 /** The cron may fire a few ms early: ticks, kick-off and end are computed this far ahead of the wall clock. */
 const TICK_TOLERANCE_MS = 5000;
 
@@ -212,7 +212,7 @@ async function processMatchInTransaction(matchId: string, places: PlaceEnum[], w
 }
 
 /**
- * Every 10 minutes: reveals places, kicks matches off, scores the missed board ticks, ends matches
+ * Every BOARD_TICK_MINUTES minutes: reveals places, kicks matches off, scores the missed board ticks, ends matches
  * and finally the championship. Each match runs in its own transaction; a failing match is reported
  * and does not stop the others.
  */
@@ -245,7 +245,7 @@ export async function championshipTick(now: Date = new Date()): Promise<void> {
 
 export function startChampionshipTicker(): CronJob {
 	return new CronJob(
-		'*/10 * * * *',
+		`*/${BOARD_TICK_MINUTES} * * * *`,
 		() => {
 			void runChampionshipJob('championshipTick', () => championshipTick())();
 		},
@@ -681,40 +681,6 @@ export async function removePlayerFromBoards(playerId: string, clanId: number): 
 		{ timeout: 15000 }
 	);
 	if (version !== null) publishBoardChanged(found, version);
-}
-
-/**
- * A dinoz healed on the board (the only item it may use there): the life change is a board version of its own,
- * so the replay shows it and the allies see it at once. Best effort, called after the heal committed.
- */
-export async function recordBoardHeal(dinozId: number): Promise<void> {
-	const found = await prisma.clanChampionshipPiece.findFirst({
-		where: {
-			dinozId,
-			state: ClanChampionshipPieceState.onBoard,
-			match: { status: ClanChampionshipMatchStatus.live }
-		},
-		select: { match: { select: { id: true, homeClanId: true, awayClanId: true } } }
-	});
-	if (!found) return;
-	const match = found.match;
-	const version = await prisma.$transaction(
-		async tx => {
-			await lockMatch(tx, match.id);
-			const current = await tx.clanChampionshipMatch.findUnique({ where: { id: match.id }, select: { status: true } });
-			if (current?.status !== ClanChampionshipMatchStatus.live) return null;
-			const piece = await tx.clanChampionshipPiece.findUnique({
-				where: { matchId_dinozId: { matchId: match.id, dinozId } },
-				select: { state: true, dinoz: { select: { life: true } } }
-			});
-			if (piece?.state !== ClanChampionshipPieceState.onBoard) return null;
-			const version = await bumpVersion(tx, match.id);
-			await recordFrame(tx, match.id, version, [{ type: 'heal', dinozId, life: piece.dinoz.life }]);
-			return version;
-		},
-		{ timeout: 15000 }
-	);
-	if (version !== null) publishBoardChanged(match, version);
 }
 
 type JournalRow = {

@@ -98,7 +98,7 @@
 					<template v-else-if="!finished">
 						<DinozEquip :dinozId="selected.dinozId" />
 						<div class="inventory-panel" data-testid="selection-inventory">
-							<InventoryTab :dinozId="selected.dinozId" healOnly silent @itemUsed="emit('itemUsed', $event)" />
+							<InventoryTab :dinozId="selected.dinozId" equipOnly silent />
 						</div>
 					</template>
 				</div>
@@ -170,7 +170,6 @@ const emit = defineEmits<{
 	enter: [dinozId: number];
 	leave: [dinozId: number];
 	select: [dinozId: number];
-	itemUsed: [dinozId: number];
 }>();
 
 const tabs = ['clan', 'mine', 'selection', 'journal', 'chat'] as const;

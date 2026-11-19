@@ -56,7 +56,7 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 		}
 	});
 
-	// The backend tick runs at boot and every 10 minutes: the match started 5 minutes ago (no tick due yet)
+	// The backend tick runs at boot and every 20 minutes: the match started 5 minutes ago (no tick due yet)
 	// and ends in 2 days, so it is left alone for the whole test.
 	const now = Date.now();
 	const event = await db.clanEvent.create({
@@ -148,7 +148,7 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 	}
 });
 
-test('the selected piece shows its equipment and inventory, and can be healed and equipped from the board', async ({
+test('the selected piece shows its equipment and inventory, and can be equipped but not healed from the board', async ({
 	page,
 	player,
 	createPlayer,
@@ -239,7 +239,7 @@ test('the selected piece shows its equipment and inventory, and can be healed an
 		await page.getByTestId(`enter-${dinoz.id}`).click();
 		await expect(page.getByTestId('board-piece')).toHaveCount(1);
 
-		// A piece without action points cannot be selected on the board, but it can still be healed from the list
+		// A piece without action points cannot be selected on the board, but it can still be inspected from the list
 		await page.locator('.cdc-tabs li.clickable', { hasText: dinoz.name }).click();
 
 		const hp = page.getByTestId('selection-hp');
@@ -249,15 +249,11 @@ test('the selected piece shows its equipment and inventory, and can be healed an
 		const equipped = page.locator('.equip img[alt="cloud_burger"]');
 		await expect(equipped).toHaveCount(1);
 
-		// A dinoz locked on the board can only be healed: other items stay disabled
+		// A dinoz locked on the board can only equip items: none can be used, heals included
 		const inventory = page.getByTestId('selection-inventory');
-		await expect(inventory.getByTestId(`use-item-${CLOUD_BURGER}`)).toBeVisible();
+		await expect(inventory.getByTestId(`equip-item-${CLOUD_BURGER}`)).toBeVisible();
+		await expect(inventory.getByTestId(`use-item-${CLOUD_BURGER}`)).toHaveCount(0);
 		await expect(inventory.getByTestId(`use-item-${POTION_IRMA}`)).toHaveCount(0);
-
-		await inventory.getByTestId(`use-item-${CLOUD_BURGER}`).click();
-		await page.getByTestId('confirm-accept').click();
-		await expect(hp).toContainText('60/100');
-		expect((await db.dinoz.findUniqueOrThrow({ where: { id: dinoz.id } })).life).toBe(60);
 
 		await inventory.getByTestId(`equip-item-${CLOUD_BURGER}`).click();
 		await expect(equipped).toHaveCount(2);

@@ -50,7 +50,6 @@
 				@enter="onEnter"
 				@leave="onLeave"
 				@select="selectedDinozId = $event"
-				@itemUsed="onItemUsed"
 			/>
 		</template>
 	</div>
@@ -289,12 +288,6 @@ async function onLeave(dinozId: number) {
 		await ClanChampionshipService.leave(dinozId);
 		if (selectedDinozId.value === dinozId) selectedDinozId.value = null;
 	});
-}
-
-// The item was used through the inventory: only the displayed life is left to refresh
-async function onItemUsed(dinozId: number) {
-	await refetch();
-	refreshFiche(dinozId);
 }
 
 // The board is the one of the player's own clan: any other clan id in the URL is redirected

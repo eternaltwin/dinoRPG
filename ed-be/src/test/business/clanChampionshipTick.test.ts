@@ -159,7 +159,7 @@ describe('championshipTick', () => {
 	it('applies the missed ticks: scores and AP', async () => {
 		// home west at x=5 (line 5), away east at x=15 (line 4): nobody passed
 		setup(live(), [piece(1, HOME, 5), piece(2, AWAY, 15)]);
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		expect(matchUpdate().data).toEqual({ homeScore: 10, awayScore: 8, ticksApplied: 2, version: { increment: 1 } });
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
@@ -169,7 +169,7 @@ describe('championshipTick', () => {
 
 	it('takes the pieces at 0 HP off the board before scoring the missed ticks', async () => {
 		setup(live(), [piece(1, HOME, 5)]);
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		const calls = p.clanChampionshipPiece.updateMany.mock.calls.map((c: any[]) => c[0]);
 		const retire = calls.findIndex((c: any) => c.data.state === 'dead');
 		const credit = calls.findIndex((c: any) => c.data.actionPoints?.increment !== undefined);
@@ -179,7 +179,7 @@ describe('championshipTick', () => {
 
 	it('caps stored AP at 20 once the missed ticks are credited', async () => {
 		setup(live(), [piece(1, HOME, 5), piece(2, AWAY, 15)]);
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		const calls = p.clanChampionshipPiece.updateMany.mock.calls.map((c: any[]) => c[0].data);
 		const credit = calls.findIndex((d: any) => d.actionPoints?.increment !== undefined);
 		const cap = p.clanChampionshipPiece.updateMany.mock.calls.findIndex(
@@ -195,28 +195,28 @@ describe('championshipTick', () => {
 
 	it('maps the sides when the away clan is west', async () => {
 		setup(live({ westClanId: AWAY }), [piece(1, HOME, 15), piece(2, AWAY, 5)]);
-		await championshipTick(min(10));
+		await championshipTick(min(20));
 		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 5, ticksApplied: 1, version: { increment: 1 } });
 	});
 
 	it('applies nothing the second time at the same instant', async () => {
 		const m = live();
 		setup(m, [piece(1, HOME, 5)]);
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		const applied = matchUpdate().data;
 		p.clanChampionshipMatch.update.mockClear();
 		p.clanChampionshipPiece.updateMany.mockClear();
 		p.clanChampionshipMatch.findUnique.mockResolvedValue({ ...m, ...applied });
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
 		expect(p.clanChampionshipPiece.updateMany).not.toHaveBeenCalled();
 	});
 
 	it('finishes the match: remaining ticks, winner, pieces left, dinoz unlocked', async () => {
-		setup(live({ ticksApplied: 280, homeScore: 100, awayScore: 100 }), [piece(1, HOME, 5), piece(2, AWAY, 15)], 0);
+		setup(live({ ticksApplied: 136, homeScore: 100, awayScore: 100 }), [piece(1, HOME, 5), piece(2, AWAY, 15)], 0);
 		await championshipTick(new Date(endsAt.getTime() + 3 * 3600_000));
 		const { data } = matchUpdate();
-		expect(data).toMatchObject({ homeScore: 140, awayScore: 132, ticksApplied: 288, winnerClanId: HOME });
+		expect(data).toMatchObject({ homeScore: 140, awayScore: 132, ticksApplied: 144, winnerClanId: HOME });
 		expect(data.status).toBe('finished');
 		expect(p.clanChampionshipPiece.updateMany).toHaveBeenCalledWith({
 			where: { matchId: expect.any(String), state: 'onBoard' },
@@ -232,16 +232,16 @@ describe('championshipTick', () => {
 		});
 	});
 
-	it('tolerates a cron firing a few ms early: one tick at startsAt + 10 min - 1 ms', async () => {
+	it('tolerates a cron firing a few ms early: one tick at startsAt + 20 min - 1 ms', async () => {
 		setup(live(), [piece(1, HOME, 5)]);
-		await championshipTick(new Date(min(10).getTime() - 1));
+		await championshipTick(new Date(min(20).getTime() - 1));
 		expect(matchUpdate().data).toMatchObject({ ticksApplied: 1 });
 	});
 
-	it('tolerates a cron firing early at the end: 288 ticks and finished at endsAt - 1 ms', async () => {
-		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+	it('tolerates a cron firing early at the end: 144 ticks and finished at endsAt - 1 ms', async () => {
+		setup(live({ ticksApplied: 143 }), [piece(1, HOME, 5)], 0);
 		await championshipTick(new Date(endsAt.getTime() - 1));
-		expect(matchUpdate().data).toMatchObject({ ticksApplied: 288, status: 'finished' });
+		expect(matchUpdate().data).toMatchObject({ ticksApplied: 144, status: 'finished' });
 	});
 
 	it('kicks off a few ms before startsAt', async () => {
@@ -252,32 +252,32 @@ describe('championshipTick', () => {
 
 	it('does not tick 6 s before the tick', async () => {
 		setup(live(), [piece(1, HOME, 5)]);
-		await championshipTick(new Date(min(10).getTime() - 6000));
+		await championshipTick(new Date(min(20).getTime() - 6000));
 		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
 	});
 
 	it('maps the sides the same way when the west clan was deleted (away deleted, home west unknown)', async () => {
 		// westClanId null (west clan deleted): the deleted side is the null one
 		setup(live({ westClanId: null, awayClanId: null }), [piece(1, HOME, 15)]);
-		await championshipTick(min(10));
+		await championshipTick(min(20));
 		// the home clan is east (away was the deleted west clan): east line = 4
 		expect(matchUpdate().data).toEqual({ homeScore: 4, awayScore: 0, ticksApplied: 1, version: { increment: 1 } });
 	});
 
 	it('gives the win to the away clan with the higher score', async () => {
-		setup(live({ ticksApplied: 288, homeScore: 1, awayScore: 2 }), [], 0);
+		setup(live({ ticksApplied: 144, homeScore: 1, awayScore: 2 }), [], 0);
 		await championshipTick(endsAt);
 		expect(matchUpdate().data).toMatchObject({ winnerClanId: AWAY, status: 'finished' });
 	});
 
 	it('a draw gives no winner', async () => {
-		setup(live({ ticksApplied: 288, homeScore: 3, awayScore: 3 }), [], 0);
+		setup(live({ ticksApplied: 144, homeScore: 3, awayScore: 3 }), [], 0);
 		await championshipTick(endsAt);
 		expect(matchUpdate().data.winnerClanId).toBeNull();
 	});
 
-	it('never scores more than 288 ticks', async () => {
-		setup(live({ ticksApplied: 288 }), [piece(1, HOME, 5)], 0);
+	it('never scores more than 144 ticks', async () => {
+		setup(live({ ticksApplied: 144 }), [piece(1, HOME, 5)], 0);
 		await championshipTick(new Date(endsAt.getTime() + 3600_000));
 		expect(matchUpdate().data).not.toHaveProperty('ticksApplied');
 	});
@@ -289,7 +289,7 @@ describe('championshipTick', () => {
 	});
 
 	it('finishes the championship only when every match is finished', async () => {
-		setup(live({ ticksApplied: 288 }), [], 1);
+		setup(live({ ticksApplied: 144 }), [], 1);
 		await championshipTick(endsAt);
 		expect(p.clanEvent.update).not.toHaveBeenCalled();
 
@@ -345,7 +345,7 @@ describe('championshipTick', () => {
 			if (where.id === 'bad') throw new Error('boom');
 			return good;
 		});
-		await championshipTick(min(10));
+		await championshipTick(min(20));
 		expect(DISCORD.sendError).toHaveBeenCalledTimes(1);
 		expect(matchUpdate().where.id).toBe('good');
 		expect(bad.id).toBe('bad');
@@ -353,7 +353,7 @@ describe('championshipTick', () => {
 });
 
 describe('startChampionshipTicker', () => {
-	it('builds a stopped 10-minute UTC cron job', () => {
+	it('builds a stopped 20-minute UTC cron job', () => {
 		const job = startChampionshipTicker();
 		expect(job.running).toBeFalsy();
 	});
@@ -374,7 +374,7 @@ describe('championshipTick board version', () => {
 			committed = true;
 			return r;
 		});
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		expect(committed).toBe(true);
 		expect(matchUpdate()).toMatchObject({ data: { version: { increment: 1 } }, select: { version: true } });
 		expect(publishToWsChannel).toHaveBeenCalledTimes(2);
@@ -395,14 +395,14 @@ describe('championshipTick board version', () => {
 		expect(publishToWsChannel).toHaveBeenCalledTimes(2);
 	});
 	it('the end of the match bumps and publishes', async () => {
-		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+		setup(live({ ticksApplied: 143 }), [piece(1, HOME, 5)], 0);
 		await championshipTick(new Date(endsAt.getTime() - 1));
 		expect(matchUpdate().data.version).toEqual({ increment: 1 });
 		expect(publishToWsChannel).toHaveBeenCalledTimes(2);
 	});
 	it('a tick that changes nothing neither bumps nor publishes', async () => {
 		setup(live({ ticksApplied: 2 }), [piece(1, HOME, 5)]);
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		expect(p.clanChampionshipMatch.update).not.toHaveBeenCalled();
 		expect(publishToWsChannel).not.toHaveBeenCalled();
 		expect(publishToWsChannelFamily).not.toHaveBeenCalled();
@@ -413,7 +413,7 @@ describe('championshipTick board version', () => {
 		expect(recordFrame).toHaveBeenCalledWith(p, match().id, 5, [{ type: 'start' }]);
 	});
 	it('records the missed ticks and the end in one replay frame', async () => {
-		setup(live({ ticksApplied: 287 }), [piece(1, HOME, 5)], 0);
+		setup(live({ ticksApplied: 143 }), [piece(1, HOME, 5)], 0);
 		await championshipTick(new Date(endsAt.getTime() - 1));
 		expect(recordFrame).toHaveBeenCalledTimes(1);
 		const events = vi.mocked(recordFrame).mock.calls[0][3];
@@ -428,7 +428,7 @@ describe('championshipTick board version', () => {
 	it('a failing match publishes nothing', async () => {
 		setup(live(), [piece(1, HOME, 5)]);
 		p.clanChampionshipMatch.update.mockRejectedValue(new Error('db down'));
-		await championshipTick(min(25));
+		await championshipTick(min(50));
 		expect(publishToWsChannel).not.toHaveBeenCalled();
 	});
 });
