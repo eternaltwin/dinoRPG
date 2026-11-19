@@ -4517,6 +4517,11 @@
 		"vs": "VS",
 		"announcement": {
 			"overtime": "¡Prórroga!"
+		},
+		"tooltip": {
+			"nextTurn": "Próximo turno en",
+			"speed": "Velocidad",
+			"speedValue": "{value} %"
 		}
 	},
 	"ingredients": {

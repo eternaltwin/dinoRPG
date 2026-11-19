@@ -44,7 +44,9 @@ export enum DinoAction {
 	ENERGY,
 	MAXENERGY,
 	EMOTE,
-	SHAKE
+	SHAKE,
+	// Not part of Motion-Twin's fight.swf: custom stats displayed in the fighter's tooltip
+	STATS = 32
 }
 
 export enum FinishState {
@@ -374,4 +376,17 @@ export type transpiled =
 	| {
 			action: DinoAction.WAIT;
 			time: number;
+	  }
+	| {
+			action: DinoAction.STATS;
+			fighters: FighterTooltipStats[];
 	  };
+
+/**
+ * Stats displayed in a fighter's tooltip, keyed by their (already translated) label.
+ * They are merged with the ones previously set; `null` removes a stat.
+ */
+export interface FighterTooltipStats {
+	fid: number;
+	stats: Record<string, string | number | null>;
+}

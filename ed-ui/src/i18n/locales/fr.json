@@ -4519,6 +4519,11 @@
 		"vs": "VS",
 		"announcement": {
 			"overtime": "Prolongations !"
+		},
+		"tooltip": {
+			"nextTurn": "Prochain tour dans",
+			"speed": "Vitesse",
+			"speedValue": "{value} %"
 		}
 	},
 	"ingredients": {

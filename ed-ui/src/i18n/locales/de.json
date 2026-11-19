@@ -4515,6 +4515,11 @@
 		"vs": "VS",
 		"announcement": {
 			"overtime": "Verlängerung! "
+		},
+		"tooltip": {
+			"nextTurn": "Nächster Zug in",
+			"speed": "Geschwindigkeit",
+			"speedValue": "{value} %"
 		}
 	},
 	"ingredients": {
