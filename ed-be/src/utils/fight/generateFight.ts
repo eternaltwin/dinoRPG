@@ -8,6 +8,7 @@ import {
 	hasStatus,
 	heal,
 	playFighterTurn,
+	pushFighterTimes,
 	stepFighter,
 	updateStat,
 	hasItem,
@@ -82,6 +83,10 @@ export type DetailedFight = {
 	 * Format: {fighter}:{skillId}
 	 */
 	passivesTracker: Partial<Record<string, boolean>>;
+	/**
+	 * Last `fighterTimes` step sent: fight time and, for each fighter still in the fight, its time and speed
+	 */
+	fighterTimesSent: { time: number; fighters: Map<number, { time: number; speed: number }> };
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -254,7 +259,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				}
 			}
 		},
-		passivesTracker: {}
+		passivesTracker: {},
+		fighterTimesSent: { time: -1, fighters: new Map() }
 	};
 
 	// If a timeout is present, display it.
@@ -299,6 +305,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				});
 			}
 		});
+
+		// Send the starting time and speed of every fighter
+		pushFighterTimes(fightData);
 	}
 
 	let turn = 0;
