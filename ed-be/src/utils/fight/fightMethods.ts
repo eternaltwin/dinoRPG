@@ -17,6 +17,7 @@ import {
 	IncapacitatingStatus
 } from '@drpg/core/models/fight/DetailedFighter';
 import {
+	FighterTimesStep,
 	FightStep,
 	InitStepFighter,
 	LeaveAnimation,
@@ -590,6 +591,48 @@ export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type
 	};
 
 	return data;
+};
+
+/**
+ * Push a `fighterTimes` step with the fighters whose time or speed changed since the previous one,
+ * so the front can display when each fighter plays next and its speed.
+ * It must be called each time the fight time moves forward.
+ */
+export const pushFighterTimes = (fightData: DetailedFight) => {
+	const fighters = getFighters(fightData);
+	const step: FighterTimesStep = {
+		action: 'fighterTimes',
+		// Rounded values are precise enough for the display and keep the history light
+		time: Math.round(fightData.time),
+		fighters: []
+	};
+
+	const sentFighters = fightData.fighterTimesSent.fighters;
+
+	// Forget fighters that left the fight so they are sent again if they come back
+	sentFighters.forEach((_, fid) => {
+		if (!fighters.some(f => f.id === fid)) {
+			sentFighters.delete(fid);
+		}
+	});
+
+	fighters.forEach(fighter => {
+		const time = Math.round(fighter.time);
+		const speed = Math.round(fighter.stats.special.speed * 1000) / 1000;
+		const sent = sentFighters.get(fighter.id);
+		if (sent && sent.time === time && sent.speed === speed) {
+			return;
+		}
+		sentFighters.set(fighter.id, { time, speed });
+		step.fighters.push(sent && sent.speed === speed ? { fid: fighter.id, time } : { fid: fighter.id, time, speed });
+	});
+
+	// Nothing changed since the previous step
+	if (step.fighters.length === 0 && step.time === fightData.fighterTimesSent.time) {
+		return;
+	}
+	fightData.fighterTimesSent.time = step.time;
+	fightData.steps.push(step);
 };
 
 export const initStepFighter = (
@@ -5169,6 +5212,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 		// Set the new current time to fighter's turn
 		fightData.time += deltaTime;
+		pushFighterTimes(fightData);
 
 		// Recover energy for all fighters except the current one
 		getFighters(fightData).forEach(f => {
@@ -5263,6 +5307,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		if (isStatusTurn) {
 			return;
 		}
+	}
+
+	if (deltaTime <= 0) {
+		// The fight time did not move but fighters' times may have changed during the previous turn
+		pushFighterTimes(fightData);
 	}
 
 	if (deltaTime < 0) {

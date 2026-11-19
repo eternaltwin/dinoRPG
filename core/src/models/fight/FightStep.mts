@@ -273,6 +273,25 @@ export interface StatusTurnStep {
 	delta: number;
 }
 
+// Timing of the fighters: emitted at the start of the fight and each time the fight time moves forward (new turn or
+// status turn), so the front can display when each fighter plays next and its speed.
+// These values cannot be deduced from the other steps: they depend on random rolls (starting initiative, skills...)
+// and on effects that have no step of their own.
+// `time` is the current fight time. Only the fighters whose time or speed changed since the previous step are listed
+// (a fighter that died or escaped is listed again once it is back), and their speed only if it changed.
+export interface FighterTimesStep {
+	action: 'fighterTimes';
+	time: number;
+	fighters: {
+		fid: number;
+		// Fight time at which the fighter plays next
+		time: number;
+		// Speed factor of the fighter: the time between two of its turns is multiplied by it (lower is faster).
+		// Omitted when it did not change since the fighter was last listed.
+		speed?: number;
+	}[];
+}
+
 // The fighter passes its turn due to exceeding combo or no energy.
 export interface TiredStep {
 	action: 'tired';
@@ -364,6 +383,7 @@ export type FightStep =
 	| ReviveStep
 	| NewTurnStep
 	| StatusTurnStep
+	| FighterTimesStep
 	| TiredStep
 	| FlipStep
 	| AnimationStep
