@@ -4519,6 +4519,11 @@
 		"vs": "VS",
 		"announcement": {
 			"overtime": "Overtime!"
+		},
+		"tooltip": {
+			"nextTurn": "Next turn in",
+			"speed": "Speed",
+			"speedValue": "{value}%"
 		}
 	},
 	"ingredients": {

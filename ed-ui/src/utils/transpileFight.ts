@@ -25,6 +25,7 @@ import {
 } from '@drpg/core/utils/fightConstants';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Boss, bossList } from '@drpg/core/models/fight/BossList';
+import { FighterTooltipStatsTracker } from '@drpg/core/utils/fighterTooltipStats';
 
 /**
  * @param background Overrides the place's own background — a dungeon draws one per fight out of
@@ -198,6 +199,18 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
+	// Time before the next turn and speed of each fighter, displayed in its tooltip
+	const tooltipStats = new FighterTooltipStatsTracker({
+		nextTurn: t('fight.tooltip.nextTurn'),
+		speed: t('fight.tooltip.speed'),
+		formatSpeed: percent => t('fight.tooltip.speedValue', { value: percent })
+	});
+	const removeTooltipStats = (fid: number) => {
+		const removed = tooltipStats.remove(fid);
+		if (removed) {
+			history.push({ action: DinoAction.STATS, fighters: [removed] });
+		}
+	};
 
 	for (let i = 0; i < fight.length; i++) {
 		const step = fight[i];
@@ -491,6 +504,7 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
+				removeTooltipStats(step.fighter.id);
 				activeFighters.filter(f => f.id != step.fighter.id);
 				myFighter = undefined;
 				break;
@@ -612,6 +626,7 @@ export function transpileFight(
 					action: DinoAction.ESCAPE,
 					fid: step.fighter.id
 				});
+				removeTooltipStats(step.fighter.id);
 				break;
 			case 'looseHp':
 				history.push({
@@ -696,6 +711,13 @@ export function transpileFight(
 				// Update energy of fighters except the one that is playing a new turn.
 				history.push(energyStep as transpiled);
 				break;
+			case 'fighterTimes': {
+				const changes = tooltipStats.update(step);
+				if (changes.length > 0) {
+					history.push({ action: DinoAction.STATS, fighters: changes });
+				}
+				break;
+			}
 			case 'reduceEnergy':
 				break;
 			case 'removeCostume':
