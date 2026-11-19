@@ -1042,16 +1042,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/dinorpg_animations@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@eternaltwin/dinorpg_animations@npm:1.1.0"
+"@eternaltwin/dinorpg_animations@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@eternaltwin/dinorpg_animations@npm:1.1.1"
   dependencies:
     "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"
     "@pixi/picture": "npm:^4.0.1"
     lz-string: "npm:^1.5.0"
     pixi.js: "npm:^7.4.3"
-  checksum: 10/bbb6d0b76126e4a9ef9d75b45d999fff7aa4f5df818c7d084ff09088631746f36ff708b712236983e94935e1fcbe503ae2a620b28e218a17a31664ff014e7361
+  checksum: 10/c6e3905446d7eff301c395615e7399eb549e532d746df6289eca1ba689011026e30fda71cef4049de5535555714c9a869697e42acdbef13e1e1e3cdeda079fd0
   languageName: node
   linkType: hard
 
@@ -7629,7 +7629,7 @@ __metadata:
   dependencies:
     "@drpg/core": "workspace:^"
     "@eternaltwin/core": "npm:^0.17.2"
-    "@eternaltwin/dinorpg_animations": "npm:^1.1.0"
+    "@eternaltwin/dinorpg_animations": "npm:^1.1.1"
     "@eternaltwin/marktwin": "npm:^0.6.1"
     "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"

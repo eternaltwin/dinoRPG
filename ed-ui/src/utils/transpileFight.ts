@@ -530,10 +530,11 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fighter.id}`);
 					return;
 				}
-				myFighter.energy += step.energy;
+				// The step gives the energy gained, the Energy action expects the new level
+				setFighterEnergy(myFighter, myFighter.energy + step.energy);
 				history.push({
 					action: DinoAction.ENERGY,
-					fighters: [{ fid: step.fighter.id, energy: step.energy }]
+					fighters: [{ fid: step.fighter.id, energy: myFighter.energy }]
 				});
 				myFighter = undefined;
 				break;
