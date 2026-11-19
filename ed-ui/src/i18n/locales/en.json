@@ -4389,6 +4389,15 @@
 	},
 	"fight": {
 		"pageName": "Fight!",
+		"timeline": {
+			"label": "Fight history",
+			"start": "Start of the fight",
+			"previous": "Previous step",
+			"next": "Next step",
+			"end": "End of the fight",
+			"counter": "Step {current} / {total}",
+			"death": "{name} dies"
+		},
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",
 		"lvlup": "A Dinoz gained a **new level**!",

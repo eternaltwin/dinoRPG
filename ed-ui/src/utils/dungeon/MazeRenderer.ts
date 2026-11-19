@@ -1,13 +1,12 @@
 import { Application, BlurFilter, Container, Graphics, Sprite, Text } from 'pixi.js';
 import { GlowFilter } from '@pixi/filter-glow';
 import { DropShadowFilter } from '@pixi/filter-drop-shadow';
-// @ts-expect-error smonster is missing from the package's sdino.d.ts typings.
 import { smonster } from '@eternaltwin/dinorpg_animations';
 import { KEY_SKIN_COUNT, SKINS } from '@drpg/core/models/dungeon/DungeonClient';
 import type { MazeDims, RendererOptions, RevealedCell, Skin } from '@drpg/core/models/dungeon/DungeonClient';
 import { gfx, pad2 } from './dungeonAssets.js';
 
-/** The slice of smonster (a Pixi Container) we use — the published typings omit it. */
+/** The slice of smonster (a Pixi Container) we use. */
 type SMonster = Container & {
 	collider: { width: number; height: number };
 	playing: boolean;
@@ -605,7 +604,7 @@ export class MazeRenderer {
 				return this.sprite(`item_${c.icon}`, c.x, c.y, this.cell * 1.3);
 			case 'monster':
 				if (c.monster) {
-					this.monsterAt(c);
+					this.monsterAt(c, c.monster);
 					return null;
 				}
 				return this.sprite('item_skel', c.x, c.y, this.cell * 0.8);
@@ -621,11 +620,11 @@ export class MazeRenderer {
 	}
 
 	/** The team's first monster, standing (animated) on its cell. */
-	private monsterAt(c: RevealedCell): void {
+	private monsterAt(c: RevealedCell, monster: string): void {
 		const key = `${c.l},${c.x},${c.y}`;
 		let m = this.monsterSprites.get(key);
 		if (!m) {
-			m = new smonster({ type: c.monster, pflag: true }) as SMonster;
+			m = new smonster({ type: monster, pflag: true }) as SMonster;
 			// The parts stream in, so the art has no usable bounds yet: fit on the collider now
 			// (it tracks the art within ~20%) and refit exactly once the sprite has loaded.
 			const sprite = m;

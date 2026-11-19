@@ -4391,6 +4391,15 @@
 	},
 	"fight": {
 		"pageName": "Combate",
+		"timeline": {
+			"label": "Historial del combate",
+			"start": "Inicio del combate",
+			"previous": "Paso anterior",
+			"next": "Paso siguiente",
+			"end": "Fin del combate",
+			"counter": "Paso {current} / {total}",
+			"death": "Muerte de {name}"
+		},
 		"win": "¡Tú **ganas** este combate!",
 		"lose": "Has **perdido**...",
 		"lvlup": "¡Un Dino ganó un **nivel adicional**!",

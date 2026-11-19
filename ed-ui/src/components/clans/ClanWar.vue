@@ -209,7 +209,7 @@ import { ClanService } from '../../services';
 import { errorHandler } from '../../utils';
 import { clanStore } from '../../store/clanStore';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { Fight } from '@eternaltwin/dinorpg_animations';
+import { Fight, type FightData } from '@eternaltwin/dinorpg_animations';
 import { DinoAction, EntranceEffect, transpiled } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace } from '../../utils/transpileFight';
 import { playerStore } from '../../store';
@@ -440,7 +440,8 @@ export default defineComponent({
 					...defense,
 					{ action: DinoAction.DISPLAY }
 				]
-			});
+				// The transpiled steps of core are looser than the typings of the package (optional gfx, life…)
+			} as FightData);
 			const display = this.loadedCastle.getDisplay();
 			display.style.maxWidth = '100%';
 			canvas.appendChild(display);

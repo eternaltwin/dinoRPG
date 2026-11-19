@@ -4389,6 +4389,15 @@
 	},
 	"fight": {
 		"pageName": "Kampf!",
+		"timeline": {
+			"label": "Kampfverlauf",
+			"start": "Beginn des Kampfes",
+			"previous": "Vorheriger Schritt",
+			"next": "Nächster Schritt",
+			"end": "Ende des Kampfes",
+			"counter": "Schritt {current} / {total}",
+			"death": "{name} stirbt"
+		},
 		"win": "Du hast den Kampf **gewonnen**!",
 		"lose": "Du hast **verloren**...",
 		"lvlup": "Ein Dinoz hat eine **zusätzliche Stufe** erhalten!",
