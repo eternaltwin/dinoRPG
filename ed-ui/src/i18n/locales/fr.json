@@ -4392,15 +4392,6 @@
 	},
 	"fight": {
 		"pageName": "Combat !",
-		"timeline": {
-			"label": "Historique du combat",
-			"start": "Début du combat",
-			"previous": "Étape précédente",
-			"next": "Étape suivante",
-			"end": "Fin du combat",
-			"counter": "Étape {current} / {total}",
-			"death": "Mort de {name}"
-		},
 		"win": "Vous **remportez** ce combat !",
 		"lose": "Vous avez **perdu**...",
 		"lvlup": "Un Dinoz a gagné un **niveau supplémentaire** !",
