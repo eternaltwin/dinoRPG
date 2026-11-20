@@ -10,7 +10,7 @@ icon:
 
 Once a championship starts, Clans can no longer register nor change league.
 
-The championship is played as a **Swiss tournament** of 48-hour battles. Every Clan starts with 0 points. A victory awards 3 points, a draw 1 point and a defeat 0 points.
+The championship is played as a **Swiss tournament** of 48-hour battles. Every Clan starts with 0 points. A victory awards 4 points, a draw 1 point and a defeat 0 point.
 
 Each round, every Clan faces a Clan with a close score, avoiding as much as possible meeting the same opponent twice. The first round is drawn at random, each following one is drawn at the end of the previous one. The number of rounds depends on the number of registered Clans: at least 3, plus one each time the number of Clans doubles (8 Clans: 3 rounds, 16 Clans: 4 rounds, 32 Clans: 5 rounds...).
 
@@ -32,7 +32,7 @@ At the top, there is the current **score** of the battle and at the bottom there
 
 Upon joining the battlefield, Dinoz can move once. Then they need to wait to accumulate action points to move again. It is possible to cumulate actions points and not use them immediately.
 
-All Dinoz present on the battlefield earn one action point every 20 minutes.
+Tous les Dinoz gagnent un point d'action toutes les 20 minutes.
 
 You can click on one of your Dinoz to move it or know who it belongs to. Only the owner of a Dinoz can move it.
 
@@ -44,7 +44,7 @@ Good coordination between Clan members is necessary to achieve victory.
 
 In the battle display, each Clan has its own **score line**, blue for the left side and red for the right side.
 
-Every _20 minutes_, each Clan scores points based on how far is its score line. In the above example, the left side (blue line) will score 2 points, and the right side (red line) 4 points.
+Toutes les _20 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. In the above example, the left side (blue line) will score 2 points, and the right side (red line) 4 points.
 
 The score line is determined as follows: it matches the position of the \*_first_ Dinoz of the Clan **not passed** by an opponent.
 
@@ -64,4 +64,4 @@ If a Dinoz attacks an opponent from behind, it will fight alone: the opponent is
 
 If a Dinoz perishes in a fight, it is removed from the battlefield and will not be able to join again. A Dinoz is also allowed to leave the battlefield by going back to the start line of its side, and it will be able to rejoin.
 
-It is possible to equip and unequip items on your Dinoz at any time during the battle. However, no item can be used on the battlefield: to heal your Dinoz, it must first leave the battle.
+Il est possible d'équiper et de déséquiper des objets sur votre Dinoz à n'importe quel moment durant la bataille. En revanche, aucun objet ne peut être utilisé sur le champ de bataille : pour soigner votre Dinoz, il doit d'abord quitter la bataille.
