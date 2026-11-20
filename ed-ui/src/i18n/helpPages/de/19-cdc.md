@@ -64,4 +64,4 @@ Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, de
 
 Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann auch freiwillig die Schlacht verlassen, indem er zur Startspalte seines Klans zurückkehrt. Danach kann er die Schlacht auch erneut betreten.
 
-Gegenstände können von Dinoz während der Schlacht jederzeit angelegt und abgelegt werden. Auf dem Schlachtfeld kann jedoch kein Gegenstand benutzt werden: Um deinen Dinoz zu heilen, muss er die Schlacht zuerst verlassen.
+Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. En revanche, aucun objet ne peut être utilisé sur le champ de bataille : pour soigner votre Dinoz, il doit d'abord quitter la bataille.
