@@ -32,7 +32,7 @@ En haut, vous pouvez voir le **score** actuel de la bataille et en bas le temps 
 
 Les Dinoz qui ont rejoint la bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite.
 
-Tous les Dinoz gagnent un point d'action toutes les 20 minutes.
+Tous les Dinoz gagnent un point d'action toutes les 10 minute.
 
 Vous pouvez cliquer sur un Dinoz pour pouvoir le déplacer ou savoir à qui il appartient. Seul le propriétaire d'un Dinoz peut le déplacer.
 
@@ -44,7 +44,7 @@ Une bonne organisation entre les membres du Clan est donc nécessaire pour rempo
 
 Comme vous pouvez le voir sur l'affichage de la bataille, chaque Clan dispose d'une **ligne de score**, bleue pour le Clan de gauche et rouge pour le Clan de droite.
 
-Toutes les _20 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Ainsi, dans l'exemple ci-dessus, le Clan de gauche (ligne bleue) va remporter 2 points et le Clan de droite (ligne rouge) 4 points.
+Toutes les _10 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Ainsi, dans l'exemple ci-dessus, le Clan de gauche (ligne bleue) va remporter 2 points et le Clan de droite (ligne rouge) 4 points.
 
 La ligne de score est positionnée de la façon suivante : elle indique la position du premier Dinoz du Clan qui n'a pas été dépassé par un Dinoz du Clan adverse.
 
@@ -64,4 +64,4 @@ Si un Dinoz attaque un adversaire par derrière, il le fait seul, l'adversaire s
 
 Si un Dinoz meurt au cours d'un combat, il est retiré de la bataille et ne pourra plus la rejoindre. Un Dinoz peut aussi quitter la bataille volontairement en retournant sur la ligne de touche de son Clan, il pourra alors retourner combattre.
 
-Il est possible d'équiper et de déséquiper des objets sur votre Dinoz à n'importe quel moment durant la bataille. En revanche, aucun objet ne peut être utilisé sur le champ de bataille : pour soigner votre Dinoz, il doit d'abord quitter la bataille.
+Il est possible d'équiper et d'utiliser des objets sur votre Dinoz à n'importe quel moment durant la bataille.
