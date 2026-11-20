@@ -4397,7 +4397,7 @@
 			"start": "Kampfbeginn",
 			"previous": "Vorheriger Schritt",
 			"next": "Nächster Schritt",
-			"end": "Ende des Kampfes",
+			"end": "Kampfende",
 			"counter": "Schritt {current} / {total}",
 			"death": "{name} stirbt"
 		},
