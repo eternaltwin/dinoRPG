@@ -32,7 +32,7 @@ At the top, there is the current **score** of the battle and at the bottom there
 
 Upon joining the battlefield, Dinoz can move once. Then they need to wait to accumulate action points to move again. It is possible to cumulate actions points and not use them immediately.
 
-Tous les Dinoz gagnent un point d'action toutes les 20 minutes.
+All Dinoz present on the battlefield earn one action point every 20 minutes.
 
 You can click on one of your Dinoz to move it or know who it belongs to. Only the owner of a Dinoz can move it.
 
@@ -44,7 +44,7 @@ Good coordination between Clan members is necessary to achieve victory.
 
 In the battle display, each Clan has its own **score line**, blue for the left side and red for the right side.
 
-Toutes les _20 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. In the above example, the left side (blue line) will score 2 points, and the right side (red line) 4 points.
+Every _20 minutes_, each Clan scores points based on how far is its score line. In the above example, the left side (blue line) will score 2 points, and the right side (red line) 4 points.
 
 The score line is determined as follows: it matches the position of the \*_first_ Dinoz of the Clan **not passed** by an opponent.
 
@@ -64,4 +64,4 @@ If a Dinoz attacks an opponent from behind, it will fight alone: the opponent is
 
 If a Dinoz perishes in a fight, it is removed from the battlefield and will not be able to join again. A Dinoz is also allowed to leave the battlefield by going back to the start line of its side, and it will be able to rejoin.
 
-Il est possible d'équiper et de déséquiper des objets sur votre Dinoz à n'importe quel moment durant la bataille. En revanche, aucun objet ne peut être utilisé sur le champ de bataille : pour soigner votre Dinoz, il doit d'abord quitter la bataille.
+It is possible to manage your Dinoz equipment at any time during the battle. However, no item can be used on the battlefield : to heal your Dinoz, it must leave the battlefield.
