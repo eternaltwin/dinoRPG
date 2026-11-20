@@ -4352,7 +4352,7 @@
 			"PLAYER_JOIN": "A player has joined the clan.",
 			"PLAYER_LEAVE": "This player decided to leave the clan.",
 			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
-			"LEADERSHIP_TRANSFER": "J'ai désigné {newLeader} comme nouveau chef du clan.",
+			"LEADERSHIP_TRANSFER": "I transferred leadership to {newLeader}.",
 			"CASTLE_BUILD": "I built the castle.",
 			"CASTLE_REBUILD": "I rebuilt the castle.",
 			"WAR_ATTACKED": "As war officer of {name}, I declare war against your clan!",
@@ -4393,11 +4393,11 @@
 	"fight": {
 		"pageName": "Fight!",
 		"timeline": {
-			"label": "Fight history",
-			"start": "Start of the fight",
-			"previous": "Previous step",
-			"next": "Next step",
-			"end": "End of the fight",
+			"label": "Fight History",
+			"start": "Start of the Fight",
+			"previous": "Previous Step",
+			"next": "Next Step",
+			"end": "End of the Fight",
 			"counter": "Step {current} / {total}",
 			"death": "{name} dies"
 		},
@@ -5465,7 +5465,7 @@
 		"clanApply": "{name} would like to join your clan!",
 		"message": "You have received a new message.",
 		"clanApplyAccepted": "The clan {name} accepted your application.",
-		"clanLeadershipTransfer": "{player} t'a choisi comme nouveau chef de ton clan.",
+		"clanLeadershipTransfer": "{player} chose you as the new clan leader.",
 		"clanWar": {
 			"WAR_ATTACKED": "We have been attacked by {targetClan}!",
 			"WAR_START": "I started a war with {targetClan}!",
@@ -5659,7 +5659,7 @@
 			"busy": "Unavailable"
 		},
 		"replayMatch": "Replay the match",
-		"watchLive": "Watch live",
+		"watchLive": "Watch Live",
 		"replayView": {
 			"tabs": {
 				"board": "Board",
