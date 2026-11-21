@@ -1048,18 +1048,25 @@ model FightArchive {
   FBTournamentRightId   Int?
 
   @@index([tournamentId, tournamentStep])
+  @@index([createdDate])
+  @@index([leftPlayerId, createdDate])
+  @@index([rightPlayerId, createdDate])
 }
 
 model FightWatched {
   id             String       @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
+  fight          FightArchive @relation(fields: [fightArchiveId], references: [id], onDelete: Cascade)
   player         Player       @relation(fields: [playerId], references: [id], onDelete: Cascade)
   playerId       String       @db.Uuid
+  /// A favorite keeps its archive past the retention period (see cron/purgeFightArchives).
   favorite       Boolean
+  favoriteDate   DateTime?    @db.Timestamp(6)
   fightArchiveId String       @db.Uuid
 
   @@unique([playerId, fightArchiveId])
   @@index([playerId, fightArchiveId])
+  @@index([playerId, favorite])
+  @@index([fightArchiveId, favorite])
 }
 
 model Tournament {

@@ -7,6 +7,13 @@
 			:rightName="rightClanName"
 			:rightTitle="rightClanName ? $t('fight.clan') : null"
 		/>
+		<div v-if="loaded && loggedIn" class="favorite">
+			<DZButton :off="!favorite" data-testid="replay-favorite" @click="toggleFavorite">
+				<img :src="getImgURL('icons', 'small_star')" :class="{ off: !favorite }" alt="" />
+				{{ favorite ? $t('replays.removeFavorite') : $t('replays.addFavorite') }}
+			</DZButton>
+			<RouterLink :to="{ name: 'Replays' }">{{ $t('topBar.rightMenu.replays') }}</RouterLink>
+		</div>
 		<div v-if="backTo" class="back">
 			<RouterLink :to="backTo"
 				><DZButton back>{{
@@ -37,6 +44,7 @@ import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import FightersHeader from '../components/fight/FightersHeader.vue';
 import { FightService } from '../services';
+import { playerStore } from '../store';
 import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
@@ -53,10 +61,16 @@ export default defineComponent({
 			loaded: false,
 			leftPlayer: null as null | { id: string; name: string },
 			rightPlayer: null as null | { id: string; name: string },
-			rightClanName: null as null | string
+			rightClanName: null as null | string,
+			favorite: false,
+			pendingFavorite: false,
+			playerStore: playerStore()
 		};
 	},
 	computed: {
+		loggedIn(): boolean {
+			return !!this.playerStore.getPlayerId;
+		},
 		backTo(): string | null {
 			const back = this.$route.query.back;
 			// Only internal clan paths
@@ -65,7 +79,21 @@ export default defineComponent({
 			return back;
 		}
 	},
-	methods: {},
+	methods: {
+		async toggleFavorite() {
+			if (this.pendingFavorite) return;
+			this.pendingFavorite = true;
+			try {
+				const res = await FightService.setFavorite(this.$route.params.archive.toString(), !this.favorite);
+				this.favorite = res.favorite;
+				this.$toast.success(res.favorite ? this.$t('replays.favoriteAdded') : this.$t('replays.favoriteRemoved'));
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			} finally {
+				this.pendingFavorite = false;
+			}
+		}
+	},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
 
@@ -97,6 +125,9 @@ export default defineComponent({
 			this.rightPlayer = fightResult.rightPlayer;
 			this.rightClanName = fightResult.metadata.rightClanName ?? null;
 			this.loaded = true;
+			if (this.loggedIn) {
+				this.favorite = (await FightService.isFavorite(archiveId)).favorite;
+			}
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
@@ -107,6 +138,20 @@ export default defineComponent({
 <style lang="scss" scoped>
 #shareFight {
 	align-self: center;
+}
+.favorite {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	margin: 6px 0;
+	img {
+		vertical-align: middle;
+		margin-right: 4px;
+		&.off {
+			filter: grayscale(100%);
+		}
+	}
 }
 .back {
 	display: flex;

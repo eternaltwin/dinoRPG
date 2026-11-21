@@ -192,3 +192,117 @@ export async function isClanChampionshipFightReplayable(archiveId: string): Prom
 		return !!row && row.match.status !== ClanChampionshipMatchStatus.scheduled;
 	});
 }
+
+const archiveSummarySelect = {
+	id: true,
+	createdDate: true,
+	result: true,
+	fighters: true,
+	metadata: true,
+	tournamentId: true,
+	FBTournamentId: true,
+	leftPlayer: { select: { id: true, name: true } },
+	rightPlayer: { select: { id: true, name: true } },
+	FightWatched: { where: { favorite: true }, select: { playerId: true } }
+} as const;
+
+/** The archived fights a player took part in, newest first. */
+export async function getPlayerFightArchives(playerId: string, page: number, pageSize: number) {
+	return withSpan(getPlayerFightArchives.name, async () => {
+		const where = { OR: [{ leftPlayerId: playerId }, { rightPlayerId: playerId }] };
+		const [total, archives] = await prisma.$transaction([
+			prisma.fightArchive.count({ where }),
+			prisma.fightArchive.findMany({
+				where,
+				select: archiveSummarySelect,
+				orderBy: { createdDate: 'desc' },
+				skip: pageSize * (page - 1),
+				take: pageSize
+			})
+		]);
+		return { total, archives };
+	});
+}
+
+/** The fights a player keeps as favorites, last added first. */
+export async function getFavoriteFightArchives(playerId: string) {
+	return withSpan(getFavoriteFightArchives.name, async () => {
+		const rows = await prisma.fightWatched.findMany({
+			where: { playerId, favorite: true },
+			select: { fight: { select: archiveSummarySelect } },
+			orderBy: [{ favoriteDate: 'desc' }, { id: 'asc' }]
+		});
+		return rows.map(r => r.fight);
+	});
+}
+
+export async function isFavoriteFight(playerId: string, fightArchiveId: string) {
+	return withSpan(isFavoriteFight.name, async () => {
+		const row = await prisma.fightWatched.findUnique({
+			where: { playerId_fightArchiveId: { playerId, fightArchiveId } },
+			select: { favorite: true }
+		});
+		return !!row?.favorite;
+	});
+}
+
+/**
+ * Adds or removes a favorite. The player row is locked so two concurrent additions cannot go over `max`.
+ * Returns null when adding would go over `max`, else the player's favorite count afterwards.
+ */
+export async function setFavoriteFight(playerId: string, fightArchiveId: string, favorite: boolean, max: number) {
+	return withSpan(setFavoriteFight.name, async () => {
+		return prisma.$transaction(async tx => {
+			await tx.$executeRaw`SELECT 1 FROM player WHERE id = ${playerId}::uuid FOR UPDATE`;
+			if (!favorite) {
+				await tx.fightWatched.updateMany({
+					where: { playerId, fightArchiveId },
+					data: { favorite: false, favoriteDate: null }
+				});
+				return tx.fightWatched.count({ where: { playerId, favorite: true } });
+			}
+			const others = await tx.fightWatched.count({
+				where: { playerId, favorite: true, NOT: { fightArchiveId } }
+			});
+			if (others >= max) return null;
+			const existing = await tx.fightWatched.findUnique({
+				where: { playerId_fightArchiveId: { playerId, fightArchiveId } },
+				select: { favorite: true }
+			});
+			if (!existing?.favorite) {
+				await tx.fightWatched.upsert({
+					where: { playerId_fightArchiveId: { playerId, fightArchiveId } },
+					create: { playerId, fightArchiveId, favorite: true, favoriteDate: new Date() },
+					update: { favorite: true, favoriteDate: new Date() }
+				});
+			}
+			return others + 1;
+		});
+	});
+}
+
+/**
+ * Deletes the archives created before `before` that no player keeps as a favorite, `batchSize` rows per statement so
+ * no single statement locks a large part of the table. Their FightWatched rows go with them (cascade).
+ * Returns how many archives were deleted.
+ */
+export async function purgeFightArchivesBefore(before: Date, batchSize: number) {
+	return withSpan(purgeFightArchivesBefore.name, async () => {
+		let total = 0;
+		for (;;) {
+			const deleted = await prisma.$executeRaw`
+				DELETE FROM "FightArchive"
+				WHERE id IN (
+					SELECT fa.id
+					FROM "FightArchive" fa
+					WHERE fa."createdDate" < ${before}
+						AND NOT EXISTS (
+							SELECT 1 FROM "FightWatched" fw WHERE fw."fightArchiveId" = fa.id AND fw.favorite
+						)
+					LIMIT ${batchSize}
+				)`;
+			total += deleted;
+			if (deleted < batchSize) return total;
+		}
+	});
+}

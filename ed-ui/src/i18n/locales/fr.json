@@ -63,6 +63,7 @@
 			}
 		},
 		"rightMenu": {
+			"replays": "Mes replays",
 			"news": "Nouveautés",
 			"gazette": "Gazette",
 			"ranking": "Classement",
@@ -2680,6 +2681,7 @@
 		"serverTime": "Temps du serveur"
 	},
 	"pageTitle": {
+		"replays": "DinoRPG [ Mes replays ]",
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
@@ -5717,6 +5719,34 @@
 				"heal": "{dinoz} est soigné ({life} PV).",
 				"withdrawn": "Retirés du damier (joueur parti du clan) : {names}."
 			}
+		}
+	},
+	"replays": {
+		"favorites": "Favoris",
+		"mine": "Mes combats",
+		"favoritesCount": "{count} / {max} combats en favoris",
+		"retention": "Les combats sont effacés au bout de {months} mois. Mettez-en jusqu’à {max} en favoris pour les garder.",
+		"empty": "Aucun combat archivé.",
+		"emptyFavorites": "Aucun combat en favori. Cliquez sur l’étoile d’un combat pour le garder.",
+		"date": "Date",
+		"kind": "Type",
+		"fighters": "Combattants",
+		"result": "Résultat",
+		"expires": "Expiration",
+		"kept": "Conservé",
+		"victory": "Victoire",
+		"defeat": "Défaite",
+		"watch": "Voir le combat",
+		"addFavorite": "Ajouter aux favoris",
+		"removeFavorite": "Retirer des favoris",
+		"favoriteAdded": "Combat ajouté aux favoris.",
+		"favoriteRemoved": "Combat retiré des favoris.",
+		"kinds": {
+			"dojo": "Dojo",
+			"tournament": "Tournoi",
+			"forceBrute": "Force Brute",
+			"clanWar": "Guerre de clans",
+			"clanChampionship": "Championnat des clans"
 		}
 	}
 }

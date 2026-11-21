@@ -27,6 +27,7 @@ import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketS
 import { IncomingMessage } from 'http';
 import { flushAllRuns } from './dao/dungeonRunDao.js';
 import { checkBans } from './cron/checkBans.js';
+import { purgeFightArchives } from './cron/purgeFightArchives.js';
 import TournamentManager from './utils/tournamentManager.js';
 import { prisma } from './prisma.js';
 import { resumeTournaments } from './business/forceBruteService.js';
@@ -107,6 +108,7 @@ export function main(cx: ServerContext) {
 	startupTask('scheduleAtStart', () => scheduleAtStart());
 	itinerantMerchant().start();
 	checkBans().start();
+	purgeFightArchives().start();
 
 	startupTask('scheduleDinozEndOfUnavailability', () => scheduleDinozEndOfUnavailability());
 	startupTask('scheduleOffersExpiration', () => scheduleOffersExpiration());
