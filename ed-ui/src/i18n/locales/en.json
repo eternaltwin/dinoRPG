@@ -63,6 +63,7 @@
 			}
 		},
 		"rightMenu": {
+			"replays": "My replays",
 			"news": "News",
 			"gazette": "Newsletter",
 			"ranking": "Ranking",
@@ -2680,6 +2681,7 @@
 		"serverTime": "Server Time"
 	},
 	"pageTitle": {
+		"replays": "DinoRPG [ My replays ]",
 		"default": "DinoRPG [ Dinoland News ]",
 		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
 		"shop": "DinoRPG [ Merchant: {shop} ]",
@@ -4519,6 +4521,11 @@
 		"vs": "VS",
 		"announcement": {
 			"overtime": "Overtime!"
+		},
+		"tooltip": {
+			"nextTurn": "Next turn in",
+			"speed": "Speed",
+			"speedValue": "{value}%"
 		}
 	},
 	"ingredients": {
@@ -5712,6 +5719,34 @@
 				"heal": "{dinoz} healed ({life} HP).",
 				"withdrawn": "Taken off the board (player left the clan): {names}."
 			}
+		}
+	},
+	"replays": {
+		"favorites": "Favorites",
+		"mine": "My fights",
+		"favoritesCount": "{count} / {max} favorite fights",
+		"retention": "Fights are deleted after {months} months. Add up to {max} of them to your favorites to keep them.",
+		"empty": "No archived fight.",
+		"emptyFavorites": "No favorite fight. Click the star of a fight to keep it.",
+		"date": "Date",
+		"kind": "Type",
+		"fighters": "Fighters",
+		"result": "Result",
+		"expires": "Expires",
+		"kept": "Kept",
+		"victory": "Victory",
+		"defeat": "Defeat",
+		"watch": "Watch the fight",
+		"addFavorite": "Add to favorites",
+		"removeFavorite": "Remove from favorites",
+		"favoriteAdded": "Fight added to your favorites.",
+		"favoriteRemoved": "Fight removed from your favorites.",
+		"kinds": {
+			"dojo": "Dojo",
+			"tournament": "Tournament",
+			"forceBrute": "Brute Force",
+			"clanWar": "Clan war",
+			"clanChampionship": "Clan championship"
 		}
 	}
 }
