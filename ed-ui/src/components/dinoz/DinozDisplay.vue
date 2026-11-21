@@ -89,7 +89,7 @@ export default defineComponent({
 			}
 			return 'top: -15px;';
 		},
-		getDinozId(shift: number): void | number {
+		getDinozId(shift: number): number | undefined {
 			if (!useDinozStore().getDinozList) return;
 
 			const currentIndex = useDinozStore().getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);

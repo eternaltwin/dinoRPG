@@ -200,7 +200,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { type Component, defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZTable from '../common/DZTable.vue';
@@ -233,7 +233,7 @@ import { formatNumber } from '@drpg/core/utils/string';
 
 export default defineComponent({
 	name: 'ClanWar',
-	components: { DinozMini, DZTable, DZDisclaimer, DZButton, VueDraggable },
+	components: { DinozMini, DZTable, DZDisclaimer, DZButton, VueDraggable: VueDraggable as Component },
 	data() {
 		return {
 			war: false as boolean,

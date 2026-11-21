@@ -1,14 +1,22 @@
 <template>
 	<article class="msg-card" :class="{ 'is-self': isSelf }">
 		<header class="msg-card__header">
-			<RouterLink class="avatar" :to="author ? { name: 'Account', params: { id: author.id } } : undefined">
+			<component
+				:is="author ? 'RouterLink' : 'span'"
+				class="avatar"
+				:to="author ? { name: 'Account', params: { id: author.id } } : undefined"
+			>
 				<img v-if="author?.avatarUrl" :src="author.avatarUrl" alt="avatar" />
 				<span v-else class="avatar--stub">{{ author?.name?.[0]?.toUpperCase() ?? 'Unknown' }}</span>
-			</RouterLink>
+			</component>
 
 			<div class="meta">
 				<div class="name-row">
-					<RouterLink class="author" :to="author ? { name: 'Account', params: { id: author.id } } : undefined">
+					<component
+						:is="author ? 'RouterLink' : 'span'"
+						class="author"
+						:to="author ? { name: 'Account', params: { id: author.id } } : undefined"
+					>
 						<img
 							src="\src\assets\icons\crown.png"
 							alt="rank"
@@ -16,7 +24,7 @@
 							v-tippy="{ content: t('clan.icons.crown'), theme: 'small' }"
 						/>
 						{{ author?.name ?? 'Unknown' }}
-					</RouterLink>
+					</component>
 					<span v-if="author?.isLeader" class="badge badge--leader">{{ t('clan.icons.crown') }}</span>
 					<span class="badge">{{ topItem }}</span>
 				</div>

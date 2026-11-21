@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	<div>
-		<Router-view :key="$route.params.pageId"></Router-view>
+		<Router-view :key="String($route.params.pageId)"></Router-view>
 	</div>
 	<div class="bottom-buttons">
 		<div v-if="hasPageManageRight">
