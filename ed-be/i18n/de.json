@@ -1,5 +1,5 @@
 {
-	"favoriteFightLimit": "Du hast bereits {{max}} Lieblingskämpfe. Entferne einen, um einen anderen hinzuzufügen.",
+	"favoriteFightLimit": "Du hast bereits {{max}} Kämpfe in den Favoriten. Du müsstest einen entfernen, um einen weiteren hinzuzufügen.",
 	"favoriteFightNotPvP": "Nur Kämpfe zwischen Spielern können zu den Favoriten hinzugefügt werden.",
 	"clanEvent": {
 		"overlap": "Ein anderes Klanereignis im Gange oder geplant."
