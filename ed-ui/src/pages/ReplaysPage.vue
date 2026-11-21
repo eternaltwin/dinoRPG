@@ -5,11 +5,11 @@
 			{{ $t('replays.retention', { months: FIGHT_ARCHIVE_RETENTION_MONTHS, max: MAX_FAVORITE_FIGHTS }) }}
 		</p>
 		<div class="tabs">
-			<DZButton :off="tab !== 'favorites'" data-testid="tab-favorites" @click="selectTab('favorites')">
-				{{ $t('replays.favorites') }} ({{ favorites.length }}/{{ MAX_FAVORITE_FIGHTS }})
-			</DZButton>
-			<DZButton :off="tab !== 'mine'" data-testid="tab-mine" @click="selectTab('mine')">
+			<DZButton :inactive="tab !== 'mine'" data-testid="tab-mine" @click="selectTab('mine')">
 				{{ $t('replays.mine') }}
+			</DZButton>
+			<DZButton :inactive="tab !== 'favorites'" data-testid="tab-favorites" @click="selectTab('favorites')">
+				{{ $t('replays.favorites') }} ({{ favorites.length }}/{{ MAX_FAVORITE_FIGHTS }})
 			</DZButton>
 		</div>
 
@@ -45,7 +45,9 @@
 					</td>
 					<td class="date">{{ fight.expiresAt ? formatDate(fight.expiresAt) : $t('replays.kept') }}</td>
 					<td class="icons">
+						<!-- Only PvP fights can be kept; a favorite saved before that rule can still be removed -->
 						<img
+							v-if="fight.pvp || fight.favorite"
 							:class="{ star: true, off: !fight.favorite }"
 							:src="getImgURL('icons', 'small_star')"
 							:alt="fight.favorite ? $t('replays.removeFavorite') : $t('replays.addFavorite')"
@@ -103,7 +105,7 @@ export default defineComponent({
 	components: { TitleHeader, DZTable, DZButton },
 	data() {
 		return {
-			tab: 'favorites' as Tab,
+			tab: 'mine' as Tab,
 			favorites: [] as FightArchiveSummary[],
 			mine: [] as FightArchiveSummary[],
 			page: 1,
@@ -194,6 +196,11 @@ export default defineComponent({
 	},
 	async mounted() {
 		// The favorites count shows on its tab whichever tab is open
+		try {
+			this.favorites = (await FightService.getFavorites()).fights;
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
+		}
 		await this.load();
 	}
 });

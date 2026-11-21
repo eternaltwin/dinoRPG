@@ -21,7 +21,7 @@ export const FightService = {
 		const res = await http().get(`/fight/archives/favorites`);
 		return res.data;
 	},
-	async isFavorite(archiveId: string): Promise<{ favorite: boolean }> {
+	async isFavorite(archiveId: string): Promise<{ favorite: boolean; pvp: boolean }> {
 		const res = await http().get(`/fight/${archiveId}/favorite`);
 		return res.data;
 	},

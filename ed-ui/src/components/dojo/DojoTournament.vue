@@ -24,7 +24,7 @@
 						class="dinoz"
 						v-else-if="team.show"
 						:class="{ me: team.player && team.player.id === playerStore.getPlayerId, lost: !team.won && team.watched }"
-						@click="goToPage('ShareFight', { archive: team.fight })"
+						@click="goToPage('ReplayFight', { archive: team.fight })"
 					>
 						<DinozMini
 							v-if="team.dinoz"
@@ -41,7 +41,13 @@
 							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
-					<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-else
+						@click="goToPage('ReplayFight', { archive: team.fight })"
+					>
 						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>
@@ -67,7 +73,7 @@
 						class="dinoz"
 						v-else-if="team.show"
 						:class="{ me: team.player && team.player.id === playerStore.getPlayerId, lost: !team.won && team.watched }"
-						@click="goToPage('ShareFight', { archive: team.fight })"
+						@click="goToPage('ReplayFight', { archive: team.fight })"
 					>
 						<DinozMini v-if="team.dinoz" :display="team.dinoz.display" :width="50" :height="50" class="dinoz-display" />
 						<span class="name" v-if="team.dinoz">{{ team.player?.name ?? '???' }}</span>
@@ -77,7 +83,13 @@
 							<p>{{ $t('dojo.seeFight', { playerA: team?.player?.name, playerB: team?.opponent?.name }) }}</p>
 						</template>
 					</Tippy>
-					<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: team.fight })">
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-else
+						@click="goToPage('ReplayFight', { archive: team.fight })"
+					>
 						<span class="name">{{ $t('dojo.soon') }}</span>
 
 						<template #content>

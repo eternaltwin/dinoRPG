@@ -21,6 +21,7 @@
 	<template v-if="fightTransformed">
 		<div id="fightContent">
 			<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+			<FightFavoriteButton v-if="loaded" :archiveId="archiveId" :fighters="fighters" />
 			<div v-show="loaded" class="content">
 				<Suspense>
 					<FullFightAnimation :fight="fightTransformed" />
@@ -58,11 +59,13 @@ import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResul
 import { UnavailableReason } from '@drpg/prisma/enums';
 import FightRecap from './FightRecap.vue';
 import FightersHeader from '../fight/FightersHeader.vue';
+import FightFavoriteButton from '../fight/FightFavoriteButton.vue';
 
 export default defineComponent({
 	name: 'ChallengeFriend',
 	components: {
 		DZButton,
+		FightFavoriteButton,
 		DZDisclaimer,
 		DZInput,
 		TitleHeader,
@@ -85,6 +88,8 @@ export default defineComponent({
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
 			shareLink: '',
+			archiveId: null as null | string,
+			fighters: [] as FighterRecap[],
 			fightStat: {} as FullFightStats,
 			leftPlayer: null as null | { id: string; name: string },
 			rightPlayer: null as null | { id: string; name: string }
@@ -136,8 +141,10 @@ export default defineComponent({
 				};
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
+				this.archiveId = fightResult.id;
+				this.fighters = fighters;
 				this.loaded = true;
-				this.shareLink = `${window.location.origin}/dojo/share/${fightResult.id}`;
+				this.shareLink = `${window.location.origin}/replay/${fightResult.id}`;
 				await this.$refreshGold();
 				dojoStore().incrementCashPrice(this.fightCost);
 			} catch (e) {
@@ -156,6 +163,8 @@ export default defineComponent({
 			this.fightTransformed = undefined;
 			this.loaded = false;
 			this.shareLink = '';
+			this.archiveId = null;
+			this.fighters = [];
 		},
 		composeMyTeam(data: number[]) {
 			this.myTeam = data;

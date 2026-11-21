@@ -7,13 +7,7 @@
 			:rightName="rightClanName"
 			:rightTitle="rightClanName ? $t('fight.clan') : null"
 		/>
-		<div v-if="loaded && loggedIn" class="favorite">
-			<DZButton :off="!favorite" data-testid="replay-favorite" @click="toggleFavorite">
-				<img :src="getImgURL('icons', 'small_star')" :class="{ off: !favorite }" alt="" />
-				{{ favorite ? $t('replays.removeFavorite') : $t('replays.addFavorite') }}
-			</DZButton>
-			<RouterLink :to="{ name: 'Replays' }">{{ $t('topBar.rightMenu.replays') }}</RouterLink>
-		</div>
+		<FightFavoriteButton v-if="fighters.length > 0" :archiveId="archiveId" :fighters="fighters" showReplaysLink />
 		<div v-if="backTo" class="back">
 			<RouterLink :to="backTo"
 				><DZButton back>{{
@@ -43,9 +37,10 @@ import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import FightersHeader from '../components/fight/FightersHeader.vue';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { FightService } from '../services';
-import { playerStore } from '../store';
 import DZButton from '../components/common/DZButton.vue';
+import FightFavoriteButton from '../components/fight/FightFavoriteButton.vue';
 
 export default defineComponent({
 	name: 'ReplayFight',
@@ -53,6 +48,7 @@ export default defineComponent({
 		TitleHeader,
 		DZButton,
 		FightersHeader,
+		FightFavoriteButton,
 		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
 	data() {
@@ -62,14 +58,12 @@ export default defineComponent({
 			leftPlayer: null as null | { id: string; name: string },
 			rightPlayer: null as null | { id: string; name: string },
 			rightClanName: null as null | string,
-			favorite: false,
-			pendingFavorite: false,
-			playerStore: playerStore()
+			fighters: [] as FighterRecap[]
 		};
 	},
 	computed: {
-		loggedIn(): boolean {
-			return !!this.playerStore.getPlayerId;
+		archiveId(): string {
+			return this.$route.params.archive.toString();
 		},
 		backTo(): string | null {
 			const back = this.$route.query.back;
@@ -79,30 +73,18 @@ export default defineComponent({
 			return back;
 		}
 	},
-	methods: {
-		async toggleFavorite() {
-			if (this.pendingFavorite) return;
-			this.pendingFavorite = true;
-			try {
-				const res = await FightService.setFavorite(this.$route.params.archive.toString(), !this.favorite);
-				this.favorite = res.favorite;
-				this.$toast.success(res.favorite ? this.$t('replays.favoriteAdded') : this.$t('replays.favoriteRemoved'));
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
-			} finally {
-				this.pendingFavorite = false;
-			}
-		}
-	},
 	async mounted() {
-		const archiveId = this.$route.params.archive.toString();
+		const archiveId = this.archiveId;
 
 		try {
 			const fightResult = await FightService.getReplay(archiveId);
 			const fightSteps = fightResult.history as FightStep[];
 			const fighters = fightResult.fighters as FighterRecap[];
 			if (!fightSteps || !fighters) return;
+			this.fighters = fighters;
 
+			// Friend and tournament fights are archived without a place: they are fought in the dojo
+			const placeId: number = fightResult.metadata?.placeId ?? PlaceEnum.DOJO;
 			const nexFight = transpileFight(
 				structuredClone(toRaw(fighters)),
 				fightSteps,
@@ -110,12 +92,12 @@ export default defineComponent({
 				fightResult.result,
 				undefined,
 				undefined,
-				false
+				placeId === PlaceEnum.DOJO
 			);
 			if (!nexFight) {
 				return;
 			}
-			const initPlace = resolveFightingPlace(fightResult.metadata.placeId);
+			const initPlace = resolveFightingPlace(placeId);
 			this.fightTransformed = {
 				...initPlace,
 				history: nexFight.filter(n => n != undefined)
@@ -123,11 +105,8 @@ export default defineComponent({
 			};
 			this.leftPlayer = fightResult.leftPlayer;
 			this.rightPlayer = fightResult.rightPlayer;
-			this.rightClanName = fightResult.metadata.rightClanName ?? null;
+			this.rightClanName = fightResult.metadata?.rightClanName ?? null;
 			this.loaded = true;
-			if (this.loggedIn) {
-				this.favorite = (await FightService.isFavorite(archiveId)).favorite;
-			}
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
@@ -138,20 +117,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 #shareFight {
 	align-self: center;
-}
-.favorite {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 12px;
-	margin: 6px 0;
-	img {
-		vertical-align: middle;
-		margin-right: 4px;
-		&.off {
-			filter: grayscale(100%);
-		}
-	}
 }
 .back {
 	display: flex;

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { makeRequest } from '../helpers/req.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { STANDARD_PVP_RULES } from '@drpg/core/models/fight/FightConfiguration';
@@ -30,7 +31,8 @@ vi.mock('../../dao/eventsDao.js', () => ({
 vi.mock('../../dao/archiveDao.js', () => ({
 	getArchivedFightRequest: vi.fn(),
 	getClanChampionshipFightParticipants: vi.fn(),
-	isClanChampionshipFightReplayable: vi.fn().mockResolvedValue(false)
+	isClanChampionshipFightReplayable: vi.fn().mockResolvedValue(false),
+	viewFight: vi.fn()
 }));
 vi.mock('../../business/missionsService.js', () => ({ checkMissionFight: vi.fn() }));
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
@@ -45,7 +47,8 @@ import { getPlayerEventProgression } from '../../dao/eventsDao.js';
 import {
 	getArchivedFightRequest,
 	getClanChampionshipFightParticipants,
-	isClanChampionshipFightReplayable
+	isClanChampionshipFightReplayable,
+	viewFight
 } from '../../dao/archiveDao.js';
 import { movementListener } from '../../business/specialService.js';
 import {
@@ -543,6 +546,39 @@ describe('replayFight', () => {
 			expect(result.id).toBe('a1');
 			expect(playerDao.auth).not.toHaveBeenCalled();
 			expect(getClanChampionshipFightParticipants).not.toHaveBeenCalled();
+			expect(viewFight).not.toHaveBeenCalled();
+		});
+		it('marks the fight as watched by a logged-in participant', async () => {
+			cdcArchive();
+			vi.mocked(getClanChampionshipFightParticipants).mockResolvedValue(['p1', 'p2']);
+			await replayFight(req({ archiveId: 'a1' }));
+			expect(viewFight).toHaveBeenCalledWith('p1', 'a1');
+		});
+	});
+	describe('watched fights', () => {
+		const publicArchive = () =>
+			vi.mocked(getArchivedFightRequest).mockResolvedValue({
+				fighters: '[]',
+				result: true,
+				steps: '[]',
+				seed: 's',
+				leftPlayer: null,
+				rightPlayer: null,
+				metadata: null
+			} as never);
+		const authedReq = () =>
+			makeRequest({ params: { archiveId: 'a1' }, headers: { authorization: 'Basic x' } } as never);
+		it('marks the fight as watched when the viewer is logged in', async () => {
+			publicArchive();
+			await replayFight(authedReq());
+			expect(viewFight).toHaveBeenCalledWith('p1', 'a1');
+		});
+		it('still shows the replay when the viewer token is invalid', async () => {
+			publicArchive();
+			vi.mocked(playerDao.auth).mockRejectedValueOnce(new ExpectedError('You are not logged in'));
+			const result = await replayFight(authedReq());
+			expect(result.id).toBe('a1');
+			expect(viewFight).not.toHaveBeenCalled();
 		});
 	});
 });

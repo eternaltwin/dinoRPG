@@ -9,6 +9,7 @@ import {
 	FightArchivePage,
 	FightArchiveSummary,
 	FightFavorites,
+	isPvPFight,
 	MAX_FAVORITE_FIGHTS
 } from '@drpg/core/models/fight/FightArchiveList';
 import {
@@ -38,6 +39,15 @@ export interface ArchiveSummaryRow {
 	FightWatched: { playerId: string }[];
 }
 
+function parseFighters(raw: string): FighterRecap[] {
+	try {
+		return JSON.parse(raw) as FighterRecap[];
+	} catch {
+		// A broken archive still shows in the list
+		return [];
+	}
+}
+
 function parseMetadata(raw: string | null): { kind?: string; rightClanName?: string } {
 	if (!raw) return {};
 	try {
@@ -65,12 +75,7 @@ export function fightArchiveExpiry(createdDate: Date): Date {
 }
 
 export function toFightArchiveSummary(row: ArchiveSummaryRow, playerId: string): FightArchiveSummary {
-	let fighters: FighterRecap[] = [];
-	try {
-		fighters = JSON.parse(row.fighters) as FighterRecap[];
-	} catch {
-		// A broken archive still shows in the list
-	}
+	const fighters = parseFighters(row.fighters);
 	const kind = fightArchiveKind(row);
 	// The purge spares favorites and clan championship fights
 	const kept = row.FightWatched.length > 0 || kind === 'clanChampionship';
@@ -80,6 +85,7 @@ export function toFightArchiveSummary(row: ArchiveSummaryRow, playerId: string):
 		createdDate: row.createdDate.toISOString(),
 		expiresAt: kept ? null : fightArchiveExpiry(row.createdDate).toISOString(),
 		favorite: row.FightWatched.some(w => w.playerId === playerId),
+		pvp: isPvPFight(fighters),
 		result: row.result,
 		fighters: fighters.map(f => ({ id: f.id, type: f.type, name: f.name, attacker: f.attacker })),
 		leftPlayer: row.leftPlayer,
@@ -101,9 +107,17 @@ export async function getMyFavoriteFights(req: Request): Promise<FightFavorites>
 	return { max: MAX_FAVORITE_FIGHTS, fights: archives.map(a => toFightArchiveSummary(a, authed.id)) };
 }
 
-export async function getFavoriteState(req: Request): Promise<{ favorite: boolean }> {
+export async function getFavoriteState(req: Request): Promise<{ favorite: boolean; pvp: boolean }> {
 	const authed = await auth(req);
-	return { favorite: await isFavoriteFight(authed.id, req.params.archiveId) };
+	const archiveId = req.params.archiveId;
+	const fight = await getArchivedFightRequest(archiveId);
+	if (!fight) {
+		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
+	}
+	return {
+		favorite: await isFavoriteFight(authed.id, archiveId),
+		pvp: isPvPFight(parseFighters(fight.fighters))
+	};
 }
 
 export async function updateFavoriteFight(req: Request): Promise<{ favorite: boolean; count: number; max: number }> {
@@ -116,6 +130,10 @@ export async function updateFavoriteFight(req: Request): Promise<{ favorite: boo
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
 	await assertCanReadArchive(fight.metadata, archiveId, authed.id);
+	// Removing stays possible, so a favorite saved before this rule can still be dropped
+	if (favorite && !isPvPFight(parseFighters(fight.fighters))) {
+		throw new ExpectedError(translate('favoriteFightNotPvP', authed));
+	}
 
 	const count = await setFavoriteFight(authed.id, archiveId, favorite, MAX_FAVORITE_FIGHTS);
 	if (count === null) {

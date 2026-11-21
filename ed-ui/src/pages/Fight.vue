@@ -1,5 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
+	<FightFavoriteButton v-if="fight && loaded" :archiveId="fight.archiveId" :fighters="fight.fighters" />
 	<div v-show="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
@@ -21,6 +22,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { localStore, playerStore, sessionStore, useDinozStore } from '../store';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import FightBounce from '../components/fight/FightBounce.vue';
+import FightFavoriteButton from '../components/fight/FightFavoriteButton.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
@@ -32,6 +34,7 @@ export default defineComponent({
 	},
 	components: {
 		FightBounce,
+		FightFavoriteButton,
 		TitleHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
