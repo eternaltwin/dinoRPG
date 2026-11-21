@@ -2681,7 +2681,7 @@
 		"serverTime": "Server-Zeit"
 	},
 	"pageTitle": {
-		"replays": "DinoRPG [ Meine Wiederholungen ]",
+		"replays": "Dino-RPG [ Meine Wiederholungen ]",
 		"default": "Dino-RPG [ Dinoland-Nachrichten ]",
 		"dinoz": "Dino-RPG [ Profil von {dinoz} ]",
 		"shop": "Dino-RPG [ Händler: {shop} ]",
@@ -5726,8 +5726,8 @@
 	"replays": {
 		"favorites": "Favoriten",
 		"mine": "Meine Kämpfe",
-		"favoritesCount": "{count} / {max} Lieblingskämpfe",
-		"retention": "Kämpfe werden nach {months} Monaten gelöscht. Füge bis zu {max} zu deinen Favoriten hinzu, um sie zu behalten.",
+		"favoritesCount": "{count} / {max} Kämpfe in den Favoriten",
+		"retention": "Kämpfe werden nach {months} Monaten gelöscht. Füge bis zu {max} Kämpfe zu deinen Favoriten hinzu, um sie zu behalten.",
 		"empty": "Kein archivierter Kampf.",
 		"emptyFavorites": "Kein Lieblingskampf. Klicke auf den Stern eines Kampfes, um ihn zu behalten.",
 		"date": "Datum",
