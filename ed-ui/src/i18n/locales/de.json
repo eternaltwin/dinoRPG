@@ -4401,7 +4401,9 @@
 			"next": "Nächster Schritt",
 			"end": "Ende des Kampfes",
 			"counter": "Schritt {current} / {total}",
-			"death": "{name} stirbt"
+			"death": "{name} stirbt",
+			"show": "Kampfverlauf anzeigen",
+			"hide": "Kampfverlauf ausblenden"
 		},
 		"win": "Du hast den Kampf **gewonnen**!",
 		"lose": "Du hast **verloren**...",

@@ -4401,7 +4401,9 @@
 			"next": "Next step",
 			"end": "End of the fight",
 			"counter": "Step {current} / {total}",
-			"death": "{name} dies"
+			"death": "{name} dies",
+			"show": "Show the fight history",
+			"hide": "Hide the fight history"
 		},
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",

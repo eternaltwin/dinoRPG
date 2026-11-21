@@ -1,79 +1,102 @@
 <template>
-	<div
-		class="fight-timeline"
-		:class="{ seeking }"
-		role="group"
-		:aria-label="$t('fight.timeline.label')"
-		data-testid="fight-timeline"
-		@keydown.left.prevent="step(-1)"
-		@keydown.right.prevent="step(1)"
-		@keydown.home.prevent="emit('seek', 0)"
-		@keydown.end.prevent="emit('seek', last)"
-	>
+	<div class="fight-timeline-wrapper">
 		<button
 			type="button"
-			class="control"
-			:title="$t('fight.timeline.start')"
-			:disabled="shown <= 0"
-			@click="emit('seek', 0)"
+			class="toggle"
+			:class="{ open }"
+			:title="$t(open ? 'fight.timeline.hide' : 'fight.timeline.show')"
+			:aria-label="$t(open ? 'fight.timeline.hide' : 'fight.timeline.show')"
+			:aria-expanded="open"
+			aria-controls="fight-timeline"
+			data-testid="fight-timeline-toggle"
+			@click="open = !open"
 		>
-			<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2h2v8H2zM11 2v8L5 6z" /></svg>
+			<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" /></svg>
 		</button>
-		<button
-			type="button"
-			class="control"
-			:title="$t('fight.timeline.previous')"
-			:disabled="shown <= 0"
-			@click="step(-1)"
+		<div
+			v-show="open"
+			id="fight-timeline"
+			class="fight-timeline"
+			:class="{ seeking }"
+			role="group"
+			:aria-label="$t('fight.timeline.label')"
+			data-testid="fight-timeline"
+			@keydown.left.prevent="step(-1)"
+			@keydown.right.prevent="step(1)"
+			@keydown.home.prevent="emit('seek', 0)"
+			@keydown.end.prevent="emit('seek', last)"
 		>
-			<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M9 2v8L3 6z" /></svg>
-		</button>
+			<button
+				type="button"
+				class="control"
+				:title="$t('fight.timeline.start')"
+				:disabled="shown <= 0"
+				@click="emit('seek', 0)"
+			>
+				<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2h2v8H2zM11 2v8L5 6z" /></svg>
+			</button>
+			<button
+				type="button"
+				class="control"
+				:title="$t('fight.timeline.previous')"
+				:disabled="shown <= 0"
+				@click="step(-1)"
+			>
+				<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M9 2v8L3 6z" /></svg>
+			</button>
 
-		<div class="track">
-			<div class="rail">
-				<div class="fill" :style="{ width: percent(shown) }"></div>
-				<button
-					v-for="marker in markers"
-					:key="marker.step"
-					type="button"
-					class="marker"
-					:class="marker.side ? 'right' : 'left'"
-					:style="{ left: percent(marker.step) }"
-					:title="$t('fight.timeline.death', { name: marker.name })"
-					tabindex="-1"
-					@click="emit('seek', marker.step)"
-				></button>
+			<div class="track">
+				<div class="rail">
+					<div class="fill" :style="{ width: percent(shown) }"></div>
+					<button
+						v-for="marker in markers"
+						:key="marker.step"
+						type="button"
+						class="marker"
+						:class="marker.side ? 'right' : 'left'"
+						:style="{ left: percent(marker.step) }"
+						:title="$t('fight.timeline.death', { name: marker.name })"
+						tabindex="-1"
+						@click="emit('seek', marker.step)"
+					></button>
+				</div>
+				<input
+					class="slider"
+					type="range"
+					min="0"
+					:max="last"
+					:value="shown"
+					:aria-label="$t('fight.timeline.label')"
+					:aria-valuetext="$t('fight.timeline.counter', { current: shown + 1, total })"
+					@input="onInput"
+					@change="dragged = undefined"
+				/>
 			</div>
-			<input
-				class="slider"
-				type="range"
-				min="0"
-				:max="last"
-				:value="shown"
-				:aria-label="$t('fight.timeline.label')"
-				:aria-valuetext="$t('fight.timeline.counter', { current: shown + 1, total })"
-				@input="onInput"
-				@change="dragged = undefined"
-			/>
+
+			<button
+				type="button"
+				class="control"
+				:title="$t('fight.timeline.next')"
+				:disabled="shown >= last"
+				@click="step(1)"
+			>
+				<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2v8l6-4z" /></svg>
+			</button>
+			<button
+				type="button"
+				class="control"
+				:title="$t('fight.timeline.end')"
+				:disabled="shown >= last"
+				@click="emit('seek', last)"
+			>
+				<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 2v8l6-4zM8 2h2v8H8z" /></svg>
+			</button>
+
+			<span class="counter">
+				<img v-if="seeking" class="hourglass" :src="getImgURL('icons', 'hourglass')" alt="" />
+				{{ $t('fight.timeline.counter', { current: shown + 1, total }) }}
+			</span>
 		</div>
-
-		<button type="button" class="control" :title="$t('fight.timeline.next')" :disabled="shown >= last" @click="step(1)">
-			<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2v8l6-4z" /></svg>
-		</button>
-		<button
-			type="button"
-			class="control"
-			:title="$t('fight.timeline.end')"
-			:disabled="shown >= last"
-			@click="emit('seek', last)"
-		>
-			<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 2v8l6-4zM8 2h2v8H8z" /></svg>
-		</button>
-
-		<span class="counter">
-			<img v-if="seeking" class="hourglass" :src="getImgURL('icons', 'hourglass')" alt="" />
-			{{ $t('fight.timeline.counter', { current: shown + 1, total }) }}
-		</span>
 	</div>
 </template>
 
@@ -98,6 +121,9 @@ const props = defineProps<{
 	markers: FightTimelineMarker[];
 }>();
 const emit = defineEmits<{ (e: 'seek', step: number): void }>();
+
+// The timeline is folded by default, the player unfolds it from the arrow under the canvas
+const open = ref(false);
 
 // Value of the slider while the player drags it, so the thumb does not jump back between two steps of the seek
 const dragged = ref<number>();
@@ -126,13 +152,53 @@ $wood: #874a16;
 $brick: #bc683c;
 $gold: #ffee92;
 
+.fight-timeline-wrapper {
+	// Canvas width, shrunk on narrow screens
+	width: 100%;
+	max-width: 488px;
+}
+
+.toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 12px;
+	padding: 0;
+	border: none;
+	border-bottom: 1px solid $wood;
+	background-color: $parchment;
+	cursor: pointer;
+
+	svg {
+		width: 12px;
+		height: 8px;
+		fill: none;
+		stroke: $wood;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 0.15s ease;
+	}
+
+	&.open svg {
+		transform: rotate(180deg);
+	}
+
+	&:hover,
+	&:focus-visible {
+		background-color: #f5d39f;
+
+		svg {
+			stroke: $brick;
+		}
+	}
+}
+
 .fight-timeline {
 	display: flex;
 	align-items: center;
 	gap: 3px;
-	// Canvas width, shrunk on narrow screens
-	width: 100%;
-	max-width: 488px;
 	box-sizing: border-box;
 	padding: 4px 6px;
 	background-color: $parchment;
