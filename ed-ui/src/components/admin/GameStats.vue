@@ -24,7 +24,7 @@ import {
 	Title,
 	Tooltip
 } from 'chart.js';
-import { defineComponent } from 'vue';
+import { type Component, defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
@@ -39,7 +39,7 @@ export default defineComponent({
 	name: 'GameStats',
 	components: {
 		// eslint-disable-next-line vue/no-reserved-component-names
-		Line
+		Line: Line as Component
 	},
 	data() {
 		const now = new Date();

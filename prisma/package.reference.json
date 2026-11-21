@@ -139,6 +139,6 @@
 	"version": "0.17.26",
 	"sideEffects": false,
 	"dependencies": {
-		"@prisma/client-runtime-utils": "^7.10.0"
+		"@prisma/client-runtime-utils": "^7.10.1"
 	}
 }
