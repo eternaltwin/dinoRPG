@@ -656,8 +656,8 @@ test('a finished match replays every step with the state of both clans, fights i
 		await page.getByTestId('replay-tab-history').click();
 		const entries = page.getByTestId('replay-history-entry');
 		await expect(entries).toHaveCount(3);
-		await expect(entries.first()).toContainText(`Mine${suffix} attaque Foe${suffix}`);
-		await expect(entries.last()).toContainText(`Mine${suffix} entre sur le damier`);
+		await expect(entries.first()).toContainText(`Mine${suffix} a attaqué Foe${suffix}`);
+		await expect(entries.last()).toContainText(`Mine${suffix} est entré sur le damier`);
 		await expect(entries.first().getByTestId('replay-history-fight-link')).toHaveAttribute('href', /\/replay\/.+/);
 		await entries.first().getByTestId('replay-history-fight').click();
 		await expect(page.getByTestId('replay-fight').locator('canvas')).toBeVisible({ timeout: 20_000 });
@@ -676,10 +676,10 @@ test('a finished match replays every step with the state of both clans, fights i
 
 		const step = page.getByTestId('replay-step');
 		await expect(step).toContainText('Étape 1 / 3');
-		await expect(step).toContainText(`Mine${suffix} entre sur le damier`);
+		await expect(step).toContainText(`Mine${suffix} est entré sur le damier`);
 
 		await page.getByTestId('replay-next').click();
-		await expect(step).toContainText(`Mine${suffix} se déplace en (1, ${y})`);
+		await expect(step).toContainText(`Mine${suffix} s'est déplacé en (1, ${y})`);
 		// Omniscient: the enemy piece, inserted without a frame of its own, shows up with its life and action points
 		const rows = page.getByTestId('replay-roster-row');
 		await expect(rows.filter({ hasText: `Foe${suffix}` })).toContainText('70 / 100');
@@ -687,7 +687,7 @@ test('a finished match replays every step with the state of both clans, fights i
 
 		// Fights are played: reaching the attack by hand plays its fight
 		await page.getByTestId('replay-next').click();
-		await expect(step).toContainText(`Mine${suffix} attaque Foe${suffix}`);
+		await expect(step).toContainText(`Mine${suffix} a attaqué Foe${suffix}`);
 		await expect(page).toHaveURL(/[?&]step=3/);
 		await expect(page.getByTestId('replay-fight').locator('canvas')).toBeVisible({ timeout: 20_000 });
 
@@ -695,7 +695,7 @@ test('a finished match replays every step with the state of both clans, fights i
 		await page.getByTestId('replay-play-fights').uncheck();
 		await page.getByTestId('replay-first').click();
 		await page.getByTestId('replay-next-fight').click();
-		await expect(step).toContainText(`Mine${suffix} attaque Foe${suffix}`);
+		await expect(step).toContainText(`Mine${suffix} a attaqué Foe${suffix}`);
 		await expect(page.getByTestId('replay-fight')).toHaveCount(0);
 		await expect(page.getByTestId('replay-show-fight')).toBeVisible();
 
