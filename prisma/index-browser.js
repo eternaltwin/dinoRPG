@@ -775,6 +775,7 @@ exports.Prisma.FightWatchedScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
   favorite: 'favorite',
+  favoriteDate: 'favoriteDate',
   fightArchiveId: 'fightArchiveId'
 };
 

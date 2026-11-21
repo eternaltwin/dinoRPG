@@ -87417,6 +87417,7 @@ export namespace Prisma {
     id: string | null
     playerId: string | null
     favorite: boolean | null
+    favoriteDate: Date | null
     fightArchiveId: string | null
   }
 
@@ -87424,6 +87425,7 @@ export namespace Prisma {
     id: string | null
     playerId: string | null
     favorite: boolean | null
+    favoriteDate: Date | null
     fightArchiveId: string | null
   }
 
@@ -87431,6 +87433,7 @@ export namespace Prisma {
     id: number
     playerId: number
     favorite: number
+    favoriteDate: number
     fightArchiveId: number
     _all: number
   }
@@ -87440,6 +87443,7 @@ export namespace Prisma {
     id?: true
     playerId?: true
     favorite?: true
+    favoriteDate?: true
     fightArchiveId?: true
   }
 
@@ -87447,6 +87451,7 @@ export namespace Prisma {
     id?: true
     playerId?: true
     favorite?: true
+    favoriteDate?: true
     fightArchiveId?: true
   }
 
@@ -87454,6 +87459,7 @@ export namespace Prisma {
     id?: true
     playerId?: true
     favorite?: true
+    favoriteDate?: true
     fightArchiveId?: true
     _all?: true
   }
@@ -87534,6 +87540,7 @@ export namespace Prisma {
     id: string
     playerId: string
     favorite: boolean
+    favoriteDate: Date | null
     fightArchiveId: string
     _count: FightWatchedCountAggregateOutputType | null
     _min: FightWatchedMinAggregateOutputType | null
@@ -87558,6 +87565,7 @@ export namespace Prisma {
     id?: boolean
     playerId?: boolean
     favorite?: boolean
+    favoriteDate?: boolean
     fightArchiveId?: boolean
     fight?: boolean | FightArchiveDefaultArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -87567,6 +87575,7 @@ export namespace Prisma {
     id?: boolean
     playerId?: boolean
     favorite?: boolean
+    favoriteDate?: boolean
     fightArchiveId?: boolean
     fight?: boolean | FightArchiveDefaultArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -87576,6 +87585,7 @@ export namespace Prisma {
     id?: boolean
     playerId?: boolean
     favorite?: boolean
+    favoriteDate?: boolean
     fightArchiveId?: boolean
     fight?: boolean | FightArchiveDefaultArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -87585,10 +87595,11 @@ export namespace Prisma {
     id?: boolean
     playerId?: boolean
     favorite?: boolean
+    favoriteDate?: boolean
     fightArchiveId?: boolean
   }
 
-  export type FightWatchedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "favorite" | "fightArchiveId", ExtArgs["result"]["fightWatched"]>
+  export type FightWatchedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "favorite" | "favoriteDate" | "fightArchiveId", ExtArgs["result"]["fightWatched"]>
   export type FightWatchedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     fight?: boolean | FightArchiveDefaultArgs<ExtArgs>
     player?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -87611,7 +87622,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       playerId: string
+      /**
+       * A favorite keeps its archive past the retention period (see cron/purgeFightArchives).
+       */
       favorite: boolean
+      favoriteDate: Date | null
       fightArchiveId: string
     }, ExtArgs["result"]["fightWatched"]>
     composites: {}
@@ -88041,6 +88056,7 @@ export namespace Prisma {
     readonly id: FieldRef<"FightWatched", 'String'>
     readonly playerId: FieldRef<"FightWatched", 'String'>
     readonly favorite: FieldRef<"FightWatched", 'Boolean'>
+    readonly favoriteDate: FieldRef<"FightWatched", 'DateTime'>
     readonly fightArchiveId: FieldRef<"FightWatched", 'String'>
   }
     
@@ -99199,6 +99215,7 @@ export namespace Prisma {
     id: 'id',
     playerId: 'playerId',
     favorite: 'favorite',
+    favoriteDate: 'favoriteDate',
     fightArchiveId: 'fightArchiveId'
   };
 
@@ -104513,6 +104530,7 @@ export namespace Prisma {
     id?: UuidFilter<"FightWatched"> | string
     playerId?: UuidFilter<"FightWatched"> | string
     favorite?: BoolFilter<"FightWatched"> | boolean
+    favoriteDate?: DateTimeNullableFilter<"FightWatched"> | Date | string | null
     fightArchiveId?: UuidFilter<"FightWatched"> | string
     fight?: XOR<FightArchiveScalarRelationFilter, FightArchiveWhereInput>
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
@@ -104522,6 +104540,7 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     favorite?: SortOrder
+    favoriteDate?: SortOrderInput | SortOrder
     fightArchiveId?: SortOrder
     fight?: FightArchiveOrderByWithRelationInput
     player?: PlayerOrderByWithRelationInput
@@ -104535,6 +104554,7 @@ export namespace Prisma {
     NOT?: FightWatchedWhereInput | FightWatchedWhereInput[]
     playerId?: UuidFilter<"FightWatched"> | string
     favorite?: BoolFilter<"FightWatched"> | boolean
+    favoriteDate?: DateTimeNullableFilter<"FightWatched"> | Date | string | null
     fightArchiveId?: UuidFilter<"FightWatched"> | string
     fight?: XOR<FightArchiveScalarRelationFilter, FightArchiveWhereInput>
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
@@ -104544,6 +104564,7 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     favorite?: SortOrder
+    favoriteDate?: SortOrderInput | SortOrder
     fightArchiveId?: SortOrder
     _count?: FightWatchedCountOrderByAggregateInput
     _max?: FightWatchedMaxOrderByAggregateInput
@@ -104557,6 +104578,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"FightWatched"> | string
     playerId?: UuidWithAggregatesFilter<"FightWatched"> | string
     favorite?: BoolWithAggregatesFilter<"FightWatched"> | boolean
+    favoriteDate?: DateTimeNullableWithAggregatesFilter<"FightWatched"> | Date | string | null
     fightArchiveId?: UuidWithAggregatesFilter<"FightWatched"> | string
   }
 
@@ -109943,6 +109965,7 @@ export namespace Prisma {
   export type FightWatchedCreateInput = {
     id?: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fight: FightArchiveCreateNestedOneWithoutFightWatchedInput
     player: PlayerCreateNestedOneWithoutFightWatchedInput
   }
@@ -109951,12 +109974,14 @@ export namespace Prisma {
     id?: string
     playerId: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fightArchiveId: string
   }
 
   export type FightWatchedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: FightArchiveUpdateOneRequiredWithoutFightWatchedNestedInput
     player?: PlayerUpdateOneRequiredWithoutFightWatchedNestedInput
   }
@@ -109965,6 +109990,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightArchiveId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -109972,18 +109998,21 @@ export namespace Prisma {
     id?: string
     playerId: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fightArchiveId: string
   }
 
   export type FightWatchedUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FightWatchedUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightArchiveId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -114982,6 +115011,7 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     favorite?: SortOrder
+    favoriteDate?: SortOrder
     fightArchiveId?: SortOrder
   }
 
@@ -114989,6 +115019,7 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     favorite?: SortOrder
+    favoriteDate?: SortOrder
     fightArchiveId?: SortOrder
   }
 
@@ -114996,6 +115027,7 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     favorite?: SortOrder
+    favoriteDate?: SortOrder
     fightArchiveId?: SortOrder
   }
 
@@ -129600,12 +129632,14 @@ export namespace Prisma {
   export type FightWatchedCreateWithoutPlayerInput = {
     id?: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fight: FightArchiveCreateNestedOneWithoutFightWatchedInput
   }
 
   export type FightWatchedUncheckedCreateWithoutPlayerInput = {
     id?: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fightArchiveId: string
   }
 
@@ -130760,6 +130794,7 @@ export namespace Prisma {
     id?: UuidFilter<"FightWatched"> | string
     playerId?: UuidFilter<"FightWatched"> | string
     favorite?: BoolFilter<"FightWatched"> | boolean
+    favoriteDate?: DateTimeNullableFilter<"FightWatched"> | Date | string | null
     fightArchiveId?: UuidFilter<"FightWatched"> | string
   }
 
@@ -147896,6 +147931,7 @@ export namespace Prisma {
   export type FightWatchedCreateWithoutFightInput = {
     id?: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     player: PlayerCreateNestedOneWithoutFightWatchedInput
   }
 
@@ -147903,6 +147939,7 @@ export namespace Prisma {
     id?: string
     playerId: string
     favorite: boolean
+    favoriteDate?: Date | string | null
   }
 
   export type FightWatchedCreateOrConnectWithoutFightInput = {
@@ -153043,6 +153080,7 @@ export namespace Prisma {
   export type FightWatchedCreateManyPlayerInput = {
     id?: string
     favorite: boolean
+    favoriteDate?: Date | string | null
     fightArchiveId: string
   }
 
@@ -153996,18 +154034,21 @@ export namespace Prisma {
   export type FightWatchedUpdateWithoutPlayerInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: FightArchiveUpdateOneRequiredWithoutFightWatchedNestedInput
   }
 
   export type FightWatchedUncheckedUpdateWithoutPlayerInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightArchiveId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FightWatchedUncheckedUpdateManyWithoutPlayerInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightArchiveId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -155848,11 +155889,13 @@ export namespace Prisma {
     id?: string
     playerId: string
     favorite: boolean
+    favoriteDate?: Date | string | null
   }
 
   export type FightWatchedUpdateWithoutFightInput = {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     player?: PlayerUpdateOneRequiredWithoutFightWatchedNestedInput
   }
 
@@ -155860,12 +155903,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FightWatchedUncheckedUpdateManyWithoutFightInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
+    favoriteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TournamentTeamCreateManyTournamentInput = {

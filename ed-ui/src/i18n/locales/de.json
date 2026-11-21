@@ -63,6 +63,7 @@
 			}
 		},
 		"rightMenu": {
+			"replays": "Meine Wiederholungen",
 			"news": "Neuigkeiten",
 			"gazette": "Zeitung",
 			"ranking": "Rangliste",
@@ -2679,6 +2680,7 @@
 		"serverTime": "Server-Zeit"
 	},
 	"pageTitle": {
+		"replays": "DinoRPG [ Meine Wiederholungen ]",
 		"default": "Dino-RPG [ Dinoland-Nachrichten ]",
 		"dinoz": "Dino-RPG [ Profil von {dinoz} ]",
 		"shop": "Dino-RPG [ Händler: {shop} ]",
@@ -5712,6 +5714,34 @@
 				"heal": "{dinoz} wird geheilt ({life} LP).",
 				"withdrawn": "Vom Spielfeld genommen (Spieler hat den Klan verlassen): {names}."
 			}
+		}
+	},
+	"replays": {
+		"favorites": "Favoriten",
+		"mine": "Meine Kämpfe",
+		"favoritesCount": "{count} / {max} Lieblingskämpfe",
+		"retention": "Kämpfe werden nach {months} Monaten gelöscht. Füge bis zu {max} zu deinen Favoriten hinzu, um sie zu behalten.",
+		"empty": "Kein archivierter Kampf.",
+		"emptyFavorites": "Kein Lieblingskampf. Klicke auf den Stern eines Kampfes, um ihn zu behalten.",
+		"date": "Datum",
+		"kind": "Art",
+		"fighters": "Kämpfer",
+		"result": "Ergebnis",
+		"expires": "Ablauf",
+		"kept": "Behalten",
+		"victory": "Sieg",
+		"defeat": "Niederlage",
+		"watch": "Kampf ansehen",
+		"addFavorite": "Zu den Favoriten hinzufügen",
+		"removeFavorite": "Aus den Favoriten entfernen",
+		"favoriteAdded": "Kampf zu den Favoriten hinzugefügt.",
+		"favoriteRemoved": "Kampf aus den Favoriten entfernt.",
+		"kinds": {
+			"dojo": "Dojo",
+			"tournament": "Turnier",
+			"forceBrute": "Brute Force",
+			"clanWar": "Clankrieg",
+			"clanChampionship": "Clanmeisterschaft"
 		}
 	}
 }
