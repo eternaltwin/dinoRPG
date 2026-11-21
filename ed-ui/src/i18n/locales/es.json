@@ -5581,7 +5581,7 @@
 		"registeredClans": "Clanes inscritos ({count})",
 		"noRegistration": "Ningún clan inscrito por ahora.",
 		"standings": "Clasificación",
-		"nextMatch": "Próximo partido",
+		"nextMatch": "Próxima batalla",
 		"placeRevealAt": "El lugar de batalla será anunciado el {date}",
 		"kickOff": "Inicio: {date}",
 		"opponent": "Rival: {clan}",
