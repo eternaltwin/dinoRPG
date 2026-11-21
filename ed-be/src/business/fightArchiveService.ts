@@ -71,10 +71,12 @@ export function toFightArchiveSummary(row: ArchiveSummaryRow, playerId: string):
 	} catch {
 		// A broken archive still shows in the list
 	}
-	const kept = row.FightWatched.length > 0;
+	const kind = fightArchiveKind(row);
+	// The purge spares favorites and clan championship fights
+	const kept = row.FightWatched.length > 0 || kind === 'clanChampionship';
 	return {
 		id: row.id,
-		kind: fightArchiveKind(row),
+		kind,
 		createdDate: row.createdDate.toISOString(),
 		expiresAt: kept ? null : fightArchiveExpiry(row.createdDate).toISOString(),
 		favorite: row.FightWatched.some(w => w.playerId === playerId),
