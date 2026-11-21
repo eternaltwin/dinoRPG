@@ -4396,10 +4396,10 @@
 		"pageName": "Kampf!",
 		"timeline": {
 			"label": "Kampfverlauf",
-			"start": "Beginn des Kampfes",
+			"start": "Kampfbeginn",
 			"previous": "Vorheriger Schritt",
 			"next": "Nächster Schritt",
-			"end": "Ende des Kampfes",
+			"end": "Kampfende",
 			"counter": "Schritt {current} / {total}",
 			"death": "{name} stirbt",
 			"show": "Kampfverlauf anzeigen",
