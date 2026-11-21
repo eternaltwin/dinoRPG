@@ -52,7 +52,7 @@
 		"express": "^4.21.2",
 		"express-validator": "^7.2.0",
 		"i18next": "^23.12.2",
-		"i18next-fs-backend": "^2.3.1",
+		"i18next-fs-backend": "^2.7.0",
 		"kryo": "^0.16.1",
 		"kryo-json": "^0.16.1",
 		"multer": "^2.5.0",
@@ -60,11 +60,12 @@
 		"node-schedule": "^2.1.1",
 		"reflect-metadata": "^0.1.13",
 		"romans": "^3.1.0",
+		"sanitize-html": "^2.18.2",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.0",
 		"toml": "^5.0.0",
 		"url": "^0.11.3",
-		"ws": "^8.18.0"
+		"ws": "^8.23.0"
 	},
 	"devDependencies": {
 		"@stylistic/eslint-plugin-ts": "^1.4.0",
@@ -81,15 +82,14 @@
 		"@types/swagger-ui-express": "^4.1.7",
 		"@types/validator": "^13.12.2",
 		"@types/ws": "^8.5.13",
-		"@vitest/coverage-v8": "^4.1.9",
+		"@vitest/coverage-v8": "^4.1.12",
 		"concurrently": "^9.1.0",
 		"prettier": "^3.4.2",
 		"prisma": "^7.10.0",
-		"sanitize-html": "^2.13.1",
 		"ts-node": "^10.9.2",
 		"tsc-watch": "6.2.1",
 		"typescript": "^5.7.2",
-		"vitest": "^4.1.9"
+		"vitest": "^4.1.12"
 	},
 	"type": "module",
 	"exports": {
