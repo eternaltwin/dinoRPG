@@ -1,5 +1,6 @@
 {
 	"favoriteFightLimit": "You already have {{max}} favorite fights. Remove one to add another.",
+	"favoriteFightNotPvP": "Only fights between players can be added to favorites.",
 	"clanEvent": {
 		"overlap": "Another clan event is already ongoing or scheduled."
 	},
