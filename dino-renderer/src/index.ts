@@ -231,7 +231,7 @@ async function renderPage(type: DinoType, code: string, opts: Required<RenderOpt
 	try {
 		// Redirection des logs du navigateur vers Node.js
 		page.on('console', msg => console.log(`[puppeteer:${type}]`, msg.text()));
-		page.on('pageerror', err => console.error(`[puppeteer:error]`, err.message));
+		page.on('pageerror', err => console.error(`[puppeteer:error]`, err instanceof Error ? err.message : err));
 
 		await page.setRequestInterception(true);
 		page.on('request', (req: HTTPRequest) => {
