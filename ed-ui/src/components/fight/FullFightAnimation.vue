@@ -1,6 +1,8 @@
 <template>
 	<div class="full-fight">
 		<div ref="canvasHolder" class="pixi-canvas"></div>
+		<!-- Debrief of the fight, shown between the canvas and the folded timeline -->
+		<slot name="debrief"></slot>
 		<FightTimeline
 			v-if="started"
 			:current="currentStep"

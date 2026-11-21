@@ -38,10 +38,13 @@
 	<FightFavoriteButton v-if="fightTransformed && fight" :archiveId="fight.archiveId" :fighters="fight.fighters" />
 	<div class="wrapper" v-if="fightTransformed && fight">
 		<Suspense>
-			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
+			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true">
+				<template #debrief>
+					<FightBounce v-if="fightEnded" :fight="fight" :dinozId="+dinozId" />
+				</template>
+			</FullFightAnimation>
 			<template #fallback> <Loading /> </template>
 		</Suspense>
-		<FightBounce v-if="fightEnded" :fight="fight" :dinozId="+dinozId" />
 	</div>
 </template>
 
