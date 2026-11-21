@@ -1,4 +1,5 @@
 {
+	"favoriteFightLimit": "Vous avez déjà {{max}} combats en favoris. Retirez-en un pour en ajouter un autre.",
 	"clanEvent": {
 		"overlap": "Un autre événement de clan est déjà en cours ou programmé."
 	},
