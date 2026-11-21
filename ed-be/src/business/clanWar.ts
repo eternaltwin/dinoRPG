@@ -1409,7 +1409,8 @@ export async function attackCastle(req: Request) {
 			id: a.dinozId,
 			itemsUsed: a.itemsUsed
 		})),
-		place: activeWar.defender.castle.placeId
+		place: activeWar.defender.castle.placeId,
+		archiveId: archive.id
 	};
 }
 

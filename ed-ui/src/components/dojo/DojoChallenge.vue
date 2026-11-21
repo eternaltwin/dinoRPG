@@ -78,6 +78,7 @@
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
 				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+				<FightFavoriteButton v-if="loaded" :archiveId="archiveId" :fighters="fighters" />
 				<div v-show="loaded" class="content">
 					<Suspense>
 						<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
@@ -114,12 +115,14 @@ import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
 import FightersHeader from '../fight/FightersHeader.vue';
+import FightFavoriteButton from '../fight/FightFavoriteButton.vue';
 import { UnavailableReason } from '@drpg/prisma/enums';
 
 export default defineComponent({
 	name: 'DojoChallenge',
 	components: {
 		DZButton,
+		FightFavoriteButton,
 		FightRecap,
 		DinozWithoutFlash,
 		DZDisclaimer,
@@ -143,6 +146,8 @@ export default defineComponent({
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
+			archiveId: null as null | string,
+			fighters: [] as FighterRecap[],
 			fightStat: undefined as undefined | FullFightStats,
 			challengeWon: false,
 			victory: false,
@@ -174,6 +179,8 @@ export default defineComponent({
 			this.challengeWon = false;
 			this.fightStat = undefined;
 			this.loaded = false;
+			this.archiveId = null;
+			this.fighters = [];
 			this.fightTransformed = undefined;
 			this.opponent = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 			this.myFighter = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
@@ -225,6 +232,8 @@ export default defineComponent({
 				};
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
+				this.archiveId = fightResult.id;
+				this.fighters = fighters;
 				this.loaded = true;
 				if (this.playerStore.getPlayerOptions.skipFight) {
 					this.fightAnimationEnded = true;

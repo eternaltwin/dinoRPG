@@ -4,7 +4,8 @@
 			'button-component': true,
 			[size]: true,
 			back,
-			off
+			off,
+			inactive
 		}"
 	>
 		<img v-if="back && size === 'normal'" :src="getImgURL('button', 'button-back-arrow')" alt="button-back" />
@@ -28,7 +29,13 @@ export default defineComponent({
 			type: Boolean,
 			default: false
 		},
+		/** Disabled: greyed out with a forbidden cursor. */
 		off: {
+			type: Boolean,
+			default: false
+		},
+		/** Unselected tab or toggle: greyed out but still clickable. */
+		inactive: {
 			type: Boolean,
 			default: false
 		}
@@ -128,6 +135,14 @@ export default defineComponent({
 	&.off {
 		filter: grayscale(100%);
 		cursor: not-allowed;
+	}
+
+	&.inactive {
+		filter: grayscale(100%);
+
+		&:hover {
+			filter: none;
+		}
 	}
 }
 </style>

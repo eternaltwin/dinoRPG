@@ -709,7 +709,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		}
 	});
 
-	await archiveFight(fightResult, victory, authed.id, null);
+	const archive = await archiveFight(fightResult, victory, authed.id, null);
 
 	// Items used
 	const merguezPerPlayer: Record<string, number> = {};
@@ -786,6 +786,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 			itemsUsed: a.itemsUsed
 		})),
 		place: PlaceEnum.FORCEBRUT,
-		statusReward
+		statusReward,
+		archiveId: archive.id
 	};
 }

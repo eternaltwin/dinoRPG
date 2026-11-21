@@ -27,10 +27,6 @@ export const DojoService = {
 		});
 		return res.data;
 	},
-	async getSharedFight(archive: string): Promise<DojoFightResume> {
-		const res = await http().get(`/dojo/share/${archive}`);
-		return res.data;
-	},
 	async getMyHistory(page: number): Promise<{ archive: { id: string; fighters: FighterRecap[] }[]; quantity: number }> {
 		const res = await http().get(`/dojo/history/${page}`);
 		return res.data;

@@ -384,9 +384,9 @@ const router = createRouter({
 							component: () => import('../components/dojo/ChallengeFriend.vue')
 						},
 						{
+							// Links shared before the replay page
 							path: '/dojo/share/:archive',
-							name: 'ShareFight',
-							component: () => import('../components/dojo/ShareFight.vue')
+							redirect: to => ({ name: 'ReplayFight', params: { archive: to.params.archive } })
 						},
 						{
 							path: '/dojo/history',

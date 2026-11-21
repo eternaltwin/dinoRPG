@@ -35,6 +35,7 @@
 			<span>{{ $t('fb_tournament.fight', { opponent: opponent.name }) }}</span>
 		</div>
 	</div>
+	<FightFavoriteButton v-if="fightTransformed && fight" :archiveId="fight.archiveId" :fighters="fight.fighters" />
 	<div class="wrapper" v-if="fightTransformed && fight">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
@@ -57,6 +58,7 @@ import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import FightBounce from '../components/fight/FightBounce.vue';
+import FightFavoriteButton from '../components/fight/FightFavoriteButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { FBService } from '../services/FBTournamentService.js';
 import { localStore, playerStore, sessionStore, useDinozStore } from '../store/index.js';
@@ -67,6 +69,7 @@ export default defineComponent({
 	name: 'ForceBrute',
 	components: {
 		FightBounce,
+		FightFavoriteButton,
 		DinozWithoutFlash,
 		DZDisclaimer,
 		TitleHeader,

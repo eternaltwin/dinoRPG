@@ -51,7 +51,7 @@ import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
-import { getArchivedFightRequest } from '../dao/archiveDao.js';
+import { getArchivedFightRequest, viewFight } from '../dao/archiveDao.js';
 import { assertCanReadArchive, isClanChampionshipArchive } from '../utils/archiveAccess.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { gameConfig } from '../utils/gameConfig.js';
@@ -787,6 +787,7 @@ export async function replayFight(req: Request): Promise<FightReplay> {
 
 	// Clan championship fights are only visible to their participants.
 	// Every failure gives the same answer as a missing archive, so existence is not revealed.
+	let viewerId: string | null = null;
 	if (isClanChampionshipArchive(fight.metadata)) {
 		let playerId: string;
 		try {
@@ -798,6 +799,20 @@ export async function replayFight(req: Request): Promise<FightReplay> {
 			throw new ExpectedError('No replay found.');
 		}
 		await assertCanReadArchive(fight.metadata, archiveId, playerId);
+		viewerId = playerId;
+	} else if (req.headers.authorization) {
+		// Other replays stay public: a logged-in viewer is only needed to mark the fight as watched
+		try {
+			viewerId = (await auth(req)).id;
+		} catch (err) {
+			if (!(err instanceof ExpectedError)) {
+				LOGGER.error('Unexpected failure while authenticating a replay viewer', err);
+			}
+		}
+	}
+	// Watching a tournament fight reveals the next round, as the former dojo share page did
+	if (viewerId) {
+		await viewFight(viewerId, archiveId);
 	}
 
 	const replay: FightReplay = {

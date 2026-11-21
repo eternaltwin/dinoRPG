@@ -26,7 +26,7 @@
 						theme: 'small'
 					}"
 				/>
-				<RouterLink :to="`/dojo/share/${fight.id}`">
+				<RouterLink :to="`/replay/${fight.id}`">
 					<img
 						:src="getImgURL('icons', 'small_follow')"
 						v-tippy="{
@@ -74,7 +74,7 @@ export default defineComponent({
 	},
 	methods: {
 		copyToClipBoard(id: string) {
-			navigator.clipboard.writeText(`${window.location.origin}/dojo/share/${id}`);
+			navigator.clipboard.writeText(`${window.location.origin}/replay/${id}`);
 		},
 		async getHistory() {
 			try {

@@ -7,6 +7,7 @@
 			:rightName="rightClanName"
 			:rightTitle="rightClanName ? $t('fight.clan') : null"
 		/>
+		<FightFavoriteButton v-if="loaded" :archiveId="archiveId" :fighters="fighters" />
 		<p v-if="failed" class="failed">{{ $t('clanChampionship.replayView.fightUnavailable') }}</p>
 		<div v-else-if="fight" class="animation">
 			<Suspense>
@@ -25,6 +26,7 @@ import type { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import type { FightStep } from '@drpg/core/models/fight/FightStep';
 import type { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import FightersHeader from '../../fight/FightersHeader.vue';
+import FightFavoriteButton from '../../fight/FightFavoriteButton.vue';
 import { FightService } from '../../../services';
 import { resolveFightingPlace, transpileFight } from '../../../utils/transpileFight.js';
 
@@ -40,14 +42,15 @@ const failed = ref(false);
 const leftPlayer = ref<{ id: string; name: string } | null>(null);
 const rightPlayer = ref<{ id: string; name: string } | null>(null);
 const rightClanName = ref<string | null>(null);
+const fighters = ref<FighterRecap[]>([]);
 
 onMounted(async () => {
 	try {
 		const replay = await FightService.getReplay(props.archiveId);
 		const steps = replay.history as FightStep[];
-		const fighters = replay.fighters as FighterRecap[];
+		fighters.value = replay.fighters as FighterRecap[];
 		const history = transpileFight(
-			structuredClone(toRaw(fighters)),
+			structuredClone(toRaw(replay.fighters as FighterRecap[])),
 			steps,
 			t,
 			replay.result,

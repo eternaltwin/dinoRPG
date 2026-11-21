@@ -20,15 +20,25 @@ import {
 	ArchiveSummaryRow,
 	fightArchiveExpiry,
 	fightArchiveKind,
+	getFavoriteState,
 	getMyFavoriteFights,
 	getMyFightArchives,
 	purgeExpiredFightArchives,
 	toFightArchiveSummary,
 	updateFavoriteFight
 } from '../../business/fightArchiveService.js';
-import { MAX_FAVORITE_FIGHTS } from '@drpg/core/models/fight/FightArchiveList';
+import { isPvPFight, MAX_FAVORITE_FIGHTS } from '@drpg/core/models/fight/FightArchiveList';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 const ARCHIVE_ID = '00000000-0000-0000-0000-0000000000aa';
+const PVP_FIGHTERS = JSON.stringify([
+	{ id: 1, type: 'dinoz', name: 'Moi', attacker: true },
+	{ id: 2, type: 'dinoz', name: 'Lui', attacker: false }
+]);
+const PVE_FIGHTERS = JSON.stringify([
+	{ id: 1, type: 'dinoz', name: 'Moi', attacker: true },
+	{ id: 2, type: 'monster', name: 'Goupignon', attacker: false }
+]);
 
 function row(overrides: Partial<ArchiveSummaryRow> = {}): ArchiveSummaryRow {
 	return {
@@ -148,7 +158,10 @@ describe('updateFavoriteFight', () => {
 	});
 
 	it('adds a favorite under the limit', async () => {
-		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({ metadata: null } as never);
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVP_FIGHTERS
+		} as never);
 		vi.mocked(archiveDao.setFavoriteFight).mockResolvedValue(3);
 		await expect(updateFavoriteFight(req(true))).resolves.toEqual({
 			favorite: true,
@@ -159,15 +172,85 @@ describe('updateFavoriteFight', () => {
 	});
 
 	it('refuses a favorite over the limit', async () => {
-		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({ metadata: null } as never);
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVP_FIGHTERS
+		} as never);
 		vi.mocked(archiveDao.setFavoriteFight).mockResolvedValue(null);
 		await expect(updateFavoriteFight(req(true))).rejects.toThrow('favoriteFightLimit');
 	});
 
+	it('refuses to add a fight that is not PvP', async () => {
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVE_FIGHTERS
+		} as never);
+		await expect(updateFavoriteFight(req(true))).rejects.toThrow('favoriteFightNotPvP');
+		expect(archiveDao.setFavoriteFight).not.toHaveBeenCalled();
+	});
+
+	it('still removes a fight that is not PvP', async () => {
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVE_FIGHTERS
+		} as never);
+		vi.mocked(archiveDao.setFavoriteFight).mockResolvedValue(0);
+		await expect(updateFavoriteFight(req(false))).resolves.toMatchObject({ favorite: false });
+	});
+
 	it('removes a favorite', async () => {
-		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({ metadata: null } as never);
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVP_FIGHTERS
+		} as never);
 		vi.mocked(archiveDao.setFavoriteFight).mockResolvedValue(0);
 		await expect(updateFavoriteFight(req(false))).resolves.toMatchObject({ favorite: false, count: 0 });
+	});
+});
+
+describe('getFavoriteState', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(auth).mockResolvedValue({ id: 'p1' } as never);
+	});
+
+	const req = () => makeRequest({ params: { archiveId: ARCHIVE_ID } });
+
+	it('tells whether the fight is my favorite and PvP', async () => {
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVP_FIGHTERS
+		} as never);
+		vi.mocked(archiveDao.isFavoriteFight).mockResolvedValue(true);
+		await expect(getFavoriteState(req())).resolves.toEqual({ favorite: true, pvp: true });
+	});
+
+	it('flags a fight against monsters as not PvP', async () => {
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue({
+			metadata: null,
+			fighters: PVE_FIGHTERS
+		} as never);
+		vi.mocked(archiveDao.isFavoriteFight).mockResolvedValue(false);
+		await expect(getFavoriteState(req())).resolves.toEqual({ favorite: false, pvp: false });
+	});
+
+	it('refuses a missing archive', async () => {
+		vi.mocked(archiveDao.getArchivedFightRequest).mockResolvedValue(null);
+		await expect(getFavoriteState(req())).rejects.toThrow('dojo.archiveNotFound');
+	});
+});
+
+describe('isPvPFight', () => {
+	it('needs a dinoz on each side', () => {
+		expect(isPvPFight(JSON.parse(PVP_FIGHTERS))).toBe(true);
+		expect(isPvPFight(JSON.parse(PVE_FIGHTERS))).toBe(false);
+		expect(isPvPFight([{ type: FighterType.DINOZ, attacker: true }])).toBe(false);
+		expect(
+			isPvPFight([
+				{ type: FighterType.DINOZ, attacker: true },
+				{ type: FighterType.CLONE, attacker: false }
+			])
+		).toBe(false);
 	});
 });
 

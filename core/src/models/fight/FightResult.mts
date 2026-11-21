@@ -36,6 +36,8 @@ export interface FightResult {
 	endText?: FightText;
 	itemWon?: number;
 	statusReward?: DinozStatusId;
+	/** Archive of the fight, set for the PvP fights that are archived (replay, favorites). */
+	archiveId?: string;
 	autoReequipped?: { itemId: number; count: number }[];
 	missingReequip?: { itemId: number; count: number }[];
 }
