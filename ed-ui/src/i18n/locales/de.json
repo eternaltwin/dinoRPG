@@ -5728,13 +5728,13 @@
 		"mine": "Meine Kämpfe",
 		"favoritesCount": "{count} / {max} Kämpfe in den Favoriten",
 		"retention": "Kämpfe werden nach {months} Monaten gelöscht. Füge bis zu {max} Kämpfe zu deinen Favoriten hinzu, um sie zu behalten.",
-		"empty": "Kein archivierter Kampf.",
-		"emptyFavorites": "Kein Lieblingskampf. Klicke auf den Stern eines Kampfes, um ihn zu behalten.",
+		"empty": "Keine Kämpfe archiviert.",
+		"emptyFavorites": "Keine Kämpfe in den Favoriten. Klicke beim Kampf aufs Sternchen, um ihn zu behalten.",
 		"date": "Datum",
-		"kind": "Art",
+		"kind": "Typ",
 		"fighters": "Kämpfer",
 		"result": "Ergebnis",
-		"expires": "Ablauf",
+		"expires": "Ablaufdatum",
 		"kept": "Behalten",
 		"victory": "Sieg",
 		"defeat": "Niederlage",
@@ -5746,9 +5746,9 @@
 		"kinds": {
 			"dojo": "Dojo",
 			"tournament": "Turnier",
-			"forceBrute": "Brute Force",
-			"clanWar": "Clankrieg",
-			"clanChampionship": "Clanmeisterschaft"
+			"forceBrute": "Rohkraft",
+			"clanWar": "Klanenkrieg",
+			"clanChampionship": "Meisterschaft der Klane"
 		}
 	}
 }
