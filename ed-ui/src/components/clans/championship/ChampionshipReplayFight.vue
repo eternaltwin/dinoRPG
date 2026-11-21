@@ -82,7 +82,7 @@ onMounted(async () => {
 .animation {
 	display: flex;
 	justify-content: center;
-	max-width: 100%;
+	width: 100%;
 }
 .failed {
 	font-style: italic;

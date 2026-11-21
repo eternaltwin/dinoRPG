@@ -1,9 +1,11 @@
 <template>
-	<table>
-		<tbody>
-			<slot />
-		</tbody>
-	</table>
+	<div class="dz-table">
+		<table>
+			<tbody>
+				<slot />
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <script lang="ts">
@@ -15,11 +17,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-table {
+// Scrolls sideways instead of widening the page on narrow screens
+.dz-table {
 	width: 95%;
+	max-width: 95%;
 	align-self: center;
-	margin-top: 10px;
-	margin-bottom: 5px;
+	margin: 10px auto 5px;
+	overflow-x: auto;
+}
+table {
+	width: 100%;
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;

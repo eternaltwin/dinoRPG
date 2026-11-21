@@ -77,6 +77,7 @@ watch(() => [props.archiveId, pvp.value, loggedIn.value], loadState, { immediate
 <style lang="scss" scoped>
 .fight-favorite {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	gap: 12px;

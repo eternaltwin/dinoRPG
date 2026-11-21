@@ -130,8 +130,9 @@ $gold: #ffee92;
 	display: flex;
 	align-items: center;
 	gap: 3px;
-	width: 488px;
-	max-width: 100%;
+	// Canvas width, shrunk on narrow screens
+	width: 100%;
+	max-width: 488px;
 	box-sizing: border-box;
 	padding: 4px 6px;
 	background-color: $parchment;
@@ -182,6 +183,8 @@ $gold: #ffee92;
 .track {
 	position: relative;
 	flex: 1;
+	// The range input must not keep its intrinsic width on narrow screens
+	min-width: 0;
 	height: 18px;
 	margin: 0 6px;
 }

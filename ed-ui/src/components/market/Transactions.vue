@@ -220,6 +220,10 @@ h4 {
 	font-weight: normal;
 }
 
+// DZTable wraps its table in a scroll container that already takes 95% of the width
+:deep(.dz-table table) {
+	table-layout: fixed;
+}
 table {
 	width: 95%;
 	table-layout: fixed;

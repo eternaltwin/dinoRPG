@@ -117,6 +117,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 #shareFight {
 	align-self: center;
+	width: 100%;
 }
 .back {
 	display: flex;
@@ -179,6 +180,7 @@ export default defineComponent({
 }
 .content {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 </style>

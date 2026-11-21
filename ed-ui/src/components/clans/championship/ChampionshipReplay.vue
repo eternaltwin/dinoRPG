@@ -842,10 +842,12 @@ onBeforeUnmount(() => {
 }
 .rosters {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 	gap: 8px;
 }
 .roster {
+	min-width: 0;
+	overflow-x: auto;
 	h4 {
 		margin: 0 0 4px;
 		text-align: center;
