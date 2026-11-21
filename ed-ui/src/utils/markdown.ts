@@ -1,7 +1,21 @@
-import MarkdownModule from 'vue3-markdown-it';
+import MarkdownIt from 'markdown-it';
+import { defineComponent, h } from 'vue';
 
-// vue3-markdown-it is a CommonJS bundle that only exports `default`. Since Vite 8, a default import of such a
-// bundle from a `"type": "module"` package yields the whole exports object (Node semantics), so unwrap it.
-const Markdown = (MarkdownModule as unknown as { default?: typeof MarkdownModule }).default ?? MarkdownModule;
+// Same defaults as the former vue3-markdown-it component: no raw HTML unless asked, no linkify, no typographer.
+const renderers = {
+	text: new MarkdownIt({ html: false }),
+	html: new MarkdownIt({ html: true })
+};
+
+const Markdown = defineComponent({
+	name: 'Markdown',
+	props: {
+		source: { type: String, default: '' },
+		html: { type: Boolean, default: false }
+	},
+	setup(props) {
+		return () => h('div', { innerHTML: (props.html ? renderers.html : renderers.text).render(props.source ?? '') });
+	}
+});
 
 export default Markdown;
