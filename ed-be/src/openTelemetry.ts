@@ -1,5 +1,5 @@
 import { NodeSDK } from '@opentelemetry/sdk-node';
-import { Resource } from '@opentelemetry/resources';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 import { SEMRESATTRS_DEPLOYMENT_ENVIRONMENT, SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { ExpressInstrumentation, ExpressLayerType } from '@opentelemetry/instrumentation-express';
@@ -17,6 +17,10 @@ function getAuthorizationHeader(clientId: string, clientSecret: string): string 
 }
 
 export function initOpentelemetry(config: Config): NodeSDK {
+	// Since sdk-node 0.2xx an OTLP metrics exporter is started by default (towards localhost:4318). Only traces are
+	// sent to Eternaltwin, so keep metrics off unless explicitly asked for.
+	process.env.OTEL_METRICS_EXPORTER ??= 'none';
+
 	const exporter = new OTLPTraceExporter({
 		url: urlJoin(config.eternaltwin.url, 'v1/traces'),
 		headers: {
@@ -25,7 +29,7 @@ export function initOpentelemetry(config: Config): NodeSDK {
 	});
 
 	const otelSdk = new NodeSDK({
-		resource: new Resource({
+		resource: resourceFromAttributes({
 			[SEMRESATTRS_SERVICE_NAME]: config.eternaltwin.app,
 			[SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: config.eternaltwin.channel
 		}),
