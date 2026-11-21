@@ -1,5 +1,6 @@
 {
 	"favoriteFightLimit": "Ya tienes {{max}} combates favoritos. Quita uno para añadir otro.",
+	"favoriteFightNotPvP": "Solo los combates entre jugadores pueden añadirse a favoritos.",
 	"clanEvent": {
 		"overlap": "Ya hay otro evento de clan en curso o programado."
 	},
