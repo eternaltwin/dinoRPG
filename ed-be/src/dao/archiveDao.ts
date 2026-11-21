@@ -282,7 +282,8 @@ export async function setFavoriteFight(playerId: string, fightArchiveId: string,
 }
 
 /**
- * Deletes the archives created before `before` that no player keeps as a favorite, `batchSize` rows per statement so
+ * Deletes the archives created before `before` that no player keeps as a favorite and that are not clan championship
+ * fights (their match replays need them), `batchSize` rows per statement so
  * no single statement locks a large part of the table. Their FightWatched rows go with them (cascade).
  * Returns how many archives were deleted.
  */
@@ -298,6 +299,9 @@ export async function purgeFightArchivesBefore(before: Date, batchSize: number) 
 					WHERE fa."createdDate" < ${before}
 						AND NOT EXISTS (
 							SELECT 1 FROM "FightWatched" fw WHERE fw."fightArchiveId" = fa.id AND fw.favorite
+						)
+						AND NOT EXISTS (
+							SELECT 1 FROM clan_championship_fight ccf WHERE ccf."archiveId" = fa.id
 						)
 					LIMIT ${batchSize}
 				)`;

@@ -88,6 +88,12 @@ describe('toFightArchiveSummary', () => {
 		expect(summary.expiresAt).toBeNull();
 	});
 
+	it('never expires a clan championship fight', () => {
+		const summary = toFightArchiveSummary(row({ metadata: JSON.stringify({ kind: 'clanChampionship' }) }), 'p1');
+		expect(summary.favorite).toBe(false);
+		expect(summary.expiresAt).toBeNull();
+	});
+
 	it('gives the expiry date when nobody keeps it', () => {
 		const summary = toFightArchiveSummary(row(), 'p1');
 		expect(summary.expiresAt).toBe(new Date('2026-11-22T00:00:00').toISOString());

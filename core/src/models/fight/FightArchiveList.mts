@@ -1,6 +1,6 @@
 import { FighterRecap } from './FightResult.mjs';
 
-/** Archives older than this are deleted every night, unless a player keeps them as a favorite. */
+/** Archives older than this are deleted every night, unless a player keeps them as a favorite or they are clan championship fights. */
 export const FIGHT_ARCHIVE_RETENTION_MONTHS = 6;
 /** How many archived fights a player can keep as favorites. */
 export const MAX_FAVORITE_FIGHTS = 25;
