@@ -63,7 +63,7 @@
 			}
 		},
 		"rightMenu": {
-			"replays": "Mes replays",
+			"replays": "Mes archives",
 			"news": "Nouveautés",
 			"gazette": "Gazette",
 			"ranking": "Classement",
@@ -2681,7 +2681,7 @@
 		"serverTime": "Temps du serveur"
 	},
 	"pageTitle": {
-		"replays": "DinoRPG [ Mes replays ]",
+		"replays": "DinoRPG [ Mes archives ]",
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"shop": "DinoRPG [ Marchand : {shop} ]",
@@ -5729,7 +5729,7 @@
 		"favoritesCount": "{count} / {max} combats en favoris",
 		"retention": "Les combats sont effacés au bout de {months} mois. Mettez-en jusqu’à {max} en favoris pour les garder.",
 		"empty": "Aucun combat archivé.",
-		"emptyFavorites": "Aucun combat en favori. Cliquez sur l’étoile d’un combat pour le garder.",
+		"emptyFavorites": "Aucun combat en favori. Cliquez sur l’étoile d’un combat pour l'archiver et le garder.",
 		"date": "Date",
 		"kind": "Type",
 		"fighters": "Combattants",
@@ -5746,8 +5746,8 @@
 		"kinds": {
 			"dojo": "Dojo",
 			"tournament": "Tournoi",
-			"forceBrute": "Force Brute",
-			"clanWar": "Guerre de clans",
+			"forceBrute": "Forcebrut",
+			"clanWar": "Guerre des clans",
 			"clanChampionship": "Championnat des clans"
 		}
 	}
