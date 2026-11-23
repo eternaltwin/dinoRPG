@@ -32,7 +32,7 @@ Oben siehst du den aktuellen **Punktestand** der Schlacht und unten die verbleib
 
 Dinoz, die sich der Schlacht angeschlossen haben, können sich um ein Feld bewegen und müssen daraufhin zunächst eine bestimmte Anzahl von Minuten warten, bevor sie sich erneut bewegen können. Es ist möglich, Aktionen anzusammeln, wenn man sie nicht sofort verwendet.
 
-Alle sich auf dem Schlachtfeld befindlichen Dinoz erhalten alle 20 Minuten eine Aktion.
+Alle Dinoz erhalten alle 20 Minuten einen Aktionspunkt.
 
 Man kann einen Dinoz anklicken, um ihn zu bewegen oder um herauszufinden, wem er gehört,  Ein Dinoz kann nur von seinem Besitzer bewegt werden.
 
@@ -64,4 +64,4 @@ Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, de
 
 Falls ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann auch freiwillig die Schlacht verlassen, indem er zur Startspalte seines Klans zurückkehrt. Danach kann er die Schlacht auch erneut betreten.
 
-Gegenstände können von Dinoz während der Schlacht jederzeit angelegt und abgelegt werden. Auf dem Schlachtfeld kann jedoch kein Gegenstand benutzt werden: Um deinen Dinoz zu heilen, muss er die Schlacht zuerst verlassen.
+Gegenstände können von Dinoz während der Schlacht jederzeit angelegt und ausgetauscht werden. Es können jedoch keine Gegenstände benutzt werden – um Heilung zu erhalten, müssen Dinoz das Schlachtfeld verlassen.

@@ -10,7 +10,7 @@ icon:
 
 Once a championship starts, Clans can no longer register nor change league.
 
-The championship is played as a **Swiss tournament** of 48-hour battles. Every Clan starts with 0 points. A victory awards 3 points, a draw 1 point and a defeat 0 points.
+The championship is played as a **Swiss tournament** of 48-hour battles. Every Clan starts with 0 points. A victory awards 4 points, a draw 1 point and a defeat 0 point.
 
 Each round, every Clan faces a Clan with a close score, avoiding as much as possible meeting the same opponent twice. The first round is drawn at random, each following one is drawn at the end of the previous one. The number of rounds depends on the number of registered Clans: at least 3, plus one each time the number of Clans doubles (8 Clans: 3 rounds, 16 Clans: 4 rounds, 32 Clans: 5 rounds...).
 
@@ -64,4 +64,4 @@ If a Dinoz attacks an opponent from behind, it will fight alone: the opponent is
 
 If a Dinoz perishes in a fight, it is removed from the battlefield and will not be able to join again. A Dinoz is also allowed to leave the battlefield by going back to the start line of its side, and it will be able to rejoin.
 
-It is possible to equip and unequip items on your Dinoz at any time during the battle. However, no item can be used on the battlefield: to heal your Dinoz, it must first leave the battle.
+It is possible to manage your Dinoz equipment at any time during the battle. However, no item can be used on the battlefield : to heal your Dinoz, it must leave the battlefield.
