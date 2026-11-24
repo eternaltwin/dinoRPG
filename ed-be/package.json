@@ -51,7 +51,7 @@
 		"dotenv": "^16.4.5",
 		"express": "^4.22.3",
 		"express-validator": "^7.3.2",
-		"i18next": "^23.12.2",
+		"i18next": "^27.2.6",
 		"i18next-fs-backend": "^2.7.0",
 		"kryo": "^0.16.1",
 		"kryo-json": "^0.16.1",
