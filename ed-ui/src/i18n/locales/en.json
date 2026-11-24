@@ -4777,7 +4777,7 @@
 		"group": "Group {group}",
 		"seeFinal": "See the final",
 		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
-		"soon": "Soon",
+		"soon": "Bientôt",
 		"seeFight": "Watch the fight between {playerA} and {playerB}",
 		"deleteTeam": "Delete my team",
 		"timer": {
