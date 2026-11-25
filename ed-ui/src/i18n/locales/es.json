@@ -4777,7 +4777,7 @@
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
-		"soon": "Pronto",
+		"soon": "Bientôt",
 		"seeFight": "Ver el combate entre {playerA} y {playerB}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
