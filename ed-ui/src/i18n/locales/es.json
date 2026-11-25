@@ -4527,7 +4527,7 @@
 		"tooltip": {
 			"nextTurn": "Próximo turno en",
 			"speed": "Velocidad",
-			"speedValue": "{value} %"
+			"speedValue": "{value}%"
 		}
 	},
 	"ingredients": {
@@ -4777,7 +4777,7 @@
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
 		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
-		"soon": "Bientôt",
+		"soon": "Ver",
 		"seeFight": "Ver el combate entre {playerA} y {playerB}",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {
@@ -5729,7 +5729,7 @@
 		"favoritesCount": "{count} / {max} combates favoritos",
 		"retention": "Los combates se borran al cabo de {months} meses. Añade hasta {max} a tus favoritos para conservarlos.",
 		"empty": "Ningún combate archivado.",
-		"emptyFavorites": "Ningún combate favorito. Haz clic en la estrella de un combate para conservarlo.",
+		"emptyFavorites": "Ningún combate favorito. Haz clic en la estrella de un combate para archivarlo y conservarlo.",
 		"date": "Fecha",
 		"kind": "Tipo",
 		"fighters": "Combatientes",
@@ -5746,7 +5746,7 @@
 		"kinds": {
 			"dojo": "Dojo",
 			"tournament": "Torneo",
-			"forceBrute": "Fuerza Bruta",
+			"forceBrute": "Fuerzabruta",
 			"clanWar": "Guerra de clanes",
 			"clanChampionship": "Campeonato de clanes"
 		}
