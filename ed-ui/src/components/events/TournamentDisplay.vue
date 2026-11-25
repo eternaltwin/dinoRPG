@@ -48,7 +48,7 @@
 					</template>
 				</Tippy>
 				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ReplayFight', { archive: team.fight })">
-					<span class="name">{{ $t('dojo.soon') }}</span>
+					<span class="soon">{{ $t('dojo.soon') }}</span>
 
 					<template #content>
 						<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
@@ -471,11 +471,19 @@ export default defineComponent({
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
 				font-size: 10px;
-				text-overflow: ellipsis;
+				white-space: nowrap;
 				overflow: hidden;
-				max-width: 120%;
-				overflow-wrap: anywhere;
-				text-wrap: nowrap;
+				text-overflow: ellipsis;
+				max-width: 100%;
+			}
+			
+			.soon {
+				text-shadow: 0 0 5px #000;
+				color: #fff;
+				max-width: 100%;
+				font-size: 10px;
+				overflow-wrap: break-word;
+				text-align: center;
 			}
 
 			&:nth-child(1) {
