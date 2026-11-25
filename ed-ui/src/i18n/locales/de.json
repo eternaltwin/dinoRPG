@@ -4777,7 +4777,7 @@
 		"group": "Gruppe {group}",
 		"seeFinal": "Finale ansehen",
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu {max} Wellen pro Tag abschließen.//",
-		"soon": "Bald",
+		"soon": "Kampf ansehen",
 		"seeFight": "Kampf zwischen {playerA} und {playerB} ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {
