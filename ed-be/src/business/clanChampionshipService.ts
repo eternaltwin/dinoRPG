@@ -10,7 +10,7 @@ import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { LocalTransactionClient, playerHasRightRequest } from '../dao/clansDao.js';
 import { Auth, auth } from '../dao/playerDao.js';
 import { prisma, PismaClientLocal } from '../prisma.js';
-import { computeStandings, StandingBye } from '../utils/clanChampionship/standings.js';
+import { computeStandings, StandingBye } from '@drpg/core/utils/clanChampionshipStandings';
 import { pairKey, pairSwissRound, swissRoundCount } from '../utils/clanChampionship/swiss.js';
 import {
 	computeMatchSlots,

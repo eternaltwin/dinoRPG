@@ -150,7 +150,13 @@
 				</li>
 			</ul>
 		</div>
-		<ChampionshipStandings v-else :standings="championship.standings" />
+		<template v-else>
+			<div v-if="hasLiveMatch" class="live-view">
+				<DZCheckbox id="championshipLiveView" v-model="liveView" :label="$t('clanChampionship.liveView')" />
+				<span v-if="liveView" class="live-hint">{{ $t('clanChampionship.liveViewHint') }}</span>
+			</div>
+			<ChampionshipStandings :standings="displayedStandings" :liveClans="liveView ? liveClans : undefined" />
+		</template>
 	</div>
 	<SearchEntity background entityType="clan" placeHolder="ranking.placeholder.searchClan" @entity="goToClan" />
 </template>
@@ -170,11 +176,16 @@ import { clanStore } from '../../store/clanStore';
 import { formatNumber } from '@drpg/core/utils/string';
 import WarHistory from './WarHistory.vue';
 import ChampionshipStandings from '../clans/championship/ChampionshipStandings.vue';
-import { ClanChampionshipDTO } from '@drpg/core/models/clan/clanChampionship';
+import { ClanChampionshipDTO, ClanChampionshipStandingDTO } from '@drpg/core/models/clan/clanChampionship';
+import { computeStandings } from '@drpg/core/utils/clanChampionshipStandings';
+import DZCheckbox from '../common/DZCheckbox.vue';
+
+/** Refresh of the championship while the live view shows matches in progress (their scores move with the ticks and fights). */
+const LIVE_REFRESH_MS = 60_000;
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { ChampionshipStandings, WarHistory, Flags, SearchEntity, DZDisclaimer },
+	components: { ChampionshipStandings, DZCheckbox, WarHistory, Flags, SearchEntity, DZDisclaimer },
 	props: {
 		page: {
 			type: Number,
@@ -189,7 +200,10 @@ export default defineComponent({
 		return {
 			clansList: [] as Array<ClanLite>,
 			witness: false as boolean,
-			championship: null as ClanChampionshipDTO | null
+			championship: null as ClanChampionshipDTO | null,
+			/** Provisional table counting the matches in progress at their current score; nothing is saved. */
+			liveView: false,
+			liveRefresh: null as ReturnType<typeof setInterval> | null
 		};
 	},
 	watch: {
@@ -200,7 +214,20 @@ export default defineComponent({
 		type: {
 			immediate: true,
 			handler: 'getClansRanking'
+		},
+		liveRefreshActive: {
+			immediate: true,
+			handler(active: boolean) {
+				if (active && !this.liveRefresh) {
+					this.liveRefresh = setInterval(() => this.refreshChampionship(), LIVE_REFRESH_MS);
+				} else if (!active) {
+					this.stopLiveRefresh();
+				}
+			}
 		}
+	},
+	beforeUnmount() {
+		this.stopLiveRefresh();
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
@@ -224,6 +251,18 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
+		},
+		async refreshChampionship(): Promise<void> {
+			if (this.witness) return;
+			try {
+				this.championship = await ClanChampionshipService.getCurrent();
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		stopLiveRefresh(): void {
+			if (this.liveRefresh) clearInterval(this.liveRefresh);
+			this.liveRefresh = null;
 		},
 		goToClan(clan: SelectOption<number>): void {
 			this.$router.push({ name: 'Clan', params: { id: clan.value } });
@@ -255,6 +294,39 @@ export default defineComponent({
 		},
 		myClanId(): number {
 			return clanStore().getClanId;
+		},
+		hasLiveMatch(): boolean {
+			return !!this.championship?.matches.some(m => m.status === 'live');
+		},
+		liveRefreshActive(): boolean {
+			return this.liveView && this.hasLiveMatch && this.rankingType === ClanRankingType.CHAMPIONSHIP;
+		},
+		/** Names (the standings key) of the clans playing right now. */
+		liveClans(): Set<string> {
+			const names = new Set<string>();
+			for (const m of this.championship?.matches ?? []) {
+				if (m.status !== 'live') continue;
+				names.add(m.homeClan.name);
+				names.add(m.awayClan.name);
+			}
+			return names;
+		},
+		displayedStandings(): ClanChampionshipStandingDTO[] {
+			if (!this.championship) return [];
+			if (!this.liveView || !this.hasLiveMatch) return this.championship.standings;
+			return computeStandings(
+				this.championship.matches.map(m => ({
+					homeClanId: m.homeClan.id,
+					awayClanId: m.awayClan.id,
+					homeClanName: m.homeClan.name,
+					awayClanName: m.awayClan.name,
+					homeScore: m.homeScore,
+					awayScore: m.awayScore,
+					status: m.status
+				})),
+				this.championship.byes,
+				{ includeLive: true }
+			);
 		}
 	}
 });
@@ -365,6 +437,22 @@ h3 {
 	text-transform: uppercase;
 	font-size: 0.9em;
 	letter-spacing: 1px;
+}
+.live-view {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 5px 0;
+
+	:deep(.dz-checkbox) {
+		color: #874a16;
+	}
+
+	.live-hint {
+		font-size: 8pt;
+		font-style: italic;
+		color: #874a16;
+	}
 }
 .registrations {
 	columns: 2;

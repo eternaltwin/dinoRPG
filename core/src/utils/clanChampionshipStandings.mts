@@ -1,4 +1,4 @@
-import { ClanChampionshipMatchStatus, ClanChampionshipStandingDTO } from '@drpg/core/models/clan/clanChampionship';
+import { ClanChampionshipMatchStatus, ClanChampionshipStandingDTO } from '../models/clan/clanChampionship.mjs';
 
 export type StandingMatch = {
 	homeClanId: number | null;
@@ -19,11 +19,15 @@ type Row = Omit<ClanChampionshipStandingDTO, 'rank'>;
 
 /**
  * Championship table. Rows are keyed by snapshot name so a deleted clan keeps its line. Only finished matches
- * score; win/draw come from the scores (the winner id is null for a deleted winner too). A Swiss bye counts as a
+ * score (live ones too with `includeLive`, for a provisional table computed client side); win/draw come from the scores (the winner id is null for a deleted winner too). A Swiss bye counts as a
  * win without board score. Ties are broken on the Buchholz (sum of the points of the opponents met), then on the
  * score difference and the total scored.
  */
-export function computeStandings(matches: StandingMatch[], byes: StandingBye[] = []): ClanChampionshipStandingDTO[] {
+export function computeStandings(
+	matches: StandingMatch[],
+	byes: StandingBye[] = [],
+	{ includeLive = false }: { includeLive?: boolean } = {}
+): ClanChampionshipStandingDTO[] {
 	const rows = new Map<string, Row>();
 	const rowOf = (name: string, clanId: number | null): Row => {
 		let row = rows.get(name);
@@ -52,7 +56,7 @@ export function computeStandings(matches: StandingMatch[], byes: StandingBye[] =
 	for (const m of matches) {
 		const home = rowOf(m.homeClanName, m.homeClanId);
 		const away = rowOf(m.awayClanName, m.awayClanId);
-		if (m.status !== 'finished') continue;
+		if (m.status !== 'finished' && !(includeLive && m.status === 'live')) continue;
 		opponents.push([home, away], [away, home]);
 		for (const [row, scored, conceded] of [
 			[home, m.homeScore, m.awayScore],

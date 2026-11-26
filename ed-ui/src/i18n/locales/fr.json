@@ -5590,6 +5590,9 @@
 		"kickOff": "Coup d'envoi dans {days} jours, {hours} heures et {minutes} minutes.",
 		"opponent": "Adversaire : {clan}",
 		"noNextMatch": "Plus de match à jouer",
+		"liveView": "Vue temps réel",
+		"liveViewHint": "Classement provisoire : les matchs en cours comptent avec leur score actuel.",
+		"liveMatch": "Match en cours",
 		"standingsCol": {
 			"rank": "Rang",
 			"clan": "Clan",

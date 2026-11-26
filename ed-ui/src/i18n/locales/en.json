@@ -5590,6 +5590,9 @@
 		"kickOff": "Kick-off in {days} days, {hours} hours and {minutes} minutes.",
 		"opponent": "Opponent: {clan}",
 		"noNextMatch": "No more matches to play",
+		"liveView": "Live view",
+		"liveViewHint": "Provisional standings: matches in progress count at their current score.",
+		"liveMatch": "Match in progress",
 		"standingsCol": {
 			"rank": "Rank",
 			"clan": "Clan",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeStandings, StandingMatch } from '../../utils/clanChampionship/standings.js';
+import { computeStandings, StandingMatch } from '@drpg/core/utils/clanChampionshipStandings';
 
 let nextId = 1;
 const names: Record<string, number> = {};
@@ -109,5 +109,24 @@ describe('computeStandings with Swiss byes', () => {
 		]);
 		const order = rows.map(r => r.clanName);
 		expect(order.indexOf('P')).toBeLessThan(order.indexOf('Q'));
+	});
+
+	it('counts live matches at their current score only with includeLive', () => {
+		const matches = [
+			match('A', 'B', 4, 2, 'finished'),
+			match('A', 'C', 1, 5, 'live'),
+			match('B', 'C', 0, 0, 'scheduled')
+		];
+		const by = (rows: ReturnType<typeof computeStandings>, n: string) => rows.find(r => r.clanName === n);
+
+		const official = computeStandings(matches);
+		expect(by(official, 'C')).toMatchObject({ played: 0, points: 0 });
+		expect(official[0].clanName).toBe('A');
+
+		const live = computeStandings(matches, [], { includeLive: true });
+		expect(by(live, 'A')).toMatchObject({ played: 2, won: 1, lost: 1, points: 3, scoreFor: 5, scoreAgainst: 7 });
+		expect(by(live, 'B')).toMatchObject({ played: 1, points: 0 });
+		expect(by(live, 'C')).toMatchObject({ played: 1, won: 1, points: 3, scoreDiff: 4 });
+		expect(live.map(r => r.clanName)).toEqual(['C', 'A', 'B']);
 	});
 });

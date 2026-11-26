@@ -19,6 +19,7 @@
 					s.clanName
 				}}</RouterLink>
 				<span v-else>{{ s.clanName }}</span>
+				<span v-if="liveClans?.has(s.clanName)" class="live" :title="$t('clanChampionship.liveMatch')">●</span>
 			</td>
 			<td>{{ s.played }}</td>
 			<td>{{ s.won }}</td>
@@ -37,7 +38,11 @@ import type { ClanChampionshipStandingDTO } from '@drpg/core/models/clan/clanCha
 import DZTable from '../../common/DZTable.vue';
 import { clanStore } from '../../../store/clanStore';
 
-defineProps<{ standings: ClanChampionshipStandingDTO[] }>();
+defineProps<{
+	standings: ClanChampionshipStandingDTO[];
+	/** Clans whose match is in progress (by name, the standings key), flagged in the live view. */
+	liveClans?: Set<string>;
+}>();
 
 function signed(n: number): string {
 	return n > 0 ? `+${n}` : `${n}`;
@@ -52,6 +57,16 @@ th {
 }
 td.clan {
 	text-align: left;
+}
+td.clan .live {
+	margin-left: 4px;
+	color: #c62828;
+	animation: live-blink 1.5s ease-in-out infinite;
+}
+@keyframes live-blink {
+	50% {
+		opacity: 0.3;
+	}
 }
 tr.mine td {
 	background-color: #f3ca92;

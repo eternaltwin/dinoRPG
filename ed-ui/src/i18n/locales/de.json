@@ -5590,6 +5590,9 @@
 		"kickOff": "Beginn in {days} Tag(en), {hours} Stunde(n) und {minutes} Minute(n).",
 		"opponent": "Gegner: {clan}",
 		"noNextMatch": "Es finden keine Partien mehr statt",
+		"liveView": "Live-Ansicht",
+		"liveViewHint": "Vorläufige Rangliste: laufende Spiele zählen mit ihrem aktuellen Stand.",
+		"liveMatch": "Spiel läuft",
 		"standingsCol": {
 			"rank": "Rang",
 			"clan": "Klan",
