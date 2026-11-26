@@ -5586,8 +5586,8 @@
 		"noRegistration": "Ningún clan inscrito por ahora.",
 		"standings": "Clasificación",
 		"nextMatch": "Próxima batalla",
-		"placeRevealAt": "El lugar de batalla será anunciado el {date}",
-		"kickOff": "Inicio: {date}",
+		"placeRevealAt": "El lugar de batalla será anunciado en {days} días, {hours} horas y {minutes} minutos.",
+		"kickOff": "Inicio en {days} días, {hours} horas y {minutes} minutos.",
 		"opponent": "Rival: {clan}",
 		"noNextMatch": "No quedan batallas por realizar",
 		"standingsCol": {

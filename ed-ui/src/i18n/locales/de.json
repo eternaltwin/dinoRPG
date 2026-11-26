@@ -5586,8 +5586,8 @@
 		"noRegistration": "Derzeit noch kein Klan angemeldet.",
 		"standings": "Rangliste",
 		"nextMatch": "Nächste Partie",
-		"placeRevealAt": "Ort wird am {date} bekannt gegeben",
-		"kickOff": "Beginn: {date}",
+		"placeRevealAt": "Ort wird in {days} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) bekannt gegeben.",
+		"kickOff": "Beginn in {days} Tag(en), {hours} Stunde(n) und {minutes} Minute(n).",
 		"opponent": "Gegner: {clan}",
 		"noNextMatch": "Es finden keine Partien mehr statt",
 		"standingsCol": {

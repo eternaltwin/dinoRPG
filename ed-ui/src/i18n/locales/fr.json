@@ -5586,8 +5586,8 @@
 		"noRegistration": "Aucun clan inscrit pour le moment.",
 		"standings": "Classement",
 		"nextMatch": "Prochain match",
-		"placeRevealAt": "Lieu révélé le {date}",
-		"kickOff": "Coup d'envoi : {date}",
+		"placeRevealAt": "Lieu révélé dans {days} jours, {hours} heures et {minutes} minutes.",
+		"kickOff": "Coup d'envoi dans {days} jours, {hours} heures et {minutes} minutes.",
 		"opponent": "Adversaire : {clan}",
 		"noNextMatch": "Plus de match à jouer",
 		"standingsCol": {
