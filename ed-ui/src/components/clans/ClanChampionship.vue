@@ -31,8 +31,9 @@
 		<template v-if="rounds.length > 0">
 			<h3>{{ $t('clanChampionship.calendar') }}</h3>
 			<DZTable v-for="round in rounds" :key="round.round">
-				<tr>
+				<tr class="round-header" data-testid="championship-round-header" @click="toggleRound(round.round)">
 					<th class="dinoz-header" colspan="4">
+						<span class="round-toggle">{{ isCollapsed(round.round) ? '▸' : '▾' }}</span>
 						{{
 							championship.totalRounds
 								? $t('clanChampionship.roundOf', {
@@ -44,41 +45,43 @@
 						}}
 					</th>
 				</tr>
-				<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
-					<td>
-						<RouterLink v-if="m.homeClan.id !== null" :to="{ name: 'Clan', params: { id: m.homeClan.id } }">{{
-							m.homeClan.name
-						}}</RouterLink>
-						<span v-else>{{ m.homeClan.name }}</span>
-						{{ $t('clanChampionship.versus') }}
-						<RouterLink v-if="m.awayClan.id !== null" :to="{ name: 'Clan', params: { id: m.awayClan.id } }">{{
-							m.awayClan.name
-						}}</RouterLink>
-						<span v-else>{{ m.awayClan.name }}</span>
-						<div v-if="isMine(m) && m.placeId !== null" class="place">{{ placeName(m.placeId) }}</div>
-					</td>
-					<td>
-						<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
-						<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
-						<div v-if="canReplay(m)">
-							<RouterLink
-								:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
-								data-testid="match-replay-link"
-								>{{ $t('clanChampionship.replayMatch') }}</RouterLink
-							>
-						</div>
-						<div v-else-if="canWatchLive(m)">
-							<RouterLink
-								:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
-								data-testid="match-live-link"
-								>{{ $t('clanChampionship.watchLive') }}</RouterLink
-							>
-						</div>
-					</td>
-				</tr>
-				<tr v-for="b in byesOf(round.round)" :key="`bye-${b.clanName}`" :class="{ mine: b.clanId === viewedClanId }">
-					<td colspan="4" data-testid="championship-bye">{{ $t('clanChampionship.bye', { clan: b.clanName }) }}</td>
-				</tr>
+				<template v-if="!isCollapsed(round.round)">
+					<tr v-for="m in round.matches" :key="m.id" :class="{ mine: isMine(m) }">
+						<td>
+							<RouterLink v-if="m.homeClan.id !== null" :to="{ name: 'Clan', params: { id: m.homeClan.id } }">{{
+								m.homeClan.name
+							}}</RouterLink>
+							<span v-else>{{ m.homeClan.name }}</span>
+							{{ $t('clanChampionship.versus') }}
+							<RouterLink v-if="m.awayClan.id !== null" :to="{ name: 'Clan', params: { id: m.awayClan.id } }">{{
+								m.awayClan.name
+							}}</RouterLink>
+							<span v-else>{{ m.awayClan.name }}</span>
+							<div v-if="isMine(m) && m.placeId !== null" class="place">{{ placeName(m.placeId) }}</div>
+						</td>
+						<td>
+							<span>{{ $t(`clanChampionship.status.${m.status}`) }}</span>
+							<span v-if="m.status !== 'scheduled'"> · {{ m.homeScore }} – {{ m.awayScore }}</span>
+							<div v-if="canReplay(m)">
+								<RouterLink
+									:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
+									data-testid="match-replay-link"
+									>{{ $t('clanChampionship.replayMatch') }}</RouterLink
+								>
+							</div>
+							<div v-else-if="canWatchLive(m)">
+								<RouterLink
+									:to="{ name: 'ClanChampionshipReplay', params: { id: viewedClanId, matchId: m.id } }"
+									data-testid="match-live-link"
+									>{{ $t('clanChampionship.watchLive') }}</RouterLink
+								>
+							</div>
+						</td>
+					</tr>
+					<tr v-for="b in byesOf(round.round)" :key="`bye-${b.clanName}`" :class="{ mine: b.clanId === viewedClanId }">
+						<td colspan="4" data-testid="championship-bye">{{ $t('clanChampionship.bye', { clan: b.clanName }) }}</td>
+					</tr>
+				</template>
 			</DZTable>
 			<p v-if="nextRoundPending">{{ $t('clanChampionship.nextRoundPending') }}</p>
 		</template>
@@ -106,6 +109,8 @@ export default defineComponent({
 			playerStore: playerStore(),
 			championship: null as ClanChampionshipDTO | null,
 			loading: false as boolean,
+			// Rounds the player folded or unfolded by hand, which override the default (finished rounds folded)
+			roundToggles: {} as Record<number, boolean>,
 			stopListening: undefined as (() => void) | undefined,
 			stopWaitingForReady: undefined as (() => void) | undefined
 		};
@@ -159,6 +164,16 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		isCollapsed(round: number): boolean {
+			return this.roundToggles[round] ?? this.isRoundFinished(round);
+		},
+		isRoundFinished(round: number): boolean {
+			const matches = this.rounds.find(r => r.round === round)?.matches ?? [];
+			return matches.length > 0 && matches.every(m => m.status === 'finished');
+		},
+		toggleRound(round: number) {
+			this.roundToggles = { ...this.roundToggles, [round]: !this.isCollapsed(round) };
+		},
 		byesOf(round: number): ClanChampionshipDTO['byes'] {
 			return (this.championship?.byes ?? []).filter(b => b.round === round);
 		},
@@ -245,6 +260,14 @@ h3 {
 .place {
 	font-weight: normal;
 	font-size: 0.85em;
+}
+tr.round-header {
+	cursor: pointer;
+	user-select: none;
+}
+.round-toggle {
+	display: inline-block;
+	width: 1em;
 }
 tr.mine td {
 	background-color: #f3ca92;

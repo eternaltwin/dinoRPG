@@ -364,6 +364,9 @@ test('the championship shows the next match on the clan page and the standings i
 		await expect(next).toContainText(clanB.name);
 		await expect(next).toContainText('Lieu du match : Dinoville');
 
+		// The finished round starts folded
+		await expect(page.getByText('12 – 3')).toHaveCount(0);
+		await page.getByTestId('championship-round-header').first().click();
 		await expect(page.getByText('Terminé', { exact: true })).toBeVisible();
 		await expect(page.getByText('12 – 3')).toBeVisible();
 
@@ -671,6 +674,7 @@ test('a finished match replays every step with the state of both clans, fights i
 		expect(frames.map(f => (f.events as { type: string }[])[0].type)).toEqual(['enter', 'move', 'attack']);
 
 		await page.goto(`/clan/${clanA.id}/championship`);
+		await page.getByTestId('championship-round-header').first().click();
 		await page.getByTestId('match-replay-link').click();
 		await page.waitForURL(`**/championship/replay/${match.id}`);
 
@@ -824,6 +828,7 @@ test('a player of no clan of the match watches it live without life nor AP, then
 		await db.clanChampionshipMatch.update({ where: { id: match.id }, data: { status: 'finished' } });
 		await page.goto(`/clan/${clanA.id}/championship`);
 		await expect(page.getByTestId('match-live-link')).toHaveCount(0);
+		await page.getByTestId('championship-round-header').first().click();
 		await page.getByTestId('match-replay-link').click();
 		await page.waitForURL(`**/championship/replay/${match.id}`);
 		await expect(page.getByTestId('replay-live')).toHaveCount(0);
