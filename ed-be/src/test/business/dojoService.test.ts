@@ -224,6 +224,16 @@ describe('fightFriend', () => {
 		const result = await fightFriend(req({ left: [1], right: [1], rightId: 'p2' }));
 		expect(result.fight).toEqual({ id: 'arch', result: true });
 	});
+	it('accepts dinoz locked on the clan championship board', async () => {
+		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValue({
+			money: 1000,
+			cooker: false,
+			dinoz: [{ id: 1, unavailableReason: UnavailableReason.clanChampionship }],
+			clanId: 1
+		} as never);
+		const result = await fightFriend(req({ left: [1], right: [1], rightId: 'p2' }));
+		expect(result.fight).toEqual({ id: 'arch', result: true });
+	});
 	it('throws when left player invalid', async () => {
 		vi.mocked(playerDao.getDojoFightPreparationRequest).mockResolvedValueOnce(null as never);
 		await expect(fightFriend(req({ left: [1], right: [1], rightId: 'p2' }))).rejects.toThrow('dinozNotPlayer');
@@ -276,7 +286,7 @@ describe('getDojoFriendData', () => {
 		let result = await getFriendDinoz(req({}, { id: 1 }));
 		expect(result.length).toBe(2);
 	});
-	it('excludes dinoz locked on the clan championship board', async () => {
+	it('keeps dinoz locked on the clan championship board', async () => {
 		vi.mocked(playerDao.getDojoFriendData).mockResolvedValue({
 			dinoz: [
 				{ id: 1, name: 'abc', display: '0123', level: 1, unavailableReason: null },
@@ -285,7 +295,7 @@ describe('getDojoFriendData', () => {
 			clanId: 1
 		});
 		const result = await getFriendDinoz(req({}, { id: 1 }));
-		expect(result.map(d => d.id)).toEqual([1]);
+		expect(result.map(d => d.id)).toEqual([1, 2]);
 	});
 });
 

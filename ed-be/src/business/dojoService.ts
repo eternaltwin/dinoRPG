@@ -668,13 +668,13 @@ async function createOpponentTeam(team: { id: number; level: number }[], myDojo:
 	return opponents;
 }
 
+// Friendly fights leave the dinoz untouched, so a dinoz on the clan championship board can still take part
 const FIGHT_BLOCKING_REASONS: UnavailableReason[] = [
 	UnavailableReason.frozen,
 	UnavailableReason.sacrificed,
 	UnavailableReason.unsacrificing,
 	UnavailableReason.selling,
-	UnavailableReason.unfreezing,
-	UnavailableReason.clanChampionship
+	UnavailableReason.unfreezing
 ];
 
 function availableDinozIds(dinoz: { id: number; unavailableReason: UnavailableReason | null }[]): number[] {
