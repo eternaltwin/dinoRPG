@@ -45,6 +45,12 @@
 					<DinozIcon :display="p.display" :size="32" />
 					<span class="name">{{ p.name }}</span>
 					<span class="muted">{{ $t('clanChampionship.level', { level: p.level }) }}</span>
+					<span v-if="p.life !== undefined" class="stat" data-testid="mine-hp"
+						><span v-html="formatContent($t('clanChampionship.hp'))" /> {{ p.life }}/{{ p.maxLife }}</span
+					>
+					<span v-if="p.actionPoints !== undefined" class="stat" data-testid="mine-ap"
+						>{{ $t('clanChampionship.ap') }} {{ p.actionPoints }}</span
+					>
 				</li>
 			</ul>
 			<p v-else class="muted">{{ $t('clanChampionship.noneOnBoard') }}</p>
@@ -54,6 +60,9 @@
 						<DinozIcon :display="d.display" :size="32" />
 						<span class="name">{{ d.name }}</span>
 						<span class="muted">{{ $t('clanChampionship.level', { level: d.level }) }}</span>
+						<span class="stat"
+							><span v-html="formatContent($t('clanChampionship.hp'))" /> {{ d.life }}/{{ d.maxLife }}</span
+						>
 						<DZButton :off="pending" :data-testid="`enter-${d.id}`" @click="emit('enter', d.id)">{{
 							$t('clanChampionship.enter')
 						}}</DZButton>
@@ -364,6 +373,10 @@ function formatDate(d: Date | string): string {
 			background: rgba(43, 108, 176, 0.2);
 		}
 	}
+}
+.stat {
+	font-size: 0.9em;
+	white-space: nowrap;
 }
 .muted {
 	opacity: 0.75;
