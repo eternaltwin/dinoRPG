@@ -193,12 +193,46 @@ describe('join flow', () => {
 		vi.mocked(clansDao.playerHasRightRequest).mockResolvedValue(false as never);
 		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('cannot accept');
 	});
-	it('acceptJoinRequest refuses while the clan plays the championship', async () => {
-		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 4, clan: { _count: { members: 1 } } } as never);
+	it('acceptJoinRequest refuses a player who already played the running championship', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({
+			clanId: 4,
+			playerId: 'joiner',
+			clan: { _count: { members: 1 } }
+		} as never);
 		vi.mocked(isClanInRunningChampionship).mockResolvedValueOnce(true);
-		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('clanChampionship.rosterLocked');
+		vi.mocked(hasPlayerPlayedRunningChampionship).mockResolvedValueOnce(true);
+		await expect(svc.acceptJoinRequest(req({ id: '1' }))).rejects.toThrow('clanChampionship.joinerAlreadyPlayed');
 		expect(isClanInRunningChampionship).toHaveBeenCalledWith(4);
+		expect(hasPlayerPlayedRunningChampionship).toHaveBeenCalledWith('joiner');
 		expect(clansDao.acceptPlayerJoinRequest).not.toHaveBeenCalled();
+	});
+	it('acceptJoinRequest lets a player who never played the running championship join a playing clan', async () => {
+		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({
+			clanId: 4,
+			playerId: 'joiner',
+			clan: { _count: { members: 1 } }
+		} as never);
+		vi.mocked(isClanInRunningChampionship).mockResolvedValueOnce(true);
+		vi.mocked(hasPlayerPlayedRunningChampionship).mockResolvedValueOnce(false);
+		vi.mocked(clansDao.acceptPlayerJoinRequest).mockResolvedValue({
+			id: 7,
+			dateJoin: new Date(),
+			rights: 0,
+			donation: 0,
+			player: {},
+			clan: {}
+		} as never);
+		expect((await svc.acceptJoinRequest(req({ id: '1' }))).id).toBe(7);
+	});
+	it('joinClan refuses a player who already played the running championship', async () => {
+		vi.mocked(canJoinClan).mockResolvedValue(true as never);
+		vi.mocked(isClanInRunningChampionship).mockResolvedValueOnce(true);
+		vi.mocked(hasPlayerPlayedRunningChampionship).mockResolvedValueOnce(true);
+		await expect(svc.joinClan(req({ id: '4' }))).rejects.toThrow('clanChampionship.alreadyPlayedNoJoin');
+		expect(isClanInRunningChampionship).toHaveBeenCalledWith(4);
+		expect(hasPlayerPlayedRunningChampionship).toHaveBeenCalledWith('p1');
+		expect(playerDao.removeMoney).not.toHaveBeenCalled();
+		expect(clansDao.joinClanRequest).not.toHaveBeenCalled();
 	});
 	it('denyJoinRequest refunds the requester, not the clan member who denies', async () => {
 		vi.mocked(clansDao.clanJoinRequest).mockResolvedValue({ clanId: 1, playerId: 'requester' } as never);
@@ -245,10 +279,15 @@ describe('join flow', () => {
 });
 
 vi.mock('../../business/clanChampionshipService.js', () => ({
+	hasPlayerPlayedRunningChampionship: vi.fn(),
 	isClanInActiveChampionship: vi.fn(),
 	isClanInRunningChampionship: vi.fn()
 }));
-import { isClanInActiveChampionship, isClanInRunningChampionship } from '../../business/clanChampionshipService.js';
+import {
+	hasPlayerPlayedRunningChampionship,
+	isClanInActiveChampionship,
+	isClanInRunningChampionship
+} from '../../business/clanChampionshipService.js';
 
 describe('deleteClan', () => {
 	it('rejects when the clan is registered in the active championship', async () => {

@@ -59,7 +59,11 @@ import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { UpdateClanMemberRequestBody, UpdateClanMemberRequestParams } from '@drpg/core/returnTypes/Clan';
 import { prisma } from '../prisma.js';
 import { updateDinoz } from '../dao/dinozDao.js';
-import { isClanInActiveChampionship, isClanInRunningChampionship } from './clanChampionshipService.js';
+import {
+	hasPlayerPlayedRunningChampionship,
+	isClanInActiveChampionship,
+	isClanInRunningChampionship
+} from './clanChampionshipService.js';
 import { removePlayerFromBoards } from './clanChampionshipMatchService.js';
 import { kickPlayerFromWsChannels } from './serverEventService.js';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
@@ -197,6 +201,13 @@ export async function joinClan(req: Request): Promise<JoinClanResponse> {
 		throw new ExpectedError(`Player ${authed.name} doesn't fill conditions to join a clan`);
 	}
 
+	if (
+		(await isClanInRunningChampionship(Number(req.params.id))) &&
+		(await hasPlayerPlayedRunningChampionship(authed.id))
+	) {
+		throw new ExpectedError(translate('clanChampionship.alreadyPlayedNoJoin', authed));
+	}
+
 	await removeMoney(authed.id, CLAN_JOIN_MONEY);
 
 	const clan = await joinClanRequest(Number(req.params.id), authed.id);
@@ -241,8 +252,12 @@ export async function acceptJoinRequest(req: Request): Promise<ClanMember> {
 		throw new ExpectedError(`You cannot accept this request`);
 	}
 
-	if (await isClanInRunningChampionship(fullClanRequest.clanId)) {
-		throw new ExpectedError(translate('clanChampionship.rosterLocked', authed));
+	// While the clan plays the championship, only players who have not played any match of it can come in
+	if (
+		(await isClanInRunningChampionship(fullClanRequest.clanId)) &&
+		(await hasPlayerPlayedRunningChampionship(fullClanRequest.playerId))
+	) {
+		throw new ExpectedError(translate('clanChampionship.joinerAlreadyPlayed', authed));
 	}
 
 	const join = await acceptPlayerJoinRequest(+req.params.id, authed.id);

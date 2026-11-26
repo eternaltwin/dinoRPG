@@ -276,6 +276,30 @@ export async function isClanInRunningChampionship(
 	return !!registration;
 }
 
+/**
+ * True when the player took part in a match of the running championship: a Dinoz engaged on a board
+ * (whatever its clan) or a fight they were part of. Such a player can no longer join a registered clan.
+ */
+export async function hasPlayerPlayedRunningChampionship(
+	playerId: string,
+	tx: PismaClientLocal | LocalTransactionClient = prisma
+): Promise<boolean> {
+	const event = await findActiveChampionshipEvent(tx);
+	if (!event) return false;
+	const config = parseEventConfig(event) as ClanChampionshipEventConfig;
+	if (config.phase !== 'running') return false;
+	const piece = await tx.clanChampionshipPiece.findFirst({
+		where: { playerId, match: { eventId: event.id } },
+		select: { id: true }
+	});
+	if (piece) return true;
+	const fight = await tx.clanChampionshipFight.findFirst({
+		where: { participantPlayerIds: { has: playerId }, match: { eventId: event.id } },
+		select: { id: true }
+	});
+	return !!fight;
+}
+
 export async function startClanChampionship(req: Request): Promise<{ id: string }> {
 	const authed = await auth(req);
 	const { start, places } = req.body as ChampionshipForm;

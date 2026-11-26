@@ -23,6 +23,8 @@ vi.mock('../../prisma.js', () => ({
 			updateMany: vi.fn()
 		},
 		clanChampionshipMatch: { findMany: vi.fn(), createMany: vi.fn(), findFirst: vi.fn(), update: vi.fn() },
+		clanChampionshipPiece: { findFirst: vi.fn() },
+		clanChampionshipFight: { findFirst: vi.fn() },
 		clanWar: { findFirst: vi.fn() },
 		clan: { findUniqueOrThrow: vi.fn() }
 	}
@@ -38,6 +40,7 @@ import {
 	closeRegistrations,
 	finishChampionship,
 	generateNextRound,
+	hasPlayerPlayedRunningChampionship,
 	isClanInActiveChampionship,
 	isClanInRunningChampionship,
 	openChampionshipRegistrations,
@@ -872,6 +875,44 @@ describe('isClanInRunningChampionship', () => {
 	});
 	it('is false without an active championship', async () => {
 		expect(await isClanInRunningChampionship(7, p)).toBe(false);
+	});
+});
+
+describe('hasPlayerPlayedRunningChampionship', () => {
+	const runningEvent = () =>
+		activeEvent({ config: JSON.stringify({ ...JSON.parse(activeEvent().config), phase: 'running' }) });
+	it('is true when the player engaged a Dinoz in a match of the running championship', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(runningEvent());
+		p.clanChampionshipPiece.findFirst.mockResolvedValue({ id: 1 });
+		expect(await hasPlayerPlayedRunningChampionship('player-2', p)).toBe(true);
+		expect(p.clanChampionshipPiece.findFirst).toHaveBeenCalledWith({
+			where: { playerId: 'player-2', match: { eventId: 'ev-1' } },
+			select: { id: true }
+		});
+	});
+	it('is true when the player took part in a fight of the running championship', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(runningEvent());
+		p.clanChampionshipPiece.findFirst.mockResolvedValue(null);
+		p.clanChampionshipFight.findFirst.mockResolvedValue({ id: 3 });
+		expect(await hasPlayerPlayedRunningChampionship('player-2', p)).toBe(true);
+		expect(p.clanChampionshipFight.findFirst).toHaveBeenCalledWith({
+			where: { participantPlayerIds: { has: 'player-2' }, match: { eventId: 'ev-1' } },
+			select: { id: true }
+		});
+	});
+	it('is false for a player who never played the running championship', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(runningEvent());
+		p.clanChampionshipPiece.findFirst.mockResolvedValue(null);
+		p.clanChampionshipFight.findFirst.mockResolvedValue(null);
+		expect(await hasPlayerPlayedRunningChampionship('player-2', p)).toBe(false);
+	});
+	it('is false outside the running phase', async () => {
+		p.clanEvent.findFirst.mockResolvedValue(activeEvent());
+		expect(await hasPlayerPlayedRunningChampionship('player-2', p)).toBe(false);
+		expect(p.clanChampionshipPiece.findFirst).not.toHaveBeenCalled();
+	});
+	it('is false without an active championship', async () => {
+		expect(await hasPlayerPlayedRunningChampionship('player-2', p)).toBe(false);
 	});
 });
 
