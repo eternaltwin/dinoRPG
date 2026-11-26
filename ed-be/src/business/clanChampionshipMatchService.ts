@@ -354,7 +354,14 @@ export async function resolveBoardAttack(
 			where: { matchId: match.id, state: ClanChampionshipPieceState.onBoard }
 		});
 		const zone = fightZone(attacker as { x: number; y: number }, defender as { x: number; y: number });
-		pieces = onBoard.filter(p => p.x !== null && p.y !== null && zone.has(cellIndex(p.x, p.y)));
+		// A dinoz on its own entry column is out of reach: it is not dragged into the fight (except the attacker)
+		pieces = onBoard.filter(
+			p =>
+				p.x !== null &&
+				p.y !== null &&
+				zone.has(cellIndex(p.x, p.y)) &&
+				(p.id === attacker.id || p.x !== entryColumn(sideOf(match, p.clanId)))
+		);
 		for (const own of [attacker, defender]) {
 			if (!pieces.some(p => p.id === own.id)) pieces.push(own);
 		}
@@ -673,10 +680,12 @@ export async function moveOnBoard(authed: Auth, dinozId: number, direction: Boar
 		});
 		const occupant = onBoard.find(o => o.x === target.x && o.y === target.y);
 		if (occupant && occupant.clanId === clanId) throw fail('cellOccupied');
+		// The enemy entry column is out of reach: no stopping there, no attacking a dinoz standing on it
+		if (target.x === entryColumn(side === 'west' ? 'east' : 'west')) {
+			throw fail(occupant ? 'targetOnEntryColumn' : 'enemyEntryColumn');
+		}
 
 		if (!occupant) {
-			// Attacking an enemy on its entry column is fine (the attacker stays); stopping there is not.
-			if (target.x === entryColumn(side === 'west' ? 'east' : 'west')) throw fail('enemyEntryColumn');
 			await tx.clanChampionshipPiece.update({
 				where: { id: own.id },
 				data: { x: target.x, y: target.y, actionPoints: { decrement: 1 } }

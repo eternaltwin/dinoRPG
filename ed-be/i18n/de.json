@@ -32,6 +32,7 @@
 		"notOnBoard": "Dieser Dinoz befindet sich nicht auf dem Spielfeld.",
 		"notOnEntryColumn": "Dieser Dinoz befindet sich nicht auf eurer Startspalte.",
 		"enemyEntryColumn": "Du kannst nicht auf der gegnerischen Startspalte stehen bleiben.",
+		"targetOnEntryColumn": "Du kannst keinen Dinoz auf seiner Startspalte angreifen.",
 		"noActionPoints": "Dieser Dinoz hat keine Aktionspunkte mehr.",
 		"outOfBoard": "Außerhalb des Spielfelds.",
 		"obstacle": "Es ist ein Hindernis im Weg.",

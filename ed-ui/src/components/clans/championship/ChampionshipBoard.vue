@@ -204,10 +204,12 @@ const targets = computed(() => {
 			if (x < 0 || y < 0 || x >= BOARD_SIZE || y >= BOARD_SIZE) continue;
 			const index = y * BOARD_SIZE + x;
 			if (obstacles.value.has(index)) continue;
+			// The enemy entry column is out of reach: no stopping there, no attacking a dinoz standing on it
+			if (x === enemyEntryX.value) continue;
 			const other = piecesByCell.value.get(index);
 			if (other) {
 				if (!other.mine && !other.ally) targets.set(index, { direction, target: 'attack' });
-			} else if (x !== enemyEntryX.value) {
+			} else {
 				targets.set(index, { direction, target: 'move' });
 			}
 		}

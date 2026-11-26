@@ -411,20 +411,20 @@ describe('moveOnBoard', () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ clanId: AWAY, x: 1, y: 5 }));
 		await expect(move(BoardDirection.W)).rejects.toThrow('clanChampionship.enemyEntryColumn');
 	});
-	it('attacking an enemy standing on the enemy entry column is still allowed', async () => {
+	it('targetOnEntryColumn: west cannot attack an enemy standing on x = 19', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 18, y: 5 }));
 		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: AWAY, x: 19, y: 5 }]);
-		vi.mocked(getDinozForChampionshipFight).mockResolvedValue([]);
-		vi.mocked(calculateFightBetweenPlayers).mockReturnValue({
-			outcome: 0,
-			attackers: [],
-			defenders: [],
-			steps: [],
-			fighters: []
-		} as never);
-		vi.mocked(archiveFight).mockResolvedValue({ id: 'arch-1' } as never);
-		const r = await move(BoardDirection.E);
-		expect(r.fight).not.toBeNull();
+		await expect(move(BoardDirection.E)).rejects.toThrow('clanChampionship.targetOnEntryColumn');
+		expect(p.clanChampionshipPiece.update).not.toHaveBeenCalled();
+		expect(calculateFightBetweenPlayers).not.toHaveBeenCalled();
+	});
+	it('targetOnEntryColumn: east cannot attack an enemy standing on x = 0', async () => {
+		vi.mocked(auth).mockResolvedValue({ id: PLAYER, clanId: AWAY } as never);
+		p.clanMember.findUnique.mockResolvedValue({ clanId: AWAY });
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ clanId: AWAY, x: 1, y: 5 }));
+		p.clanChampionshipPiece.findMany.mockResolvedValue([{ id: 2, clanId: HOME, x: 0, y: 5 }]);
+		await expect(move(BoardDirection.W)).rejects.toThrow('clanChampionship.targetOnEntryColumn');
+		expect(calculateFightBetweenPlayers).not.toHaveBeenCalled();
 	});
 	it('noActionPoints', async () => {
 		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 5, y: 5, actionPoints: 0 }));

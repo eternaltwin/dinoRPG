@@ -161,6 +161,45 @@ describe('resolveBoardAttack', () => {
 		expect(ids(teamB)).toEqual([20, 40]);
 	});
 
+	it('leaves out of a frontal fight the pieces standing on their own entry column, except the attacker', async () => {
+		const att = piece(1, 1, 0, 5); // west attacker on its own entry column: still fights
+		const def = piece(2, 2, 1, 5); // east victim, attacked from x - 1: frontal
+		const allyOnEntry = piece(3, 1, 0, 6); // west, on its entry column: out of reach
+		const enemyNear = piece(4, 2, 1, 6);
+		const tx = makeTx([att, def, allyOnEntry, enemyNear]);
+		setup(
+			r => dinozRow(r as never),
+			(a, d) => ({
+				outcome: FightOutcome.DefenderWin,
+				attackers: a.map(x => fiche({ dinozId: x.id, playerId: 'p1' } as never)),
+				defenders: d.map(x => fiche({ dinozId: x.id, playerId: 'p2' } as never))
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		const [, teamA, , teamB] = vi.mocked(calculateFightBetweenPlayers).mock.calls[0];
+		expect(ids(teamA)).toEqual([10]);
+		expect(ids(teamB)).toEqual([20, 40]);
+	});
+
+	it('leaves out of a frontal fight an enemy standing on its own entry column', async () => {
+		const att = piece(1, 1, 17, 5); // west attacker
+		const def = piece(2, 2, 18, 5); // east victim, frontal
+		const enemyOnEntry = piece(4, 2, 19, 4); // east, on its entry column: out of reach
+		const tx = makeTx([att, def, enemyOnEntry]);
+		setup(
+			r => dinozRow(r as never),
+			(a, d) => ({
+				outcome: FightOutcome.DefenderWin,
+				attackers: a.map(x => fiche({ dinozId: x.id, playerId: 'p1' } as never)),
+				defenders: d.map(x => fiche({ dinozId: x.id, playerId: 'p2' } as never))
+			})
+		);
+		await resolveBoardAttack(tx as never, match, att as never, def as never, authed);
+		const [, teamA, , teamB] = vi.mocked(calculateFightBetweenPlayers).mock.calls[0];
+		expect(ids(teamA)).toEqual([10]);
+		expect(ids(teamB)).toEqual([20]);
+	});
+
 	it('kills a dead defender, unlocks the dinoz, applies hp and xp, never touches fight/restingAttack', async () => {
 		const att = piece(1, 2, 6, 3, { playerId: 'p2' });
 		const def = piece(2, 1, 7, 3, { playerId: 'p1' });
