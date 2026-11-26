@@ -261,6 +261,8 @@
 			"war_defend": "Añade tu Dino a las líneas de defensa del castillo de tu clan.",
 			"war_remove": "Retira tu Dino de las líneas de defensa del castillo de tu clan.",
 			"war_attack": "Atacar el castillo enemigo.",
+			"cdc_enter": "Envía a tu Dino al campo de batalla del campeonato de clanes.",
+			"cdc_leave": "Retira a tu Dino del campo de batalla del campeonato de clanes.",
 			"dungeon_enter": "Puedes entrar en este lugar subterráneo y peligroso. ¡No te vayas a perder!",
 			"dungeon": "Ver la evolución de la exploración actual.",
 			"demon_shop": "¡ATENCIÓN! ¡PELIGRO!"
@@ -300,6 +302,8 @@
 			"war_defend": "Defender tu castillo",
 			"war_remove": "Retirar de la defensa",
 			"war_attack": "Atacar el castillo",
+			"cdc_enter": "Unirse al campo de batalla",
+			"cdc_leave": "Dejar el campo de batalla",
 			"dungeon_enter": "Entrar",
 			"dungeon": "Acceder al plano",
 			"demon_shop": "Tienda Demoniaca"

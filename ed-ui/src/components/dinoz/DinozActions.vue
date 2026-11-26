@@ -124,7 +124,14 @@ import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../../components/modal/ResurrectModal.vue';
 import { itinerantShopNameList, shopNameList } from '../../constants/index.js';
-import { ClanService, DinozService, DungeonService, FightService, MissionService } from '../../services/index.js';
+import {
+	ClanChampionshipService,
+	ClanService,
+	DinozService,
+	DungeonService,
+	FightService,
+	MissionService
+} from '../../services/index.js';
 import { playerStore, sessionStore, useDinozStore } from '../../store/index.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { errorHandler } from '../../utils/index.js';
@@ -650,6 +657,29 @@ export default defineComponent({
 				case Action.WAR_REMOVE:
 					try {
 						await ClanService.removeDefender(this.dinozId);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					await this.refreshDinoz();
+					break;
+				case Action.CDC_ENTER: {
+					const clanId = this.playerStore.getClanId;
+					try {
+						await ClanChampionshipService.enter(this.dinozId);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+						await this.refreshDinoz();
+						return;
+					}
+					await this.refreshDinoz();
+					if (clanId !== undefined) {
+						this.$router.push({ name: 'ClanChampionshipMatch', params: { id: clanId } });
+					}
+					break;
+				}
+				case Action.CDC_LEAVE:
+					try {
+						await ClanChampionshipService.leave(this.dinozId);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}

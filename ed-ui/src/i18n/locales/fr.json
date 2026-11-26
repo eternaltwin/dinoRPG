@@ -261,6 +261,8 @@
 			"war_defend": "Ajoutez votre Dinoz aux lignes de défense du château de votre clan.",
 			"war_remove": "Retirer votre Dinoz des lignes de défense du château de votre clan.",
 			"war_attack": "Attaquer le château adverse.",
+			"cdc_enter": "Envoyez votre Dinoz sur le champ de bataille du championnat des clans.",
+			"cdc_leave": "Retirez votre Dinoz du champ de bataille du championnat des clans.",
 			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
 			"dungeon": "Voir l'évolution de l'exploration actuelle...",
 			"demon_shop": "ATTENTION ! DANGER !"
@@ -300,6 +302,8 @@
 			"war_defend": "Défendre votre château",
 			"war_remove": "Retirer de la défense",
 			"war_attack": "Attaquer le château",
+			"cdc_enter": "Rejoindre le champ de bataille",
+			"cdc_leave": "Quitter le champ de bataille",
 			"dungeon_enter": "Entrer",
 			"dungeon": "Accéder au Plan",
 			"demon_shop": "Boutique Démoniaque"

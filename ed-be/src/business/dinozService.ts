@@ -111,6 +111,7 @@ import { movementListener } from './specialService.js';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from '../utils/server/safeSchedule.js';
 import { finishDinozUnsacrifice } from './demonShopService.js';
+import { getBoardActionOfDinoz } from './clanChampionshipMatchService.js';
 
 /**
  * @summary Whether a dinoz can level up right now, accounting for tournament level caps
@@ -170,9 +171,14 @@ export async function getAvailableActions(
 		dinoz.followers = [];
 	}
 
-	// On a championship board: only the level up (the other actions are locked)
+	// On a championship board: only the level up and leaving the board (the other actions are locked)
 	if (dinoz.unavailableReason === UnavailableReason.clanChampionship) {
-		return (await canLevelUpNow(dinoz)) ? [actionList[Action.LEVEL_UP]] : [];
+		const locked: ActionFiche[] = [];
+		if (await canLevelUpNow(dinoz)) locked.push(actionList[Action.LEVEL_UP]);
+		if (player.clan && (await getBoardActionOfDinoz(dinoz, player.clan.id)) === 'leave') {
+			locked.push(actionList[Action.CDC_LEAVE]);
+		}
+		return locked;
 	}
 
 	if (dinoz.unavailableReason && noActionsReasons.includes(dinoz.unavailableReason)) {
@@ -192,6 +198,11 @@ export async function getAvailableActions(
 	// Stop rest
 	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
+	}
+
+	// Clan championship: enter the board of the clan's live match
+	if (player.clan && (await getBoardActionOfDinoz(dinoz, player.clan.id)) === 'enter') {
+		availableActions.push(actionList[Action.CDC_ENTER]);
 	}
 
 	// War actions

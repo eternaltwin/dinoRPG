@@ -21,6 +21,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
 	ClanChampionshipMatchStatus,
 	ClanChampionshipPieceState,
+	Dinoz,
 	LogType,
 	Prisma,
 	UnavailableReason
@@ -515,6 +516,43 @@ async function withLiveMatch<T>(
 	);
 	publishBoardChanged(found, version);
 	return result;
+}
+
+export type BoardDinozAction = 'enter' | 'leave';
+
+/**
+ * The board action a dinoz can take right now in its clan's live match, mirroring the checks of `enterBoard` and
+ * `leaveBoard` (without the lock: the action re-validates everything). Feeds the dinoz actions.
+ */
+export async function getBoardActionOfDinoz(
+	dinoz: Pick<Dinoz, 'id' | 'life' | 'placeId' | 'leaderId' | 'unavailableReason'> & { followers: unknown[] },
+	clanId: number
+): Promise<BoardDinozAction | null> {
+	const onBoard = dinoz.unavailableReason === UnavailableReason.clanChampionship;
+	if (!onBoard && (dinoz.unavailableReason !== null || dinoz.life <= 0)) return null;
+	if (!onBoard && (dinoz.leaderId !== null || dinoz.followers.length > 0)) return null;
+
+	const match = await findLiveMatchOfClan(clanId);
+	if (!match || Date.now() >= match.endsAt.getTime()) return null;
+	if (!onBoard && dinoz.placeId !== match.placeId) return null;
+
+	const piece = await prisma.clanChampionshipPiece.findUnique({
+		where: { matchId_dinozId: { matchId: match.id, dinozId: dinoz.id } },
+		select: { state: true, clanId: true, x: true }
+	});
+	if (onBoard) {
+		const canLeave =
+			piece?.state === ClanChampionshipPieceState.onBoard &&
+			piece.clanId === clanId &&
+			piece.x === entryColumn(sideOf(match, clanId));
+		return canLeave ? 'leave' : null;
+	}
+	if (piece?.state === ClanChampionshipPieceState.dead) return null;
+	if (!piece || piece.clanId !== clanId) {
+		const used = await prisma.clanChampionshipPiece.count({ where: { matchId: match.id, clanId } });
+		if (used >= BOARD_MATCH_QUOTA) return null;
+	}
+	return 'enter';
 }
 
 export async function enterBoard(authed: Auth, dinozId: number): Promise<void> {

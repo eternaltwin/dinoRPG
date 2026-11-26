@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { BoardDirection } from '@drpg/core/models/clan/clanChampionship';
+import { BOARD_MATCH_QUOTA, BOARD_SIZE, BoardDirection } from '@drpg/core/models/clan/clanChampionship';
 import { makeRequest } from '../helpers/req.js';
 
 vi.mock('../../context.js', () => ({ DISCORD: { sendError: vi.fn() }, LOGGER: { error: vi.fn() } }));
@@ -48,6 +48,7 @@ import { publishToWsChannel } from '../../business/serverEventService.js';
 import { prisma } from '../../prisma.js';
 import {
 	enterBoard as enterBoardAs,
+	getBoardActionOfDinoz,
 	leaveBoard as leaveBoardAs,
 	moveOnBoard as moveOnBoardAs,
 	removePlayerFromBoards,
@@ -175,6 +176,67 @@ describe('common checks', () => {
 		await leaveBoard(body({ dinozId: 5 }));
 		const lock = p.$queryRaw.mock.invocationCallOrder[0];
 		expect(lock).toBeLessThan(p.clanChampionshipPiece.findUnique.mock.invocationCallOrder[0]);
+	});
+});
+
+describe('getBoardActionOfDinoz', () => {
+	const free = (o: Record<string, unknown> = {}) => ({
+		id: 5,
+		life: 10,
+		placeId: 1,
+		leaderId: null,
+		unavailableReason: null,
+		followers: [] as unknown[],
+		...o
+	});
+	const onBoard = (o: Record<string, unknown> = {}) => free({ unavailableReason: 'clanChampionship', ...o });
+	const actionOf = (d: ReturnType<typeof free>) => getBoardActionOfDinoz(d as never, HOME);
+	beforeEach(() => setup());
+
+	it('enter for a free dinoz at the match place', async () => {
+		expect(await actionOf(free())).toBe('enter');
+	});
+	it('enter again after leaving the board', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'left', x: null, y: null }));
+		p.clanChampionshipPiece.count.mockResolvedValue(BOARD_MATCH_QUOTA);
+		expect(await actionOf(free())).toBe('enter');
+	});
+	it('nothing without a live match, or once it is over', async () => {
+		setup(null);
+		expect(await actionOf(free())).toBeNull();
+		setup();
+		vi.setSystemTime(endsAt);
+		expect(await actionOf(free())).toBeNull();
+	});
+	it('nothing for a dead, busy, misplaced or grouped dinoz', async () => {
+		expect(await actionOf(free({ life: 0 }))).toBeNull();
+		expect(await actionOf(free({ unavailableReason: 'resting' }))).toBeNull();
+		expect(await actionOf(free({ placeId: 2 }))).toBeNull();
+		expect(await actionOf(free({ leaderId: 3 }))).toBeNull();
+		expect(await actionOf(free({ followers: [{ id: 6 }] }))).toBeNull();
+	});
+	it('nothing for a dinoz dead in the match', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ state: 'dead', x: null, y: null }));
+		expect(await actionOf(free())).toBeNull();
+	});
+	it('nothing once the clan quota is reached', async () => {
+		p.clanChampionshipPiece.count.mockResolvedValue(BOARD_MATCH_QUOTA);
+		expect(await actionOf(free())).toBeNull();
+	});
+	it('leave for a piece on its entry column', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc());
+		expect(await actionOf(onBoard())).toBe('leave');
+	});
+	it('nothing for a piece away from its entry column', async () => {
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 3 }));
+		expect(await actionOf(onBoard())).toBeNull();
+	});
+	it('leave on the east entry column for the east clan', async () => {
+		setup(liveMatch({ westClanId: AWAY }));
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: 0 }));
+		expect(await actionOf(onBoard())).toBeNull();
+		p.clanChampionshipPiece.findUnique.mockResolvedValue(pc({ x: BOARD_SIZE - 1 }));
+		expect(await actionOf(onBoard())).toBe('leave');
 	});
 });
 

@@ -261,6 +261,8 @@
 			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
 			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
 			"war_attack": "Gegnerische Burg angreifen.",
+			"cdc_enter": "Schicke deinen Dinoz auf das Schlachtfeld der Klanmeisterschaft.",
+			"cdc_leave": "Ziehe deinen Dinoz vom Schlachtfeld der Klanmeisterschaft zurück.",
 			"dungeon_enter": "Du kannst diesen Ort erkunden, aber gib Acht, dass du dich nicht verläufst!",
 			"dungeon": "Aktuellen Erkundungsstand betrachten...",
 			"demon_shop": "ACHTUNG! GEFAHR!"
@@ -300,6 +302,8 @@
 			"war_defend": "Burg verteidigen",
 			"war_remove": "Von der Verteidigung abziehen",
 			"war_attack": "Burg angreifen",
+			"cdc_enter": "Schlachtfeld betreten",
+			"cdc_leave": "Schlachtfeld verlassen",
 			"dungeon_enter": "Betreten",
 			"dungeon": "Karte öffnen",
 			"demon_shop": "Dämonisches Geschäft"

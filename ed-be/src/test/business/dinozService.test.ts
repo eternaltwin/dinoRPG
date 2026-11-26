@@ -81,6 +81,7 @@ vi.mock('../../business/fightService.js', () => ({
 }));
 vi.mock('../../business/missionsService.js', () => ({ getMissionAction: vi.fn() }));
 vi.mock('../../business/specialService.js', () => ({ movementListener: vi.fn() }));
+vi.mock('../../business/clanChampionshipMatchService.js', () => ({ getBoardActionOfDinoz: vi.fn() }));
 vi.mock('../../business/clanWar.js', () => ({ currentWar: vi.fn() }));
 vi.mock('@drpg/core/utils/checkCondition', () => ({ checkCondition: vi.fn().mockReturnValue(false) }));
 vi.mock('@drpg/core/utils/GatherUtils', () => ({
@@ -128,6 +129,7 @@ import { getPlayerRewards } from '../../dao/playerRewardsDao.js';
 import { getSpecificSecret } from '../../dao/secretDao.js';
 import { prisma } from '../../prisma.js';
 import TournamentManager from '../../utils/tournamentManager.js';
+import { getBoardActionOfDinoz } from '../../business/clanChampionshipMatchService.js';
 import { getMissionAction } from '../../business/missionsService.js';
 import { movementListener } from '../../business/specialService.js';
 import * as fightService from '../../business/fightService.js';
@@ -242,6 +244,27 @@ describe('getAvailableActions', () => {
 		expect(
 			await getAvailableActions(baseDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never, player())
 		).toEqual([]);
+	});
+	it('offers leaving the board to a piece that can leave it', async () => {
+		vi.mocked(getBoardActionOfDinoz).mockResolvedValue('leave');
+		const result = await getAvailableActions(
+			baseDinoz({ unavailableReason: UnavailableReason.clanChampionship }) as never,
+			player({ clan: { id: 1, castle: null, attackingWars: [] } })
+		);
+		expect(result.map(a => a.name)).toEqual([Action.CDC_LEAVE]);
+	});
+	it('offers entering the board to a dinoz that can enter it', async () => {
+		vi.mocked(getBoardActionOfDinoz).mockResolvedValue('enter');
+		const result = await getAvailableActions(
+			baseDinoz() as never,
+			player({ clan: { id: 1, castle: null, attackingWars: [] } })
+		);
+		expect(result.some(a => a.name === Action.CDC_ENTER)).toBe(true);
+		expect(getBoardActionOfDinoz).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }), 1);
+	});
+	it('does not look for a board without clan', async () => {
+		await getAvailableActions(baseDinoz() as never, player());
+		expect(getBoardActionOfDinoz).not.toHaveBeenCalled();
 	});
 	it('offers only the level up when the locked dinoz can level up', async () => {
 		vi.mocked(DinozUtils.canLevelUp).mockReturnValue(true as never);
