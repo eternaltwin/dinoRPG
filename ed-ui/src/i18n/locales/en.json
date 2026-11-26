@@ -261,6 +261,8 @@
 			"war_defend": "Add your Dinoz to the defense lines of your clan castle.",
 			"war_remove": "Remove your Dinoz to the defense lines of your clan castle.",
 			"war_attack": "Attack the enemy castle.",
+			"cdc_enter": "Send your Dinoz onto the clan championship battlefield.",
+			"cdc_leave": "Take your Dinoz off the clan championship battlefield.",
 			"dungeon_enter": "You can explore the dungeon, but make sure you don't get lost!",
 			"dungeon": "Get down to some serious exploring - although let's face it - you're no Tenzing Norgay... ",
 			"demon_shop": "BEWARE! DANGER!"
@@ -300,6 +302,8 @@
 			"war_defend": "Defend your castle",
 			"war_remove": "Remove from defense",
 			"war_attack": "Attack the castle",
+			"cdc_enter": "Join the battlefield",
+			"cdc_leave": "Leave the battlefield",
 			"dungeon_enter": "Enter",
 			"dungeon": "Go Exploring",
 			"demon_shop": "Demon Shop"
@@ -5582,10 +5586,13 @@
 		"noRegistration": "No clan registered yet.",
 		"standings": "Standings",
 		"nextMatch": "Next Match",
-		"placeRevealAt": "Place revealed on {date}",
-		"kickOff": "Kick-off: {date}",
+		"placeRevealAt": "Place revealed in {days} days, {hours} hours and {minutes} minutes.",
+		"kickOff": "Kick-off in {days} days, {hours} hours and {minutes} minutes.",
 		"opponent": "Opponent: {clan}",
 		"noNextMatch": "No more matches to play",
+		"liveView": "Live view",
+		"liveViewHint": "Provisional standings: matches in progress count at their current score.",
+		"liveMatch": "Match in progress",
 		"standingsCol": {
 			"rank": "Rank",
 			"clan": "Clan",
