@@ -261,6 +261,8 @@
 			"war_defend": "Beteilige deine Dinoz an der Burgverteidigung eures Klans.",
 			"war_remove": "Ziehe deine Dinoz von der Burgverteidigung eures Klans ab.",
 			"war_attack": "Gegnerische Burg angreifen.",
+			"cdc_enter": "Schicke deinen Dinoz auf das Schlachtfeld der Klanmeisterschaft.",
+			"cdc_leave": "Ziehe deinen Dinoz vom Schlachtfeld der Klanmeisterschaft zurück.",
 			"dungeon_enter": "Du kannst diesen Ort erkunden, aber gib Acht, dass du dich nicht verläufst!",
 			"dungeon": "Aktuellen Erkundungsstand betrachten...",
 			"demon_shop": "ACHTUNG! GEFAHR!"
@@ -300,6 +302,8 @@
 			"war_defend": "Burg verteidigen",
 			"war_remove": "Von der Verteidigung abziehen",
 			"war_attack": "Burg angreifen",
+			"cdc_enter": "Schlachtfeld betreten",
+			"cdc_leave": "Schlachtfeld verlassen",
 			"dungeon_enter": "Betreten",
 			"dungeon": "Karte öffnen",
 			"demon_shop": "Dämonisches Geschäft"
@@ -5582,10 +5586,13 @@
 		"noRegistration": "Derzeit noch kein Klan angemeldet.",
 		"standings": "Rangliste",
 		"nextMatch": "Nächste Partie",
-		"placeRevealAt": "Ort wird am {date} bekannt gegeben",
-		"kickOff": "Beginn: {date}",
+		"placeRevealAt": "Ort wird in {days} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) bekannt gegeben.",
+		"kickOff": "Beginn in {days} Tag(en), {hours} Stunde(n) und {minutes} Minute(n).",
 		"opponent": "Gegner: {clan}",
 		"noNextMatch": "Es finden keine Partien mehr statt",
+		"liveView": "Live-Ansicht",
+		"liveViewHint": "Vorläufige Rangliste: laufende Spiele zählen mit ihrem aktuellen Stand.",
+		"liveMatch": "Spiel läuft",
 		"standingsCol": {
 			"rank": "Rang",
 			"clan": "Klan",
