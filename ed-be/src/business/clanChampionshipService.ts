@@ -494,7 +494,14 @@ export async function getCurrentChampionship(req: Request): Promise<ClanChampion
 		}),
 		prisma.clanChampionshipMatch.findMany({
 			where: { eventId: event.id },
-			orderBy: [{ round: 'asc' }, { startsAt: 'asc' }]
+			// The matches of a round share their start: break the tie on the clans, or the calendar reorders on each update
+			orderBy: [
+				{ round: 'asc' },
+				{ startsAt: 'asc' },
+				{ homeClanId: { sort: 'asc', nulls: 'last' } },
+				{ awayClanId: { sort: 'asc', nulls: 'last' } },
+				{ id: 'asc' }
+			]
 		})
 	]);
 
