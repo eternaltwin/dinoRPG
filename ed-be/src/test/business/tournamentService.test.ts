@@ -35,8 +35,11 @@ import {
 	getDojoTournamentFights,
 	readAllFightFromPool,
 	tournamentsHistory,
-	getNewLevelLimits
+	getNewLevelLimits,
+	formatArchetypeParams
 } from '../../business/tournamentService.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { invalidateTournamentCache } from '../../utils/tournament.cache.js';
 
 const req = (params = {}, body = {}) => makeRequest({ params, body });
@@ -52,19 +55,29 @@ beforeEach(() => {
 const latest = (overrides = {}) => ({
 	id: 't1',
 	teamSize: 2,
-	teamRace: '1,2',
+	teamRace: '1,3',
 	levelLimit: 30,
 	raceMinimum: 1,
+	...overrides
+});
+
+const teamDinoz = (overrides = {}) => ({
+	id: 1,
+	raceId: RaceEnum.MOUEFFE,
+	level: 20,
+	nbrUpFire: 10,
+	nbrUpWood: 0,
+	nbrUpWater: 0,
+	nbrUpLightning: 0,
+	nbrUpAir: 0,
+	skills: [] as { skillId: number }[],
 	...overrides
 });
 
 describe('createTournamentTeam', () => {
 	const playerDinoz = (overrides = {}) => ({
 		Dojo: { id: 'd1', tournamentTeamId: null },
-		dinoz: [
-			{ id: 1, raceId: 1, level: 20 },
-			{ id: 2, raceId: 2, level: 25 }
-		],
+		dinoz: [teamDinoz({ id: 1 }), teamDinoz({ id: 2, raceId: RaceEnum.PIGMOU, level: 25 })],
 		...overrides
 	});
 
@@ -90,7 +103,15 @@ describe('createTournamentTeam', () => {
 
 	it('throws on wrong dinoz quantity', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest() as never);
-		await expect(createTournamentTeam(req({}, { team: [1] }))).rejects.toThrow('wrongDinozQuantity');
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
+		await expect(createTournamentTeam(req({}, { team: [1] }))).rejects.toThrow('tournament.archetype.error.teamSize');
+		expect(prisma.tournamentTeam.create).not.toHaveBeenCalled();
+	});
+
+	it('throws on duplicated dinoz ids', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(latest() as never);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
+		await expect(createTournamentTeam(req({}, { team: [1, 1] }))).rejects.toThrow('wrongDinozQuantity');
 	});
 
 	it('throws when no dojo', async () => {
@@ -111,7 +132,7 @@ describe('createTournamentTeam', () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest() as never);
 		// The DAO only returns eligible dinoz: the locked dinoz 2 is excluded
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
-			playerDinoz({ dinoz: [{ id: 1, raceId: 1, level: 20 }] }) as never
+			playerDinoz({ dinoz: [teamDinoz({ id: 1 })] }) as never
 		);
 		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('dinozNotPlayer');
 		expect(prisma.tournamentTeam.create).not.toHaveBeenCalled();
@@ -126,25 +147,81 @@ describe('createTournamentTeam', () => {
 	it('throws on wrong race', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest({ teamRace: '5,6' }) as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
-		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('wrongRace');
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow(
+			'tournament.archetype.error.wrongRace'
+		);
 	});
 
 	it('throws when a dinoz is too high level', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest({ levelLimit: 22 }) as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
-		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('dinozTooHighLevel');
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow(
+			'tournament.archetype.error.levelTooHigh'
+		);
 	});
 
 	it('throws when not enough race diversity', async () => {
 		vi.mocked(getLatestTournament).mockResolvedValue(latest({ raceMinimum: 2, teamRace: '1' }) as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
 			Dojo: { id: 'd1', tournamentTeamId: null },
-			dinoz: [
-				{ id: 1, raceId: 1, level: 20 },
-				{ id: 2, raceId: 1, level: 20 }
-			]
+			dinoz: [teamDinoz({ id: 1 }), teamDinoz({ id: 2 })]
 		} as never);
-		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow('notEnoughDiversity');
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow(
+			'tournament.archetype.error.notEnoughRaces'
+		);
+	});
+
+	it('checks the rules of the tournament archetype', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(latest({ rules: { skillForbidden: Skill.BRAVE } }) as never);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
+			playerDinoz({
+				dinoz: [teamDinoz({ id: 1, skills: [{ skillId: Skill.BRAVE }] }), teamDinoz({ id: 2, raceId: RaceEnum.PIGMOU })]
+			}) as never
+		);
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow(
+			'tournament.archetype.error.skillForbidden'
+		);
+		expect(prisma.tournamentTeam.create).not.toHaveBeenCalled();
+	});
+
+	it('refuses a demon when demons are forbidden', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(latest({ rules: { demon: 'none' } }) as never);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(
+			playerDinoz({
+				dinoz: [
+					teamDinoz({ id: 1, skills: [{ skillId: Skill.FORCE_DE_LUMIERE }] }),
+					teamDinoz({ id: 2, raceId: RaceEnum.PIGMOU })
+				]
+			}) as never
+		);
+		await expect(createTournamentTeam(req({}, { team: [1, 2] }))).rejects.toThrow(
+			'tournament.archetype.error.demonNone'
+		);
+	});
+
+	it('accepts a team meeting the rules', async () => {
+		vi.mocked(getLatestTournament).mockResolvedValue(
+			latest({ rules: { elementDominant: 1, levelSpread: 5 } }) as never
+		);
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue(playerDinoz() as never);
+		await createTournamentTeam(req({}, { team: [1, 2] }));
+		expect(prisma.tournamentTeam.create).toHaveBeenCalled();
+	});
+});
+
+describe('formatArchetypeParams', () => {
+	it('translates races, elements and skills and keeps the other values', () => {
+		expect(
+			formatArchetypeParams({ race: 13, races: [1, 3], element: 3, skill: Skill.BRAVE, min: 5, sizes: [4, 6] })
+		).toEqual({
+			race: 'race.13',
+			races: 'race.1, race.3',
+			element: 'tournament.archetype.element.water',
+			skill: `tournament.archetype.skill.${Skill.BRAVE}`,
+			min: 5,
+			sizes: '4, 6'
+		});
+		expect(formatArchetypeParams(undefined)).toEqual({});
 	});
 });
 

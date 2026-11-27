@@ -5757,5 +5757,286 @@
 			"clanWar": "Clan War",
 			"clanChampionship": "Clan Championship"
 		}
+	},
+	"tournament": {
+		"archetype": {
+			"meta": {
+				"races": {
+					"name": "Races",
+					"description": "Who may enter: only some races or some Dinoz are allowed."
+				},
+				"restrictive": {
+					"name": "Restrictive",
+					"description": "Every race, but a constraint on how the Dinoz are built: elements, skills or levels."
+				},
+				"ffa": {
+					"name": "Free for all",
+					"description": "Every race, no restriction on races or builds: only the team size changes."
+				},
+				"echo": {
+					"name": "Echo",
+					"description": "Rules computed from the previous tournaments, to break the established metas and rotate the races."
+				}
+			},
+			"sub": {
+				"monorace": {
+					"name": "Single race",
+					"description": "Only the {races} race is allowed."
+				},
+				"clan": {
+					"name": "Clan",
+					"description": "The whole team must be of the same race, of your choice."
+				},
+				"duo_race": {
+					"name": "Race duo",
+					"description": "Only the {races} races are allowed, with at least one Dinoz of each."
+				},
+				"trio_race": {
+					"name": "Race trio",
+					"description": "Only the {races} races are allowed, with at least one Dinoz of each."
+				},
+				"binomes": {
+					"name": "Pairs",
+					"description": "The team is made of pairs of Dinoz of the same race (4 or 6 Dinoz)."
+				},
+				"common": {
+					"name": "Common races",
+					"description": "Only the common races are allowed: {races}."
+				},
+				"uncommon": {
+					"name": "Uncommon races",
+					"description": "Only the uncommon races are allowed: {races}."
+				},
+				"flying": {
+					"name": "Flyers",
+					"description": "Only the flying races are allowed: {races}."
+				},
+				"terrestrial": {
+					"name": "Ground dwellers",
+					"description": "Only the ground races are allowed: {races}."
+				},
+				"bipede": {
+					"name": "Bipeds",
+					"description": "Only the biped races are allowed: {races}."
+				},
+				"quadrupede": {
+					"name": "Quadrupeds",
+					"description": "Only the quadruped races are allowed: {races}."
+				},
+				"element_native": {
+					"name": "Elemental natives",
+					"description": "Only the native races of the {element} element are allowed: {races}."
+				},
+				"demons": {
+					"name": "Demons",
+					"description": "Only demon Dinoz are allowed."
+				},
+				"no_demon": {
+					"name": "No demon",
+					"description": "Demon Dinoz are forbidden."
+				},
+				"demon_captain": {
+					"name": "Demon captain",
+					"description": "The team must have exactly one demon Dinoz."
+				},
+				"element_min": {
+					"name": "Minimum element",
+					"description": "Every Dinoz must have at least {min} level ups in {element}."
+				},
+				"element_dominant": {
+					"name": "Dominant element",
+					"description": "The most levelled element of every Dinoz must be {element}."
+				},
+				"elemental_purity": {
+					"name": "Elemental purity",
+					"description": "All the Dinoz must share the same dominant element, of your choice."
+				},
+				"rainbow": {
+					"name": "Rainbow",
+					"description": "Every Dinoz must have a different dominant element (3 to 5 Dinoz)."
+				},
+				"specialists": {
+					"name": "Specialists",
+					"description": "Every Dinoz must have at least {pct}% of its level ups in a single element."
+				},
+				"balanced": {
+					"name": "Balanced",
+					"description": "No Dinoz may have more than {pct}% of its level ups in the same element."
+				},
+				"skill_required": {
+					"name": "Required skill",
+					"description": "Every Dinoz must have the {skill} skill."
+				},
+				"skill_forbidden": {
+					"name": "Forbidden skill",
+					"description": "The {skill} skill is forbidden."
+				},
+				"summoners": {
+					"name": "Summoners",
+					"description": "Every Dinoz must have at least one invocation."
+				},
+				"no_summon": {
+					"name": "No invocation",
+					"description": "Invocations are forbidden."
+				},
+				"ether_adepts": {
+					"name": "Ether adepts",
+					"description": "Every Dinoz must have at least {min} skills of the Ether tree."
+				},
+				"purists": {
+					"name": "Purists",
+					"description": "No skill of the Ether tree nor sphere skill is allowed."
+				},
+				"full_diversity": {
+					"name": "Full diversity",
+					"description": "All the Dinoz of the team must be of different races."
+				},
+				"level_budget": {
+					"name": "Level budget",
+					"description": "The sum of the levels of the team must not exceed {pct}% of the maximum level times the team size."
+				},
+				"promotion": {
+					"name": "Class of",
+					"description": "The level gap between the highest and the lowest Dinoz of the team must not exceed {max}."
+				},
+				"ffa_solo": {
+					"name": "Solo",
+					"description": "Every race, a single Dinoz per team."
+				},
+				"ffa_duo": {
+					"name": "Duo",
+					"description": "Every race, teams of 2 Dinoz."
+				},
+				"ffa_trio": {
+					"name": "Trio",
+					"description": "Every race, teams of 3 Dinoz."
+				},
+				"ffa_squad": {
+					"name": "Squad",
+					"description": "Every race, teams of 5 Dinoz."
+				},
+				"ffa_legion": {
+					"name": "Legion",
+					"description": "Every race, teams of 6 Dinoz."
+				},
+				"ffa_open": {
+					"name": "Open",
+					"description": "Every race, no restriction: the team size is drawn at random."
+				},
+				"anti_meta": {
+					"name": "Anti-meta",
+					"description": "The races most present among the qualified teams of the last tournament are forbidden: {forbidden}."
+				},
+				"outsiders": {
+					"name": "Underdogs",
+					"description": "Only the least registered races of the last 3 tournaments are allowed: {races}."
+				},
+				"vedettes": {
+					"name": "Stars",
+					"description": "Only the races of the day of the previous qualification are allowed: {races}."
+				},
+				"champion_ban": {
+					"name": "Champions banned",
+					"description": "The races of the champion team of the last tournament are forbidden: {forbidden}."
+				},
+				"heritage": {
+					"name": "Legacy",
+					"description": "The team must have at least one Dinoz of a race of the champion team of the last tournament: {required}."
+				},
+				"skill_echo": {
+					"name": "Skill echo",
+					"description": "The most widespread skill among the finalists of the last tournament is forbidden: {skill}."
+				}
+			},
+			"rule": {
+				"forbiddenRaces": "Forbidden races: {races}.",
+				"demon_only": "Demon Dinoz only.",
+				"demon_none": "No demon Dinoz.",
+				"demon_exactlyOne": "Exactly one demon Dinoz.",
+				"sameRace": "The whole team is of the same race.",
+				"pairs": "Team made of pairs of the same race.",
+				"distinctRaces": "All the Dinoz are of different races.",
+				"requireOneOf": "At least one Dinoz of race {races}.",
+				"elementMin": "At least {min} level ups in {element} per Dinoz.",
+				"elementDominant": "Dominant element of every Dinoz: {element}.",
+				"elementPurity": "All the Dinoz share the same dominant element.",
+				"rainbow": "Every Dinoz has a different dominant element.",
+				"specialistPct": "At least {value}% of the level ups in a single element.",
+				"balancedPct": "At most {value}% of the level ups in the same element.",
+				"skillRequired": "Required skill: {skill}.",
+				"skillForbidden": "Forbidden skill: {skill}.",
+				"summon_required": "At least one invocation per Dinoz.",
+				"summon_none": "No invocation.",
+				"purist": "No Ether nor sphere skill.",
+				"etherMin": "At least {value} Ether skills per Dinoz.",
+				"levelBudgetPct": "Sum of the levels at most {value}% of the maximum level × the team size.",
+				"levelSpread": "Level gap of at most {value} within the team."
+			},
+			"error": {
+				"teamSize": "Your team must have exactly {qty} Dinoz.",
+				"wrongRace": "The {race} race is not allowed in this tournament.",
+				"levelTooHigh": "A Dinoz exceeds the maximum level allowed ({max}).",
+				"notEnoughRaces": "Your team must have at least {qty} different races.",
+				"forbiddenRace": "The {race} race is forbidden in this tournament.",
+				"demonOnly": "Only demon Dinoz are allowed.",
+				"demonNone": "Demon Dinoz are forbidden.",
+				"demonExactlyOne": "Your team must have exactly one demon Dinoz.",
+				"sameRace": "All the Dinoz of your team must be of the same race.",
+				"pairs": "Your team must be made of pairs of Dinoz of the same race.",
+				"distinctRaces": "All the Dinoz of your team must be of different races.",
+				"requireOneOf": "Your team must have at least one Dinoz of one of these races: {races}.",
+				"elementMin": "Every Dinoz must have at least {min} level ups in {element}.",
+				"elementDominant": "The most levelled element of every Dinoz must be {element}.",
+				"elementPurity": "All the Dinoz of your team must share the same dominant element.",
+				"rainbow": "Every Dinoz of your team must have a different dominant element.",
+				"specialist": "Every Dinoz must have at least {pct}% of its level ups in a single element.",
+				"balanced": "No Dinoz may have more than {pct}% of its level ups in the same element.",
+				"skillRequired": "Every Dinoz must have the {skill} skill.",
+				"skillForbidden": "The {skill} skill is forbidden in this tournament.",
+				"summonRequired": "Every Dinoz must have at least one invocation.",
+				"summonNone": "Invocations are forbidden in this tournament.",
+				"purist": "Ether tree skills and sphere skills are forbidden in this tournament.",
+				"etherMin": "Every Dinoz must have at least {min} skills of the Ether tree.",
+				"levelBudget": "The sum of the levels of your team ({sum}) exceeds the maximum allowed ({max}).",
+				"levelSpread": "The level gap between your Dinoz must not exceed {max}."
+			},
+			"element": {
+				"fire": "Fire",
+				"wood": "Wood",
+				"water": "Water",
+				"lightning": "Lightning",
+				"air": "Air"
+			},
+			"skill": {
+				"11101": "Burning Claws",
+				"11102": "Wrath",
+				"11103": "Strength",
+				"21101": "Carapace",
+				"21102": "Savagery",
+				"21103": "Endurance",
+				"31101": "Water Cannon",
+				"31102": "Perception",
+				"31103": "Mutation",
+				"41101": "Intelligence",
+				"41102": "Focus",
+				"41103": "Celerity",
+				"51101": "Agility",
+				"51102": "Strategy",
+				"51103": "Mistral",
+				"11408": "Warlord",
+				"11501": "Brave",
+				"11410": "Elemental Master",
+				"21401": "Gorilloz Spirit",
+				"21501": "Colossus",
+				"31312": "Poisoned Claws",
+				"31406": "Acid Blood",
+				"31501": "Lifeguard",
+				"41403": "Benediction Aura",
+				"41406": "Reincarnation",
+				"41501": "Corrosive Archangel",
+				"51501": "Transcendental Meditation",
+				"51406": "Life Breath"
+			}
+		}
 	}
 }
