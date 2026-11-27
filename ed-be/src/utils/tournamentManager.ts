@@ -702,6 +702,11 @@ class TournamentManager {
 					interpolation: { escapeValue: false }
 				};
 			}
+			// Saved first: if the news or the poll fails, the next tournament is still drawn among these candidates
+			await prisma.tournament.update({
+				where: { id: this.tournamentId },
+				data: { nextCandidates: candidates as unknown as Prisma.InputJsonValue }
+			});
 			const news = await createTranslatedNews(
 				`tid_vote_${this.tournamentId}`,
 				NewsType.tid_vote,
@@ -726,10 +731,7 @@ class TournamentManager {
 
 			await prisma.tournament.update({
 				where: { id: this.tournamentId },
-				data: {
-					nextCandidates: candidates as unknown as Prisma.InputJsonValue,
-					nextPollId: poll.id
-				}
+				data: { nextPollId: poll.id }
 			});
 			LOGGER.log(`Vote for the next tournament opened (poll ${poll.id}, ${candidates.length} candidates).`);
 		} catch (error) {
@@ -777,6 +779,10 @@ class TournamentManager {
 				LOGGER.error('Error while counting the votes for the tournament format, falling back to a random sub', error);
 			}
 		}
+		// Candidates without a poll (the vote could not be opened): drawn uniformly among them
+		if (candidates.length > 0) {
+			return { chosen: candidates[getRandomInteger(0, candidates.length - 1)], vote: null };
+		}
 
 		try {
 			const context = latest
@@ -797,8 +803,8 @@ class TournamentManager {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
 
-		// The sub archetype is drawn now (and not when the previous tournament ends) so that a clan war postponement
-		// keeps counting the votes until the effective creation.
+		// The sub archetype is drawn now, at the effective creation (after a possible clan war postponement). The poll
+		// itself closes at the planned creation time: votes are not accepted during a postponement.
 		const latest = await prisma.tournament.findFirst({
 			orderBy: { date: 'desc' },
 			select: { id: true, metaArchetype: true, nextCandidates: true, nextPollId: true }

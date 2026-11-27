@@ -305,7 +305,8 @@ describe('sub rolls', () => {
 		expect(ban.rules.forbiddenRaces).toEqual([RaceEnum.SIRAIN, RaceEnum.WINKS]);
 		expect(ban.teamRace).not.toContain(RaceEnum.SIRAIN);
 		expect(roll('heritage').rules.requireOneOf).toEqual([RaceEnum.SIRAIN, RaceEnum.WINKS]);
-		expect(roll('skill_echo').rules.skillForbidden).toBe(Skill.FORCE);
+		// Force is the most widespread but is a base skill: only the curated pool can be forbidden
+		expect(roll('skill_echo').rules.skillForbidden).toBe(Skill.BRAVE);
 	});
 
 	it('echo subs are unavailable without history', () => {

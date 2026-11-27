@@ -50,6 +50,7 @@ import {
 } from '../dao/playerDao.js';
 import { getPlayerPositionDojoDAO } from '../dao/rankingDao.js';
 import { prisma } from '../prisma.js';
+import { LOGGER } from '../context.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import translate from '../utils/server/translate.js';
 import { assertCanReadArchive } from '../utils/archiveAccess.js';
@@ -132,10 +133,15 @@ export async function createMyTeam(req: Request) {
 	}
 
 	// The team feeds the pool where the opponents of the current and next qualifications are drawn
-	await upsertQualifPool(
-		tournament.id,
-		team.map(d => ({ id: d.id, raceId: d.raceId, level: d.level }))
-	);
+	// The team is already saved: a failure here only loses these dinoz from the pool, the player must not see an error
+	try {
+		await upsertQualifPool(
+			tournament.id,
+			team.map(d => ({ id: d.id, raceId: d.raceId, level: d.level }))
+		);
+	} catch (error) {
+		LOGGER.error(`Error while adding the team of ${authed.id} to the qualification pool`, error);
+	}
 
 	return replaced;
 }

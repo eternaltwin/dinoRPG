@@ -321,6 +321,16 @@ const ffaSub = (key: string, teamSize?: number) =>
 const allRacesExcept = (excluded: readonly RaceEnum[]) => ALL_RACES.filter(r => !excluded.includes(r));
 
 /** Most frequent skill of the record (ties broken at random), undefined when empty */
+/**
+ * Only the skills of FORBIDDEN_SKILL_POOL can be banned by skill_echo: a base skill (or a demon/sphere one) owned by
+ * most dinoz would leave most players without a valid team, since skills cannot be unlearned.
+ */
+function forbiddableSkillCounts(counts: Partial<Record<Skill, number>>): Partial<Record<Skill, number>> {
+	return Object.fromEntries(
+		Object.entries(counts).filter(([skill]) => FORBIDDEN_SKILL_POOL.includes(Number(skill) as Skill))
+	) as Partial<Record<Skill, number>>;
+}
+
 function mostFrequentSkill(random: Random, counts: Partial<Record<Skill, number>>): Skill | undefined {
 	const entries = Object.entries(counts)
 		.map(([skill, count]) => [Number(skill) as Skill, count ?? 0] as const)
@@ -460,9 +470,9 @@ export const metaArchetypes: MetaArchetypeDef[] = [
 				'skill_echo',
 				(random, ctx) => ({
 					teamRace: [...ALL_RACES],
-					rules: { skillForbidden: mostFrequentSkill(random, ctx.lastFinalistSkills) }
+					rules: { skillForbidden: mostFrequentSkill(random, forbiddableSkillCounts(ctx.lastFinalistSkills)) }
 				}),
-				{ isAvailable: ctx => hasPositive(ctx.lastFinalistSkills) }
+				{ isAvailable: ctx => hasPositive(forbiddableSkillCounts(ctx.lastFinalistSkills)) }
 			)
 		]
 	}
@@ -570,8 +580,18 @@ export function resolveRaceMinimum(roll: SubRoll, teamSize: number, random: Rand
  * @summary Raw parameters to interpolate in `tournament.archetype.sub.<key>.description` (the caller formats them):
  * races (authorized races), forbidden / required (race lists), element, min, skill, pct, max, size, sizes.
  */
+/** Element whose native races are exactly `races` (element_native), undefined if none matches. */
+export function nativeElementOf(races: RaceEnum[]): UpElement | undefined {
+	const set = new Set(races);
+	return (Object.keys(NATIVE_RACES).map(Number) as UpElement[]).find(
+		element => NATIVE_RACES[element].length === set.size && NATIVE_RACES[element].every(r => set.has(r))
+	);
+}
+
 export function subDescriptionParams(roll: SubRoll): Record<string, unknown> {
 	const r = roll.rules;
+	// The params of a roll are not stored with the tournament: rebuild the element of element_native from its races
+	const nativeElement = roll.key === 'element_native' ? nativeElementOf(roll.teamRace) : undefined;
 	return {
 		races: roll.teamRace,
 		...(roll.teamSize !== undefined ? { size: roll.teamSize } : {}),
@@ -587,6 +607,7 @@ export function subDescriptionParams(roll: SubRoll): Record<string, unknown> {
 		...(r.levelBudgetPct !== undefined ? { pct: r.levelBudgetPct } : {}),
 		...(r.etherMin !== undefined ? { min: r.etherMin } : {}),
 		...(r.levelSpread !== undefined ? { max: r.levelSpread } : {}),
+		...(nativeElement !== undefined ? { element: nativeElement } : {}),
 		...roll.params
 	};
 }

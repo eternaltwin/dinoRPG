@@ -1,9 +1,9 @@
 <template>
 	<div class="archetype" data-testid="tournament-archetype">
-		<p class="meta" v-if="info.metaArchetype">{{ metaName }}</p>
+		<p class="meta" v-if="info.metaArchetype && !isLegacy">{{ metaName }}</p>
 		<p class="sub" v-if="info.formatName">{{ subName }}</p>
 		<p class="description" v-if="subDescription" v-html="formatContent(subDescription)" />
-		<p class="description" v-else-if="metaDescription" v-html="formatContent(metaDescription)" />
+		<p class="description" v-else-if="metaDescription && !isLegacy" v-html="formatContent(metaDescription)" />
 		<ul class="params">
 			<li>{{ $t('dojo.ui.archetype.teamSize', { qty: info.teamSize }) }}</li>
 			<li v-if="info.raceMinimum && info.raceMinimum > 1">
@@ -27,6 +27,7 @@
 import { defineComponent, PropType } from 'vue';
 import { DojoTournamentInfo } from '../../services/DojoService.js';
 import { describeRules, describeSubParams, RuleLine } from '../../utils/dojo.js';
+import { findSubArchetype } from '@drpg/core/models/dojo/tournamentArchetypes';
 
 export default defineComponent({
 	name: 'TournamentArchetype',
@@ -37,6 +38,10 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		/** Tournament created before the archetypes: its legacy format has no meta (the column defaults to ffa) */
+		isLegacy(): boolean {
+			return !!this.info.formatName && !findSubArchetype(this.info.formatName);
+		},
 		metaName(): string {
 			const key = this.info.metaArchetype ?? '';
 			return this.translateOr(`tournament.archetype.meta.${key}.name`, key);

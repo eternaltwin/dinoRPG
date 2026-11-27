@@ -279,9 +279,14 @@ describe('openNextFormatVote', () => {
 		// Planned creation of the next tournament (round 8): two weeks after the qualification start
 		expect(endDate).toEqual(new Date(2026, 10, 30));
 
-		expect(prisma.tournament.update).toHaveBeenCalledWith({
+		// Candidates saved before publishing, then the poll
+		expect(prisma.tournament.update).toHaveBeenNthCalledWith(1, {
 			where: { id: 't1' },
-			data: { nextCandidates: CANDIDATES, nextPollId: 7 }
+			data: { nextCandidates: CANDIDATES }
+		});
+		expect(prisma.tournament.update).toHaveBeenNthCalledWith(2, {
+			where: { id: 't1' },
+			data: { nextPollId: 7 }
 		});
 	});
 
@@ -305,7 +310,12 @@ describe('openNextFormatVote', () => {
 		await expect(manager.openNextFormatVote(prisma as never)).resolves.toBeUndefined();
 
 		expect(LOGGER.error).toHaveBeenCalled();
-		expect(prisma.tournament.update).not.toHaveBeenCalled();
+		// The candidates stay stored so that the next tournament is still drawn among them, without poll
+		expect(prisma.tournament.update).toHaveBeenCalledTimes(1);
+		expect(prisma.tournament.update).toHaveBeenCalledWith({
+			where: { id: 't1' },
+			data: { nextCandidates: CANDIDATES }
+		});
 	});
 
 	it('does not open a vote without candidate', async () => {
@@ -455,6 +465,18 @@ describe('createTournament', () => {
 		const data = prisma.tournament.create.mock.calls[0][0].data;
 		expect(data.formatName).toBe('monorace');
 		expect(vi.mocked(createTranslatedNews).mock.calls[0][5][Lang.fr].voteResult).toBe('');
+	});
+
+	it('draws among the stored candidates when the poll could not be created', async () => {
+		const prisma = creationPrisma({ id: 't1', metaArchetype: 'ffa', nextCandidates: CANDIDATES, nextPollId: null });
+		vi.spyOn(Math, 'random').mockReturnValue(0.99);
+
+		await TournamentManager.createTournament(prisma as never);
+
+		expect(prisma.pollVote.groupBy).not.toHaveBeenCalled();
+		expect(rollCandidates).not.toHaveBeenCalled();
+		const data = prisma.tournament.create.mock.calls[0][0].data;
+		expect(data.formatName).toBe(CANDIDATES[CANDIDATES.length - 1].key);
 	});
 
 	it('creates the first tournament without any previous one', async () => {
