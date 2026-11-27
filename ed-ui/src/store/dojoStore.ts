@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import { StoreDojo } from '@drpg/core/models/store/StoreDojo';
-import { DojoService } from '../services/DojoService';
+import { DojoService, DojoTournamentInfo } from '../services/DojoService';
+
+type DojoState = Omit<StoreDojo, 'tournamentInfo'> & { tournamentInfo?: DojoTournamentInfo };
 
 export const dojoStore = defineStore('dojoStore', {
-	state: (): StoreDojo => ({
+	state: (): DojoState => ({
 		dojoId: undefined,
 		activeChallenge: undefined,
 		reputation: 0,
@@ -16,13 +18,13 @@ export const dojoStore = defineStore('dojoStore', {
 		myTeam: []
 	}),
 	getters: {
-		getReputation: (state: StoreDojo) => state.reputation,
-		getWorth: (state: StoreDojo) => state.worth,
-		getRank: (state: StoreDojo) => state.rank,
-		getState: (state: StoreDojo) => state.currentTournament,
-		getTeam: (state: StoreDojo) => state.myTeam
-		// getDojo: (state: StoreDojo) => state.dojo,
-		// getTournament: (state: StoreDojo) => state.tournament
+		getReputation: (state: DojoState) => state.reputation,
+		getWorth: (state: DojoState) => state.worth,
+		getRank: (state: DojoState) => state.rank,
+		getState: (state: DojoState) => state.currentTournament,
+		getTeam: (state: DojoState) => state.myTeam
+		// getDojo: (state: DojoState) => state.dojo,
+		// getTournament: (state: DojoState) => state.tournament
 	},
 	actions: {
 		async update() {

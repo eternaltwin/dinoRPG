@@ -4760,6 +4760,35 @@
 		"OfferWon": "**{winner}** hat das **Angebot {offer}** von **{player} ({playerId})** für den **Betrag von {amount}** Schatzbriefen **gewonnen**."
 	},
 	"dojo": {
+		"ui": {
+			"raceCounter": "Verschiedene Rassen: {count}/{min}",
+			"notEnoughRaces": "Dein Team hat nur {count} verschiedene Rasse(n): mindestens {min} sind nötig.",
+			"minRacesDisclaimer": "Dein Team muss **mindestens {min} verschiedene Rassen** haben (ein Dämonen-Dinoz zählt als seine Rasse). Deine Gegner werden aus den Rassen deines Teams gezogen.",
+			"featuredRace": {
+				"title": "Rasse des Tages: **{race}**",
+				"short": "Rasse des Tages: {race}",
+				"rule": "+50 % Ruf, wenn dein Dinoz dieser Rasse angehört, +50 %, wenn dein Gegner es tut (kumulierbar). +1 Punkt je 5 Stufen, die dein Gegner über dir liegt.",
+				"dinozTip": "Rasse des Tages: +50 % Ruf",
+				"opponentTip": "Rasse des Tages: +50 % Ruf, wenn du ihn besiegst"
+			},
+			"gain": {
+				"title": "Gewonnener Ruf",
+				"base": "Sieg und Herausforderung",
+				"levelBonus": "Bonus für Stufenunterschied",
+				"featured": "Bonus der Rasse des Tages",
+				"total": "Gesamt",
+				"points": "{qty} Punkte",
+				"none": "In diesem Kampf wurde kein Rufpunkt gewonnen."
+			},
+			"archetype": {
+				"teamSize": "Team aus {qty} Dinoz",
+				"raceMinimum": "Mindestens {qty} verschiedene Rassen",
+				"levelLimit": "Maximale Stufe: {level}",
+				"poisonOn": "Gift aktiviert",
+				"poisonOff": "Gift deaktiviert",
+				"rules": "Sonderregeln"
+			}
+		},
 		"welcome": "Willkommen in deinem Dojo",
 		"markAsRead": "Als angeschaut setzen",
 		"noTournament": "Es sind nicht genug Dinoz da, um ein Turnier zu veranstalten. Komm später wieder, nachdem du deine Freunde zum Spiel mitgebracht hast!",
