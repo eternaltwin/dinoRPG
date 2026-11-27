@@ -4760,6 +4760,35 @@
 		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},
 	"dojo": {
+		"ui": {
+			"raceCounter": "Races différentes : {count}/{min}",
+			"notEnoughRaces": "Votre équipe ne compte que {count} race(s) différente(s) : il en faut au moins {min}.",
+			"minRacesDisclaimer": "Votre équipe doit compter **au moins {min} races différentes** (un Dinoz démon compte comme sa race). Vos adversaires sont tirés parmi les races de votre équipe.",
+			"featuredRace": {
+				"title": "Race du jour : **{race}**",
+				"short": "Race du jour : {race}",
+				"rule": "+50 % de réputation si votre Dinoz est de cette race, +50 % si votre adversaire l'est (cumulables). +1 point tous les 5 niveaux d'avance de votre adversaire.",
+				"dinozTip": "Race du jour : +50 % de réputation",
+				"opponentTip": "Race du jour : +50 % de réputation en le battant"
+			},
+			"gain": {
+				"title": "Réputation gagnée",
+				"base": "Victoire et défi",
+				"levelBonus": "Bonus d'écart de niveau",
+				"featured": "Bonus de la race du jour",
+				"total": "Total",
+				"points": "{qty} points",
+				"none": "Aucun point de réputation n'a été gagné lors de ce combat."
+			},
+			"archetype": {
+				"teamSize": "Équipe de {qty} Dinoz",
+				"raceMinimum": "Au moins {qty} races différentes",
+				"levelLimit": "Niveau maximum : {level}",
+				"poisonOn": "Poison activé",
+				"poisonOff": "Poison désactivé",
+				"rules": "Règles spéciales"
+			}
+		},
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",

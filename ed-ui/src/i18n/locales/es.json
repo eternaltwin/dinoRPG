@@ -4760,6 +4760,35 @@
 		"OfferWon": "La **oferta {offer}** de **{player} ({playerId})** ha sido **ganada por {winner}** por el **monto de {amount}** bonos."
 	},
 	"dojo": {
+		"ui": {
+			"raceCounter": "Razas diferentes: {count}/{min}",
+			"notEnoughRaces": "Tu equipo solo tiene {count} raza(s) diferente(s): se necesitan al menos {min}.",
+			"minRacesDisclaimer": "Tu equipo debe tener **al menos {min} razas diferentes** (un Dinoz demonio cuenta como su raza). Tus rivales se eligen entre las razas de tu equipo.",
+			"featuredRace": {
+				"title": "Raza del día: **{race}**",
+				"short": "Raza del día: {race}",
+				"rule": "+50 % de reputación si tu Dinoz es de esta raza, +50 % si tu rival lo es (acumulables). +1 punto por cada 5 niveles que tu rival te saque.",
+				"dinozTip": "Raza del día: +50 % de reputación",
+				"opponentTip": "Raza del día: +50 % de reputación al vencerlo"
+			},
+			"gain": {
+				"title": "Reputación ganada",
+				"base": "Victoria y desafío",
+				"levelBonus": "Bonificación por diferencia de nivel",
+				"featured": "Bonificación de la raza del día",
+				"total": "Total",
+				"points": "{qty} puntos",
+				"none": "No has ganado ningún punto de reputación en este combate."
+			},
+			"archetype": {
+				"teamSize": "Equipo de {qty} Dinoz",
+				"raceMinimum": "Al menos {qty} razas diferentes",
+				"levelLimit": "Nivel máximo: {level}",
+				"poisonOn": "Veneno activado",
+				"poisonOff": "Veneno desactivado",
+				"rules": "Reglas especiales"
+			}
+		},
 		"welcome": "Bienvenido a tu Dojo",
 		"markAsRead": "Marcar como visto",
 		"noTournament": "Aún no hay suficientes Dinos para poder empezar un torneo, ¡vuelve más tarde una vez que hayas traído a tus amigos al juego!",

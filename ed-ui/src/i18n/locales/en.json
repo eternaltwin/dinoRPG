@@ -4760,6 +4760,35 @@
 		"OfferWon": "The **offer {offer}** of **{player} ({playerId})** has been **won by {winner}** for the **amount of {amount}** vouchers."
 	},
 	"dojo": {
+		"ui": {
+			"raceCounter": "Different races: {count}/{min}",
+			"notEnoughRaces": "Your team only has {count} different race(s): at least {min} are required.",
+			"minRacesDisclaimer": "Your team must have **at least {min} different races** (a demon Dinoz counts as its race). Your opponents are drawn from the races of your team.",
+			"featuredRace": {
+				"title": "Race of the day: **{race}**",
+				"short": "Race of the day: {race}",
+				"rule": "+50% reputation if your Dinoz is of this race, +50% if your opponent is (cumulative). +1 point for every 5 levels your opponent is above you.",
+				"dinozTip": "Race of the day: +50% reputation",
+				"opponentTip": "Race of the day: +50% reputation by beating it"
+			},
+			"gain": {
+				"title": "Reputation earned",
+				"base": "Victory and challenge",
+				"levelBonus": "Level gap bonus",
+				"featured": "Race of the day bonus",
+				"total": "Total",
+				"points": "{qty} points",
+				"none": "No reputation point was earned in this fight."
+			},
+			"archetype": {
+				"teamSize": "Team of {qty} Dinoz",
+				"raceMinimum": "At least {qty} different races",
+				"levelLimit": "Maximum level: {level}",
+				"poisonOn": "Poison enabled",
+				"poisonOff": "Poison disabled",
+				"rules": "Special rules"
+			}
+		},
 		"welcome": "Welcome to your Dojo",
 		"markAsRead": "Set as watched",
 		"noTournament": "There is not enough Dinoz to start a tournament. Come back later when you'll have brought your friends to the game!",

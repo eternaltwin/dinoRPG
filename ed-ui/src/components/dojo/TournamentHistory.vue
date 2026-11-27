@@ -7,7 +7,7 @@
 			<th class="items-header">{{ $t('dojo.history.link') }}</th>
 		</tr>
 		<tr v-for="tournament in history" :key="tournament.id">
-			<td>{{ $t(`dojo.tournamentFormats.${tournament.formatName}`) }}</td>
+			<td>{{ formatLabel(tournament.formatName) }}</td>
 			<td>{{ new Date(tournament.date).toLocaleDateString() }}</td>
 			<td class="icons">
 				<RouterLink :to="`/dojo/tournament/${tournament.id}/0`">
@@ -55,6 +55,14 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		/** Sub archetype name, else the name of a format created before the archetypes, else the raw key */
+		formatLabel(formatName: string): string {
+			const has = (key: string) => this.$te(key) || this.$te(key, 'fr');
+			const sub = `tournament.archetype.sub.${formatName}.name`;
+			const legacy = `dojo.tournamentFormats.${formatName}`;
+			if (has(sub)) return this.$t(sub);
+			return has(legacy) ? this.$t(legacy) : formatName;
+		},
 		async getHistory() {
 			try {
 				const archive = await DojoService.getTournamentHistory(this.currentPage);
