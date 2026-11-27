@@ -275,6 +275,9 @@
 		}
 	},
 	"dojo": {
+		"qualif": {
+			"notEnoughRaces": "Tu equipo de clasificación debe incluir al menos {{qty}} razas diferentes."
+		},
 		"inexistantDojo": "El dojo seleccionado no existe.",
 		"dinozNotPlayer": "Un Dino no pertenece al jugador.",
 		"alreadyFighted": "Este Dino ya ha combatido.",

@@ -13,24 +13,31 @@ import {
 	DOJO_FIGHT_FRIENDS_DINOZ_COST,
 	DOJO_MAX_DAILY_CHALLENGE,
 	DOJO_MAX_SERIES,
-	DOJO_OPPONENT_IN_SERIE,
-	DOJO_REPUTATION_CHALLENGE,
-	DOJO_REPUTATION_WIN
+	DOJO_MIN_RACES,
+	DOJO_OPPONENT_IN_SERIE
 } from '@drpg/core/utils/dojoConstants';
+import { computeQualifGain, QualifGain } from '@drpg/core/utils/dojoQualif';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Dojo, NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
 import dayjs from 'dayjs';
 import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest, viewFight } from '../dao/archiveDao.js';
-import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
+import {
+	getDinozForDojoFight,
+	getRandomDinozFromLevel,
+	getRandomDinozOfRaceFromLevel,
+	getRandomPoolDinoz
+} from '../dao/dinozDao.js';
 import {
 	addOpponent,
 	cleanCurrentOpponentTeam,
 	createMyDojo,
 	getMyDojoDao,
 	getMyTeamDao,
+	getRecentTournamentIds,
 	incrementDailyReset,
-	replaceMyTeamDao
+	replaceMyTeamDao,
+	upsertQualifPool
 } from '../dao/dojoDao.js';
 import {
 	auth,
@@ -103,6 +110,11 @@ export async function createMyTeam(req: Request) {
 	// Fill DOJO_OPPONENT_IN_SERIE (5) opponents
 	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
 
+	// A demon shares the raceId of its race, so it counts as that race
+	if (new Set(team.map(d => d.raceId)).size < DOJO_MIN_RACES) {
+		throw new ExpectedError(translate('dojo.qualif.notEnoughRaces', authed, { qty: DOJO_MIN_RACES }));
+	}
+
 	if (team.some(d => d.level < 10)) {
 		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
 	}
@@ -118,6 +130,13 @@ export async function createMyTeam(req: Request) {
 	if (!replaced) {
 		throw new ExpectedError(translate('dojo.teamAlreadyChanged', authed));
 	}
+
+	// The team feeds the pool where the opponents of the current and next qualifications are drawn
+	await upsertQualifPool(
+		tournament.id,
+		team.map(d => ({ id: d.id, raceId: d.raceId, level: d.level }))
+	);
+
 	return replaced;
 }
 
@@ -143,7 +162,8 @@ export async function getMyTeam(req: Request) {
 			myDojo.team.map(d => {
 				return {
 					id: d.dinoz.id,
-					level: d.dinoz.level
+					level: d.dinoz.level,
+					raceId: d.dinoz.raceId
 				};
 			}),
 			myDojo
@@ -321,9 +341,13 @@ function generateRandomChallenge(): Challenge {
 	};
 }
 
-export async function fightChallenge(
-	req: Request
-): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
+export async function fightChallenge(req: Request): Promise<{
+	fight: DojoFightResume;
+	stats: FullFightStats;
+	challengeWon: boolean;
+	victory: boolean;
+	gain: QualifGain;
+}> {
 	const myDinozId = +req.body.myDinoz;
 	const opponentId = +req.body.opponent;
 
@@ -412,6 +436,15 @@ export async function fightChallenge(
 
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && victory;
+	const gain = computeQualifGain({
+		victory,
+		challengeWon,
+		attackerLevel: leftTeam[0].level,
+		attackerRaceId: leftTeam[0].raceId,
+		targetLevel: rightTeam[0].level,
+		targetRaceId: rightTeam[0].raceId,
+		featuredRace: tournament.featuredRace ?? null
+	});
 
 	const newChallenge = generateRandomChallenge();
 	await prisma.$transaction(async tx => {
@@ -469,7 +502,7 @@ export async function fightChallenge(
 			}
 		});
 
-		const addedReputation = victory ? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0) : 0;
+		const addedReputation = gain.total;
 		const newReputation = dojo.reputation + addedReputation;
 		const totalCombats = dojo.DojoChallengeHistory.length + 1;
 		const totalVictoires = dojo.DojoChallengeHistory.filter(h => h.victory).length + (victory ? 1 : 0);
@@ -536,7 +569,7 @@ export async function fightChallenge(
 
 	await Promise.all(promises);
 
-	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory };
+	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory, gain };
 }
 
 export async function skipOpponent(req: Request) {
@@ -639,25 +672,56 @@ export async function skipOpponent(req: Request) {
 	}
 }
 
-async function pickOpponentIds(team: { id: number; level: number }[], playerId: string): Promise<number[]> {
-	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
-	const opponentIds = [];
-	const parsedId = opponentLevels.map(o => o.id);
-	for (const dinoz of opponentLevels) {
-		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, playerId);
+type QualifTeamDinoz = { id: number; level: number; raceId: number };
+
+/**
+ * @summary One slot per race of the team, held by its highest dinoz (DOJO_OPPONENT_IN_SERIE races drawn at random when
+ * there are more). A team with fewer races, selected before the race minimum, fills the remaining slots with its
+ * highest dinoz left.
+ */
+function pickOpponentSlots(team: QualifTeamDinoz[]): QualifTeamDinoz[] {
+	const byLevel = [...team].sort((a, b) => b.level - a.level);
+	const bestOfRace = new Map<number, QualifTeamDinoz>();
+	for (const dinoz of byLevel) {
+		if (!bestOfRace.has(dinoz.raceId)) bestOfRace.set(dinoz.raceId, dinoz);
+	}
+	const races = [...bestOfRace.values()];
+	for (let i = races.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[races[i], races[j]] = [races[j], races[i]];
+	}
+	const slots = races.slice(0, DOJO_OPPONENT_IN_SERIE);
+	for (const dinoz of byLevel) {
+		if (slots.length >= DOJO_OPPONENT_IN_SERIE) break;
+		if (!slots.includes(dinoz)) slots.push(dinoz);
+	}
+	return slots.sort((a, b) => b.level - a.level);
+}
+
+async function pickOpponentIds(team: QualifTeamDinoz[], playerId: string): Promise<number[]> {
+	const slots = pickOpponentSlots(team);
+	const tournamentIds = await getRecentTournamentIds();
+	const opponentIds: number[] = [];
+	const excluded = team.map(d => d.id);
+	for (const dinoz of slots) {
+		// Same race from the qualification pool, then same race in the whole game, then any race
+		const ennemi =
+			(await getRandomPoolDinoz(dinoz.raceId, dinoz.level, excluded, playerId, tournamentIds)) ??
+			(await getRandomDinozOfRaceFromLevel(dinoz.raceId, dinoz.level, excluded, playerId)) ??
+			(await getRandomDinozFromLevel(dinoz.level, excluded, playerId));
 		if (ennemi === null) {
 			// Incomplete opponent teams won't be created
 			return [];
 		}
 		// Prevent a picked to opponent to be picked again
-		parsedId.push(ennemi.id);
+		excluded.push(ennemi.id);
 		opponentIds.push(ennemi.id);
 	}
 
 	return opponentIds;
 }
 
-async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
+async function createOpponentTeam(team: QualifTeamDinoz[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
 	const opponentIds = await pickOpponentIds(team, myDojo.playerId);
 
 	const opponents = [];

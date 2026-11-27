@@ -47,6 +47,83 @@ export async function getRandomDinozFromLevel(level: number, team: number[], pla
 	});
 }
 
+// Dinoz that cannot be drawn as qualification opponents
+const QUALIF_UNAVAILABLE_REASONS: UnavailableReason[] = [
+	UnavailableReason.frozen,
+	UnavailableReason.sacrificed,
+	UnavailableReason.unsacrificing,
+	UnavailableReason.selling,
+	UnavailableReason.unfreezing
+];
+
+const QUALIF_MAX_LEVEL_DIFFERENCE = 5;
+
+function qualifAvailableDinoz(level: number, levelDifference: number, exclude: number[], playerId: string) {
+	return {
+		level: { gte: level - levelDifference, lte: level + levelDifference },
+		id: { notIn: exclude },
+		playerId: { not: playerId },
+		OR: [{ unavailableReason: null }, { unavailableReason: { notIn: QUALIF_UNAVAILABLE_REASONS } }]
+	} satisfies Prisma.DinozWhereInput;
+}
+
+/**
+ * @summary Random dinoz of a race from the qualification pool of the given tournaments, in a level window widening from ±1 to ±5.
+ * The window uses the current level of the dinoz. A dinoz registered in several tournaments is drawn once.
+ */
+export async function getRandomPoolDinoz(
+	raceId: number,
+	level: number,
+	exclude: number[],
+	playerId: string,
+	tournamentIds: string[]
+) {
+	return withSpan(getRandomPoolDinoz.name, async () => {
+		if (tournamentIds.length === 0) return null;
+		for (let levelDifference = 1; levelDifference <= QUALIF_MAX_LEVEL_DIFFERENCE; levelDifference++) {
+			const candidates = await prisma.dojoQualifPool.findMany({
+				where: {
+					tournamentId: { in: tournamentIds },
+					raceId,
+					dinoz: qualifAvailableDinoz(level, levelDifference, exclude, playerId)
+				},
+				distinct: ['dinozId'],
+				select: { dinozId: true }
+			});
+			if (candidates.length > 0) {
+				return { id: candidates[Math.floor(Math.random() * candidates.length)].dinozId };
+			}
+		}
+		return null;
+	});
+}
+
+/**
+ * @summary Random available dinoz of a race among all the dinoz of the game, in a level window widening from ±1 to ±5.
+ */
+export async function getRandomDinozOfRaceFromLevel(
+	raceId: number,
+	level: number,
+	exclude: number[],
+	playerId: string
+) {
+	return withSpan(getRandomDinozOfRaceFromLevel.name, async () => {
+		for (let levelDifference = 1; levelDifference <= QUALIF_MAX_LEVEL_DIFFERENCE; levelDifference++) {
+			const where = { ...qualifAvailableDinoz(level, levelDifference, exclude, playerId), raceId };
+			const count = await prisma.dinoz.count({ where });
+			if (count > 0) {
+				return await prisma.dinoz.findFirst({
+					skip: Math.floor(Math.random() * count),
+					where,
+					orderBy: { id: 'asc' },
+					select: { id: true }
+				});
+			}
+		}
+		return null;
+	});
+}
+
 export async function getActiveDinoz(playerId: string) {
 	return withSpan(getActiveDinoz.name, async () => {
 		const dinozList = await prisma.dinoz.findMany({
@@ -608,6 +685,7 @@ export async function getDinozForDojoFight(dinozIds: number[]) {
 				display: true,
 				name: true,
 				level: true,
+				raceId: true,
 				life: true,
 				maxLife: true,
 				nbrUpFire: true,
