@@ -302,7 +302,7 @@
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
 		"qualificationMilestone": "**{{points}} points** : {{rewards}}.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il existe des récompenses pour les joueurs qui atteindront certains paliers de points à la fin des qualifications ! Ces récompenses sont cumulatives chaque fois qu'un joueur atteint un nouveau palier de points.\n{{qualificationRewards}}\n\nBon tournois à tous !"
+		"newsCorpus": "# Tournois {{number}}\n## Archétype {{type}}\n{{description}}\nLes phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}{{subRules}}\n{{voteResult}}## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et respectivement 10%, 8% et 6% du cash price.\n- Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 2% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 1% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0,5% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il existe des récompenses pour les joueurs qui atteindront certains paliers de points à la fin des qualifications ! Ces récompenses sont cumulatives chaque fois qu'un joueur atteint un nouveau palier de points.\n{{qualificationRewards}}\n\nBon tournois à tous !"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -391,7 +391,16 @@
 		"flying": "toutes les races volantes ou rampantes",
 		"anti_poison": "toutes les races n'ayant pas d'affinités avec le poison",
 		"hippo": "uniquement les hippoclamps",
-		"demons": "uniquement les démons"
+		"demons": "uniquement les démons",
+		"vote": {
+			"newsTitle": "Tournoi Inter Dojo {{number}} : votez pour le format !",
+			"newsCorpus": "# Vote pour le Tournoi {{number}}\nLes qualifications sont terminées ! Choisissez le format du prochain tournoi parmi les propositions suivantes :\n\n{{candidates}}\n\nLe vote est ouvert jusqu'au {{endDate}}. Le format sera tiré au sort à la création du tournoi : chaque proposition a autant de chances que son nombre de votes plus un.\nLa limite de niveau, le poison ainsi que la taille des équipes et le nombre de races (quand le format ne les impose pas) seront tirés au sort à la création du tournoi.",
+			"teamSize": "Les équipes sont constituées de {{nb}} membres.",
+			"teamSizes": "Les équipes sont constituées de {{sizes}} membres.",
+			"raceMinimum": "Au moins {{races}} races différentes par équipe.",
+			"result": "## Résultat du vote\n{{results}}",
+			"resultLine": "{{name}} : {{votes}} vote(s)"
+		}
 	},
 	"announce": {
 		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** à atteindre le niveau {{level}} !",

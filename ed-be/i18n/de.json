@@ -302,7 +302,7 @@
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
 		"qualificationMilestone": "**{{points}} Punkte**: {{rewards}}.",
 		"newsTitle": "Neues Inter-Dojo Turnier",
-		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“ \nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die bestimmte Punktemeilensteine erreicht haben, Belohnungen erhalten werden! Diese sind beim Erreichen jedes weiteren Punktemeilensteins kumulativ.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
+		"newsCorpus": "# Turnier Nummer {{number}}\n## Archetyp: „{{type}}“\n{{description}}\nDie Qualifikationsphasen dauern bis zum {{endQualif}} an. Die Regeln zum Erstellen von Mannschaften lauten wie folgt:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}{{subRules}}\n{{voteResult}}## Belohnungen\nEs gibt folgende Belohnungen:\n- Für den Erstplatzierten ein seltenes Toufufu-Ei, eine legendäre Geschenkbox und 12% des Preisgeldes.\n- Für den zweiten, dritten und vierten Platz jeweils ein Toufufu-Ei, eine epische Geschenkbox sowie entsprechend 10%, 8% oder 6% des Preisgeldes.\n- Die Plätze 5-8 erhalten jeweils eine seltene Geschenkbox und 4% des Preisgeldes.\n- Die Plätze 9-16 jeweils eine seltene Geschenkbox und 2% des Preisgeldes.\n- Diejenigen, die nur einen Sieg errungen haben, jeweils 1% des Preisgeldes.\n- Alle anderen, die sich für die Gruppenphasen qualifiziert haben, erhalten jeweils 0,5% des Preisgeldes.\n# Qualifikationsbelohnungen\nDenkt daran, dass am Ende der Qualifikationsrunden diejenigen, die bestimmte Punktemeilensteine erreicht haben, Belohnungen erhalten werden! Diese sind beim Erreichen jedes weiteren Punktemeilensteins kumulativ.\n{{qualificationRewards}}\n\nWir wünschen allen ein gutes Turnier!"
 	},
 	"race": {
 		"1": "Möffe",
@@ -391,7 +391,16 @@
 		"flying": "alle fliegenden oder kriechenden Rassen",
 		"anti_poison": "alle Rassen ohne Giftaffinität",
 		"hippo": "ausschließlich Hippoklampen",
-		"demons": "nur Dämonen"
+		"demons": "nur Dämonen",
+		"vote": {
+			"newsTitle": "Inter-Dojo-Turnier {{number}}: Stimmt über das Format ab!",
+			"newsCorpus": "# Abstimmung für Turnier {{number}}\nDie Qualifikationen sind vorbei! Wählt das Format des nächsten Turniers aus den folgenden Vorschlägen:\n\n{{candidates}}\n\nDie Abstimmung läuft bis zum {{endDate}}. Das Format wird bei der Erstellung des Turniers ausgelost: Jeder Vorschlag hat so viele Chancen wie seine Stimmenzahl plus eins.\nDie Levelgrenze, das Gift sowie die Mannschaftsgröße und die Anzahl der Rassen (wenn das Format sie nicht vorgibt) werden bei der Erstellung des Turniers ausgelost.",
+			"teamSize": "Die Mannschaften bestehen aus {{nb}} Mitgliedern.",
+			"teamSizes": "Die Mannschaften bestehen aus {{sizes}} Mitgliedern.",
+			"raceMinimum": "Mindestens {{races}} verschiedene Rassen pro Mannschaft.",
+			"result": "## Ergebnis der Abstimmung\n{{results}}",
+			"resultLine": "{{name}}: {{votes}} Stimme(n)"
+		}
 	},
 	"announce": {
 		"dinoz": "$t(position.{{position}}) **$t(race.{{race}})** die Stufe {{level}} erreicht hat!",
