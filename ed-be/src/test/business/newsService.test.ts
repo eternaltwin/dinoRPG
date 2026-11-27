@@ -50,7 +50,8 @@ import {
 	getNewsCreatedDate,
 	selectPollOption,
 	toggleLikeNews,
-	createTranslatedNews
+	createTranslatedNews,
+	createNewsPoll
 } from '../../business/newsService.js';
 import { Lang, NewsType } from '@drpg/prisma';
 import { DISCORD } from '../../context.js';
@@ -284,5 +285,57 @@ describe('toggleLikeNews', () => {
 		vi.mocked(newsDao.hasPlayerLikedNews).mockResolvedValue(false as never);
 		await toggleLikeNews(req({ id: '1' }));
 		expect(newsDao.likeNews).toHaveBeenCalledWith(1, 'p1');
+	});
+});
+
+describe('createTranslatedNews return value', () => {
+	it('returns the created news', async () => {
+		const created = { id: 3, frenchTitle: 'a', frenchText: 'b' };
+		vi.mocked(newsDao.createNews).mockResolvedValue(created as never);
+		const news = await createTranslatedNews(
+			't',
+			NewsType.tid_vote,
+			'title',
+			{} as Record<Lang, Record<string, unknown>>,
+			'body',
+			{} as Record<Lang, Record<string, unknown>>
+		);
+		expect(news).toBe(created);
+	});
+});
+
+describe('createNewsPoll', () => {
+	it('creates the options with their labels and schedules the expiration', async () => {
+		const endDate = new Date('2030-01-06T00:00:00Z');
+		const optionCreate = vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: data.orderIndex, ...data }));
+		const pollCreate = vi.fn().mockResolvedValue({ id: 9, endDate });
+		vi.mocked(prisma.$transaction).mockImplementation(async (cb: never) =>
+			(cb as unknown as (tx: unknown) => unknown)({
+				poll: { create: pollCreate },
+				pollOption: { create: optionCreate }
+			})
+		);
+		const labels = { [Lang.fr]: 'Monorace', [Lang.en]: 'Single race', [Lang.es]: 'Monoraza', [Lang.de]: 'Monorasse' };
+
+		const poll = await createNewsPoll(
+			5,
+			[
+				{ optionText: 'monorace', labels, orderIndex: 0 },
+				{ optionText: 'duo_race', labels, orderIndex: 1 }
+			],
+			endDate
+		);
+
+		expect(pollCreate).toHaveBeenCalledWith({ data: { newsId: 5, endDate } });
+		expect(optionCreate).toHaveBeenCalledWith({
+			data: { pollId: 9, optionText: 'monorace', orderIndex: 0, labels }
+		});
+		expect(poll.id).toBe(9);
+		expect(poll.options).toHaveLength(2);
+		expect(scheduleJob).toHaveBeenCalledWith('poll_9', endDate, expect.any(Function));
+	});
+
+	it('refuses a poll without option', async () => {
+		await expect(createNewsPoll(5, [], new Date())).rejects.toThrow();
 	});
 });

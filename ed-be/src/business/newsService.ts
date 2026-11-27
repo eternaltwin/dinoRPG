@@ -65,6 +65,7 @@ export async function postNews(req: Request) {
  * @param bodyKey - The key for translating the body.
  * @param bodyParams - The parameters for translating the body.
  * @param publishOnDiscord - Whether to publish the news (in french) on Discord.
+ * @returns The created news.
  */
 export async function createTranslatedNews(
 	title: string,
@@ -74,7 +75,7 @@ export async function createTranslatedNews(
 	bodyKey: string,
 	bodyParams: Record<Lang, Record<string, unknown>>,
 	publishOnDiscord: boolean = false
-): Promise<void> {
+) {
 	const news = await createNews({
 		title: title,
 		type: type,
@@ -94,6 +95,68 @@ export async function createTranslatedNews(
 			LOGGER.error(`${type} News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
 		}
 	}
+	return news;
+}
+
+/** Option of a poll created programmatically, with its label translated in every language. */
+export type TranslatedPollOption = {
+	optionText: string;
+	labels: Record<Lang, string>;
+	orderIndex: number;
+};
+
+/**
+ * Creates the poll and its options in a transaction, then schedules its expiration.
+ */
+async function insertPoll(
+	newsId: number,
+	options: { optionText: string; orderIndex: number; labels?: Record<Lang, string> }[],
+	endDate: Date
+) {
+	const poll = await prisma.$transaction(async tx => {
+		const createdPoll = await tx.poll.create({
+			data: {
+				newsId: newsId,
+				endDate
+			}
+		});
+
+		const createdOptions = await Promise.all(
+			options.map(option =>
+				tx.pollOption.create({
+					data: {
+						pollId: createdPoll.id,
+						optionText: option.optionText,
+						orderIndex: option.orderIndex,
+						labels: option.labels
+					}
+				})
+			)
+		);
+
+		return {
+			...createdPoll,
+			options: createdOptions
+		};
+	});
+
+	scheduleJob(`poll_${poll.id}`, poll.endDate, () => expirePoll(poll.id));
+	return poll;
+}
+
+/**
+ * Attaches a poll to an existing news (e.g. the vote for the format of the next tournament).
+ *
+ * @param newsId - The news holding the poll.
+ * @param options - The options, with their translated labels.
+ * @param endDate - When the poll expires.
+ * @returns The created poll with its options.
+ */
+export async function createNewsPoll(newsId: number, options: TranslatedPollOption[], endDate: Date) {
+	if (options.length === 0) {
+		throw new Error('A poll needs at least one option');
+	}
+	return insertPoll(newsId, options, endDate);
 }
 
 export async function createPoll(req: Request) {
@@ -132,33 +195,7 @@ export async function createPoll(req: Request) {
 	} else {
 		endDate = dayjs(endDate).startOf('day').toDate();
 	}
-	const poll = await prisma.$transaction(async tx => {
-		const createdPoll = await tx.poll.create({
-			data: {
-				newsId: news.id,
-				endDate
-			}
-		});
-
-		const createdOptions = await Promise.all(
-			pollOptions.map(option =>
-				tx.pollOption.create({
-					data: {
-						pollId: createdPoll.id,
-						optionText: option.optionText,
-						orderIndex: option.orderIndex
-					}
-				})
-			)
-		);
-
-		return {
-			...createdPoll,
-			options: createdOptions
-		};
-	});
-
-	scheduleJob(`poll_${poll.id}`, poll.endDate, () => expirePoll(poll.id));
+	await insertPoll(news.id, pollOptions, endDate);
 }
 
 export async function expirePoll(pollId: number) {

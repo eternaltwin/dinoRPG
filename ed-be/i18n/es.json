@@ -305,7 +305,7 @@
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
 		"qualificationMilestone": "**{{points}} puntos**: {{rewards}}.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\n{{description}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}{{subRules}}\n{{voteResult}}## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -394,7 +394,16 @@
 		"flying": "todas las razas voladoras o reptantes",
 		"anti_poison": "todas las razas que no tienen afinidad con el veneno",
 		"hippo": "únicamente los hippoclamps",
-		"demons": "únicamente demonios"
+		"demons": "únicamente demonios",
+		"vote": {
+			"newsTitle": "Torneo Inter Dojo {{number}}: ¡vota por el formato!",
+			"newsCorpus": "# Votación para el Torneo {{number}}\n¡Las clasificatorias han terminado! Elige el formato del próximo torneo entre las siguientes propuestas:\n\n{{candidates}}\n\nLa votación está abierta hasta el {{endDate}}. El formato se sorteará al crear el torneo: cada propuesta tiene tantas posibilidades como su número de votos más uno.\nEl límite de nivel, el veneno, así como el tamaño de los equipos y el número de razas (cuando el formato no los impone) se sortearán al crear el torneo.",
+			"teamSize": "Los equipos están formados por {{nb}} miembros.",
+			"teamSizes": "Los equipos están formados por {{sizes}} miembros.",
+			"raceMinimum": "Al menos {{races}} razas diferentes por equipo.",
+			"result": "## Resultado de la votación\n{{results}}",
+			"resultLine": "{{name}}: {{votes}} voto(s)"
+		}
 	},
 	"announce": {
 		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
