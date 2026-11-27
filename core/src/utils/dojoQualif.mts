@@ -54,8 +54,12 @@ export function computeQualifGain(input: QualifGainInput): QualifGain {
 /**
  * @summary Race of the day of the qualification, null outside of the qualification days or when none was drawn.
  */
-export function getFeaturedRaceOfDay(featuredRaces: number[], qualificationStart: Date, now: Date = new Date()) {
+export function getFeaturedRaceOfDay(
+	featuredRaces: number[] | null | undefined,
+	qualificationStart: Date,
+	now: Date = new Date()
+) {
 	const day = dayjs(now).startOf('day').diff(dayjs(qualificationStart).startOf('day'), 'day');
 	if (day < 0 || day >= DOJO_QUALIFICATION_DAYS) return null;
-	return featuredRaces[day] ?? null;
+	return featuredRaces?.[day] ?? null;
 }
