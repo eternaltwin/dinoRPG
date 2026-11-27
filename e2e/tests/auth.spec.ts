@@ -57,8 +57,13 @@ function countSse(page: import('@playwright/test').Page) {
 }
 
 test('reloading the page opens the notification stream again', async ({ page, player }) => {
+	// The gold can show before the first stream opens: count only once it is open, or its request is counted too.
+	const firstStream = page.waitForRequest(
+		request => request.method() === 'GET' && request.url().includes('/server-events/events?ticket=')
+	);
 	await page.goto('/');
 	await expect(page.locator('#accountList .money')).toBeVisible();
+	await firstStream;
 
 	// The player store survives the reload, so nothing changes in it: the stream must open anyway.
 	const counts = countSse(page);
