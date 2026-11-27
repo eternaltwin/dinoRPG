@@ -86,15 +86,15 @@ function skillDetails(skillId: number) {
 	return skillList[skillId as Skill];
 }
 
-function isInvocation(skillId: number): boolean {
+function skillIsInvocation(skillId: number): boolean {
 	return skillDetails(skillId)?.type === SkillType.I;
 }
 
-function isEtherSkill(skillId: number): boolean {
+function skillIsEther(skillId: number): boolean {
 	return skillDetails(skillId)?.tree === SkillTreeType.ETHER;
 }
 
-function isSphereSkill(skillId: number): boolean {
+function skillIsSphere(skillId: number): boolean {
 	return skillDetails(skillId)?.isSphereSkill === true;
 }
 
@@ -165,17 +165,17 @@ export const ruleValidators: { [K in keyof Required<TournamentRules>]: RuleValid
 	skillRequired: (skill, team) => (team.some(d => !hasSkill(d, skill)) ? fail('skillRequired', { skill }) : null),
 	skillForbidden: (skill, team) => (team.some(d => hasSkill(d, skill)) ? fail('skillForbidden', { skill }) : null),
 	summon: (mode, team) => {
-		if (mode === 'required' && team.some(d => !d.skills.some(s => isInvocation(s.skillId))))
+		if (mode === 'required' && team.some(d => !d.skills.some(s => skillIsInvocation(s.skillId))))
 			return fail('summonRequired');
-		if (mode === 'none' && team.some(d => d.skills.some(s => isInvocation(s.skillId)))) return fail('summonNone');
+		if (mode === 'none' && team.some(d => d.skills.some(s => skillIsInvocation(s.skillId)))) return fail('summonNone');
 		return null;
 	},
 	purist: (enabled, team) =>
-		enabled && team.some(d => d.skills.some(s => isEtherSkill(s.skillId) || isSphereSkill(s.skillId)))
+		enabled && team.some(d => d.skills.some(s => skillIsEther(s.skillId) || skillIsSphere(s.skillId)))
 			? fail('purist')
 			: null,
 	etherMin: (min, team) =>
-		team.some(d => d.skills.filter(s => isEtherSkill(s.skillId)).length < min) ? fail('etherMin', { min }) : null,
+		team.some(d => d.skills.filter(s => skillIsEther(s.skillId)).length < min) ? fail('etherMin', { min }) : null,
 	levelBudgetPct: (pct, team, tournament) => {
 		const max = levelBudget(tournament.levelLimit, tournament.teamSize, pct);
 		const sum = team.reduce((acc, d) => acc + d.level, 0);
