@@ -21,7 +21,11 @@ vi.mock('node-schedule', () => {
 	return { scheduleJob: vi.fn(), scheduledJobs: new Proxy({}, { get: () => job }) };
 });
 vi.mock('../../business/newsService.js', () => ({ createTranslatedNews: vi.fn(), createNewsPoll: vi.fn() }));
-vi.mock('../../dao/tournamentDao.js', () => ({ getArchetypeContext: vi.fn(), getPreviousTournamentId: vi.fn() }));
+vi.mock('../../dao/tournamentDao.js', () => ({
+	getArchetypeContext: vi.fn(),
+	getAvailableRaces: vi.fn(),
+	getPreviousTournamentId: vi.fn()
+}));
 // The catalogue is implemented by another lot: only its contract is used here
 vi.mock('@drpg/core/models/dojo/tournamentArchetypes', async importOriginal => ({
 	...(await importOriginal<typeof import('@drpg/core/models/dojo/tournamentArchetypes')>()),
@@ -31,7 +35,7 @@ vi.mock('@drpg/core/models/dojo/tournamentArchetypes', async importOriginal => (
 
 import TournamentManager from '../../utils/tournamentManager.js';
 import { createNewsPoll, createTranslatedNews } from '../../business/newsService.js';
-import { getArchetypeContext, getPreviousTournamentId } from '../../dao/tournamentDao.js';
+import { getArchetypeContext, getAvailableRaces, getPreviousTournamentId } from '../../dao/tournamentDao.js';
 import { nextMeta, rollCandidates, ArchetypeCandidate } from '@drpg/core/models/dojo/tournamentArchetypes';
 import { getNewLevelLimits } from '../../business/tournamentService.js';
 import { LOGGER } from '../../context.js';
@@ -388,6 +392,7 @@ describe('createTournament', () => {
 		vi.mocked(rollCandidates).mockReturnValue(CANDIDATES);
 		vi.mocked(getArchetypeContext).mockResolvedValue(CONTEXT);
 		vi.mocked(getNewLevelLimits).mockResolvedValue(35);
+		vi.mocked(getAvailableRaces).mockResolvedValue([]);
 		vi.mocked(createTranslatedNews).mockResolvedValue({ id: 1 } as never);
 	});
 	afterEach(() => vi.restoreAllMocks());
@@ -500,6 +505,27 @@ describe('createTournament', () => {
 		const data = prisma.tournament.create.mock.calls[0][0].data;
 		expect(data.formatName).toBe('ffa_open');
 		expect(data.metaArchetype).toBe('ffa');
+		expect(LOGGER.error).toHaveBeenCalled();
+	});
+
+	it('draws the featured races among the available races only', async () => {
+		const available = [RaceEnum.SIRAIN, RaceEnum.WINKS, RaceEnum.PIGMOU];
+		vi.mocked(getAvailableRaces).mockResolvedValue(available);
+		const prisma = creationPrisma(null);
+
+		await TournamentManager.createTournament(prisma as never);
+
+		const data = prisma.tournament.create.mock.calls[0][0].data;
+		expect([...data.featuredRaces].sort()).toEqual([...available].sort());
+	});
+
+	it('falls back to every race for the featured races when the query fails', async () => {
+		vi.mocked(getAvailableRaces).mockRejectedValue(new Error('db'));
+		const prisma = creationPrisma(null);
+
+		await TournamentManager.createTournament(prisma as never);
+
+		expect(prisma.tournament.create.mock.calls[0][0].data.featuredRaces).toHaveLength(7);
 		expect(LOGGER.error).toHaveBeenCalled();
 	});
 

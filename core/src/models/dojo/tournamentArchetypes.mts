@@ -104,6 +104,11 @@ export type ArchetypeContext = {
 	lastFinalistSkills: Partial<Record<Skill, number>>;
 	/** Number of dinoz of each race in the game (active ones), used to weight monorace */
 	racePopulation: Partial<Record<RaceEnum, number>>;
+	/**
+	 * Races that can be drawn (monorace, duo/trio, outsiders): the ones owned by enough players. Every race when
+	 * undefined. Fixed race lists (flying, common...) are not filtered.
+	 */
+	availableRaces?: RaceEnum[];
 	/** Random generator returning a float in [0, 1), Math.random by default (injectable for tests) */
 	random?: () => number;
 };
@@ -204,8 +209,13 @@ function weightedIndex<T>(random: Random, items: readonly T[], weight: (item: T)
 }
 
 /** Races sorted by count (ascending or descending), ties broken at random. Races absent from counts count as 0. */
-function racesByCount(random: Random, counts: Partial<Record<RaceEnum, number>>, order: 'asc' | 'desc'): RaceEnum[] {
-	const shuffled = pickDistinct(random, ALL_RACES, ALL_RACES.length);
+function racesByCount(
+	random: Random,
+	counts: Partial<Record<RaceEnum, number>>,
+	order: 'asc' | 'desc',
+	races: readonly RaceEnum[] = ALL_RACES
+): RaceEnum[] {
+	const shuffled = pickDistinct(random, races, races.length);
 	const sign = order === 'asc' ? 1 : -1;
 	return shuffled.sort((a, b) => sign * ((counts[a] ?? 0) - (counts[b] ?? 0)));
 }
@@ -214,6 +224,12 @@ const hasPositive = (record: Partial<Record<number, number>> | undefined) =>
 	Object.values(record ?? {}).some(v => (v ?? 0) > 0);
 
 const unique = <T,>(list: readonly T[] | undefined): T[] => [...new Set(list ?? [])];
+
+/** Races that can be drawn with this context: availableRaces when provided, else every race */
+export const drawableRaces = (ctx: ArchetypeContext): RaceEnum[] =>
+	ctx.availableRaces ? ALL_RACES.filter(r => ctx.availableRaces!.includes(r)) : [...ALL_RACES];
+
+const atLeastDrawable = (n: number) => (ctx: ArchetypeContext) => drawableRaces(ctx).length >= n;
 
 /** Races of the existing formats, reused as data */
 const formatRaces = (format: formatName): RaceEnum[] => [...formatTID[format].teamRace];
@@ -353,22 +369,30 @@ export const metaArchetypes: MetaArchetypeDef[] = [
 		enabled: true,
 		order: 1,
 		subs: [
-			defineSub('races', 'monorace', (random, ctx) => {
-				const index = weightedIndex(random, ALL_RACES, r => ctx.racePopulation?.[r] ?? 0);
-				const race = index >= 0 ? ALL_RACES[index] : pickOne(random, ALL_RACES);
-				return { teamRace: [race], raceMinimum: 1, rules: {} };
-			}),
+			defineSub(
+				'races',
+				'monorace',
+				(random, ctx) => {
+					const races = drawableRaces(ctx);
+					const index = weightedIndex(random, races, r => ctx.racePopulation?.[r] ?? 0);
+					const race = index >= 0 ? races[index] : pickOne(random, races);
+					return { teamRace: [race], raceMinimum: 1, rules: {} };
+				},
+				{ isAvailable: atLeastDrawable(1) }
+			),
 			defineSub('races', 'clan', () => ({ teamRace: [...ALL_RACES], raceMinimum: 1, rules: { sameRace: true } })),
-			defineSub('races', 'duo_race', random => ({
-				teamRace: pickDistinct(random, ALL_RACES, 2),
-				raceMinimum: 2,
-				rules: {}
-			})),
-			defineSub('races', 'trio_race', random => ({
-				teamRace: pickDistinct(random, ALL_RACES, 3),
-				raceMinimum: 3,
-				rules: {}
-			})),
+			defineSub(
+				'races',
+				'duo_race',
+				(random, ctx) => ({ teamRace: pickDistinct(random, drawableRaces(ctx), 2), raceMinimum: 2, rules: {} }),
+				{ isAvailable: atLeastDrawable(2) }
+			),
+			defineSub(
+				'races',
+				'trio_race',
+				(random, ctx) => ({ teamRace: pickDistinct(random, drawableRaces(ctx), 3), raceMinimum: 3, rules: {} }),
+				{ isAvailable: atLeastDrawable(3) }
+			),
 			defineSub('races', 'binomes', () => ({ teamRace: [...ALL_RACES], teamSizes: [4, 6], rules: { pairs: true } })),
 			raceListSub('common', () => formatRaces(formatName.COMMON)),
 			raceListSub('uncommon', () => formatRaces(formatName.UNCOMMON)),
@@ -383,7 +407,13 @@ export const metaArchetypes: MetaArchetypeDef[] = [
 			// Only the races having a demon variant can field demons
 			defineSub('races', 'demons', () => ({ teamRace: [...DEMON_RACES], rules: { demon: 'only' } })),
 			defineSub('races', 'no_demon', () => ({ teamRace: [...ALL_RACES], rules: { demon: 'none' } })),
-			defineSub('races', 'demon_captain', () => ({ teamRace: [...ALL_RACES], rules: { demon: 'exactlyOne' } }))
+			defineSub('races', 'demon_captain', () => ({ teamRace: [...ALL_RACES], rules: { demon: 'exactlyOne' } })),
+			// A demon captain followed by dinoz of its race that are not demons
+			defineSub('races', 'follow_the_demon', () => ({
+				teamRace: [...DEMON_RACES],
+				raceMinimum: 1,
+				rules: { demon: 'exactlyOne', sameRace: true }
+			}))
 		]
 	},
 	{
@@ -444,8 +474,11 @@ export const metaArchetypes: MetaArchetypeDef[] = [
 			defineSub(
 				'echo',
 				'outsiders',
-				(random, ctx) => ({ teamRace: racesByCount(random, ctx.recentRegisteredRaces, 'asc').slice(0, 8), rules: {} }),
-				{ isAvailable: ctx => hasPositive(ctx.recentRegisteredRaces) }
+				(random, ctx) => ({
+					teamRace: racesByCount(random, ctx.recentRegisteredRaces, 'asc', drawableRaces(ctx)).slice(0, 8),
+					rules: {}
+				}),
+				{ isAvailable: ctx => hasPositive(ctx.recentRegisteredRaces) && atLeastDrawable(1)(ctx) }
 			),
 			defineSub('echo', 'vedettes', (_random, ctx) => ({ teamRace: unique(ctx.lastFeaturedRaces), rules: {} }), {
 				isAvailable: ctx => unique(ctx.lastFeaturedRaces).length > 0

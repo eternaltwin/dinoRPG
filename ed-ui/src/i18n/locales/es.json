@@ -5868,6 +5868,10 @@
 					"name": "Capitán demonio",
 					"description": "El equipo debe tener exactamente un Dinoz demonio."
 				},
+				"follow_the_demon": {
+					"name": "Sigue al demonio",
+					"description": "Un capitán demonio lidera el equipo: exactamente un Dinoz demonio, todos los demás de su misma raza y no demonios."
+				},
 				"element_min": {
 					"name": "Elemento mínimo",
 					"description": "Cada Dinoz debe tener al menos {min} subidas en {element}."

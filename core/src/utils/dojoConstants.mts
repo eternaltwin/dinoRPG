@@ -14,4 +14,8 @@ export const DOJO_LEVEL_GAP_STEP = 5;
 // Number of days of the qualification, one featured race each
 export const DOJO_QUALIFICATION_DAYS = 7;
 
+// A race is drawn (monorace, race of the day...) only once DOJO_RACE_MIN_OWNERS players own DOJO_RACE_MIN_OWNED of them
+export const DOJO_RACE_MIN_OWNERS = 128;
+export const DOJO_RACE_MIN_OWNED = 2;
+
 export default DOJO_MAX_SERIES;

@@ -4,6 +4,7 @@ import { Prisma, UnavailableReason } from '@drpg/prisma';
 import { ArchetypeContext } from '@drpg/core/models/dojo/tournamentArchetypes';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { DOJO_RACE_MIN_OWNED, DOJO_RACE_MIN_OWNERS } from '@drpg/core/utils/dojoConstants';
 
 export async function getLatestTournament() {
 	return withSpan(getLatestTournament.name, async () => {
@@ -172,8 +173,30 @@ export async function getArchetypeContext(
 		lastFeaturedRaces: (reference?.featuredRaces ?? []) as RaceEnum[],
 		lastChampionRaces,
 		lastFinalistSkills,
-		racePopulation
+		racePopulation,
+		availableRaces: await getAvailableRaces(prisma)
 	};
+}
+
+/**
+ * Races that can be drawn (monorace, duo/trio, outsiders, races of the day): owned by at least DOJO_RACE_MIN_OWNERS
+ * players having DOJO_RACE_MIN_OWNED active dinoz (not frozen nor sacrificed) of the race.
+ */
+export async function getAvailableRaces(prisma: PismaClientLocal): Promise<RaceEnum[]> {
+	const rows = await prisma.$queryRaw<{ raceId: number }[]>`
+		SELECT owners."raceId"
+		FROM (
+			SELECT "playerId", "raceId"
+			FROM dinoz
+			WHERE "unavailableReason" IS NULL
+				OR "unavailableReason" NOT IN (${UnavailableReason.frozen}::"UnavailableReason", ${UnavailableReason.sacrificed}::"UnavailableReason")
+			GROUP BY "playerId", "raceId"
+			HAVING COUNT(*) >= ${DOJO_RACE_MIN_OWNED}
+		) owners
+		GROUP BY owners."raceId"
+		HAVING COUNT(*) >= ${DOJO_RACE_MIN_OWNERS}
+	`;
+	return rows.map(r => r.raceId as RaceEnum);
 }
 
 /** The tournament created right before the given one, null if none. */

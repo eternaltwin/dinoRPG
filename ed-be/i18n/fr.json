@@ -484,6 +484,10 @@
 					"name": "Capitaine démon",
 					"description": "L'équipe doit compter exactement un Dinoz démon."
 				},
+				"follow_the_demon": {
+					"name": "Suivez le démon",
+					"description": "Un capitaine démon mène l'équipe : exactement un Dinoz démon, tous les autres de la même race que lui et non démons."
+				},
 				"element_min": {
 					"name": "Élément minimum",
 					"description": "Chaque Dinoz doit avoir au moins {{min}} montées en {{element}}."

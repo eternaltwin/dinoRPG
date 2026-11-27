@@ -5454,17 +5454,7 @@
 			"resumed": "You resume your exploration where you left off."
 		},
 		"doorNames": "{sufix} {prefix}",
-		"doorNames_prefix": [
-			"Trees",
-			"Dragons",
-			"Squids",
-			"Goblins",
-			"Kabukis",
-			"Romeos",
-			"Wizards",
-			"Angels",
-			"Demons"
-		],
+		"doorNames_prefix": ["Trees", "Dragons", "Squids", "Goblins", "Kabukis", "Romeos", "Wizards", "Angels", "Demons"],
 		"doorNames_sufix": [
 			"Magical",
 			"Dead",
@@ -5867,6 +5857,10 @@
 				"demon_captain": {
 					"name": "Demon captain",
 					"description": "The team must have exactly one demon Dinoz."
+				},
+				"follow_the_demon": {
+					"name": "Follow the demon",
+					"description": "A demon captain leads the team: exactly one demon Dinoz, all the others of its race and not demons."
 				},
 				"element_min": {
 					"name": "Minimum element",

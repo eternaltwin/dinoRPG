@@ -234,6 +234,42 @@ describe('sub rolls', () => {
 		expect(trio.raceMinimum).toBe(3);
 	});
 
+	it('race draws only use the available races', () => {
+		const available = [RaceEnum.SIRAIN, RaceEnum.WINKS];
+		for (let seed = 1; seed <= 20; seed++) {
+			const ctx = { ...fullCtx(seeded(seed)), availableRaces: available };
+			expect(available).toContain(roll('monorace', ctx).teamRace[0]);
+			expect([...roll('duo_race', ctx).teamRace].sort()).toEqual([...available].sort());
+			for (const race of roll('outsiders', ctx).teamRace) expect(available).toContain(race);
+		}
+		const sub = (key: string) => findSubArchetype(key)!.sub;
+		const two = { ...fullCtx(), availableRaces: available };
+		expect(sub('trio_race').isAvailable?.(two)).toBe(false);
+		expect(sub('duo_race').isAvailable?.(two)).toBe(true);
+		const none = { ...fullCtx(), availableRaces: [] };
+		for (const key of ['monorace', 'duo_race', 'trio_race', 'outsiders'])
+			expect(sub(key).isAvailable?.(none)).toBe(false);
+		// Fixed race lists are not filtered
+		expect(roll('flying', two).teamRace.length).toBeGreaterThan(2);
+	});
+
+	it('follow_the_demon: one demon captain, the others of its race and not demons', () => {
+		const r = roll('follow_the_demon');
+		expect(r.teamRace).toEqual(DEMON_RACES);
+		const t = constraints({ teamRace: r.teamRace, rules: r.rules });
+		const demon = (raceId: RaceEnum) => dinoz({ raceId, skills: [{ skillId: demonSkillOf(raceId) }] });
+		const pigmou = () => dinoz({ raceId: RaceEnum.PIGMOU });
+		expect(validateTeamAgainstRules([demon(RaceEnum.PIGMOU), pigmou(), pigmou()], t)).toBeNull();
+		expect(validateTeamAgainstRules([demon(RaceEnum.PIGMOU), demon(RaceEnum.PIGMOU), pigmou()], t)?.key).toBe(
+			'demonExactlyOne'
+		);
+		expect(validateTeamAgainstRules([pigmou(), pigmou(), pigmou()], t)?.key).toBe('demonExactlyOne');
+		const other = DEMON_RACES.find(race => race !== RaceEnum.PIGMOU)!;
+		expect(validateTeamAgainstRules([demon(RaceEnum.PIGMOU), pigmou(), dinoz({ raceId: other })], t)?.key).toBe(
+			'sameRace'
+		);
+	});
+
 	it('terrestrial is the complement of flying', () => {
 		const flying = roll('flying').teamRace;
 		const terrestrial = roll('terrestrial').teamRace;

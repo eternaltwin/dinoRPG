@@ -50,7 +50,7 @@ import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReason } from '@drpg/prisma';
 import { nextMonday } from './date.js';
 import { createNewsPoll, createTranslatedNews } from '../business/newsService.js';
-import { getArchetypeContext, getPreviousTournamentId } from '../dao/tournamentDao.js';
+import { getArchetypeContext, getAvailableRaces, getPreviousTournamentId } from '../dao/tournamentDao.js';
 import weightedRandom from './fight/weightedRandom.js';
 import {
 	archetypeName,
@@ -799,6 +799,20 @@ class TournamentManager {
 		return { chosen: DEFAULT_ARCHETYPE, vote: null };
 	}
 
+	/**
+	 * @summary Races of the day of the qualification, without repetition, among the races owned by enough players.
+	 * Every race when none is (new game) or when the query fails. Days left without a race have no race of the day.
+	 */
+	static async drawFeaturedRaces(prisma: PismaClientLocal): Promise<number[]> {
+		let races: number[] = [];
+		try {
+			races = await getAvailableRaces(prisma);
+		} catch (error) {
+			LOGGER.error('Error while computing the available races, every race can be the race of the day', error);
+		}
+		return shuffle(races.length > 0 ? races : getAllRaces()).slice(0, DOJO_QUALIFICATION_DAYS);
+	}
+
 	static async createTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
@@ -817,7 +831,7 @@ class TournamentManager {
 		const raceMinimum = resolveRaceMinimum(chosen, teamSize);
 		const levelLimit = await getNewLevelLimits(teamRace);
 		const poison = getRandomInteger(0, 1) === 0;
-		const featuredRaces = shuffle(getAllRaces()).slice(0, DOJO_QUALIFICATION_DAYS);
+		const featuredRaces = await TournamentManager.drawFeaturedRaces(prisma);
 
 		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({

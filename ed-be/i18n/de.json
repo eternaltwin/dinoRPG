@@ -484,6 +484,10 @@
 					"name": "Dämonenkapitän",
 					"description": "Das Team muss genau einen Dämonen-Dinoz haben."
 				},
+				"follow_the_demon": {
+					"name": "Folge dem Dämon",
+					"description": "Ein Dämonen-Kapitän führt das Team an: genau ein Dämonen-Dinoz, alle anderen von seiner Rasse und keine Dämonen."
+				},
 				"element_min": {
 					"name": "Mindestelement",
 					"description": "Jeder Dinoz muss mindestens {{min}} Stufenaufstiege in {{element}} haben."

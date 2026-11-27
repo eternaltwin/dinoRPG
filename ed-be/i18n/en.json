@@ -484,6 +484,10 @@
 					"name": "Demon captain",
 					"description": "The team must have exactly one demon Dinoz."
 				},
+				"follow_the_demon": {
+					"name": "Follow the demon",
+					"description": "A demon captain leads the team: exactly one demon Dinoz, all the others of its race and not demons."
+				},
 				"element_min": {
 					"name": "Minimum element",
 					"description": "Every Dinoz must have at least {{min}} level ups in {{element}}."
