@@ -5,5 +5,13 @@ export const DOJO_OPPONENT_IN_SERIE = 5;
 export const DOJO_REPUTATION_WIN = 4;
 export const DOJO_REPUTATION_CHALLENGE = 4;
 export const DOJO_MAX_DAILY_CHALLENGE = 5;
+// Minimum number of distinct races in the qualification team (a demon counts as its race)
+export const DOJO_MIN_RACES = 5;
+// Bonus applied for each side (attacker, target) being of the race of the day
+export const DOJO_FEATURED_BONUS = 0.5;
+// One extra point every DOJO_LEVEL_GAP_STEP levels when the target is stronger than the attacker
+export const DOJO_LEVEL_GAP_STEP = 5;
+// Number of days of the qualification, one featured race each
+export const DOJO_QUALIFICATION_DAYS = 7;
 
 export default DOJO_MAX_SERIES;

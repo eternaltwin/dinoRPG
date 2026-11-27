@@ -30,6 +30,7 @@ import { rewarder, RewarderPromise, describeRewards } from './rewarder.js';
 import { ClanEventType, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
+import { getFeaturedRaceOfDay } from '@drpg/core/utils/dojoQualif';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
 import { Lang, NewsType } from '@drpg/prisma';
@@ -690,6 +691,8 @@ class TournamentManager {
 		await prisma.dojoOpponents.deleteMany();
 		await prisma.dojoTeam.deleteMany();
 		await prisma.dojoChallengeHistory.deleteMany();
+		// The opponent pool keeps the teams of the ending tournament (the previous one for the new tournament)
+		await prisma.dojoQualifPool.deleteMany({ where: { tournamentId: { not: this.tournamentId } } });
 		await prisma.dojo.updateMany({
 			data: {
 				reputation: 0,
@@ -818,6 +821,10 @@ class TournamentManager {
 			schedule,
 			cashPrice: tournament.cashPrice,
 			levelLimit: tournament.levelLimit,
+			featuredRace:
+				state.phase === TournamentPhase.QUALIFICATION
+					? getFeaturedRaceOfDay(tournament.featuredRaces, schedule.qualificationStart)
+					: null,
 			nextScheduledMatch: tournament.nextRound
 		};
 	}

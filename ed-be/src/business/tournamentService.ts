@@ -1,3 +1,4 @@
+import { TournamentRules } from '@drpg/core/models/dojo/tournamentArchetypes';
 import { prisma } from '../prisma.js';
 import { Request } from 'express';
 import { auth, getPlayerDinozInformationForTeam } from '../dao/playerDao.js';
@@ -169,7 +170,11 @@ export async function tournamentInfo(req: Request) {
 	if (!latestTournament) {
 		throw new ExpectedError('No tournament found');
 	}
-	return { ...latestTournament, teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)) };
+	return {
+		...latestTournament,
+		teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)),
+		rules: latestTournament.rules as TournamentRules
+	};
 }
 
 export async function getTournamentFightsToShow(

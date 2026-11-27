@@ -40,6 +40,8 @@ export interface TournamentState {
 	schedule: TournamentSchedule;
 	cashPrice: number;
 	levelLimit: number;
+	/** Race of the day of the qualification (only today's one is exposed), null outside of the qualification */
+	featuredRace?: number | null;
 }
 
 export type MetaData = {

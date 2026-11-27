@@ -251,6 +251,7 @@ exports.Prisma.PollOptionScalarFieldEnum = {
   id: 'id',
   pollId: 'pollId',
   optionText: 'optionText',
+  labels: 'labels',
   orderIndex: 'orderIndex',
   createdDate: 'createdDate'
 };
@@ -789,7 +790,20 @@ exports.Prisma.TournamentScalarFieldEnum = {
   teamRace: 'teamRace',
   levelLimit: 'levelLimit',
   cashPrice: 'cashPrice',
-  nextRound: 'nextRound'
+  nextRound: 'nextRound',
+  metaArchetype: 'metaArchetype',
+  rules: 'rules',
+  featuredRaces: 'featuredRaces',
+  nextCandidates: 'nextCandidates',
+  nextPollId: 'nextPollId'
+};
+
+exports.Prisma.DojoQualifPoolScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  dinozId: 'dinozId',
+  raceId: 'raceId',
+  level: 'level'
 };
 
 exports.Prisma.TournamentTeamScalarFieldEnum = {
@@ -888,6 +902,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
@@ -928,6 +947,7 @@ exports.NewsType = exports.$Enums.NewsType = {
   war_mana: 'war_mana',
   championship: 'championship',
   tid_start: 'tid_start',
+  tid_vote: 'tid_vote',
   tid_end: 'tid_end',
   event_christmas: 'event_christmas',
   story: 'story',
@@ -1178,6 +1198,7 @@ exports.Prisma.ModelName = {
   FightArchive: 'FightArchive',
   FightWatched: 'FightWatched',
   Tournament: 'Tournament',
+  DojoQualifPool: 'DojoQualifPool',
   TournamentTeam: 'TournamentTeam',
   FBTournament: 'FBTournament',
   GameDinoz: 'GameDinoz',

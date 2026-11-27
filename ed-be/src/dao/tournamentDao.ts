@@ -13,7 +13,11 @@ export async function getLatestTournament() {
 				raceMinimum: true,
 				teamRace: true,
 				teamSize: true,
-				levelLimit: true
+				levelLimit: true,
+				formatName: true,
+				poison: true,
+				metaArchetype: true,
+				rules: true
 			}
 		});
 	});

@@ -70,6 +70,7 @@ model Dinoz {
   npcs               NPC[]
   DojoOpponents      DojoOpponents[]
   DojoTeam           DojoTeam[]
+  DojoQualifPool     DojoQualifPool[]
   TournamentTeam     TournamentTeam[]
 
   @@index([playerId], map: "idx_playerId")
@@ -213,6 +214,8 @@ model PollOption {
   id          Int        @id @default(autoincrement())
   pollId      Int
   optionText  String     @db.VarChar
+  /// Translated labels of the option (Record<Lang, string>), optionText is the fallback
+  labels      Json?      @db.JsonB
   orderIndex  Int        @default(0)
   createdDate DateTime   @default(now()) @db.Timestamp(6)
   poll        Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
@@ -1070,20 +1073,44 @@ model FightWatched {
 }
 
 model Tournament {
-  id           String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  date         DateTime         @default(now()) @db.Timestamp(6)
-  formatName   String           @default("ffa") @db.Text
-  teamSize     Int              @default(1)
-  raceMinimum  Int              @default(1)
-  poison       Boolean          @default(true)
-  teamRace     String           @db.Text
-  levelLimit   Int              @default(50)
-  participants TournamentTeam[]
-  fights       FightArchive[]
-  cashPrice    Int              @default(0)
-  nextRound    DateTime         @default(now())
+  id             String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date           DateTime         @default(now()) @db.Timestamp(6)
+  formatName     String           @default("ffa") @db.Text
+  teamSize       Int              @default(1)
+  raceMinimum    Int              @default(1)
+  poison         Boolean          @default(true)
+  teamRace       String           @db.Text
+  levelLimit     Int              @default(50)
+  participants   TournamentTeam[]
+  fights         FightArchive[]
+  cashPrice      Int              @default(0)
+  nextRound      DateTime         @default(now())
+  /// Key of the meta archetype (races, restrictive, ffa, echo)
+  metaArchetype  String           @default("ffa") @db.Text
+  /// Resolved rules of the sub archetype (see core TournamentRules)
+  rules          Json             @default("{}") @db.JsonB
+  /// Race of the day for each day of the qualification
+  featuredRaces  Int[]            @default([])
+  /// Sub archetypes proposed to the vote for the next tournament
+  nextCandidates Json?            @db.JsonB
+  nextPollId     Int?
+  qualifPool     DojoQualifPool[]
 
   @@index([id, date])
+}
+
+/// Dinoz that were part of a qualification team, used as opponent pool for the next qualifications
+model DojoQualifPool {
+  id           String     @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tournamentId String     @db.Uuid
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  dinozId      Int
+  dinoz        Dinoz      @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  raceId       Int
+  level        Int
+
+  @@unique([tournamentId, dinozId])
+  @@index([tournamentId, raceId])
 }
 
 model TournamentTeam {
@@ -1330,6 +1357,7 @@ enum NewsType {
   war_mana
   championship
   tid_start
+  tid_vote
   tid_end
   event_christmas
   story
