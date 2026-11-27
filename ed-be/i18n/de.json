@@ -403,6 +403,285 @@
 			"raceMinimum": "Mindestens {{races}} verschiedene Rassen pro Mannschaft.",
 			"result": "## Ergebnis der Abstimmung\n{{results}}",
 			"resultLine": "{{name}}: {{votes}} Stimme(n)"
+		},
+		"archetype": {
+			"meta": {
+				"races": {
+					"name": "Rassen",
+					"description": "Wer teilnehmen darf: Nur bestimmte Rassen oder bestimmte Dinoz sind erlaubt."
+				},
+				"restrictive": {
+					"name": "Einschränkend",
+					"description": "Alle Rassen, aber eine Einschränkung beim Aufbau der Dinoz: Elemente, Fähigkeiten oder Stufen."
+				},
+				"ffa": {
+					"name": "Jeder gegen jeden",
+					"description": "Alle Rassen, keine Einschränkung bei Rassen oder Aufbau: Nur die Teamgröße ändert sich."
+				},
+				"echo": {
+					"name": "Echo",
+					"description": "Regeln, die aus den vorherigen Turnieren berechnet werden, um eingefahrene Metas aufzubrechen und die Rassen rotieren zu lassen."
+				}
+			},
+			"sub": {
+				"monorace": {
+					"name": "Einzelrasse",
+					"description": "Nur die Rasse {{races}} ist erlaubt."
+				},
+				"clan": {
+					"name": "Clan",
+					"description": "Das ganze Team muss derselben Rasse angehören, nach Wahl."
+				},
+				"duo_race": {
+					"name": "Rassen-Duo",
+					"description": "Nur die Rassen {{races}} sind erlaubt, mit mindestens einem Dinoz jeder Rasse."
+				},
+				"trio_race": {
+					"name": "Rassen-Trio",
+					"description": "Nur die Rassen {{races}} sind erlaubt, mit mindestens einem Dinoz jeder Rasse."
+				},
+				"binomes": {
+					"name": "Paare",
+					"description": "Das Team besteht aus Paaren von Dinoz derselben Rasse (4 oder 6 Dinoz)."
+				},
+				"common": {
+					"name": "Häufige Rassen",
+					"description": "Nur die häufigen Rassen sind erlaubt: {{races}}."
+				},
+				"uncommon": {
+					"name": "Seltene Rassen",
+					"description": "Nur die seltenen Rassen sind erlaubt: {{races}}."
+				},
+				"flying": {
+					"name": "Flieger",
+					"description": "Nur die fliegenden Rassen sind erlaubt: {{races}}."
+				},
+				"terrestrial": {
+					"name": "Landbewohner",
+					"description": "Nur die Landrassen sind erlaubt: {{races}}."
+				},
+				"bipede": {
+					"name": "Zweibeiner",
+					"description": "Nur die zweibeinigen Rassen sind erlaubt: {{races}}."
+				},
+				"quadrupede": {
+					"name": "Vierbeiner",
+					"description": "Nur die vierbeinigen Rassen sind erlaubt: {{races}}."
+				},
+				"element_native": {
+					"name": "Elementare Ureinwohner",
+					"description": "Nur die ursprünglichen Rassen des Elements {{element}} sind erlaubt: {{races}}."
+				},
+				"demons": {
+					"name": "Dämonen",
+					"description": "Nur Dämonen-Dinoz sind erlaubt."
+				},
+				"no_demon": {
+					"name": "Ohne Dämon",
+					"description": "Dämonen-Dinoz sind verboten."
+				},
+				"demon_captain": {
+					"name": "Dämonenkapitän",
+					"description": "Das Team muss genau einen Dämonen-Dinoz haben."
+				},
+				"element_min": {
+					"name": "Mindestelement",
+					"description": "Jeder Dinoz muss mindestens {{min}} Stufenaufstiege in {{element}} haben."
+				},
+				"element_dominant": {
+					"name": "Dominantes Element",
+					"description": "Das am meisten gesteigerte Element jedes Dinoz muss {{element}} sein."
+				},
+				"elemental_purity": {
+					"name": "Elementare Reinheit",
+					"description": "Alle Dinoz müssen dasselbe dominante Element haben, nach Wahl."
+				},
+				"rainbow": {
+					"name": "Regenbogen",
+					"description": "Jeder Dinoz muss ein anderes dominantes Element haben (3 bis 5 Dinoz)."
+				},
+				"specialists": {
+					"name": "Spezialisten",
+					"description": "Jeder Dinoz muss mindestens {{pct}} % seiner Stufenaufstiege in einem einzigen Element haben."
+				},
+				"balanced": {
+					"name": "Ausgewogen",
+					"description": "Kein Dinoz darf mehr als {{pct}} % seiner Stufenaufstiege im selben Element haben."
+				},
+				"skill_required": {
+					"name": "Pflichtfähigkeit",
+					"description": "Jeder Dinoz muss die Fähigkeit {{skill}} besitzen."
+				},
+				"skill_forbidden": {
+					"name": "Verbotene Fähigkeit",
+					"description": "Die Fähigkeit {{skill}} ist verboten."
+				},
+				"summoners": {
+					"name": "Beschwörer",
+					"description": "Jeder Dinoz muss mindestens eine Beschwörung besitzen."
+				},
+				"no_summon": {
+					"name": "Ohne Beschwörung",
+					"description": "Beschwörungen sind verboten."
+				},
+				"ether_adepts": {
+					"name": "Äther-Adepten",
+					"description": "Jeder Dinoz muss mindestens {{min}} Fähigkeiten des Äther-Baums besitzen."
+				},
+				"purists": {
+					"name": "Puristen",
+					"description": "Keine Fähigkeit des Äther-Baums und keine Sphärenfähigkeit ist erlaubt."
+				},
+				"full_diversity": {
+					"name": "Volle Vielfalt",
+					"description": "Alle Dinoz des Teams müssen verschiedenen Rassen angehören."
+				},
+				"level_budget": {
+					"name": "Stufenbudget",
+					"description": "Die Summe der Stufen des Teams darf {{pct}} % der Höchststufe mal der Teamgröße nicht überschreiten."
+				},
+				"promotion": {
+					"name": "Jahrgang",
+					"description": "Der Stufenunterschied zwischen dem höchsten und dem niedrigsten Dinoz des Teams darf {{max}} nicht überschreiten."
+				},
+				"ffa_solo": {
+					"name": "Solo",
+					"description": "Alle Rassen, ein einziger Dinoz pro Team."
+				},
+				"ffa_duo": {
+					"name": "Duo",
+					"description": "Alle Rassen, Teams aus 2 Dinoz."
+				},
+				"ffa_trio": {
+					"name": "Trio",
+					"description": "Alle Rassen, Teams aus 3 Dinoz."
+				},
+				"ffa_squad": {
+					"name": "Trupp",
+					"description": "Alle Rassen, Teams aus 5 Dinoz."
+				},
+				"ffa_legion": {
+					"name": "Legion",
+					"description": "Alle Rassen, Teams aus 6 Dinoz."
+				},
+				"ffa_open": {
+					"name": "Offen",
+					"description": "Alle Rassen, keine Einschränkung: Die Teamgröße wird ausgelost."
+				},
+				"anti_meta": {
+					"name": "Anti-Meta",
+					"description": "Die Rassen, die bei den Qualifizierten des letzten Turniers am häufigsten waren, sind verboten: {{forbidden}}."
+				},
+				"outsiders": {
+					"name": "Außenseiter",
+					"description": "Nur die in den letzten 3 Turnieren am seltensten angemeldeten Rassen sind erlaubt: {{races}}."
+				},
+				"vedettes": {
+					"name": "Stars",
+					"description": "Nur die Rassen des Tages der vorherigen Qualifikation sind erlaubt: {{races}}."
+				},
+				"champion_ban": {
+					"name": "Champions gesperrt",
+					"description": "Die Rassen des Siegerteams des letzten Turniers sind verboten: {{forbidden}}."
+				},
+				"heritage": {
+					"name": "Vermächtnis",
+					"description": "Das Team muss mindestens einen Dinoz einer Rasse des Siegerteams des letzten Turniers haben: {{required}}."
+				},
+				"skill_echo": {
+					"name": "Fähigkeitsecho",
+					"description": "Die bei den Finalisten des letzten Turniers am weitesten verbreitete Fähigkeit ist verboten: {{skill}}."
+				}
+			},
+			"rule": {
+				"forbiddenRaces": "Verbotene Rassen: {{races}}.",
+				"demon_only": "Nur Dämonen-Dinoz.",
+				"demon_none": "Keine Dämonen-Dinoz.",
+				"demon_exactlyOne": "Genau ein Dämonen-Dinoz.",
+				"sameRace": "Das ganze Team gehört derselben Rasse an.",
+				"pairs": "Team aus Paaren derselben Rasse.",
+				"distinctRaces": "Alle Dinoz gehören verschiedenen Rassen an.",
+				"requireOneOf": "Mindestens ein Dinoz der Rasse {{races}}.",
+				"elementMin": "Mindestens {{min}} Stufenaufstiege in {{element}} pro Dinoz.",
+				"elementDominant": "Dominantes Element jedes Dinoz: {{element}}.",
+				"elementPurity": "Alle Dinoz haben dasselbe dominante Element.",
+				"rainbow": "Jeder Dinoz hat ein anderes dominantes Element.",
+				"specialistPct": "Mindestens {{value}} % der Stufenaufstiege in einem einzigen Element.",
+				"balancedPct": "Höchstens {{value}} % der Stufenaufstiege im selben Element.",
+				"skillRequired": "Pflichtfähigkeit: {{skill}}.",
+				"skillForbidden": "Verbotene Fähigkeit: {{skill}}.",
+				"summon_required": "Mindestens eine Beschwörung pro Dinoz.",
+				"summon_none": "Keine Beschwörung.",
+				"purist": "Keine Äther- oder Sphärenfähigkeit.",
+				"etherMin": "Mindestens {{value}} Äther-Fähigkeiten pro Dinoz.",
+				"levelBudgetPct": "Summe der Stufen höchstens {{value}} % der Höchststufe × Teamgröße.",
+				"levelSpread": "Stufenunterschied von höchstens {{value}} im Team."
+			},
+			"error": {
+				"teamSize": "Dein Team muss aus genau {{qty}} Dinoz bestehen.",
+				"wrongRace": "Die Rasse {{race}} ist in diesem Turnier nicht erlaubt.",
+				"levelTooHigh": "Ein Dinoz überschreitet die erlaubte Höchststufe ({{max}}).",
+				"notEnoughRaces": "Dein Team muss aus mindestens {{qty}} verschiedenen Rassen bestehen.",
+				"forbiddenRace": "Die Rasse {{race}} ist in diesem Turnier verboten.",
+				"demonOnly": "Nur Dämonen-Dinoz sind erlaubt.",
+				"demonNone": "Dämonen-Dinoz sind verboten.",
+				"demonExactlyOne": "Dein Team muss genau einen Dämonen-Dinoz haben.",
+				"sameRace": "Alle Dinoz deines Teams müssen derselben Rasse angehören.",
+				"pairs": "Dein Team muss aus Paaren von Dinoz derselben Rasse bestehen.",
+				"distinctRaces": "Alle Dinoz deines Teams müssen verschiedenen Rassen angehören.",
+				"requireOneOf": "Dein Team muss mindestens einen Dinoz einer dieser Rassen haben: {{races}}.",
+				"elementMin": "Jeder Dinoz muss mindestens {{min}} Stufenaufstiege in {{element}} haben.",
+				"elementDominant": "Das am meisten gesteigerte Element jedes Dinoz muss {{element}} sein.",
+				"elementPurity": "Alle Dinoz deines Teams müssen dasselbe dominante Element haben.",
+				"rainbow": "Jeder Dinoz deines Teams muss ein anderes dominantes Element haben.",
+				"specialist": "Jeder Dinoz muss mindestens {{pct}} % seiner Stufenaufstiege in einem einzigen Element haben.",
+				"balanced": "Kein Dinoz darf mehr als {{pct}} % seiner Stufenaufstiege im selben Element haben.",
+				"skillRequired": "Jeder Dinoz muss die Fähigkeit {{skill}} besitzen.",
+				"skillForbidden": "Die Fähigkeit {{skill}} ist in diesem Turnier verboten.",
+				"summonRequired": "Jeder Dinoz muss mindestens eine Beschwörung besitzen.",
+				"summonNone": "Beschwörungen sind in diesem Turnier verboten.",
+				"purist": "Fähigkeiten des Äther-Baums und Sphärenfähigkeiten sind in diesem Turnier verboten.",
+				"etherMin": "Jeder Dinoz muss mindestens {{min}} Fähigkeiten des Äther-Baums besitzen.",
+				"levelBudget": "Die Summe der Stufen deines Teams ({{sum}}) überschreitet das erlaubte Maximum ({{max}}).",
+				"levelSpread": "Der Stufenunterschied zwischen deinen Dinoz darf {{max}} nicht überschreiten."
+			},
+			"element": {
+				"fire": "Feuer",
+				"wood": "Holz",
+				"water": "Wasser",
+				"lightning": "Blitz",
+				"air": "Luft"
+			},
+			"skill": {
+				"11101": "Brennende Klauen",
+				"11102": "Zorn",
+				"11103": "Stärke",
+				"21101": "Panzerung",
+				"21102": "Wildheit",
+				"21103": "Ausdauer",
+				"31101": "Wasserkanone",
+				"31102": "Wahrnehmung",
+				"31103": "Mutation",
+				"41101": "Intelligenz",
+				"41102": "Fokus",
+				"41103": "Schnelligkeit",
+				"51101": "Agilität",
+				"51102": "Strategie",
+				"51103": "Mistral",
+				"11408": "Kriegsherr",
+				"11501": "Tollkühnheit",
+				"11410": "Elementarmeister",
+				"21401": "Gorillo-Geist",
+				"21501": "Koloss",
+				"31312": "Vergiftete Klauen",
+				"31406": "Säurehaltiges Blut",
+				"31501": "Meisterschwimmer",
+				"41403": "Segen",
+				"41406": "Reinkarnation",
+				"41501": "Korrosiver Erzengel",
+				"51501": "Transzendentale Meditation",
+				"51406": "Hauch des Lebens"
+			}
 		}
 	},
 	"announce": {
