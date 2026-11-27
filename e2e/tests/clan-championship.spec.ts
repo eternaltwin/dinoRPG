@@ -24,8 +24,12 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 	test.setTimeout(60_000);
 	const suffix = player.id.slice(0, 8);
 	// Dinoz sheets need the weekly itinerant merchant place, normally set by a cron job.
-	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
-	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	// Kept afterwards: specs run in parallel and share it
+	await db.secret.upsert({
+		where: { key: 'itinerant' },
+		create: { key: 'itinerant', value: String(PLACE_ID) },
+		update: {}
+	});
 	const rival = await createPlayer();
 	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
 	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
@@ -138,7 +142,6 @@ test('a clan leader enters the board and moves a piece in a live championship ma
 		const moved = await db.clanChampionshipPiece.findUniqueOrThrow({ where: { id: piece.id } });
 		expect(moved).toMatchObject({ x: 1, y, actionPoints: 1 });
 	} finally {
-		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
 		// Pieces and matches cascade from the event; clans and players are left to the unique names.
 		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.dinoz.deleteMany({ where: { playerId: player.id } });
@@ -157,8 +160,12 @@ test('the selected piece shows its equipment and inventory, and can be equipped 
 	const CLOUD_BURGER = 3;
 	const POTION_IRMA = 1;
 	const suffix = player.id.slice(0, 8);
-	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
-	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	// Kept afterwards: specs run in parallel and share it
+	await db.secret.upsert({
+		where: { key: 'itinerant' },
+		create: { key: 'itinerant', value: String(PLACE_ID) },
+		update: {}
+	});
 	const rival = await createPlayer();
 	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
 	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
@@ -263,7 +270,6 @@ test('the selected piece shows its equipment and inventory, and can be equipped 
 		await expect(equipped).toHaveCount(1);
 		await expect.poll(() => db.dinozItem.count({ where: { dinozId: dinoz.id } })).toBe(1);
 	} finally {
-		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
 		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.dinoz.deleteMany({ where: { playerId: player.id } });
 		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });
@@ -567,8 +573,12 @@ test('a finished match replays every step with the state of both clans, fights i
 }) => {
 	test.setTimeout(90_000);
 	const suffix = player.id.slice(0, 8);
-	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
-	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	// Kept afterwards: specs run in parallel and share it
+	await db.secret.upsert({
+		where: { key: 'itinerant' },
+		create: { key: 'itinerant', value: String(PLACE_ID) },
+		update: {}
+	});
 	const rival = await createPlayer();
 	const clanA = await db.clan.create({ data: { name: `e2e-A-${suffix}`, leaderId: player.id } });
 	const clanB = await db.clan.create({ data: { name: `e2e-B-${suffix}`, leaderId: rival.id } });
@@ -713,7 +723,6 @@ test('a finished match replays every step with the state of both clans, fights i
 		await page.waitForURL(new RegExp(`/championship/replay/${match.id}\\?step=3$`));
 		await expect(step).toContainText('Étape 3 / 3');
 	} finally {
-		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
 		await db.clanEvent.delete({ where: { id: event.id } });
 		await db.dinoz.deleteMany({ where: { playerId: { in: [player.id, rival.id] } } });
 		await db.player.updateMany({ where: { id: { in: [player.id, rival.id] } }, data: { clanId: null } });

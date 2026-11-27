@@ -14,8 +14,12 @@ const RACES = [
 test('the qualification team needs 5 different races before it can be validated', async ({ page, player, db }) => {
 	test.setTimeout(60_000);
 	// Dinoz sheets need the weekly itinerant merchant place, normally set by a cron job.
-	const hadItinerant = (await db.secret.findUnique({ where: { key: 'itinerant' } })) !== null;
-	if (!hadItinerant) await db.secret.create({ data: { key: 'itinerant', value: String(PLACE_ID) } });
+	// Kept afterwards: specs run in parallel and share it
+	await db.secret.upsert({
+		where: { key: 'itinerant' },
+		create: { key: 'itinerant', value: String(PLACE_ID) },
+		update: {}
+	});
 
 	const dinozData = (name: string, race: (typeof RACES)[number]) => ({
 		name,
@@ -43,29 +47,25 @@ test('the qualification team needs 5 different races before it can be validated'
 		dinoz.push(await db.dinoz.create({ data: dinozData(`Race${index}`, race) }));
 	}
 
-	try {
-		// The dojo is created on the first visit of its home page
-		await page.goto('/dojo');
-		await page.waitForLoadState('networkidle');
-		await page.goto('/dojo/challenge');
+	// The dojo is created on the first visit of its home page
+	await page.goto('/dojo');
+	await page.waitForLoadState('networkidle');
+	await page.goto('/dojo/challenge');
 
-		const counter = page.getByTestId('race-counter');
-		await expect(counter).toContainText('0/5');
+	const counter = page.getByTestId('race-counter');
+	await expect(counter).toContainText('0/5');
 
-		// 5 dinoz but only 4 races: the validation is blocked with an explanation
-		for (const d of [twin, ...dinoz.slice(0, 4)]) {
-			await page.getByTestId(`select-dinoz-${d.id}`).click();
-		}
-		await expect(counter).toContainText('4/5');
-		await expect(page.getByTestId('selection-blocked')).toBeVisible();
-		await expect(page.getByTestId('select-dinoz-validate')).toHaveClass(/\boff\b/);
-
-		// A 5th race unlocks it
-		await page.getByTestId(`select-dinoz-${dinoz[4].id}`).click();
-		await expect(counter).toContainText('5/5');
-		await expect(page.getByTestId('selection-blocked')).toBeHidden();
-		await expect(page.getByTestId('select-dinoz-validate')).not.toHaveClass(/\boff\b/);
-	} finally {
-		if (!hadItinerant) await db.secret.deleteMany({ where: { key: 'itinerant' } });
+	// 5 dinoz but only 4 races: the validation is blocked with an explanation
+	for (const d of [twin, ...dinoz.slice(0, 4)]) {
+		await page.getByTestId(`select-dinoz-${d.id}`).click();
 	}
+	await expect(counter).toContainText('4/5');
+	await expect(page.getByTestId('selection-blocked')).toBeVisible();
+	await expect(page.getByTestId('select-dinoz-validate')).toHaveClass(/\boff\b/);
+
+	// A 5th race unlocks it
+	await page.getByTestId(`select-dinoz-${dinoz[4].id}`).click();
+	await expect(counter).toContainText('5/5');
+	await expect(page.getByTestId('selection-blocked')).toBeHidden();
+	await expect(page.getByTestId('select-dinoz-validate')).not.toHaveClass(/\boff\b/);
 });
