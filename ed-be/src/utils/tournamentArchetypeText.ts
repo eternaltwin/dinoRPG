@@ -1,5 +1,5 @@
 import { Lang } from '@drpg/prisma';
-import { ArchetypeCandidate, TournamentRules } from '@drpg/core/models/dojo/tournamentArchetypes';
+import { ArchetypeCandidate, subDescriptionParams, TournamentRules } from '@drpg/core/models/dojo/tournamentArchetypes';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -45,8 +45,37 @@ export function subArchetypeName(sub: string, lang: Lang): string {
 	return translateOr(`tournament.archetype.sub.${sub}.name`, lang, sub);
 }
 
-export function subArchetypeDescription(sub: string, lang: Lang): string {
-	return translateOr(`tournament.archetype.sub.${sub}.description`, lang, '');
+export function subArchetypeDescription(sub: string, lang: Lang, params?: Record<string, unknown>): string {
+	return translateOr(`tournament.archetype.sub.${sub}.description`, lang, '', {
+		...params,
+		interpolation: { escapeValue: false }
+	});
+}
+
+/** Params of the description of a rolled sub, formatted for the language (races, element, skill names). */
+export function subDescriptionTextParams(candidate: ArchetypeCandidate, lang: Lang): Record<string, unknown> {
+	const formatted: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(subDescriptionParams(candidate))) {
+		switch (key) {
+			case 'races':
+			case 'forbidden':
+			case 'required':
+				formatted[key] = translateRaces(value as number[], lang);
+				break;
+			case 'element':
+				formatted[key] = elementName(value as number, lang);
+				break;
+			case 'skill':
+				formatted[key] = skillName(value as number, lang);
+				break;
+			case 'sizes':
+				formatted[key] = (value as number[]).join(', ');
+				break;
+			default:
+				formatted[key] = value;
+		}
+	}
+	return formatted;
 }
 
 /** "Meta — Sub", each part falling back to its raw key. */
@@ -112,7 +141,7 @@ export function describeRules(rules: TournamentRules | null | undefined, lang: L
  */
 export function describeCandidate(candidate: ArchetypeCandidate, lang: Lang): string {
 	const lines = [`**${archetypeName(candidate.meta, candidate.key, lang)}**`];
-	const description = subArchetypeDescription(candidate.key, lang);
+	const description = subArchetypeDescription(candidate.key, lang, subDescriptionTextParams(candidate, lang));
 	if (description) lines.push(description);
 
 	const details = describeRules(candidate.rules, lang);

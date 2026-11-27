@@ -23,14 +23,13 @@ vi.mock('node-schedule', () => {
 vi.mock('../../business/newsService.js', () => ({ createTranslatedNews: vi.fn(), createNewsPoll: vi.fn() }));
 vi.mock('../../dao/tournamentDao.js', () => ({ getArchetypeContext: vi.fn(), getPreviousTournamentId: vi.fn() }));
 // The catalogue is implemented by another lot: only its contract is used here
-vi.mock('@drpg/core/models/dojo/tournamentArchetypes', () => ({
+vi.mock('@drpg/core/models/dojo/tournamentArchetypes', async importOriginal => ({
+	...(await importOriginal<typeof import('@drpg/core/models/dojo/tournamentArchetypes')>()),
 	nextMeta: vi.fn(),
-	rollCandidates: vi.fn(),
-	TEAM_SIZE_MIN: 3,
-	TEAM_SIZE_MAX: 6
+	rollCandidates: vi.fn()
 }));
 
-import TournamentManager, { resolveRaceMinimumLocal, resolveTeamSizeLocal } from '../../utils/tournamentManager.js';
+import TournamentManager from '../../utils/tournamentManager.js';
 import { createNewsPoll, createTranslatedNews } from '../../business/newsService.js';
 import { getArchetypeContext, getPreviousTournamentId } from '../../dao/tournamentDao.js';
 import { nextMeta, rollCandidates, ArchetypeCandidate } from '@drpg/core/models/dojo/tournamentArchetypes';
@@ -511,20 +510,5 @@ describe('createTournament', () => {
 
 		// The rules of the sub are announced
 		expect(vi.mocked(createTranslatedNews).mock.calls[0][5][Lang.fr].subRules).toContain('elementMin');
-	});
-});
-
-describe('common parameters (temporary local helpers)', () => {
-	it('resolves the team size', () => {
-		expect(resolveTeamSizeLocal({ teamSize: 2 })).toBe(2);
-		expect(resolveTeamSizeLocal({ teamSizes: [4, 6] }, () => 0.99)).toBe(6);
-		expect(resolveTeamSizeLocal({}, () => 0)).toBe(3);
-		expect(resolveTeamSizeLocal({}, () => 0.99)).toBe(6);
-	});
-	it('resolves the minimum number of races', () => {
-		expect(resolveRaceMinimumLocal({ raceMinimum: 1, teamRace: [] }, 5)).toBe(1);
-		expect(resolveRaceMinimumLocal({ teamRace: [1, 3, 5, 7] }, 6, () => 0.99)).toBe(4);
-		expect(resolveRaceMinimumLocal({ teamRace: [1, 3, 5, 7] }, 3, () => 0)).toBe(2);
-		expect(resolveRaceMinimumLocal({ teamRace: [13] }, 4, () => 0.5)).toBe(1);
 	});
 });

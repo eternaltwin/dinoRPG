@@ -66,7 +66,7 @@ import { formatDateTime } from '../../utils/formatDateTime';
 import { raceList } from '../../constants/race.js';
 import { formatNumber } from '@drpg/core/utils/string';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { raceNameKey, safeValidateTeam, toTeamDinoz } from '../../utils/dojo.js';
+import { formatArchetypeParams, safeValidateTeam, toTeamDinoz } from '../../utils/dojo.js';
 import TournamentArchetype from './TournamentArchetype.vue';
 
 export default defineComponent({
@@ -164,14 +164,10 @@ export default defineComponent({
 	methods: {
 		/** Race lists are shown as race names, the other parameters as is */
 		formatErrorParams(params?: Record<string, unknown>): Record<string, unknown> {
-			if (!params) return {};
-			return Object.fromEntries(
-				Object.entries(params).map(([key, value]) => [
-					key,
-					Array.isArray(value)
-						? value.map(v => (typeof v === 'number' ? this.$t(raceNameKey(v)) : String(v))).join(', ')
-						: value
-				])
+			return formatArchetypeParams(
+				params,
+				key => this.$t(key),
+				key => this.$te(key) || this.$te(key, 'fr')
 			);
 		},
 		goToPage(pageName: string, params?: string) {

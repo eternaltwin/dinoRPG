@@ -762,7 +762,8 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 						nbrUpWater: true,
 						nbrUpLightning: true,
 						nbrUpAir: true,
-						skills: { select: { skillId: true } }
+						skills: { select: { skillId: true } },
+						status: { select: { statusId: true } }
 					}
 				},
 				Dojo: {

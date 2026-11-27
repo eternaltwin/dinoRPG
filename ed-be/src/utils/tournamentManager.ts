@@ -34,9 +34,9 @@ import {
 	ArchetypeContext,
 	MetaArchetypeKey,
 	nextMeta,
-	rollCandidates,
-	TEAM_SIZE_MAX,
-	TEAM_SIZE_MIN
+	resolveRaceMinimum,
+	resolveTeamSize,
+	rollCandidates
 } from '@drpg/core/models/dojo/tournamentArchetypes';
 import { DOJO_QUALIFICATION_DAYS } from '@drpg/core/utils/dojoConstants';
 import { getFeaturedRaceOfDay } from '@drpg/core/utils/dojoQualif';
@@ -58,44 +58,9 @@ import {
 	describeRules,
 	getAllRaces,
 	subArchetypeDescription,
-	subArchetypeName
+	subArchetypeName,
+	subDescriptionTextParams
 } from './tournamentArchetypeText.js';
-
-/**
- * Team size of a rolled sub: imposed, else picked among the sizes it allows, else drawn between TEAM_SIZE_MIN and
- * TEAM_SIZE_MAX.
- *
- * TODO(tid-rework integration): temporary local helper, replace by Lot B's `resolveTeamSize(roll, random)` from
- * core/src/models/dojo/tournamentArchetypes.mts.
- */
-export function resolveTeamSizeLocal(
-	roll: Pick<ArchetypeCandidate, 'teamSize' | 'teamSizes'>,
-	random: () => number = Math.random
-): number {
-	if (roll.teamSize) return roll.teamSize;
-	if (roll.teamSizes && roll.teamSizes.length > 0) {
-		return roll.teamSizes[Math.floor(random() * roll.teamSizes.length)];
-	}
-	return TEAM_SIZE_MIN + Math.floor(random() * (TEAM_SIZE_MAX - TEAM_SIZE_MIN + 1));
-}
-
-/**
- * Minimum number of races of a rolled sub: imposed, else drawn between 2 and the team size, capped by the number of
- * authorized races (at least 1).
- *
- * TODO(tid-rework integration): temporary local helper, replace by Lot B's
- * `resolveRaceMinimum(roll, teamSize, random)` from core/src/models/dojo/tournamentArchetypes.mts.
- */
-export function resolveRaceMinimumLocal(
-	roll: Pick<ArchetypeCandidate, 'raceMinimum' | 'teamRace'>,
-	teamSize: number,
-	random: () => number = Math.random
-): number {
-	if (roll.raceMinimum) return roll.raceMinimum;
-	const max = Math.max(1, Math.min(teamSize, roll.teamRace.length));
-	const min = Math.min(2, max);
-	return min + Math.floor(random() * (max - min + 1));
-}
 
 /** Last resort when the catalogue gives no candidate: every race, no rule. */
 const DEFAULT_ARCHETYPE: ArchetypeCandidate = { meta: 'ffa', key: 'ffa_open', teamRace: getAllRaces(), rules: {} };
@@ -842,8 +807,8 @@ class TournamentManager {
 
 		// Common parameters, drawn whatever the sub
 		const teamRace = chosen.teamRace;
-		const teamSize = resolveTeamSizeLocal(chosen);
-		const raceMinimum = resolveRaceMinimumLocal(chosen, teamSize);
+		const teamSize = resolveTeamSize(chosen);
+		const raceMinimum = resolveRaceMinimum(chosen, teamSize);
 		const levelLimit = await getNewLevelLimits(teamRace);
 		const poison = getRandomInteger(0, 1) === 0;
 		const featuredRaces = shuffle(getAllRaces()).slice(0, DOJO_QUALIFICATION_DAYS);
@@ -902,7 +867,7 @@ class TournamentManager {
 
 			newsParams[lang] = {
 				type: archetypeName(chosen.meta, chosen.key, lang),
-				description: subArchetypeDescription(chosen.key, lang),
+				description: subArchetypeDescription(chosen.key, lang, subDescriptionTextParams(chosen, lang)),
 				subRules: subRules,
 				voteResult: voteResult,
 				endQualif: dayjs(endQualif).locale(lang).format('ddd DD MMMM HH:mm'),

@@ -4,6 +4,8 @@ import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import {
+	describeRules as coreDescribeRules,
+	subDescriptionParams,
 	TeamDinoz,
 	TeamValidationError,
 	TournamentRules,
@@ -43,7 +45,8 @@ export function toTeamDinoz(dinoz: DinozFiche): TeamDinoz {
 		nbrUpWater: dinoz.nbrUpWater,
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir,
-		skills: dinoz.skills.map(s => ({ skillId: s.skillId }))
+		skills: dinoz.skills.map(s => ({ skillId: s.skillId })),
+		status: dinoz.status.map(s => ({ statusId: s.statusId }))
 	};
 }
 
@@ -65,80 +68,84 @@ export function safeValidateTeam(
 export type RuleLine = {
 	/** Translation key, under tournament.archetype.rule.* */
 	key: string;
-	params: Record<string, string | number>;
+	params: Record<string, unknown>;
 };
 
-/** Value of a rule rendered as a parameter: elements as `:fire:` icons, skills and races translated. */
 type Translator = (key: string) => string;
 
-function elementParam(element: number): string {
-	return `:${ElementNames[element]}:`;
-}
-
-function skillParam(skill: Skill, t: Translator): string {
-	const details = skillList[skill];
-	return details ? t(`skill.name.${details.name}`) : String(skill);
-}
-
-function racesParam(races: RaceEnum[], t: Translator): string {
-	return races.map(r => t(raceNameKey(r))).join(', ');
-}
-
 /**
- * @summary One line per rule present in `rules`, with its translation key and parameters.
- * String-valued rules (demon, summon) use `tournament.archetype.rule.<field>.<value>` when that key exists.
- * Every line also gets a generic `value` parameter.
+ * @summary Formats the raw params of the archetype texts (sub descriptions, rules, errors), same convention as the
+ * backend `formatArchetypeParams`: race ids → names, element → `:fire:` icon, skill id → name.
  */
+export function formatArchetypeParams(
+	params: Record<string, unknown> | undefined,
+	t: Translator,
+	exists: (key: string) => boolean
+): Record<string, unknown> {
+	const raceName = (race: unknown) => t(raceNameKey(race as number));
+	const formatted: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(params ?? {})) {
+		switch (key) {
+			case 'race':
+				formatted[key] = raceName(value);
+				break;
+			case 'races':
+			case 'forbidden':
+			case 'required':
+				formatted[key] = Array.isArray(value) ? value.map(raceName).join(', ') : value;
+				break;
+			case 'element':
+				formatted[key] = `:${ElementNames[value as number]}:`;
+				break;
+			case 'skill': {
+				const own = `tournament.archetype.skill.${value}`;
+				const details = skillList[value as Skill];
+				formatted[key] = exists(own) ? t(own) : details ? t(`skill.name.${details.name}`) : String(value);
+				break;
+			}
+			case 'sizes':
+				formatted[key] = Array.isArray(value) ? value.join(', ') : value;
+				break;
+			default:
+				formatted[key] = value;
+		}
+	}
+	return formatted;
+}
+
+/** @summary One line per rule present in `rules` (keys from core describeRules), with formatted params. */
 export function describeRules(
 	rules: TournamentRules | null | undefined,
 	t: Translator,
 	exists: (key: string) => boolean
 ): RuleLine[] {
-	if (!rules) return [];
-	const lines: RuleLine[] = [];
-	const base = 'tournament.archetype.rule';
-	for (const [field, raw] of Object.entries(rules) as [keyof TournamentRules, unknown][]) {
-		if (raw === undefined || raw === null || raw === false) continue;
-		if (Array.isArray(raw) && raw.length === 0) continue;
-		let key = `${base}.${field}`;
-		let params: Record<string, string | number> = {};
-		switch (field) {
-			case 'elementMin': {
-				const rule = raw as NonNullable<TournamentRules['elementMin']>;
-				params = { element: elementParam(rule.element), min: rule.min, value: rule.min };
-				break;
-			}
-			case 'elementDominant':
-				params = { element: elementParam(raw as number), value: elementParam(raw as number) };
-				break;
-			case 'skillRequired':
-			case 'skillForbidden':
-				params = { skill: skillParam(raw as Skill, t), value: skillParam(raw as Skill, t) };
-				break;
-			case 'requireOneOf':
-			case 'forbiddenRaces':
-				params = { races: racesParam(raw as RaceEnum[], t), value: racesParam(raw as RaceEnum[], t) };
-				break;
-			case 'specialistPct':
-			case 'balancedPct':
-			case 'levelBudgetPct':
-				params = { pct: raw as number, value: raw as number };
-				break;
-			case 'etherMin':
-				params = { min: raw as number, value: raw as number };
-				break;
-			case 'levelSpread':
-				params = { spread: raw as number, max: raw as number, value: raw as number };
-				break;
-			case 'demon':
-			case 'summon':
-				if (exists(`${key}.${raw}`)) key = `${key}.${raw}`;
-				params = { value: raw as string };
-				break;
-			default:
-				params = typeof raw === 'number' || typeof raw === 'string' ? { value: raw } : {};
-		}
-		lines.push({ key, params });
-	}
-	return lines;
+	return coreDescribeRules(rules).map(rule => ({
+		key: `tournament.archetype.rule.${rule.key}`,
+		params: formatArchetypeParams(rule.params, t, exists)
+	}));
+}
+
+/** @summary Formatted params of the description of the sub archetype of a tournament. */
+export function describeSubParams(
+	info: {
+		metaArchetype?: string;
+		formatName?: string;
+		teamRace: number[];
+		teamSize?: number;
+		rules?: TournamentRules | null;
+	},
+	t: Translator,
+	exists: (key: string) => boolean
+): Record<string, unknown> {
+	return formatArchetypeParams(
+		subDescriptionParams({
+			meta: info.metaArchetype ?? '',
+			key: info.formatName ?? '',
+			teamRace: info.teamRace as RaceEnum[],
+			teamSize: info.teamSize,
+			rules: info.rules ?? {}
+		}),
+		t,
+		exists
+	);
 }

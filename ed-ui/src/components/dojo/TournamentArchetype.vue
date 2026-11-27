@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { DojoTournamentInfo } from '../../services/DojoService.js';
-import { describeRules, RuleLine } from '../../utils/dojo.js';
+import { describeRules, describeSubParams, RuleLine } from '../../utils/dojo.js';
 
 export default defineComponent({
 	name: 'TournamentArchetype',
@@ -53,7 +53,12 @@ export default defineComponent({
 		},
 		subDescription(): string | null {
 			const key = `tournament.archetype.sub.${this.info.formatName}.description`;
-			return this.has(key) ? this.$t(key) : null;
+			return this.has(key)
+				? this.$t(
+						key,
+						describeSubParams(this.info, k => this.$t(k), this.has)
+					)
+				: null;
 		},
 		ruleLines(): RuleLine[] {
 			return describeRules(this.info.rules, key => this.$t(key), this.has);
