@@ -9,6 +9,30 @@ import {
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { QualifGain } from '@drpg/core/utils/dojoQualif';
+import { MetaArchetypeKey, TournamentRules } from '@drpg/core/models/dojo/tournamentArchetypes';
+
+/** Tournament registration parameters (GET /dojo/tournament/) */
+export type DojoTournamentInfo = {
+	id: string;
+	teamRace: number[];
+	teamSize: number;
+	levelLimit: number;
+	raceMinimum?: number;
+	poison?: boolean;
+	/** Key of the sub archetype */
+	formatName?: string;
+	metaArchetype?: MetaArchetypeKey;
+	rules?: TournamentRules | null;
+};
+
+export type QualifFightResult = {
+	fight: DojoFightResume;
+	stats: FullFightStats;
+	challengeWon: boolean;
+	victory: boolean;
+	gain?: QualifGain;
+};
 
 export const DojoService = {
 	async getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState | null }> {
@@ -41,10 +65,7 @@ export const DojoService = {
 		});
 		return res.data;
 	},
-	async fightChallenge(
-		myDinoz: number,
-		opponent: number
-	): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
+	async fightChallenge(myDinoz: number, opponent: number): Promise<QualifFightResult> {
 		const res = await http().put(`/dojo/challenge`, {
 			myDinoz,
 			opponent
@@ -57,7 +78,7 @@ export const DojoService = {
 		});
 		return res.data;
 	},
-	async getTournamentInfo(): Promise<{ id: string; teamRace: number[]; teamSize: number; levelLimit: number }> {
+	async getTournamentInfo(): Promise<DojoTournamentInfo> {
 		const res = await http().get(`/dojo/tournament/`);
 		return res.data;
 	},

@@ -11,6 +11,7 @@
 			})
 		"
 	></DZDisclaimer>
+	<TournamentArchetype v-if="tournamentState && tournamentInfo" :info="tournamentInfo" />
 	<div
 		class="tournament"
 		v-if="tournamentState && tournamentInfo && (!tournamentTeam || tournamentTeam.teamCount === 0)"
@@ -24,7 +25,14 @@
 				})
 			"
 		></DZDisclaimer>
-		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
+		<SelectDinoz
+			:dinozList="myDinoz"
+			:selectLimit="tournamentInfo.teamSize"
+			:minLimit="tournamentInfo.teamSize"
+			:ruleError="ruleError"
+			@change="selection = $event"
+			@validate="composeMyTeam"
+		></SelectDinoz>
 	</div>
 	<div class="df aic fdc" v-if="tournamentInfo && tournamentTeam">
 		<div class="df jcc fww" v-if="myTeam.length > 0">
@@ -57,6 +65,9 @@ import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import { formatDateTime } from '../../utils/formatDateTime';
 import { raceList } from '../../constants/race.js';
 import { formatNumber } from '@drpg/core/utils/string';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { formatArchetypeParams, safeValidateTeam, toTeamDinoz } from '../../utils/dojo.js';
+import TournamentArchetype from './TournamentArchetype.vue';
 
 export default defineComponent({
 	name: 'TournamentInfo',
@@ -85,6 +96,24 @@ export default defineComponent({
 			}
 			return dojoStore().getState;
 		},
+		/** First rule broken by the selected team (translated), null when valid or when the check cannot run */
+		ruleError(): string | null {
+			const info = this.tournamentInfo;
+			if (!info || this.selection.length < info.teamSize) return null;
+			const team = this.selection
+				.map(id => useDinozStore().getDinozList.find(d => d.id === id))
+				.filter((d): d is DinozFiche => d !== undefined)
+				.map(toTeamDinoz);
+			const error = safeValidateTeam(team, {
+				teamSize: info.teamSize,
+				raceMinimum: info.raceMinimum ?? 1,
+				teamRace: info.teamRace,
+				levelLimit: info.levelLimit,
+				rules: info.rules ?? {}
+			});
+			if (!error) return null;
+			return this.$t(`tournament.archetype.error.${error.key}`, this.formatErrorParams(error.params));
+		},
 		myDinoz() {
 			return useDinozStore()
 				.getDinozList.filter(
@@ -102,7 +131,8 @@ export default defineComponent({
 						id: d.id,
 						name: d.name,
 						display: d.display,
-						level: d.level
+						level: d.level,
+						raceId: d.race.raceId
 					};
 				});
 		},
@@ -120,16 +150,26 @@ export default defineComponent({
 		DinozWithoutFlash,
 		DZButton,
 		SelectDinoz,
-		DZDisclaimer
+		DZDisclaimer,
+		TournamentArchetype
 	},
 	data() {
 		return {
+			selection: [] as number[],
 			raceList: raceList,
 			playerStore: playerStore(),
 			localStore: localStore()
 		};
 	},
 	methods: {
+		/** Race lists are shown as race names, the other parameters as is */
+		formatErrorParams(params?: Record<string, unknown>): Record<string, unknown> {
+			return formatArchetypeParams(
+				params,
+				key => this.$t(key),
+				key => this.$te(key) || this.$te(key, 'fr')
+			);
+		},
 		goToPage(pageName: string, params?: string) {
 			this.$router.push({ name: pageName, params: { id: params } });
 		},

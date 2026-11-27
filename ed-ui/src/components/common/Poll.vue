@@ -12,7 +12,7 @@
 			<div class="progress-bar" :style="{ width: getPercentage(option.id) + '%' }"></div>
 			<div class="vote-content">
 				<div class="vote-icon"></div>
-				<div class="vote-text">{{ option.optionText }}</div>
+				<div class="vote-text">{{ optionLabel(option) }}</div>
 				<div class="vote-stats" v-if="!poll.isActive">
 					<span class="vote-count">{{ getPercentage(option.id).toFixed(2) }} %</span>
 				</div>
@@ -33,6 +33,9 @@ import { NewsService } from '../../services';
 import { errorHandler } from '../../utils';
 import { localStore, playerStore } from '../../store';
 import { returnCode } from '@drpg/core/models/enums/returnCode';
+
+/** Poll options may carry a label per language (`Record<Lang, string>`) */
+type PollOptionWithLabels = PollPublic['options'][number] & { labels?: Partial<Record<string, string>> | null };
 
 export default defineComponent({
 	name: 'Poll',
@@ -59,6 +62,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		/** Translated label of the option when the poll provides one (e.g. TID vote), else its text */
+		optionLabel(option: PollOptionWithLabels): string {
+			const lang = this.localStore.getLanguage;
+			return (lang && option.labels?.[lang]) || option.optionText;
+		},
 		selectOption(optionId: number) {
 			this.selectedOption = optionId;
 		},

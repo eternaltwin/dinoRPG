@@ -4,9 +4,15 @@
 			<div
 				v-for="dinoz in dinozList"
 				:key="dinoz.dinoz.id"
-				:class="['dinoz-button', { fighted: dinoz.fighted }]"
+				:class="['dinoz-button', { fighted: dinoz.fighted, featured: isFeatured(dinoz.dinoz) }]"
 				@click="toggleDinoz(dinoz)"
 			>
+				<span
+					v-if="isFeatured(dinoz.dinoz)"
+					class="featured-badge"
+					v-tippy="{ content: $t('dojo.ui.featuredRace.dinozTip'), theme: 'small' }"
+					>★</span
+				>
 				<DinozWithoutFlash :display="dinoz.dinoz.display" flip :life="1" />
 
 				<div class="textbox">
@@ -19,9 +25,15 @@
 			<div
 				v-for="dinoz in ennemyList"
 				:key="dinoz.dinoz.id"
-				:class="['dinoz-button', { fighted: dinoz.achieved }]"
+				:class="['dinoz-button', { fighted: dinoz.achieved, featured: isFeatured(dinoz.dinoz) }]"
 				@click="toggleEnnemyDinoz(dinoz)"
 			>
+				<span
+					v-if="isFeatured(dinoz.dinoz)"
+					class="featured-badge"
+					v-tippy="{ content: $t('dojo.ui.featuredRace.opponentTip'), theme: 'small' }"
+					>★</span
+				>
 				<img
 					v-if="dinoz.fighted && !dinoz.achieved"
 					class="delete"
@@ -46,6 +58,7 @@ import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
+import { raceIdFromDisplay } from '../../utils/dojo.js';
 
 export default defineComponent({
 	name: 'CarousselDinoz',
@@ -67,10 +80,19 @@ export default defineComponent({
 			type: Object as PropType<
 				(Pick<DojoTeam, 'fighted'> & { dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'> })[]
 			>
+		},
+		/** Race of the day: its dinoz are highlighted */
+		featuredRace: {
+			type: Number as PropType<number | null>,
+			default: null
 		}
 	},
 	emits: ['validate', 'refresh'],
 	methods: {
+		isFeatured(dinoz: Pick<Dinoz, 'display'> & { raceId?: number }): boolean {
+			if (this.featuredRace === null) return false;
+			return (dinoz.raceId ?? raceIdFromDisplay(dinoz.display)) === this.featuredRace;
+		},
 		toggleDinoz(dinoz: Pick<DojoTeam, 'fighted'> & { dinoz: Pick<Dinoz, 'id'> }) {
 			if (dinoz.fighted) return;
 			this.$emit('validate', dinoz.dinoz.id);
@@ -157,6 +179,19 @@ export default defineComponent({
 	}
 	.fighted {
 		filter: grayscale(100%);
+	}
+	.featured {
+		border-color: #ffd700;
+		box-shadow: 0 0 6px #ffd700;
+
+		.featured-badge {
+			position: absolute;
+			left: 4px;
+			top: 2px;
+			z-index: 1;
+			color: #ffd700;
+			text-shadow: 0 0 2px #4d2713;
+		}
 	}
 }
 </style>

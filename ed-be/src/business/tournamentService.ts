@@ -1,3 +1,6 @@
+import { TournamentRules, validateTeamAgainstRules } from '@drpg/core/models/dojo/tournamentArchetypes';
+import { ElementNames } from '@drpg/core/models/enums/ElementType';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { prisma } from '../prisma.js';
 import { Request } from 'express';
 import { auth, getPlayerDinozInformationForTeam } from '../dao/playerDao.js';
@@ -11,6 +14,44 @@ import weightedRandom from '../utils/fight/weightedRandom.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { getLatestTournament } from '../dao/tournamentDao.js';
 import { invalidateTournamentCache } from '../utils/tournament.cache.js';
+
+/**
+ * @summary Format the raw parameters of an archetype text (rule, error, sub description) for display:
+ * race ids → race names, element id → element name, skill id → skill name, lists joined with commas.
+ */
+export function formatArchetypeParams(
+	params: Record<string, unknown> | undefined,
+	user?: Parameters<typeof translate>[1]
+) {
+	const raceName = (race: unknown) => translate(`race.${race}`, user);
+	const formatted: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(params ?? {})) {
+		switch (key) {
+			case 'race':
+				formatted[key] = raceName(value);
+				break;
+			case 'races':
+			case 'forbidden':
+			case 'required':
+				formatted[key] = (value as unknown[]).map(raceName).join(', ');
+				break;
+			case 'element':
+				formatted[key] = translate(`tournament.archetype.element.${ElementNames[value as number]}`, user);
+				break;
+			case 'skill': {
+				const name = skillList[value as Skill]?.name ?? String(value);
+				formatted[key] = translate(`tournament.archetype.skill.${value}`, user, { defaultValue: name });
+				break;
+			}
+			case 'sizes':
+				formatted[key] = (value as unknown[]).join(', ');
+				break;
+			default:
+				formatted[key] = value;
+		}
+	}
+	return formatted;
+}
 
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
@@ -27,11 +68,6 @@ export async function createTournamentTeam(req: Request) {
 	// This shouldn't happen
 	if (!latestTournament) {
 		throw new Error('No tournament found.');
-	}
-
-	// Check if player select the right number of dinoz
-	if (teamIds.length !== latestTournament.teamSize) {
-		throw new ExpectedError(translate('dojo.wrongDinozQuantity', authed, { qty: latestTournament.teamSize }));
 	}
 
 	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);
@@ -53,28 +89,23 @@ export async function createTournamentTeam(req: Request) {
 
 	const playerFilteredDinoz = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
 
-	const authorizedRaces = latestTournament.teamRace.split(',').map(r => parseInt(r)) as number[];
-
-	// Check if dinoz races are authorized for this tournament
-	if (!playerFilteredDinoz.every(d => authorizedRaces.includes(d.raceId))) {
-		throw new ExpectedError(translate('dojo.wrongRace', authed));
-	}
-
-	//Check if dinoz are under max level
-	if (playerFilteredDinoz.some(d => d.level > latestTournament.levelLimit)) {
-		throw new ExpectedError(translate('dojo.dinozTooHighLevel', authed));
-	}
-
-	// Check filtered dinoz is equal to asked dinoz (shouldn't be possible)
+	// Check filtered dinoz is equal to asked dinoz (duplicated ids)
 	if (playerFilteredDinoz.length !== teamIds.length) {
-		throw new ExpectedError('Filtered dinoz is not enought');
+		throw new ExpectedError(translate('dojo.wrongDinozQuantity', authed, { qty: latestTournament.teamSize }));
 	}
 
-	// Check if number of race is at least equal to the limit
-	const playerRaces = new Set<number>();
-	playerFilteredDinoz.forEach(d => playerRaces.add(d.raceId));
-	if (playerRaces.size < latestTournament.raceMinimum) {
-		throw new ExpectedError(translate('dojo.notEnoughDiversity', authed, { qty: latestTournament.raceMinimum }));
+	// Team size, races, level limit, race minimum and the rules of the tournament archetype
+	const error = validateTeamAgainstRules(playerFilteredDinoz, {
+		teamSize: latestTournament.teamSize,
+		raceMinimum: latestTournament.raceMinimum,
+		teamRace: latestTournament.teamRace.split(',').map(r => parseInt(r)) as RaceEnum[],
+		levelLimit: latestTournament.levelLimit,
+		rules: (latestTournament.rules ?? {}) as TournamentRules
+	});
+	if (error) {
+		throw new ExpectedError(
+			translate(`tournament.archetype.error.${error.key}`, authed, formatArchetypeParams(error.params, authed))
+		);
 	}
 
 	await prisma.tournamentTeam.create({
@@ -169,7 +200,11 @@ export async function tournamentInfo(req: Request) {
 	if (!latestTournament) {
 		throw new ExpectedError('No tournament found');
 	}
-	return { ...latestTournament, teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)) };
+	return {
+		...latestTournament,
+		teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d)),
+		rules: latestTournament.rules as TournamentRules
+	};
 }
 
 export async function getTournamentFightsToShow(

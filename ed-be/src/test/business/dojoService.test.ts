@@ -12,15 +12,22 @@ vi.mock('../../dao/archiveDao.js', () => ({
 	isClanChampionshipFightReplayable: vi.fn().mockResolvedValue(false),
 	viewFight: vi.fn()
 }));
-vi.mock('../../dao/dinozDao.js', () => ({ getDinozForDojoFight: vi.fn(), getRandomDinozFromLevel: vi.fn() }));
+vi.mock('../../dao/dinozDao.js', () => ({
+	getDinozForDojoFight: vi.fn(),
+	getRandomDinozFromLevel: vi.fn(),
+	getRandomDinozOfRaceFromLevel: vi.fn(),
+	getRandomPoolDinoz: vi.fn()
+}));
 vi.mock('../../dao/dojoDao.js', () => ({
 	addOpponent: vi.fn(),
 	cleanCurrentOpponentTeam: vi.fn(),
 	createMyDojo: vi.fn(),
 	getMyDojoDao: vi.fn(),
 	getMyTeamDao: vi.fn(),
+	getRecentTournamentIds: vi.fn(),
 	incrementDailyReset: vi.fn(),
-	replaceMyTeamDao: vi.fn()
+	replaceMyTeamDao: vi.fn(),
+	upsertQualifPool: vi.fn()
 }));
 vi.mock('../../dao/notificationDao.js', () => ({ createNotification: vi.fn() }));
 vi.mock('../../dao/playerDao.js', () => ({
@@ -59,7 +66,12 @@ import { prisma } from '../../prisma.js';
 import * as playerDao from '../../dao/playerDao.js';
 import * as dojoDao from '../../dao/dojoDao.js';
 import * as archiveDao from '../../dao/archiveDao.js';
-import { getDinozForDojoFight, getRandomDinozFromLevel } from '../../dao/dinozDao.js';
+import {
+	getDinozForDojoFight,
+	getRandomDinozFromLevel,
+	getRandomDinozOfRaceFromLevel,
+	getRandomPoolDinoz
+} from '../../dao/dinozDao.js';
 import { getPlayerPositionDojoDAO } from '../../dao/rankingDao.js';
 import { getLatestTournament } from '../../dao/tournamentDao.js';
 import TournamentManager from '../../utils/tournamentManager.js';
@@ -103,6 +115,9 @@ beforeEach(() => {
 		}
 		return [];
 	});
+	vi.mocked(dojoDao.getRecentTournamentIds).mockResolvedValue(['tt', 'prev']);
+	vi.mocked(getRandomPoolDinoz).mockResolvedValue(null);
+	vi.mocked(getRandomDinozOfRaceFromLevel).mockResolvedValue(null);
 });
 
 describe('getDojo', () => {
@@ -124,7 +139,7 @@ describe('getDojo', () => {
 });
 
 describe('createMyTeam', () => {
-	const dinozList = Array.from({ length: 5 }, (_, i) => ({ id: i + 1, level: 20 }));
+	const dinozList = Array.from({ length: 5 }, (_, i) => ({ id: i + 1, level: 20, raceId: i + 1 }));
 	beforeEach(() => {
 		vi.mocked(dojoDao.getMyDojoDao).mockResolvedValue({ id: 'd1', playerId: 'p1', dailyReset: 0 } as never);
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({ dinoz: dinozList } as never);
@@ -165,14 +180,119 @@ describe('createMyTeam', () => {
 	it('throws when a dinoz is too low level', async () => {
 		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
 			dinoz: [
-				{ id: 1, level: 5 },
-				{ id: 2, level: 20 },
-				{ id: 3, level: 20 },
-				{ id: 4, level: 20 },
-				{ id: 5, level: 20 }
+				{ id: 1, level: 5, raceId: 1 },
+				{ id: 2, level: 20, raceId: 2 },
+				{ id: 3, level: 20, raceId: 3 },
+				{ id: 4, level: 20, raceId: 4 },
+				{ id: 5, level: 20, raceId: 5 }
 			]
 		} as never);
 		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dinozTooLowLevel');
+	});
+	it('refuses a team of 4 races', async () => {
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: [1, 2, 3, 4, 4].map((raceId, i) => ({ id: i + 1, level: 20, raceId }))
+		} as never);
+		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dojo.qualif.notEnoughRaces');
+		expect(dojoDao.replaceMyTeamDao).not.toHaveBeenCalled();
+		expect(dojoDao.upsertQualifPool).not.toHaveBeenCalled();
+	});
+	it('counts a demon and a normal dinoz of the same race once', async () => {
+		// Dinoz 5 is the demon of race 4: it keeps the raceId of its race
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: [
+				{ id: 1, level: 20, raceId: 1 },
+				{ id: 2, level: 20, raceId: 2 },
+				{ id: 3, level: 20, raceId: 3 },
+				{ id: 4, level: 20, raceId: 4 },
+				{ id: 5, level: 30, raceId: 4 }
+			]
+		} as never);
+		await expect(createMyTeam(req({ team: [1, 2, 3, 4, 5] }))).rejects.toThrow('dojo.qualif.notEnoughRaces');
+	});
+	it('accepts 5 races and registers the team in the pool of the tournament', async () => {
+		await createMyTeam(req({ team: [1, 2, 3, 4, 5] }));
+		expect(dojoDao.upsertQualifPool).toHaveBeenCalledWith(
+			'tt',
+			dinozList.map(d => ({ id: d.id, raceId: d.raceId, level: d.level }))
+		);
+	});
+});
+
+describe('opponent picking', () => {
+	beforeEach(() => {
+		vi.mocked(dojoDao.getMyDojoDao).mockResolvedValue({ id: 'd1', playerId: 'p1', dailyReset: 0 } as never);
+		vi.mocked(dojoDao.replaceMyTeamDao).mockResolvedValue({ id: 'team' } as never);
+	});
+	const pickedOpponents = () => [...vi.mocked(dojoDao.replaceMyTeamDao).mock.calls[0][1]].sort((a, b) => a - b);
+	it('draws one opponent of the same race per race, from the highest dinoz of each race', async () => {
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: [
+				{ id: 1, level: 20, raceId: 1 },
+				{ id: 2, level: 25, raceId: 1 },
+				{ id: 3, level: 30, raceId: 2 },
+				{ id: 4, level: 15, raceId: 3 },
+				{ id: 5, level: 40, raceId: 4 },
+				{ id: 6, level: 12, raceId: 5 }
+			]
+		} as never);
+		const excludedAtCall: number[][] = [];
+		vi.mocked(getRandomPoolDinoz).mockImplementation(async (raceId: number, _level, exclude: number[]) => {
+			excludedAtCall.push([...exclude]);
+			return { id: 100 + raceId };
+		});
+		await createMyTeam(req({ team: [1, 2, 3, 4, 5, 6] }));
+		const calls = vi.mocked(getRandomPoolDinoz).mock.calls;
+		// Slots are ordered by level: race 4 (40), race 2 (30), race 1 (25), race 3 (15), race 5 (12)
+		expect(calls.map(c => [c[0], c[1]])).toEqual([
+			[4, 40],
+			[2, 30],
+			[1, 25],
+			[3, 15],
+			[5, 12]
+		]);
+		// Current and previous tournaments, the player id, the team and the opponents already picked are excluded
+		expect(calls.every(c => c[3] === 'p1' && c[4].join() === 'tt,prev')).toBe(true);
+		expect(excludedAtCall[0]).toEqual([1, 2, 3, 4, 5, 6]);
+		expect(excludedAtCall[4]).toEqual([1, 2, 3, 4, 5, 6, 104, 102, 101, 103]);
+		expect(getRandomDinozOfRaceFromLevel).not.toHaveBeenCalled();
+		expect(getRandomDinozFromLevel).not.toHaveBeenCalled();
+		expect(pickedOpponents()).toEqual([101, 102, 103, 104, 105]);
+	});
+	it('keeps 5 races drawn at random when the team has more', async () => {
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: Array.from({ length: 7 }, (_, i) => ({ id: i + 1, level: 20, raceId: i + 1 }))
+		} as never);
+		vi.mocked(getRandomPoolDinoz).mockImplementation(async (raceId: number) => ({ id: 100 + raceId }));
+		await createMyTeam(req({ team: [1, 2, 3, 4, 5, 6, 7] }));
+		const races = vi.mocked(getRandomPoolDinoz).mock.calls.map(c => c[0]);
+		expect(races).toHaveLength(5);
+		expect(new Set(races).size).toBe(5);
+	});
+	it('falls back to the same race in the whole game, then to any race', async () => {
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: Array.from({ length: 5 }, (_, i) => ({ id: i + 1, level: 20 + i, raceId: i + 1 }))
+		} as never);
+		// Race 1 comes from the pool, race 2 from the whole game, the other ones from any race
+		vi.mocked(getRandomPoolDinoz).mockImplementation(async (raceId: number) => (raceId === 1 ? { id: 201 } : null));
+		vi.mocked(getRandomDinozOfRaceFromLevel).mockImplementation(async (raceId: number) =>
+			raceId === 2 ? { id: 202 } : null
+		);
+		let next = 300;
+		vi.mocked(getRandomDinozFromLevel).mockImplementation(async () => ({ id: next++ }) as never);
+		await createMyTeam(req({ team: [1, 2, 3, 4, 5] }));
+		expect(getRandomPoolDinoz).toHaveBeenCalledTimes(5);
+		expect(getRandomDinozOfRaceFromLevel).toHaveBeenCalledTimes(4);
+		expect(getRandomDinozFromLevel).toHaveBeenCalledTimes(3);
+		expect(pickedOpponents()).toEqual([201, 202, 300, 301, 302]);
+	});
+	it('creates no opponent when a slot cannot be filled', async () => {
+		vi.mocked(playerDao.getPlayerDinozInformationForTeam).mockResolvedValue({
+			dinoz: Array.from({ length: 5 }, (_, i) => ({ id: i + 1, level: 20, raceId: i + 1 }))
+		} as never);
+		vi.mocked(getRandomDinozFromLevel).mockResolvedValue(null);
+		await createMyTeam(req({ team: [1, 2, 3, 4, 5] }));
+		expect(vi.mocked(dojoDao.replaceMyTeamDao).mock.calls[0][1]).toEqual([]);
 	});
 });
 
@@ -189,15 +309,19 @@ describe('getMyTeam', () => {
 		vi.mocked(dojoDao.getMyTeamDao).mockResolvedValue({
 			id: 'd1',
 			playerId: 'p1',
-			team: [{ dinoz: { id: 1, level: 20 } }],
+			team: [{ dinoz: { id: 1, level: 20, raceId: 3 } }],
 			DojoOpponents: [],
 			dailyReset: 0
 		} as never);
-		vi.mocked(dojoDao.cleanCurrentOpponentTeam).mockResolvedValue([{ dinoz: { id: 1, level: 20 } }] as never);
+		vi.mocked(dojoDao.cleanCurrentOpponentTeam).mockResolvedValue([
+			{ dinoz: { id: 1, level: 20, raceId: 3 } }
+		] as never);
 		vi.mocked(getRandomDinozFromLevel).mockResolvedValue({ id: 50 } as never);
 		vi.mocked(dojoDao.addOpponent).mockResolvedValue({ dinozId: 50 } as never);
 		const result = await getMyTeam(req());
 		expect(result.DojoOpponents).toBeDefined();
+		// The race of the team dinoz drives the draw
+		expect(getRandomPoolDinoz).toHaveBeenCalledWith(3, 20, expect.any(Array), 'p1', ['tt', 'prev']);
 	});
 });
 
@@ -388,16 +512,67 @@ describe('fightChallenge', () => {
 				}) as never
 		);
 		vi.mocked(getDinozForDojoFight).mockResolvedValue([
-			{ id: 1, items: [], maxLife: 100, life: 50, skills: [], playerId: 'p1' }
+			{ id: 1, items: [], maxLife: 100, life: 50, skills: [], playerId: 'p1', level: 20, raceId: 1 }
 		] as never);
 		vi.mocked(calculateFightBetweenPlayers).mockReturnValue(fightResult() as never);
 		vi.mocked(archiveDao.archiveFight).mockResolvedValue({ id: 'arch', result: true } as never);
 		vi.mocked(getLatestTournament).mockResolvedValue({ id: 'tt' } as never);
 	});
+	const fighter = (id: number, playerId: string, dinoz: { level: number; raceId: number }) => [
+		{ id, items: [], maxLife: 100, life: 50, skills: [], playerId, ...dinoz }
+	];
+	const fighters = (attacker: { level: number; raceId: number }, target: { level: number; raceId: number }) =>
+		vi
+			.mocked(getDinozForDojoFight)
+			.mockResolvedValueOnce(fighter(1, 'p1', attacker) as never)
+			.mockResolvedValueOnce(fighter(2, 'p2', target) as never);
+	const featured = (featuredRace: number | null) =>
+		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue({
+			id: 'tt',
+			phase: TournamentPhase.QUALIFICATION,
+			featuredRace
+		} as never);
+	const reputationIncrement = () => txObj.dojo.update.mock.calls[0][0].data.reputation.increment;
 	it('runs a challenge fight and returns the result', async () => {
 		const result = await fightChallenge(req({ myDinoz: 1, opponent: 2 }));
 		expect(result.victory).toBe(true);
 		expect(result.fight).toEqual({ id: 'arch', result: true });
+		// The mocked fight also wins the challenge: 4 + 4
+		expect(result.challengeWon).toBe(true);
+		expect(result.gain).toEqual({ base: 8, levelBonus: 0, featuredMultiplier: 1, total: 8 });
+		expect(reputationIncrement()).toBe(8);
+	});
+	it('multiplies the gain by 1.5 when the attacker is of the race of the day', async () => {
+		featured(1);
+		fighters({ level: 20, raceId: 1 }, { level: 20, raceId: 2 });
+		const result = await fightChallenge(req({ myDinoz: 1, opponent: 2 }));
+		expect(result.gain.featuredMultiplier).toBe(1.5);
+		expect(reputationIncrement()).toBe(12);
+	});
+	it('doubles the gain when both dinoz are of the race of the day', async () => {
+		featured(1);
+		fighters({ level: 20, raceId: 1 }, { level: 20, raceId: 1 });
+		const result = await fightChallenge(req({ myDinoz: 1, opponent: 2 }));
+		expect(result.gain.featuredMultiplier).toBe(2);
+		expect(reputationIncrement()).toBe(16);
+	});
+	it('adds 2 points against a target 12 levels higher', async () => {
+		fighters({ level: 20, raceId: 1 }, { level: 32, raceId: 2 });
+		const result = await fightChallenge(req({ myDinoz: 1, opponent: 2 }));
+		expect(result.gain.levelBonus).toBe(2);
+		expect(reputationIncrement()).toBe(10);
+		// The ranking still uses round(worth × reputation): 1 victory out of 1 fight, 100 + 10
+		expect(txObj.ranking.update).toHaveBeenCalledWith({ where: { playerId: 'p1' }, data: { dojo: 110 } });
+	});
+	it('earns nothing on a defeat', async () => {
+		featured(1);
+		fighters({ level: 20, raceId: 1 }, { level: 40, raceId: 1 });
+		vi.mocked(calculateFightBetweenPlayers).mockReturnValue(fightResult(FightOutcome.DefenderWin) as never);
+		vi.mocked(archiveDao.archiveFight).mockResolvedValue({ id: 'arch', result: false } as never);
+		const result = await fightChallenge(req({ myDinoz: 1, opponent: 2 }));
+		expect(result.victory).toBe(false);
+		expect(result.gain.total).toBe(0);
+		expect(reputationIncrement()).toBe(0);
 	});
 	it('throws when not in qualification', async () => {
 		vi.mocked(TournamentManager.getCurrentTournamentState).mockResolvedValue(null as never);

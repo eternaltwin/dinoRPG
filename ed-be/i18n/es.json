@@ -275,6 +275,9 @@
 		}
 	},
 	"dojo": {
+		"qualif": {
+			"notEnoughRaces": "Tu equipo de clasificación debe incluir al menos {{qty}} razas diferentes."
+		},
 		"inexistantDojo": "El dojo seleccionado no existe.",
 		"dinozNotPlayer": "Un Dino no pertenece al jugador.",
 		"alreadyFighted": "Este Dino ya ha combatido.",
@@ -302,7 +305,7 @@
 		"itemReward": "{{quantity}} {{item}} :item_{{itemId}}:",
 		"qualificationMilestone": "**{{points}} puntos**: {{rewards}}.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}}\n## Arquetipo {{type}}\n{{description}}\nLas fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}{{subRules}}\n{{voteResult}}## Recompensas\nLas recompensas serán las siguientes:\n- Para el primero, un huevo de Tufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y 10 %, 8 % y 6 % del premio en oro, respectivamente.\n- Para los puestos del 5 al 8, una caja rara y 4% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 2% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 1% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.5% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para los jugadores que alcancen hitos con determinada cantidad puntos al final de las clasificatorias! Estos premios son acumulativos por cada vez que el jugador logra cada meta de puntos.\n{{qualificationRewards}}\n\n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -391,7 +394,299 @@
 		"flying": "todas las razas voladoras o reptantes",
 		"anti_poison": "todas las razas que no tienen afinidad con el veneno",
 		"hippo": "únicamente los hippoclamps",
-		"demons": "únicamente demonios"
+		"demons": "únicamente demonios",
+		"vote": {
+			"newsTitle": "Torneo Inter Dojo {{number}}: ¡vota por el formato!",
+			"newsCorpus": "# Votación para el Torneo {{number}}\n¡Las clasificatorias han terminado! Elige el formato del próximo torneo entre las siguientes propuestas:\n\n{{candidates}}\n\nLa votación está abierta hasta el {{endDate}}. El formato se sorteará al crear el torneo: cada propuesta tiene tantas posibilidades como su número de votos más uno.\nEl límite de nivel, el veneno, así como el tamaño de los equipos y el número de razas (cuando el formato no los impone) se sortearán al crear el torneo.",
+			"teamSize": "Los equipos están formados por {{nb}} miembros.",
+			"teamSizes": "Los equipos están formados por {{sizes}} miembros.",
+			"raceMinimum": "Al menos {{races}} razas diferentes por equipo.",
+			"result": "## Resultado de la votación\n{{results}}",
+			"resultLine": "{{name}}: {{votes}} voto(s)"
+		},
+		"archetype": {
+			"meta": {
+				"races": {
+					"name": "Razas",
+					"description": "Quién puede participar: solo se permiten algunas razas o algunos Dinoz."
+				},
+				"restrictive": {
+					"name": "Restrictivos",
+					"description": "Todas las razas, pero con una restricción sobre la construcción de los Dinoz: elementos, habilidades o niveles."
+				},
+				"ffa": {
+					"name": "Todos contra todos",
+					"description": "Todas las razas, sin restricción de raza ni de construcción: solo cambia el tamaño del equipo."
+				},
+				"echo": {
+					"name": "Eco",
+					"description": "Reglas calculadas a partir de los torneos anteriores, para romper los metas establecidos y hacer rotar las razas."
+				}
+			},
+			"sub": {
+				"monorace": {
+					"name": "Raza única",
+					"description": "Solo se permite la raza {{races}}."
+				},
+				"clan": {
+					"name": "Clan",
+					"description": "Todo el equipo debe ser de la misma raza, a elegir."
+				},
+				"duo_race": {
+					"name": "Dúo de razas",
+					"description": "Solo se permiten las razas {{races}}, con al menos un Dinoz de cada una."
+				},
+				"trio_race": {
+					"name": "Trío de razas",
+					"description": "Solo se permiten las razas {{races}}, con al menos un Dinoz de cada una."
+				},
+				"binomes": {
+					"name": "Parejas",
+					"description": "El equipo está formado por parejas de Dinoz de la misma raza (4 o 6 Dinoz)."
+				},
+				"common": {
+					"name": "Razas comunes",
+					"description": "Solo se permiten las razas comunes: {{races}}."
+				},
+				"uncommon": {
+					"name": "Razas poco comunes",
+					"description": "Solo se permiten las razas poco comunes: {{races}}."
+				},
+				"flying": {
+					"name": "Voladores",
+					"description": "Solo se permiten las razas voladoras: {{races}}."
+				},
+				"terrestrial": {
+					"name": "Terrestres",
+					"description": "Solo se permiten las razas terrestres: {{races}}."
+				},
+				"bipede": {
+					"name": "Bípedos",
+					"description": "Solo se permiten las razas bípedas: {{races}}."
+				},
+				"quadrupede": {
+					"name": "Cuadrúpedos",
+					"description": "Solo se permiten las razas cuadrúpedas: {{races}}."
+				},
+				"element_native": {
+					"name": "Nativos elementales",
+					"description": "Solo se permiten las razas nativas del elemento {{element}}: {{races}}."
+				},
+				"demons": {
+					"name": "Demonios",
+					"description": "Solo se permiten los Dinoz demonio."
+				},
+				"no_demon": {
+					"name": "Sin demonio",
+					"description": "Los Dinoz demonio están prohibidos."
+				},
+				"demon_captain": {
+					"name": "Capitán demonio",
+					"description": "El equipo debe tener exactamente un Dinoz demonio."
+				},
+				"follow_the_demon": {
+					"name": "Sigue al demonio",
+					"description": "Un capitán demonio lidera el equipo: exactamente un Dinoz demonio, todos los demás de su misma raza y no demonios."
+				},
+				"element_min": {
+					"name": "Elemento mínimo",
+					"description": "Cada Dinoz debe tener al menos {{min}} subidas en {{element}}."
+				},
+				"element_dominant": {
+					"name": "Elemento dominante",
+					"description": "El elemento más subido de cada Dinoz debe ser {{element}}."
+				},
+				"elemental_purity": {
+					"name": "Pureza elemental",
+					"description": "Todos los Dinoz deben compartir el mismo elemento dominante, a elegir."
+				},
+				"rainbow": {
+					"name": "Arcoíris",
+					"description": "Cada Dinoz debe tener un elemento dominante diferente (de 3 a 5 Dinoz)."
+				},
+				"specialists": {
+					"name": "Especialistas",
+					"description": "Cada Dinoz debe tener al menos el {{pct}} % de sus subidas en un solo elemento."
+				},
+				"balanced": {
+					"name": "Equilibrados",
+					"description": "Ningún Dinoz puede tener más del {{pct}} % de sus subidas en un mismo elemento."
+				},
+				"skill_required": {
+					"name": "Habilidad obligatoria",
+					"description": "Cada Dinoz debe tener la habilidad {{skill}}."
+				},
+				"skill_forbidden": {
+					"name": "Habilidad prohibida",
+					"description": "La habilidad {{skill}} está prohibida."
+				},
+				"summoners": {
+					"name": "Invocadores",
+					"description": "Cada Dinoz debe tener al menos una invocación."
+				},
+				"no_summon": {
+					"name": "Sin invocación",
+					"description": "Las invocaciones están prohibidas."
+				},
+				"ether_adepts": {
+					"name": "Adeptos del Éter",
+					"description": "Cada Dinoz debe tener al menos {{min}} habilidades del árbol del Éter."
+				},
+				"purists": {
+					"name": "Puristas",
+					"description": "No se permite ninguna habilidad del árbol del Éter ni de esfera."
+				},
+				"full_diversity": {
+					"name": "Diversidad total",
+					"description": "Todos los Dinoz del equipo deben ser de razas diferentes."
+				},
+				"level_budget": {
+					"name": "Presupuesto de niveles",
+					"description": "La suma de los niveles del equipo no debe superar el {{pct}} % del nivel máximo multiplicado por el tamaño del equipo."
+				},
+				"promotion": {
+					"name": "Promoción",
+					"description": "La diferencia de nivel entre el Dinoz más alto y el más bajo del equipo no debe superar {{max}}."
+				},
+				"ffa_solo": {
+					"name": "Solo",
+					"description": "Todas las razas, un solo Dinoz por equipo."
+				},
+				"ffa_duo": {
+					"name": "Dúo",
+					"description": "Todas las razas, equipos de 2 Dinoz."
+				},
+				"ffa_trio": {
+					"name": "Trío",
+					"description": "Todas las razas, equipos de 3 Dinoz."
+				},
+				"ffa_squad": {
+					"name": "Escuadra",
+					"description": "Todas las razas, equipos de 5 Dinoz."
+				},
+				"ffa_legion": {
+					"name": "Legión",
+					"description": "Todas las razas, equipos de 6 Dinoz."
+				},
+				"ffa_open": {
+					"name": "Abierto",
+					"description": "Todas las razas, sin restricción: el tamaño del equipo se sortea."
+				},
+				"anti_meta": {
+					"name": "Antimeta",
+					"description": "Las razas más presentes entre los clasificados del último torneo están prohibidas: {{forbidden}}."
+				},
+				"outsiders": {
+					"name": "Tapados",
+					"description": "Solo se permiten las razas menos inscritas en los 3 últimos torneos: {{races}}."
+				},
+				"vedettes": {
+					"name": "Estrellas",
+					"description": "Solo se permiten las razas del día de la clasificación anterior: {{races}}."
+				},
+				"champion_ban": {
+					"name": "Campeones vetados",
+					"description": "Las razas del equipo campeón del último torneo están prohibidas: {{forbidden}}."
+				},
+				"heritage": {
+					"name": "Herencia",
+					"description": "El equipo debe tener al menos un Dinoz de una raza del equipo campeón del último torneo: {{required}}."
+				},
+				"skill_echo": {
+					"name": "Eco de habilidad",
+					"description": "La habilidad más extendida entre los finalistas del último torneo está prohibida: {{skill}}."
+				}
+			},
+			"rule": {
+				"forbiddenRaces": "Razas prohibidas: {{races}}.",
+				"demon_only": "Solo Dinoz demonio.",
+				"demon_none": "Ningún Dinoz demonio.",
+				"demon_exactlyOne": "Exactamente un Dinoz demonio.",
+				"sameRace": "Todo el equipo es de la misma raza.",
+				"pairs": "Equipo formado por parejas de la misma raza.",
+				"distinctRaces": "Todos los Dinoz son de razas diferentes.",
+				"requireOneOf": "Al menos un Dinoz de raza {{races}}.",
+				"elementMin": "Al menos {{min}} subidas en {{element}} por Dinoz.",
+				"elementDominant": "Elemento dominante de cada Dinoz: {{element}}.",
+				"elementPurity": "Todos los Dinoz comparten el mismo elemento dominante.",
+				"rainbow": "Cada Dinoz tiene un elemento dominante diferente.",
+				"specialistPct": "Al menos el {{value}} % de las subidas en un solo elemento.",
+				"balancedPct": "Como máximo el {{value}} % de las subidas en un mismo elemento.",
+				"skillRequired": "Habilidad obligatoria: {{skill}}.",
+				"skillForbidden": "Habilidad prohibida: {{skill}}.",
+				"summon_required": "Al menos una invocación por Dinoz.",
+				"summon_none": "Ninguna invocación.",
+				"purist": "Ninguna habilidad del Éter ni de esfera.",
+				"etherMin": "Al menos {{value}} habilidades del Éter por Dinoz.",
+				"levelBudgetPct": "Suma de los niveles como máximo el {{value}} % del nivel máximo × el tamaño del equipo.",
+				"levelSpread": "Diferencia de nivel de {{value}} como máximo en el equipo."
+			},
+			"error": {
+				"teamSize": "Tu equipo debe estar formado por exactamente {{qty}} Dinoz.",
+				"wrongRace": "La raza {{race}} no está permitida en este torneo.",
+				"levelTooHigh": "Un Dinoz supera el nivel máximo permitido ({{max}}).",
+				"notEnoughRaces": "Tu equipo debe tener al menos {{qty}} razas diferentes.",
+				"forbiddenRace": "La raza {{race}} está prohibida en este torneo.",
+				"demonOnly": "Solo se permiten los Dinoz demonio.",
+				"demonNone": "Los Dinoz demonio están prohibidos.",
+				"demonExactlyOne": "Tu equipo debe tener exactamente un Dinoz demonio.",
+				"sameRace": "Todos los Dinoz de tu equipo deben ser de la misma raza.",
+				"pairs": "Tu equipo debe estar formado por parejas de Dinoz de la misma raza.",
+				"distinctRaces": "Todos los Dinoz de tu equipo deben ser de razas diferentes.",
+				"requireOneOf": "Tu equipo debe tener al menos un Dinoz de una de estas razas: {{races}}.",
+				"elementMin": "Cada Dinoz debe tener al menos {{min}} subidas en {{element}}.",
+				"elementDominant": "El elemento más subido de cada Dinoz debe ser {{element}}.",
+				"elementPurity": "Todos los Dinoz de tu equipo deben compartir el mismo elemento dominante.",
+				"rainbow": "Cada Dinoz de tu equipo debe tener un elemento dominante diferente.",
+				"specialist": "Cada Dinoz debe tener al menos el {{pct}} % de sus subidas en un solo elemento.",
+				"balanced": "Ningún Dinoz puede tener más del {{pct}} % de sus subidas en un mismo elemento.",
+				"skillRequired": "Cada Dinoz debe tener la habilidad {{skill}}.",
+				"skillForbidden": "La habilidad {{skill}} está prohibida en este torneo.",
+				"summonRequired": "Cada Dinoz debe tener al menos una invocación.",
+				"summonNone": "Las invocaciones están prohibidas en este torneo.",
+				"purist": "Las habilidades del árbol del Éter y las de esfera están prohibidas en este torneo.",
+				"etherMin": "Cada Dinoz debe tener al menos {{min}} habilidades del árbol del Éter.",
+				"levelBudget": "La suma de los niveles de tu equipo ({{sum}}) supera el máximo permitido ({{max}}).",
+				"levelSpread": "La diferencia de nivel entre tus Dinoz no debe superar {{max}}."
+			},
+			"element": {
+				"fire": "Fuego",
+				"wood": "Madera",
+				"water": "Agua",
+				"lightning": "Rayo",
+				"air": "Aire"
+			},
+			"skill": {
+				"11101": "Garras en llamas",
+				"11102": "Cólera",
+				"11103": "Fuerza",
+				"21101": "Caparazón",
+				"21102": "Salvajería",
+				"21103": "Resistencia",
+				"31101": "Torrente de Agua",
+				"31102": "Percepción",
+				"31103": "Mutación",
+				"41101": "Inteligencia",
+				"41102": "Focus",
+				"41103": "Celeridad",
+				"51101": "Agilidad",
+				"51102": "Estrategia",
+				"51103": "Mistral",
+				"11408": "Líder de Guerra",
+				"11501": "Bravo",
+				"11410": "Maestro elemental",
+				"21401": "Espíritu Gorilos",
+				"21501": "Coloso",
+				"31312": "Garras envenenadas",
+				"31406": "Sangre-Ácida",
+				"31501": "Maestro Nadador",
+				"41403": "Bendición",
+				"41406": "Reencarnación",
+				"41501": "Arcángel Corrosivo",
+				"51501": "Meditación Trascendental",
+				"51406": "Suspiro de Vida"
+			}
+		}
 	},
 	"announce": {
 		"dinoz": "¡$t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",

@@ -23,6 +23,7 @@ export const NewsType = {
   war_mana: 'war_mana',
   championship: 'championship',
   tid_start: 'tid_start',
+  tid_vote: 'tid_vote',
   tid_end: 'tid_end',
   event_christmas: 'event_christmas',
   story: 'story',

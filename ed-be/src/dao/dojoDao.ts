@@ -41,6 +41,7 @@ export async function getMyTeamDao(playerId: string) {
 							id: true,
 							name: true,
 							level: true,
+							raceId: true,
 							display: true
 						}
 					},
@@ -91,6 +92,7 @@ export async function cleanCurrentOpponentTeam(dojoId: string) {
 					id: true,
 					name: true,
 					level: true,
+					raceId: true,
 					display: true
 				}
 			},
@@ -188,6 +190,7 @@ export async function replaceMyTeamDao(
 							id: true,
 							name: true,
 							level: true,
+							raceId: true,
 							display: true
 						}
 					},
@@ -227,6 +230,7 @@ export async function addOpponent(dinozId: number, dojoId: string) {
 					id: true,
 					name: true,
 					level: true,
+					raceId: true,
 					display: true
 				}
 			},
@@ -303,4 +307,31 @@ export async function giveReputation(quantity: number, dojoId: string) {
 			reputation: { increment: quantity }
 		}
 	});
+}
+
+/**
+ * @summary Ids of the current and previous tournaments, whose qualification pools feed the opponents.
+ */
+export async function getRecentTournamentIds(): Promise<string[]> {
+	const tournaments = await prisma.tournament.findMany({
+		orderBy: { date: 'desc' },
+		take: 2,
+		select: { id: true }
+	});
+	return tournaments.map(t => t.id);
+}
+
+/**
+ * @summary Register the dinoz of a qualification team in the pool of the tournament, refreshing their level.
+ */
+export async function upsertQualifPool(tournamentId: string, dinoz: { id: number; raceId: number; level: number }[]) {
+	await prisma.$transaction(
+		dinoz.map(d =>
+			prisma.dojoQualifPool.upsert({
+				where: { tournamentId_dinozId: { tournamentId, dinozId: d.id } },
+				create: { tournamentId, dinozId: d.id, raceId: d.raceId, level: d.level },
+				update: { level: d.level }
+			})
+		)
+	);
 }

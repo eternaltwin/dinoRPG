@@ -39,6 +39,7 @@ export const NewsType: {
   readonly war_mana: 'war_mana';
   readonly championship: 'championship';
   readonly tid_start: 'tid_start';
+  readonly tid_vote: 'tid_vote';
   readonly tid_end: 'tid_end';
   readonly event_christmas: 'event_christmas';
   readonly story: 'story';
@@ -52,6 +53,7 @@ export namespace NewsType {
   export type war_mana = 'war_mana';
   export type championship = 'championship';
   export type tid_start = 'tid_start';
+  export type tid_vote = 'tid_vote';
   export type tid_end = 'tid_end';
   export type event_christmas = 'event_christmas';
   export type story = 'story';

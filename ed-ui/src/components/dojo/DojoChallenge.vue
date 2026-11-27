@@ -1,9 +1,18 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<div id="dojoChallenge">
+		<FeaturedRace v-if="featuredRace !== null && !fightTransformed" :race="featuredRace" />
 		<template v-if="composeTeam">
 			<DZDisclaimer content="dojo.challenge.disclaimer" help round />
-			<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
+			<DZDisclaimer content="dojo.ui.minRacesDisclaimer" :params="{ min: dojoMinRaces }" round />
+			<SelectDinoz
+				:dinozList="myDinoz"
+				:selectLimit="10"
+				:minLimit="5"
+				:minRaces="dojoMinRaces"
+				:featuredRace="featuredRace"
+				@validate="composeMyTeam"
+			></SelectDinoz>
 		</template>
 		<div class="challenge" v-if="!fightTransformed && activeChallenge">
 			<p
@@ -48,6 +57,7 @@
 			<CarousselDinoz
 				v-if="!opponent.id"
 				:ennemyList="opponents"
+				:featuredRace="featuredRace"
 				@validate="selectOpponent"
 				@refresh="refresh()"
 			></CarousselDinoz>
@@ -71,6 +81,7 @@
 			<CarousselDinoz
 				v-if="opponent.id && !myFighter.id"
 				:dinozList="myTeam"
+				:featuredRace="featuredRace"
 				@validate="selectMyFighter"
 			></CarousselDinoz>
 		</template>
@@ -88,6 +99,9 @@
 			</div>
 			<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('button.return') }}</DZButton>
 			<Transition name="bounce">
+				<QualifGainRecap :gain="gain" v-if="fightAnimationEnded && gain" />
+			</Transition>
+			<Transition name="bounce">
 				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
 			</Transition>
 		</template>
@@ -100,7 +114,6 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
-import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dojoStore, playerStore, useDinozStore } from '../../store/index.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -111,7 +124,11 @@ import FightRecap from './FightRecap.vue';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
-import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
+import DOJO_MAX_SERIES, { DOJO_MIN_RACES } from '@drpg/core/utils/dojoConstants';
+import { QualifGain } from '@drpg/core/utils/dojoQualif';
+import FeaturedRace from './FeaturedRace.vue';
+import QualifGainRecap from './QualifGainRecap.vue';
+import { SelectableDinoz } from './SelectDinoz.vue';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
 import FightersHeader from '../fight/FightersHeader.vue';
@@ -122,8 +139,10 @@ export default defineComponent({
 	name: 'DojoChallenge',
 	components: {
 		DZButton,
+		FeaturedRace,
 		FightFavoriteButton,
 		FightRecap,
+		QualifGainRecap,
 		DinozWithoutFlash,
 		DZDisclaimer,
 		TitleHeader,
@@ -140,7 +159,9 @@ export default defineComponent({
 				dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 			})[],
 			composeTeam: false as boolean,
-			myDinoz: [] as DinozDojoFiche[],
+			myDinoz: [] as SelectableDinoz[],
+			dojoMinRaces: DOJO_MIN_RACES,
+			gain: undefined as QualifGain | undefined,
 
 			opponent: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
@@ -177,6 +198,7 @@ export default defineComponent({
 			this.fightAnimationEnded = false;
 			this.victory = false;
 			this.challengeWon = false;
+			this.gain = undefined;
 			this.fightStat = undefined;
 			this.loaded = false;
 			this.archiveId = null;
@@ -209,6 +231,7 @@ export default defineComponent({
 				this.fightStat = rawFight.stats;
 				this.challengeWon = rawFight.challengeWon;
 				this.victory = rawFight.victory;
+				this.gain = rawFight.gain;
 				const fightSteps = fightResult.history as FightStep[];
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
@@ -264,7 +287,8 @@ export default defineComponent({
 								id: d.id,
 								name: d.name,
 								display: d.display,
-								level: d.level
+								level: d.level,
+								raceId: d.race.raceId
 							};
 						});
 				} else {
@@ -279,6 +303,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		featuredRace(): number | null {
+			return this.dojoStore.getState?.featuredRace ?? null;
+		},
 		formattedGoal() {
 			if (!this.activeChallenge) return 0;
 			const goal = this.calculateMissedGoal(this.activeChallenge);

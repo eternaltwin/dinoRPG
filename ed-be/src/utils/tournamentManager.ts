@@ -27,9 +27,19 @@ import 'dayjs/locale/es.js';
 import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise, describeRewards } from './rewarder.js';
-import { ClanEventType, Tournament } from '@drpg/prisma';
+import { ClanEventType, Prisma, Tournament } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
+import {
+	ArchetypeCandidate,
+	ArchetypeContext,
+	MetaArchetypeKey,
+	nextMeta,
+	resolveRaceMinimum,
+	resolveTeamSize,
+	rollCandidates
+} from '@drpg/core/models/dojo/tournamentArchetypes';
+import { DOJO_QUALIFICATION_DAYS } from '@drpg/core/utils/dojoConstants';
+import { getFeaturedRaceOfDay } from '@drpg/core/utils/dojoQualif';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { romanize } from 'romans';
 import { Lang, NewsType } from '@drpg/prisma';
@@ -39,7 +49,41 @@ import { invalidateTournamentCache } from './tournament.cache.js';
 import { FightOutcome } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReason } from '@drpg/prisma';
 import { nextMonday } from './date.js';
-import { createTranslatedNews } from '../business/newsService.js';
+import { createNewsPoll, createTranslatedNews } from '../business/newsService.js';
+import { getArchetypeContext, getAvailableRaces, getPreviousTournamentId } from '../dao/tournamentDao.js';
+import weightedRandom from './fight/weightedRandom.js';
+import {
+	archetypeName,
+	describeCandidate,
+	describeRules,
+	getAllRaces,
+	subArchetypeDescription,
+	subArchetypeName,
+	subDescriptionTextParams
+} from './tournamentArchetypeText.js';
+
+/** Last resort when the catalogue gives no candidate: every race, no rule. */
+const DEFAULT_ARCHETYPE: ArchetypeCandidate = { meta: 'ffa', key: 'ffa_open', teamRace: getAllRaces(), rules: {} };
+
+const EMPTY_ARCHETYPE_CONTEXT: ArchetypeContext = {
+	lastQualifiedRaces: {},
+	recentRegisteredRaces: {},
+	lastFeaturedRaces: [],
+	lastChampionRaces: [],
+	lastFinalistSkills: {},
+	racePopulation: {}
+};
+
+function parseCandidates(value: Prisma.JsonValue | null | undefined): ArchetypeCandidate[] {
+	return Array.isArray(value) ? (value as unknown as ArchetypeCandidate[]) : [];
+}
+
+/** Result of the draw of the archetype of a new tournament. */
+type ArchetypeDraw = {
+	chosen: ArchetypeCandidate;
+	/** Candidates of the vote and their number of votes, null when there was no vote */
+	vote: { candidate: ArchetypeCandidate; votes: number }[] | null;
+};
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -606,28 +650,202 @@ class TournamentManager {
 		scheduleJob('Next tournament', nextTournament.time, () => this.initializeTournamentIfNoActiveClanWar(prisma));
 	}
 
+	/**
+	 * Opens the vote for the format of the next tournament, at the end of the qualification: rolls the candidates of the
+	 * next meta archetype, stores them, publishes a news detailing them and attaches a poll to it, closing when the next
+	 * tournament is planned.
+	 *
+	 * Idempotent (does nothing when the candidates are already stored) and never throws: a failure must not break the
+	 * round, the next tournament then falls back to a random sub.
+	 *
+	 * @param prisma - The prisma client.
+	 * @param qualifiedTeamIds - The teams qualified for the current tournament (used by the echo subs).
+	 */
+	async openNextFormatVote(prisma: PismaClientLocal, qualifiedTeamIds?: string[]): Promise<void> {
+		try {
+			const current = await prisma.tournament.findUniqueOrThrow({
+				where: { id: this.tournamentId },
+				select: { metaArchetype: true, nextCandidates: true, nextPollId: true }
+			});
+			if (current.nextCandidates) {
+				LOGGER.log(`Vote for the tournament after ${this.tournamentId} is already open.`);
+				return;
+			}
+
+			const context = await getArchetypeContext(prisma, {
+				referenceTournamentId: this.tournamentId,
+				finishedTournamentId: await getPreviousTournamentId(prisma, this.tournamentId),
+				qualifiedTeamIds
+			});
+			const meta = nextMeta(current.metaArchetype);
+			const candidates = rollCandidates(meta.key, context);
+			if (candidates.length === 0) {
+				LOGGER.error(`No candidate for the meta archetype ${meta.key}, no vote for the next tournament.`);
+				return;
+			}
+
+			const nextTournament = this.getMatchTimes().find(t => t.round === this.NUM_ROUNDS);
+			if (!nextTournament) {
+				throw new Error('Cannot find next time for a tournament');
+			}
+			const endDate = nextTournament.time;
+			const number = (await prisma.tournament.count()) + 1;
+
+			const titleParams = {} as Record<Lang, Record<string, unknown>>;
+			const bodyParams = {} as Record<Lang, Record<string, unknown>>;
+			for (const lang of Object.values(Lang)) {
+				titleParams[lang] = { number: romanize(number) };
+				bodyParams[lang] = {
+					number: romanize(number),
+					candidates: candidates.map(c => describeCandidate(c, lang)).join('\n\n'),
+					endDate: dayjs(endDate).locale(lang).format('ddd DD MMMM HH:mm'),
+					interpolation: { escapeValue: false }
+				};
+			}
+			// Saved first: if the news or the poll fails, the next tournament is still drawn among these candidates
+			await prisma.tournament.update({
+				where: { id: this.tournamentId },
+				data: { nextCandidates: candidates as unknown as Prisma.InputJsonValue }
+			});
+			const news = await createTranslatedNews(
+				`tid_vote_${this.tournamentId}`,
+				NewsType.tid_vote,
+				'tournament.vote.newsTitle',
+				titleParams,
+				'tournament.vote.newsCorpus',
+				bodyParams,
+				true
+			);
+
+			const poll = await createNewsPoll(
+				news.id,
+				candidates.map((candidate, index) => ({
+					optionText: candidate.key,
+					labels: Object.fromEntries(
+						Object.values(Lang).map(lang => [lang, subArchetypeName(candidate.key, lang)])
+					) as Record<Lang, string>,
+					orderIndex: index
+				})),
+				endDate
+			);
+
+			await prisma.tournament.update({
+				where: { id: this.tournamentId },
+				data: { nextPollId: poll.id }
+			});
+			LOGGER.log(`Vote for the next tournament opened (poll ${poll.id}, ${candidates.length} candidates).`);
+		} catch (error) {
+			LOGGER.error('Error while opening the vote for the next tournament format', error);
+		}
+	}
+
+	/** Number of votes for each candidate (indexed like the candidates, through the option orderIndex). */
+	private static async countVotes(prisma: PismaClientLocal, pollId: number, candidates: number): Promise<number[]> {
+		const [options, grouped] = await Promise.all([
+			prisma.pollOption.findMany({ where: { pollId }, select: { id: true, orderIndex: true } }),
+			prisma.pollVote.groupBy({ by: ['pollOptionId'], where: { pollId }, _count: { _all: true } })
+		]);
+		const votes = Array<number>(candidates).fill(0);
+		for (const group of grouped) {
+			const option = options.find(o => o.id === group.pollOptionId);
+			if (option && option.orderIndex >= 0 && option.orderIndex < candidates) {
+				votes[option.orderIndex] += group._count._all;
+			}
+		}
+		return votes;
+	}
+
+	/**
+	 * Draws the sub archetype of a new tournament: among the candidates voted during the previous tournament, weighted
+	 * by votes + 1. Without vote (first tournament, failure), a sub of the next meta archetype is picked uniformly.
+	 */
+	private static async drawArchetype(
+		prisma: PismaClientLocal,
+		latest: {
+			id: string;
+			metaArchetype: MetaArchetypeKey;
+			nextCandidates: Prisma.JsonValue | null;
+			nextPollId: number | null;
+		} | null
+	): Promise<ArchetypeDraw> {
+		const candidates = parseCandidates(latest?.nextCandidates);
+		if (latest?.nextPollId && candidates.length > 0) {
+			try {
+				const votes = await TournamentManager.countVotes(prisma, latest.nextPollId, candidates.length);
+				const vote = candidates.map((candidate, index) => ({ candidate, votes: votes[index] }));
+				const picked = weightedRandom(vote.map(v => ({ ...v, odds: v.votes + 1 })));
+				return { chosen: picked.candidate, vote };
+			} catch (error) {
+				LOGGER.error('Error while counting the votes for the tournament format, falling back to a random sub', error);
+			}
+		}
+		// Candidates without a poll (the vote could not be opened): drawn uniformly among them
+		if (candidates.length > 0) {
+			return { chosen: candidates[getRandomInteger(0, candidates.length - 1)], vote: null };
+		}
+
+		try {
+			const context = latest
+				? await getArchetypeContext(prisma, { referenceTournamentId: latest.id, finishedTournamentId: latest.id })
+				: EMPTY_ARCHETYPE_CONTEXT;
+			const rolled = rollCandidates(nextMeta(latest?.metaArchetype ?? null).key, context);
+			if (rolled.length > 0) {
+				return { chosen: rolled[getRandomInteger(0, rolled.length - 1)], vote: null };
+			}
+			LOGGER.error('No candidate for the next tournament, falling back to the default archetype');
+		} catch (error) {
+			LOGGER.error('Error while rolling the tournament format, falling back to the default archetype', error);
+		}
+		return { chosen: DEFAULT_ARCHETYPE, vote: null };
+	}
+
+	/**
+	 * @summary Races of the day of the qualification, without repetition, among the races owned by enough players.
+	 * Every race when none is (new game) or when the query fails. Days left without a race have no race of the day.
+	 */
+	static async drawFeaturedRaces(prisma: PismaClientLocal): Promise<number[]> {
+		let races: number[] = [];
+		try {
+			races = await getAvailableRaces(prisma);
+		} catch (error) {
+			LOGGER.error('Error while computing the available races, every race can be the race of the day', error);
+		}
+		return shuffle(races.length > 0 ? races : getAllRaces()).slice(0, DOJO_QUALIFICATION_DAYS);
+	}
+
 	static async createTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		const today = dayjs().locale('fr');
 		const newTournamentStartDate = today.startOf('week').toDate();
 
-		const tournamentFormat = formatTID[getRandomInteger(0, Object.keys(formatTID).length - 1) as formatName];
+		// The sub archetype is drawn now, at the effective creation (after a possible clan war postponement). The poll
+		// itself closes at the planned creation time: votes are not accepted during a postponement.
+		const latest = await prisma.tournament.findFirst({
+			orderBy: { date: 'desc' },
+			select: { id: true, metaArchetype: true, nextCandidates: true, nextPollId: true }
+		});
+		const { chosen, vote } = await TournamentManager.drawArchetype(prisma, latest);
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomInteger(2, 5);
-		const teamRace = tournamentFormat.teamRace;
-		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomInteger(2, teamSize);
-		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
-		const poison = tournamentFormat.poison ?? getRandomInteger(0, 1) === 0;
+		// Common parameters, drawn whatever the sub
+		const teamRace = chosen.teamRace;
+		const teamSize = resolveTeamSize(chosen);
+		const raceMinimum = resolveRaceMinimum(chosen, teamSize);
+		const levelLimit = await getNewLevelLimits(teamRace);
+		const poison = getRandomInteger(0, 1) === 0;
+		const featuredRaces = await TournamentManager.drawFeaturedRaces(prisma);
 
 		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
 				date: newTournamentStartDate,
-				formatName: tournamentFormat.name,
+				metaArchetype: chosen.meta,
+				formatName: chosen.key,
+				rules: chosen.rules as Prisma.InputJsonValue,
 				teamSize: teamSize,
 				raceMinimum: raceMinimum,
 				poison: poison,
 				teamRace: teamRace.toString(),
 				levelLimit: levelLimit,
+				featuredRaces: featuredRaces,
 				nextRound: endQualif
 			},
 			select: {
@@ -648,8 +866,30 @@ class TournamentManager {
 				return `${acc}- ${translatedRewards}\n`;
 			}, '');
 
+			const subRules = describeRules(chosen.rules, lang)
+				.map(rule => `\n- ${rule}`)
+				.join('');
+			const voteResult = vote
+				? translateTarget('tournament.vote.result', lang, {
+						results: vote
+							.map(v =>
+								translateTarget('tournament.vote.resultLine', lang, {
+									name: subArchetypeName(v.candidate.key, lang),
+									votes: v.votes,
+									interpolation: { escapeValue: false }
+								})
+							)
+							.map(line => `- ${line}`)
+							.join('\n'),
+						interpolation: { escapeValue: false }
+					}) + '\n'
+				: '';
+
 			newsParams[lang] = {
-				type: translateTarget(`tournament.${tournamentFormat.name}`, lang),
+				type: archetypeName(chosen.meta, chosen.key, lang),
+				description: subArchetypeDescription(chosen.key, lang, subDescriptionTextParams(chosen, lang)),
+				subRules: subRules,
+				voteResult: voteResult,
 				endQualif: dayjs(endQualif).locale(lang).format('ddd DD MMMM HH:mm'),
 				rule1: translateTarget('dojo.teamSize', lang, {
 					nb: teamSize,
@@ -690,6 +930,8 @@ class TournamentManager {
 		await prisma.dojoOpponents.deleteMany();
 		await prisma.dojoTeam.deleteMany();
 		await prisma.dojoChallengeHistory.deleteMany();
+		// The opponent pool keeps the teams of the ending tournament (the previous one for the new tournament)
+		await prisma.dojoQualifPool.deleteMany({ where: { tournamentId: { not: this.tournamentId } } });
 		await prisma.dojo.updateMany({
 			data: {
 				reputation: 0,
@@ -818,6 +1060,10 @@ class TournamentManager {
 			schedule,
 			cashPrice: tournament.cashPrice,
 			levelLimit: tournament.levelLimit,
+			featuredRace:
+				state.phase === TournamentPhase.QUALIFICATION
+					? getFeaturedRaceOfDay(tournament.featuredRaces, schedule.qualificationStart)
+					: null,
 			nextScheduledMatch: tournament.nextRound
 		};
 	}
@@ -1115,6 +1361,11 @@ WHERE tt."teamCount" = ${tournamentRules.teamSize}
   AND d."tournamentTeamId" IS NOT NULL
 ORDER BY r.dojo DESC
 LIMIT ${this.QUALIFIED_TEAMS};`;
+					// End of the qualification: open the vote for the format of the next tournament (never throws)
+					await this.openNextFormatVote(
+						prisma,
+						qualifiedTeams.map(t => t.tournamentTeamId)
+					);
 					teamsToMatch = await this.createPools(shuffle(qualifiedTeams).map(t => t.tournamentTeamId));
 				} else {
 					teamsToMatch = await this.getWinnersFromPreviousRound(currentState.round, prisma);

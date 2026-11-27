@@ -354,6 +354,11 @@ export type FightWatched = $Result.DefaultSelection<Prisma.$FightWatchedPayload>
  */
 export type Tournament = $Result.DefaultSelection<Prisma.$TournamentPayload>
 /**
+ * Model DojoQualifPool
+ * Dinoz that were part of a qualification team, used as opponent pool for the next qualifications
+ */
+export type DojoQualifPool = $Result.DefaultSelection<Prisma.$DojoQualifPoolPayload>
+/**
  * Model TournamentTeam
  * 
  */
@@ -589,6 +594,7 @@ export const NewsType: {
   war_mana: 'war_mana',
   championship: 'championship',
   tid_start: 'tid_start',
+  tid_vote: 'tid_vote',
   tid_end: 'tid_end',
   event_christmas: 'event_christmas',
   story: 'story',
@@ -1508,6 +1514,16 @@ export class PrismaClient<
   get tournament(): Prisma.TournamentDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.dojoQualifPool`: Exposes CRUD operations for the **DojoQualifPool** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DojoQualifPools
+    * const dojoQualifPools = await prisma.dojoQualifPool.findMany()
+    * ```
+    */
+  get dojoQualifPool(): Prisma.DojoQualifPoolDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.tournamentTeam`: Exposes CRUD operations for the **TournamentTeam** model.
     * Example usage:
     * ```ts
@@ -2090,6 +2106,7 @@ export namespace Prisma {
     FightArchive: 'FightArchive',
     FightWatched: 'FightWatched',
     Tournament: 'Tournament',
+    DojoQualifPool: 'DojoQualifPool',
     TournamentTeam: 'TournamentTeam',
     FBTournament: 'FBTournament',
     GameDinoz: 'GameDinoz',
@@ -2112,7 +2129,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerEternaltwinToken" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanChampionshipRegistration" | "clanChampionshipMatch" | "clanChampionshipPiece" | "clanChampionshipFight" | "clanChampionshipFrame" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "dinozBuild" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "playerEternaltwinToken" | "playerIp" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerDemonShop" | "demonSkill" | "demonSkillUnlockable" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanCastle" | "clanCastleRepair" | "clanJoinRequest" | "clanWar" | "clanWarRanking" | "clanEvent" | "clanChampionshipRegistration" | "clanChampionshipMatch" | "clanChampionshipPiece" | "clanChampionshipFight" | "clanChampionshipFrame" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "dojoQualifPool" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState" | "dungeonRun" | "dungeon"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7074,6 +7091,80 @@ export namespace Prisma {
           }
         }
       }
+      DojoQualifPool: {
+        payload: Prisma.$DojoQualifPoolPayload<ExtArgs>
+        fields: Prisma.DojoQualifPoolFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DojoQualifPoolFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DojoQualifPoolFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          findFirst: {
+            args: Prisma.DojoQualifPoolFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DojoQualifPoolFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          findMany: {
+            args: Prisma.DojoQualifPoolFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>[]
+          }
+          create: {
+            args: Prisma.DojoQualifPoolCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          createMany: {
+            args: Prisma.DojoQualifPoolCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DojoQualifPoolCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>[]
+          }
+          delete: {
+            args: Prisma.DojoQualifPoolDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          update: {
+            args: Prisma.DojoQualifPoolUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          deleteMany: {
+            args: Prisma.DojoQualifPoolDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DojoQualifPoolUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DojoQualifPoolUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>[]
+          }
+          upsert: {
+            args: Prisma.DojoQualifPoolUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoQualifPoolPayload>
+          }
+          aggregate: {
+            args: Prisma.DojoQualifPoolAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDojoQualifPool>
+          }
+          groupBy: {
+            args: Prisma.DojoQualifPoolGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DojoQualifPoolGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DojoQualifPoolCountArgs<ExtArgs>
+            result: $Utils.Optional<DojoQualifPoolCountAggregateOutputType> | number
+          }
+        }
+      }
       TournamentTeam: {
         payload: Prisma.$TournamentTeamPayload<ExtArgs>
         fields: Prisma.TournamentTeamFieldRefs
@@ -7782,6 +7873,7 @@ export namespace Prisma {
     fightArchive?: FightArchiveOmit
     fightWatched?: FightWatchedOmit
     tournament?: TournamentOmit
+    dojoQualifPool?: DojoQualifPoolOmit
     tournamentTeam?: TournamentTeamOmit
     fBTournament?: FBTournamentOmit
     gameDinoz?: GameDinozOmit
@@ -7916,6 +8008,7 @@ export namespace Prisma {
     npcs: number
     DojoOpponents: number
     DojoTeam: number
+    DojoQualifPool: number
     TournamentTeam: number
   }
 
@@ -7936,6 +8029,7 @@ export namespace Prisma {
     npcs?: boolean | DinozCountOutputTypeCountNpcsArgs
     DojoOpponents?: boolean | DinozCountOutputTypeCountDojoOpponentsArgs
     DojoTeam?: boolean | DinozCountOutputTypeCountDojoTeamArgs
+    DojoQualifPool?: boolean | DinozCountOutputTypeCountDojoQualifPoolArgs
     TournamentTeam?: boolean | DinozCountOutputTypeCountTournamentTeamArgs
   }
 
@@ -8060,6 +8154,13 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountDojoTeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DojoTeamWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountDojoQualifPoolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoQualifPoolWhereInput
   }
 
   /**
@@ -9064,11 +9165,13 @@ export namespace Prisma {
   export type TournamentCountOutputType = {
     participants: number
     fights: number
+    qualifPool: number
   }
 
   export type TournamentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | TournamentCountOutputTypeCountParticipantsArgs
     fights?: boolean | TournamentCountOutputTypeCountFightsArgs
+    qualifPool?: boolean | TournamentCountOutputTypeCountQualifPoolArgs
   }
 
   // Custom InputTypes
@@ -9094,6 +9197,13 @@ export namespace Prisma {
    */
   export type TournamentCountOutputTypeCountFightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightArchiveWhereInput
+  }
+
+  /**
+   * TournamentCountOutputType without action
+   */
+  export type TournamentCountOutputTypeCountQualifPoolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoQualifPoolWhereInput
   }
 
 
@@ -10884,6 +10994,7 @@ export namespace Prisma {
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     DojoOpponents?: boolean | Dinoz$DojoOpponentsArgs<ExtArgs>
     DojoTeam?: boolean | Dinoz$DojoTeamArgs<ExtArgs>
+    DojoQualifPool?: boolean | Dinoz$DojoQualifPoolArgs<ExtArgs>
     TournamentTeam?: boolean | Dinoz$TournamentTeamArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
@@ -11027,6 +11138,7 @@ export namespace Prisma {
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     DojoOpponents?: boolean | Dinoz$DojoOpponentsArgs<ExtArgs>
     DojoTeam?: boolean | Dinoz$DojoTeamArgs<ExtArgs>
+    DojoQualifPool?: boolean | Dinoz$DojoQualifPoolArgs<ExtArgs>
     TournamentTeam?: boolean | Dinoz$TournamentTeamArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -11070,6 +11182,7 @@ export namespace Prisma {
       npcs: Prisma.$NPCPayload<ExtArgs>[]
       DojoOpponents: Prisma.$DojoOpponentsPayload<ExtArgs>[]
       DojoTeam: Prisma.$DojoTeamPayload<ExtArgs>[]
+      DojoQualifPool: Prisma.$DojoQualifPoolPayload<ExtArgs>[]
       TournamentTeam: Prisma.$TournamentTeamPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -11521,6 +11634,7 @@ export namespace Prisma {
     npcs<T extends Dinoz$npcsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$npcsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DojoOpponents<T extends Dinoz$DojoOpponentsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$DojoOpponentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DojoTeam<T extends Dinoz$DojoTeamArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$DojoTeamArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    DojoQualifPool<T extends Dinoz$DojoQualifPoolArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$DojoQualifPoolArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     TournamentTeam<T extends Dinoz$TournamentTeamArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$TournamentTeamArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12469,6 +12583,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.DojoQualifPool
+   */
+  export type Dinoz$DojoQualifPoolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    where?: DojoQualifPoolWhereInput
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    cursor?: DojoQualifPoolWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoQualifPoolScalarFieldEnum | DojoQualifPoolScalarFieldEnum[]
   }
 
   /**
@@ -24061,6 +24199,7 @@ export namespace Prisma {
     id: number
     pollId: number
     optionText: number
+    labels: number
     orderIndex: number
     createdDate: number
     _all: number
@@ -24099,6 +24238,7 @@ export namespace Prisma {
     id?: true
     pollId?: true
     optionText?: true
+    labels?: true
     orderIndex?: true
     createdDate?: true
     _all?: true
@@ -24194,6 +24334,7 @@ export namespace Prisma {
     id: number
     pollId: number
     optionText: string
+    labels: JsonValue | null
     orderIndex: number
     createdDate: Date
     _count: PollOptionCountAggregateOutputType | null
@@ -24221,6 +24362,7 @@ export namespace Prisma {
     id?: boolean
     pollId?: boolean
     optionText?: boolean
+    labels?: boolean
     orderIndex?: boolean
     createdDate?: boolean
     poll?: boolean | PollDefaultArgs<ExtArgs>
@@ -24232,6 +24374,7 @@ export namespace Prisma {
     id?: boolean
     pollId?: boolean
     optionText?: boolean
+    labels?: boolean
     orderIndex?: boolean
     createdDate?: boolean
     poll?: boolean | PollDefaultArgs<ExtArgs>
@@ -24241,6 +24384,7 @@ export namespace Prisma {
     id?: boolean
     pollId?: boolean
     optionText?: boolean
+    labels?: boolean
     orderIndex?: boolean
     createdDate?: boolean
     poll?: boolean | PollDefaultArgs<ExtArgs>
@@ -24250,11 +24394,12 @@ export namespace Prisma {
     id?: boolean
     pollId?: boolean
     optionText?: boolean
+    labels?: boolean
     orderIndex?: boolean
     createdDate?: boolean
   }
 
-  export type PollOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pollId" | "optionText" | "orderIndex" | "createdDate", ExtArgs["result"]["pollOption"]>
+  export type PollOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pollId" | "optionText" | "labels" | "orderIndex" | "createdDate", ExtArgs["result"]["pollOption"]>
   export type PollOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     poll?: boolean | PollDefaultArgs<ExtArgs>
     votes?: boolean | PollOption$votesArgs<ExtArgs>
@@ -24277,6 +24422,10 @@ export namespace Prisma {
       id: number
       pollId: number
       optionText: string
+      /**
+       * Translated labels of the option (Record<Lang, string>), optionText is the fallback
+       */
+      labels: Prisma.JsonValue | null
       orderIndex: number
       createdDate: Date
     }, ExtArgs["result"]["pollOption"]>
@@ -24707,6 +24856,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PollOption", 'Int'>
     readonly pollId: FieldRef<"PollOption", 'Int'>
     readonly optionText: FieldRef<"PollOption", 'String'>
+    readonly labels: FieldRef<"PollOption", 'Json'>
     readonly orderIndex: FieldRef<"PollOption", 'Int'>
     readonly createdDate: FieldRef<"PollOption", 'DateTime'>
   }
@@ -88503,6 +88653,8 @@ export namespace Prisma {
     raceMinimum: number | null
     levelLimit: number | null
     cashPrice: number | null
+    featuredRaces: number | null
+    nextPollId: number | null
   }
 
   export type TournamentSumAggregateOutputType = {
@@ -88510,6 +88662,8 @@ export namespace Prisma {
     raceMinimum: number | null
     levelLimit: number | null
     cashPrice: number | null
+    featuredRaces: number[]
+    nextPollId: number | null
   }
 
   export type TournamentMinAggregateOutputType = {
@@ -88523,6 +88677,8 @@ export namespace Prisma {
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
+    metaArchetype: string | null
+    nextPollId: number | null
   }
 
   export type TournamentMaxAggregateOutputType = {
@@ -88536,6 +88692,8 @@ export namespace Prisma {
     levelLimit: number | null
     cashPrice: number | null
     nextRound: Date | null
+    metaArchetype: string | null
+    nextPollId: number | null
   }
 
   export type TournamentCountAggregateOutputType = {
@@ -88549,6 +88707,11 @@ export namespace Prisma {
     levelLimit: number
     cashPrice: number
     nextRound: number
+    metaArchetype: number
+    rules: number
+    featuredRaces: number
+    nextCandidates: number
+    nextPollId: number
     _all: number
   }
 
@@ -88558,6 +88721,8 @@ export namespace Prisma {
     raceMinimum?: true
     levelLimit?: true
     cashPrice?: true
+    featuredRaces?: true
+    nextPollId?: true
   }
 
   export type TournamentSumAggregateInputType = {
@@ -88565,6 +88730,8 @@ export namespace Prisma {
     raceMinimum?: true
     levelLimit?: true
     cashPrice?: true
+    featuredRaces?: true
+    nextPollId?: true
   }
 
   export type TournamentMinAggregateInputType = {
@@ -88578,6 +88745,8 @@ export namespace Prisma {
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
+    metaArchetype?: true
+    nextPollId?: true
   }
 
   export type TournamentMaxAggregateInputType = {
@@ -88591,6 +88760,8 @@ export namespace Prisma {
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
+    metaArchetype?: true
+    nextPollId?: true
   }
 
   export type TournamentCountAggregateInputType = {
@@ -88604,6 +88775,11 @@ export namespace Prisma {
     levelLimit?: true
     cashPrice?: true
     nextRound?: true
+    metaArchetype?: true
+    rules?: true
+    featuredRaces?: true
+    nextCandidates?: true
+    nextPollId?: true
     _all?: true
   }
 
@@ -88704,6 +88880,11 @@ export namespace Prisma {
     levelLimit: number
     cashPrice: number
     nextRound: Date
+    metaArchetype: string
+    rules: JsonValue
+    featuredRaces: number[]
+    nextCandidates: JsonValue | null
+    nextPollId: number | null
     _count: TournamentCountAggregateOutputType | null
     _avg: TournamentAvgAggregateOutputType | null
     _sum: TournamentSumAggregateOutputType | null
@@ -88736,8 +88917,14 @@ export namespace Prisma {
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
+    metaArchetype?: boolean
+    rules?: boolean
+    featuredRaces?: boolean
+    nextCandidates?: boolean
+    nextPollId?: boolean
     participants?: boolean | Tournament$participantsArgs<ExtArgs>
     fights?: boolean | Tournament$fightsArgs<ExtArgs>
+    qualifPool?: boolean | Tournament$qualifPoolArgs<ExtArgs>
     _count?: boolean | TournamentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tournament"]>
 
@@ -88752,6 +88939,11 @@ export namespace Prisma {
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
+    metaArchetype?: boolean
+    rules?: boolean
+    featuredRaces?: boolean
+    nextCandidates?: boolean
+    nextPollId?: boolean
   }, ExtArgs["result"]["tournament"]>
 
   export type TournamentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -88765,6 +88957,11 @@ export namespace Prisma {
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
+    metaArchetype?: boolean
+    rules?: boolean
+    featuredRaces?: boolean
+    nextCandidates?: boolean
+    nextPollId?: boolean
   }, ExtArgs["result"]["tournament"]>
 
   export type TournamentSelectScalar = {
@@ -88778,12 +88975,18 @@ export namespace Prisma {
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
+    metaArchetype?: boolean
+    rules?: boolean
+    featuredRaces?: boolean
+    nextCandidates?: boolean
+    nextPollId?: boolean
   }
 
-  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "formatName" | "teamSize" | "raceMinimum" | "poison" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound", ExtArgs["result"]["tournament"]>
+  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "formatName" | "teamSize" | "raceMinimum" | "poison" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound" | "metaArchetype" | "rules" | "featuredRaces" | "nextCandidates" | "nextPollId", ExtArgs["result"]["tournament"]>
   export type TournamentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | Tournament$participantsArgs<ExtArgs>
     fights?: boolean | Tournament$fightsArgs<ExtArgs>
+    qualifPool?: boolean | Tournament$qualifPoolArgs<ExtArgs>
     _count?: boolean | TournamentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TournamentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -88794,6 +88997,7 @@ export namespace Prisma {
     objects: {
       participants: Prisma.$TournamentTeamPayload<ExtArgs>[]
       fights: Prisma.$FightArchivePayload<ExtArgs>[]
+      qualifPool: Prisma.$DojoQualifPoolPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -88806,6 +89010,23 @@ export namespace Prisma {
       levelLimit: number
       cashPrice: number
       nextRound: Date
+      /**
+       * Key of the meta archetype (races, restrictive, ffa, echo)
+       */
+      metaArchetype: string
+      /**
+       * Resolved rules of the sub archetype (see core TournamentRules)
+       */
+      rules: Prisma.JsonValue
+      /**
+       * Race of the day for each day of the qualification
+       */
+      featuredRaces: number[]
+      /**
+       * Sub archetypes proposed to the vote for the next tournament
+       */
+      nextCandidates: Prisma.JsonValue | null
+      nextPollId: number | null
     }, ExtArgs["result"]["tournament"]>
     composites: {}
   }
@@ -89202,6 +89423,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     participants<T extends Tournament$participantsArgs<ExtArgs> = {}>(args?: Subset<T, Tournament$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fights<T extends Tournament$fightsArgs<ExtArgs> = {}>(args?: Subset<T, Tournament$fightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    qualifPool<T extends Tournament$qualifPoolArgs<ExtArgs> = {}>(args?: Subset<T, Tournament$qualifPoolArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -89241,6 +89463,11 @@ export namespace Prisma {
     readonly levelLimit: FieldRef<"Tournament", 'Int'>
     readonly cashPrice: FieldRef<"Tournament", 'Int'>
     readonly nextRound: FieldRef<"Tournament", 'DateTime'>
+    readonly metaArchetype: FieldRef<"Tournament", 'String'>
+    readonly rules: FieldRef<"Tournament", 'Json'>
+    readonly featuredRaces: FieldRef<"Tournament", 'Int[]'>
+    readonly nextCandidates: FieldRef<"Tournament", 'Json'>
+    readonly nextPollId: FieldRef<"Tournament", 'Int'>
   }
     
 
@@ -89691,6 +89918,30 @@ export namespace Prisma {
   }
 
   /**
+   * Tournament.qualifPool
+   */
+  export type Tournament$qualifPoolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    where?: DojoQualifPoolWhereInput
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    cursor?: DojoQualifPoolWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoQualifPoolScalarFieldEnum | DojoQualifPoolScalarFieldEnum[]
+  }
+
+  /**
    * Tournament without action
    */
   export type TournamentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -89706,6 +89957,1128 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TournamentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DojoQualifPool
+   */
+
+  export type AggregateDojoQualifPool = {
+    _count: DojoQualifPoolCountAggregateOutputType | null
+    _avg: DojoQualifPoolAvgAggregateOutputType | null
+    _sum: DojoQualifPoolSumAggregateOutputType | null
+    _min: DojoQualifPoolMinAggregateOutputType | null
+    _max: DojoQualifPoolMaxAggregateOutputType | null
+  }
+
+  export type DojoQualifPoolAvgAggregateOutputType = {
+    dinozId: number | null
+    raceId: number | null
+    level: number | null
+  }
+
+  export type DojoQualifPoolSumAggregateOutputType = {
+    dinozId: number | null
+    raceId: number | null
+    level: number | null
+  }
+
+  export type DojoQualifPoolMinAggregateOutputType = {
+    id: string | null
+    tournamentId: string | null
+    dinozId: number | null
+    raceId: number | null
+    level: number | null
+  }
+
+  export type DojoQualifPoolMaxAggregateOutputType = {
+    id: string | null
+    tournamentId: string | null
+    dinozId: number | null
+    raceId: number | null
+    level: number | null
+  }
+
+  export type DojoQualifPoolCountAggregateOutputType = {
+    id: number
+    tournamentId: number
+    dinozId: number
+    raceId: number
+    level: number
+    _all: number
+  }
+
+
+  export type DojoQualifPoolAvgAggregateInputType = {
+    dinozId?: true
+    raceId?: true
+    level?: true
+  }
+
+  export type DojoQualifPoolSumAggregateInputType = {
+    dinozId?: true
+    raceId?: true
+    level?: true
+  }
+
+  export type DojoQualifPoolMinAggregateInputType = {
+    id?: true
+    tournamentId?: true
+    dinozId?: true
+    raceId?: true
+    level?: true
+  }
+
+  export type DojoQualifPoolMaxAggregateInputType = {
+    id?: true
+    tournamentId?: true
+    dinozId?: true
+    raceId?: true
+    level?: true
+  }
+
+  export type DojoQualifPoolCountAggregateInputType = {
+    id?: true
+    tournamentId?: true
+    dinozId?: true
+    raceId?: true
+    level?: true
+    _all?: true
+  }
+
+  export type DojoQualifPoolAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoQualifPool to aggregate.
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoQualifPools to fetch.
+     */
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DojoQualifPoolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoQualifPools from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoQualifPools.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DojoQualifPools
+    **/
+    _count?: true | DojoQualifPoolCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DojoQualifPoolAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DojoQualifPoolSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DojoQualifPoolMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DojoQualifPoolMaxAggregateInputType
+  }
+
+  export type GetDojoQualifPoolAggregateType<T extends DojoQualifPoolAggregateArgs> = {
+        [P in keyof T & keyof AggregateDojoQualifPool]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDojoQualifPool[P]>
+      : GetScalarType<T[P], AggregateDojoQualifPool[P]>
+  }
+
+
+
+
+  export type DojoQualifPoolGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoQualifPoolWhereInput
+    orderBy?: DojoQualifPoolOrderByWithAggregationInput | DojoQualifPoolOrderByWithAggregationInput[]
+    by: DojoQualifPoolScalarFieldEnum[] | DojoQualifPoolScalarFieldEnum
+    having?: DojoQualifPoolScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DojoQualifPoolCountAggregateInputType | true
+    _avg?: DojoQualifPoolAvgAggregateInputType
+    _sum?: DojoQualifPoolSumAggregateInputType
+    _min?: DojoQualifPoolMinAggregateInputType
+    _max?: DojoQualifPoolMaxAggregateInputType
+  }
+
+  export type DojoQualifPoolGroupByOutputType = {
+    id: string
+    tournamentId: string
+    dinozId: number
+    raceId: number
+    level: number
+    _count: DojoQualifPoolCountAggregateOutputType | null
+    _avg: DojoQualifPoolAvgAggregateOutputType | null
+    _sum: DojoQualifPoolSumAggregateOutputType | null
+    _min: DojoQualifPoolMinAggregateOutputType | null
+    _max: DojoQualifPoolMaxAggregateOutputType | null
+  }
+
+  type GetDojoQualifPoolGroupByPayload<T extends DojoQualifPoolGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DojoQualifPoolGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DojoQualifPoolGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DojoQualifPoolGroupByOutputType[P]>
+            : GetScalarType<T[P], DojoQualifPoolGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DojoQualifPoolSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tournamentId?: boolean
+    dinozId?: boolean
+    raceId?: boolean
+    level?: boolean
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoQualifPool"]>
+
+  export type DojoQualifPoolSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tournamentId?: boolean
+    dinozId?: boolean
+    raceId?: boolean
+    level?: boolean
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoQualifPool"]>
+
+  export type DojoQualifPoolSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tournamentId?: boolean
+    dinozId?: boolean
+    raceId?: boolean
+    level?: boolean
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoQualifPool"]>
+
+  export type DojoQualifPoolSelectScalar = {
+    id?: boolean
+    tournamentId?: boolean
+    dinozId?: boolean
+    raceId?: boolean
+    level?: boolean
+  }
+
+  export type DojoQualifPoolOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tournamentId" | "dinozId" | "raceId" | "level", ExtArgs["result"]["dojoQualifPool"]>
+  export type DojoQualifPoolInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DojoQualifPoolIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DojoQualifPoolIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tournament?: boolean | TournamentDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+
+  export type $DojoQualifPoolPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DojoQualifPool"
+    objects: {
+      tournament: Prisma.$TournamentPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tournamentId: string
+      dinozId: number
+      raceId: number
+      level: number
+    }, ExtArgs["result"]["dojoQualifPool"]>
+    composites: {}
+  }
+
+  type DojoQualifPoolGetPayload<S extends boolean | null | undefined | DojoQualifPoolDefaultArgs> = $Result.GetResult<Prisma.$DojoQualifPoolPayload, S>
+
+  type DojoQualifPoolCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DojoQualifPoolFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DojoQualifPoolCountAggregateInputType | true
+    }
+
+  export interface DojoQualifPoolDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DojoQualifPool'], meta: { name: 'DojoQualifPool' } }
+    /**
+     * Find zero or one DojoQualifPool that matches the filter.
+     * @param {DojoQualifPoolFindUniqueArgs} args - Arguments to find a DojoQualifPool
+     * @example
+     * // Get one DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DojoQualifPoolFindUniqueArgs>(args: SelectSubset<T, DojoQualifPoolFindUniqueArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DojoQualifPool that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DojoQualifPoolFindUniqueOrThrowArgs} args - Arguments to find a DojoQualifPool
+     * @example
+     * // Get one DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DojoQualifPoolFindUniqueOrThrowArgs>(args: SelectSubset<T, DojoQualifPoolFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DojoQualifPool that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolFindFirstArgs} args - Arguments to find a DojoQualifPool
+     * @example
+     * // Get one DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DojoQualifPoolFindFirstArgs>(args?: SelectSubset<T, DojoQualifPoolFindFirstArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DojoQualifPool that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolFindFirstOrThrowArgs} args - Arguments to find a DojoQualifPool
+     * @example
+     * // Get one DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DojoQualifPoolFindFirstOrThrowArgs>(args?: SelectSubset<T, DojoQualifPoolFindFirstOrThrowArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DojoQualifPools that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DojoQualifPools
+     * const dojoQualifPools = await prisma.dojoQualifPool.findMany()
+     * 
+     * // Get first 10 DojoQualifPools
+     * const dojoQualifPools = await prisma.dojoQualifPool.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dojoQualifPoolWithIdOnly = await prisma.dojoQualifPool.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DojoQualifPoolFindManyArgs>(args?: SelectSubset<T, DojoQualifPoolFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DojoQualifPool.
+     * @param {DojoQualifPoolCreateArgs} args - Arguments to create a DojoQualifPool.
+     * @example
+     * // Create one DojoQualifPool
+     * const DojoQualifPool = await prisma.dojoQualifPool.create({
+     *   data: {
+     *     // ... data to create a DojoQualifPool
+     *   }
+     * })
+     * 
+     */
+    create<T extends DojoQualifPoolCreateArgs>(args: SelectSubset<T, DojoQualifPoolCreateArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DojoQualifPools.
+     * @param {DojoQualifPoolCreateManyArgs} args - Arguments to create many DojoQualifPools.
+     * @example
+     * // Create many DojoQualifPools
+     * const dojoQualifPool = await prisma.dojoQualifPool.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DojoQualifPoolCreateManyArgs>(args?: SelectSubset<T, DojoQualifPoolCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DojoQualifPools and returns the data saved in the database.
+     * @param {DojoQualifPoolCreateManyAndReturnArgs} args - Arguments to create many DojoQualifPools.
+     * @example
+     * // Create many DojoQualifPools
+     * const dojoQualifPool = await prisma.dojoQualifPool.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DojoQualifPools and only return the `id`
+     * const dojoQualifPoolWithIdOnly = await prisma.dojoQualifPool.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DojoQualifPoolCreateManyAndReturnArgs>(args?: SelectSubset<T, DojoQualifPoolCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DojoQualifPool.
+     * @param {DojoQualifPoolDeleteArgs} args - Arguments to delete one DojoQualifPool.
+     * @example
+     * // Delete one DojoQualifPool
+     * const DojoQualifPool = await prisma.dojoQualifPool.delete({
+     *   where: {
+     *     // ... filter to delete one DojoQualifPool
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DojoQualifPoolDeleteArgs>(args: SelectSubset<T, DojoQualifPoolDeleteArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DojoQualifPool.
+     * @param {DojoQualifPoolUpdateArgs} args - Arguments to update one DojoQualifPool.
+     * @example
+     * // Update one DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DojoQualifPoolUpdateArgs>(args: SelectSubset<T, DojoQualifPoolUpdateArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DojoQualifPools.
+     * @param {DojoQualifPoolDeleteManyArgs} args - Arguments to filter DojoQualifPools to delete.
+     * @example
+     * // Delete a few DojoQualifPools
+     * const { count } = await prisma.dojoQualifPool.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DojoQualifPoolDeleteManyArgs>(args?: SelectSubset<T, DojoQualifPoolDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DojoQualifPools.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DojoQualifPools
+     * const dojoQualifPool = await prisma.dojoQualifPool.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DojoQualifPoolUpdateManyArgs>(args: SelectSubset<T, DojoQualifPoolUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DojoQualifPools and returns the data updated in the database.
+     * @param {DojoQualifPoolUpdateManyAndReturnArgs} args - Arguments to update many DojoQualifPools.
+     * @example
+     * // Update many DojoQualifPools
+     * const dojoQualifPool = await prisma.dojoQualifPool.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DojoQualifPools and only return the `id`
+     * const dojoQualifPoolWithIdOnly = await prisma.dojoQualifPool.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DojoQualifPoolUpdateManyAndReturnArgs>(args: SelectSubset<T, DojoQualifPoolUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DojoQualifPool.
+     * @param {DojoQualifPoolUpsertArgs} args - Arguments to update or create a DojoQualifPool.
+     * @example
+     * // Update or create a DojoQualifPool
+     * const dojoQualifPool = await prisma.dojoQualifPool.upsert({
+     *   create: {
+     *     // ... data to create a DojoQualifPool
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DojoQualifPool we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DojoQualifPoolUpsertArgs>(args: SelectSubset<T, DojoQualifPoolUpsertArgs<ExtArgs>>): Prisma__DojoQualifPoolClient<$Result.GetResult<Prisma.$DojoQualifPoolPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DojoQualifPools.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolCountArgs} args - Arguments to filter DojoQualifPools to count.
+     * @example
+     * // Count the number of DojoQualifPools
+     * const count = await prisma.dojoQualifPool.count({
+     *   where: {
+     *     // ... the filter for the DojoQualifPools we want to count
+     *   }
+     * })
+    **/
+    count<T extends DojoQualifPoolCountArgs>(
+      args?: Subset<T, DojoQualifPoolCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DojoQualifPoolCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DojoQualifPool.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DojoQualifPoolAggregateArgs>(args: Subset<T, DojoQualifPoolAggregateArgs>): Prisma.PrismaPromise<GetDojoQualifPoolAggregateType<T>>
+
+    /**
+     * Group by DojoQualifPool.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoQualifPoolGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DojoQualifPoolGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DojoQualifPoolGroupByArgs['orderBy'] }
+        : { orderBy?: DojoQualifPoolGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DojoQualifPoolGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDojoQualifPoolGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DojoQualifPool model
+   */
+  readonly fields: DojoQualifPoolFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DojoQualifPool.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DojoQualifPoolClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tournament<T extends TournamentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TournamentDefaultArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DojoQualifPool model
+   */
+  interface DojoQualifPoolFieldRefs {
+    readonly id: FieldRef<"DojoQualifPool", 'String'>
+    readonly tournamentId: FieldRef<"DojoQualifPool", 'String'>
+    readonly dinozId: FieldRef<"DojoQualifPool", 'Int'>
+    readonly raceId: FieldRef<"DojoQualifPool", 'Int'>
+    readonly level: FieldRef<"DojoQualifPool", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DojoQualifPool findUnique
+   */
+  export type DojoQualifPoolFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoQualifPool to fetch.
+     */
+    where: DojoQualifPoolWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool findUniqueOrThrow
+   */
+  export type DojoQualifPoolFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoQualifPool to fetch.
+     */
+    where: DojoQualifPoolWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool findFirst
+   */
+  export type DojoQualifPoolFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoQualifPool to fetch.
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoQualifPools to fetch.
+     */
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoQualifPools.
+     */
+    cursor?: DojoQualifPoolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoQualifPools from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoQualifPools.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoQualifPools.
+     */
+    distinct?: DojoQualifPoolScalarFieldEnum | DojoQualifPoolScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool findFirstOrThrow
+   */
+  export type DojoQualifPoolFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoQualifPool to fetch.
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoQualifPools to fetch.
+     */
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoQualifPools.
+     */
+    cursor?: DojoQualifPoolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoQualifPools from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoQualifPools.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoQualifPools.
+     */
+    distinct?: DojoQualifPoolScalarFieldEnum | DojoQualifPoolScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool findMany
+   */
+  export type DojoQualifPoolFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoQualifPools to fetch.
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoQualifPools to fetch.
+     */
+    orderBy?: DojoQualifPoolOrderByWithRelationInput | DojoQualifPoolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DojoQualifPools.
+     */
+    cursor?: DojoQualifPoolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoQualifPools from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoQualifPools.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoQualifPools.
+     */
+    distinct?: DojoQualifPoolScalarFieldEnum | DojoQualifPoolScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool create
+   */
+  export type DojoQualifPoolCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DojoQualifPool.
+     */
+    data: XOR<DojoQualifPoolCreateInput, DojoQualifPoolUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool createMany
+   */
+  export type DojoQualifPoolCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DojoQualifPools.
+     */
+    data: DojoQualifPoolCreateManyInput | DojoQualifPoolCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DojoQualifPool createManyAndReturn
+   */
+  export type DojoQualifPoolCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * The data used to create many DojoQualifPools.
+     */
+    data: DojoQualifPoolCreateManyInput | DojoQualifPoolCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DojoQualifPool update
+   */
+  export type DojoQualifPoolUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DojoQualifPool.
+     */
+    data: XOR<DojoQualifPoolUpdateInput, DojoQualifPoolUncheckedUpdateInput>
+    /**
+     * Choose, which DojoQualifPool to update.
+     */
+    where: DojoQualifPoolWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool updateMany
+   */
+  export type DojoQualifPoolUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DojoQualifPools.
+     */
+    data: XOR<DojoQualifPoolUpdateManyMutationInput, DojoQualifPoolUncheckedUpdateManyInput>
+    /**
+     * Filter which DojoQualifPools to update
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * Limit how many DojoQualifPools to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DojoQualifPool updateManyAndReturn
+   */
+  export type DojoQualifPoolUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * The data used to update DojoQualifPools.
+     */
+    data: XOR<DojoQualifPoolUpdateManyMutationInput, DojoQualifPoolUncheckedUpdateManyInput>
+    /**
+     * Filter which DojoQualifPools to update
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * Limit how many DojoQualifPools to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DojoQualifPool upsert
+   */
+  export type DojoQualifPoolUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DojoQualifPool to update in case it exists.
+     */
+    where: DojoQualifPoolWhereUniqueInput
+    /**
+     * In case the DojoQualifPool found by the `where` argument doesn't exist, create a new DojoQualifPool with this data.
+     */
+    create: XOR<DojoQualifPoolCreateInput, DojoQualifPoolUncheckedCreateInput>
+    /**
+     * In case the DojoQualifPool was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DojoQualifPoolUpdateInput, DojoQualifPoolUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool delete
+   */
+  export type DojoQualifPoolDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
+    /**
+     * Filter which DojoQualifPool to delete.
+     */
+    where: DojoQualifPoolWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoQualifPool deleteMany
+   */
+  export type DojoQualifPoolDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoQualifPools to delete
+     */
+    where?: DojoQualifPoolWhereInput
+    /**
+     * Limit how many DojoQualifPools to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DojoQualifPool without action
+   */
+  export type DojoQualifPoolDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoQualifPool
+     */
+    select?: DojoQualifPoolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoQualifPool
+     */
+    omit?: DojoQualifPoolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoQualifPoolInclude<ExtArgs> | null
   }
 
 
@@ -98532,6 +99905,7 @@ export namespace Prisma {
     id: 'id',
     pollId: 'pollId',
     optionText: 'optionText',
+    labels: 'labels',
     orderIndex: 'orderIndex',
     createdDate: 'createdDate'
   };
@@ -99232,10 +100606,26 @@ export namespace Prisma {
     teamRace: 'teamRace',
     levelLimit: 'levelLimit',
     cashPrice: 'cashPrice',
-    nextRound: 'nextRound'
+    nextRound: 'nextRound',
+    metaArchetype: 'metaArchetype',
+    rules: 'rules',
+    featuredRaces: 'featuredRaces',
+    nextCandidates: 'nextCandidates',
+    nextPollId: 'nextPollId'
   };
 
   export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
+
+
+  export const DojoQualifPoolScalarFieldEnum: {
+    id: 'id',
+    tournamentId: 'tournamentId',
+    dinozId: 'dinozId',
+    raceId: 'raceId',
+    level: 'level'
+  };
+
+  export type DojoQualifPoolScalarFieldEnum = (typeof DojoQualifPoolScalarFieldEnum)[keyof typeof DojoQualifPoolScalarFieldEnum]
 
 
   export const TournamentTeamScalarFieldEnum: {
@@ -99356,6 +100746,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const JsonNullValueInput: {
@@ -99501,6 +100899,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'AdminRole'
    */
   export type EnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole'>
@@ -99525,20 +100937,6 @@ export namespace Prisma {
    * Reference to a field of type 'Lang[]'
    */
   export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -99836,6 +101234,7 @@ export namespace Prisma {
     npcs?: NPCListRelationFilter
     DojoOpponents?: DojoOpponentsListRelationFilter
     DojoTeam?: DojoTeamListRelationFilter
+    DojoQualifPool?: DojoQualifPoolListRelationFilter
     TournamentTeam?: TournamentTeamListRelationFilter
   }
 
@@ -99894,6 +101293,7 @@ export namespace Prisma {
     npcs?: NPCOrderByRelationAggregateInput
     DojoOpponents?: DojoOpponentsOrderByRelationAggregateInput
     DojoTeam?: DojoTeamOrderByRelationAggregateInput
+    DojoQualifPool?: DojoQualifPoolOrderByRelationAggregateInput
     TournamentTeam?: TournamentTeamOrderByRelationAggregateInput
   }
 
@@ -99955,6 +101355,7 @@ export namespace Prisma {
     npcs?: NPCListRelationFilter
     DojoOpponents?: DojoOpponentsListRelationFilter
     DojoTeam?: DojoTeamListRelationFilter
+    DojoQualifPool?: DojoQualifPoolListRelationFilter
     TournamentTeam?: TournamentTeamListRelationFilter
   }, "id">
 
@@ -100662,6 +102063,7 @@ export namespace Prisma {
     id?: IntFilter<"PollOption"> | number
     pollId?: IntFilter<"PollOption"> | number
     optionText?: StringFilter<"PollOption"> | string
+    labels?: JsonNullableFilter<"PollOption">
     orderIndex?: IntFilter<"PollOption"> | number
     createdDate?: DateTimeFilter<"PollOption"> | Date | string
     poll?: XOR<PollScalarRelationFilter, PollWhereInput>
@@ -100672,6 +102074,7 @@ export namespace Prisma {
     id?: SortOrder
     pollId?: SortOrder
     optionText?: SortOrder
+    labels?: SortOrderInput | SortOrder
     orderIndex?: SortOrder
     createdDate?: SortOrder
     poll?: PollOrderByWithRelationInput
@@ -100685,6 +102088,7 @@ export namespace Prisma {
     NOT?: PollOptionWhereInput | PollOptionWhereInput[]
     pollId?: IntFilter<"PollOption"> | number
     optionText?: StringFilter<"PollOption"> | string
+    labels?: JsonNullableFilter<"PollOption">
     orderIndex?: IntFilter<"PollOption"> | number
     createdDate?: DateTimeFilter<"PollOption"> | Date | string
     poll?: XOR<PollScalarRelationFilter, PollWhereInput>
@@ -100695,6 +102099,7 @@ export namespace Prisma {
     id?: SortOrder
     pollId?: SortOrder
     optionText?: SortOrder
+    labels?: SortOrderInput | SortOrder
     orderIndex?: SortOrder
     createdDate?: SortOrder
     _count?: PollOptionCountOrderByAggregateInput
@@ -100711,6 +102116,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"PollOption"> | number
     pollId?: IntWithAggregatesFilter<"PollOption"> | number
     optionText?: StringWithAggregatesFilter<"PollOption"> | string
+    labels?: JsonNullableWithAggregatesFilter<"PollOption">
     orderIndex?: IntWithAggregatesFilter<"PollOption"> | number
     createdDate?: DateTimeWithAggregatesFilter<"PollOption"> | Date | string
   }
@@ -104596,8 +106002,14 @@ export namespace Prisma {
     levelLimit?: IntFilter<"Tournament"> | number
     cashPrice?: IntFilter<"Tournament"> | number
     nextRound?: DateTimeFilter<"Tournament"> | Date | string
+    metaArchetype?: StringFilter<"Tournament"> | string
+    rules?: JsonFilter<"Tournament">
+    featuredRaces?: IntNullableListFilter<"Tournament">
+    nextCandidates?: JsonNullableFilter<"Tournament">
+    nextPollId?: IntNullableFilter<"Tournament"> | number | null
     participants?: TournamentTeamListRelationFilter
     fights?: FightArchiveListRelationFilter
+    qualifPool?: DojoQualifPoolListRelationFilter
   }
 
   export type TournamentOrderByWithRelationInput = {
@@ -104611,8 +106023,14 @@ export namespace Prisma {
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
+    metaArchetype?: SortOrder
+    rules?: SortOrder
+    featuredRaces?: SortOrder
+    nextCandidates?: SortOrderInput | SortOrder
+    nextPollId?: SortOrderInput | SortOrder
     participants?: TournamentTeamOrderByRelationAggregateInput
     fights?: FightArchiveOrderByRelationAggregateInput
+    qualifPool?: DojoQualifPoolOrderByRelationAggregateInput
   }
 
   export type TournamentWhereUniqueInput = Prisma.AtLeast<{
@@ -104629,8 +106047,14 @@ export namespace Prisma {
     levelLimit?: IntFilter<"Tournament"> | number
     cashPrice?: IntFilter<"Tournament"> | number
     nextRound?: DateTimeFilter<"Tournament"> | Date | string
+    metaArchetype?: StringFilter<"Tournament"> | string
+    rules?: JsonFilter<"Tournament">
+    featuredRaces?: IntNullableListFilter<"Tournament">
+    nextCandidates?: JsonNullableFilter<"Tournament">
+    nextPollId?: IntNullableFilter<"Tournament"> | number | null
     participants?: TournamentTeamListRelationFilter
     fights?: FightArchiveListRelationFilter
+    qualifPool?: DojoQualifPoolListRelationFilter
   }, "id" | "id">
 
   export type TournamentOrderByWithAggregationInput = {
@@ -104644,6 +106068,11 @@ export namespace Prisma {
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
+    metaArchetype?: SortOrder
+    rules?: SortOrder
+    featuredRaces?: SortOrder
+    nextCandidates?: SortOrderInput | SortOrder
+    nextPollId?: SortOrderInput | SortOrder
     _count?: TournamentCountOrderByAggregateInput
     _avg?: TournamentAvgOrderByAggregateInput
     _max?: TournamentMaxOrderByAggregateInput
@@ -104665,6 +106094,72 @@ export namespace Prisma {
     levelLimit?: IntWithAggregatesFilter<"Tournament"> | number
     cashPrice?: IntWithAggregatesFilter<"Tournament"> | number
     nextRound?: DateTimeWithAggregatesFilter<"Tournament"> | Date | string
+    metaArchetype?: StringWithAggregatesFilter<"Tournament"> | string
+    rules?: JsonWithAggregatesFilter<"Tournament">
+    featuredRaces?: IntNullableListFilter<"Tournament">
+    nextCandidates?: JsonNullableWithAggregatesFilter<"Tournament">
+    nextPollId?: IntNullableWithAggregatesFilter<"Tournament"> | number | null
+  }
+
+  export type DojoQualifPoolWhereInput = {
+    AND?: DojoQualifPoolWhereInput | DojoQualifPoolWhereInput[]
+    OR?: DojoQualifPoolWhereInput[]
+    NOT?: DojoQualifPoolWhereInput | DojoQualifPoolWhereInput[]
+    id?: UuidFilter<"DojoQualifPool"> | string
+    tournamentId?: UuidFilter<"DojoQualifPool"> | string
+    dinozId?: IntFilter<"DojoQualifPool"> | number
+    raceId?: IntFilter<"DojoQualifPool"> | number
+    level?: IntFilter<"DojoQualifPool"> | number
+    tournament?: XOR<TournamentScalarRelationFilter, TournamentWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }
+
+  export type DojoQualifPoolOrderByWithRelationInput = {
+    id?: SortOrder
+    tournamentId?: SortOrder
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    tournament?: TournamentOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type DojoQualifPoolWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tournamentId_dinozId?: DojoQualifPoolTournamentIdDinozIdCompoundUniqueInput
+    AND?: DojoQualifPoolWhereInput | DojoQualifPoolWhereInput[]
+    OR?: DojoQualifPoolWhereInput[]
+    NOT?: DojoQualifPoolWhereInput | DojoQualifPoolWhereInput[]
+    tournamentId?: UuidFilter<"DojoQualifPool"> | string
+    dinozId?: IntFilter<"DojoQualifPool"> | number
+    raceId?: IntFilter<"DojoQualifPool"> | number
+    level?: IntFilter<"DojoQualifPool"> | number
+    tournament?: XOR<TournamentScalarRelationFilter, TournamentWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }, "id" | "tournamentId_dinozId">
+
+  export type DojoQualifPoolOrderByWithAggregationInput = {
+    id?: SortOrder
+    tournamentId?: SortOrder
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    _count?: DojoQualifPoolCountOrderByAggregateInput
+    _avg?: DojoQualifPoolAvgOrderByAggregateInput
+    _max?: DojoQualifPoolMaxOrderByAggregateInput
+    _min?: DojoQualifPoolMinOrderByAggregateInput
+    _sum?: DojoQualifPoolSumOrderByAggregateInput
+  }
+
+  export type DojoQualifPoolScalarWhereWithAggregatesInput = {
+    AND?: DojoQualifPoolScalarWhereWithAggregatesInput | DojoQualifPoolScalarWhereWithAggregatesInput[]
+    OR?: DojoQualifPoolScalarWhereWithAggregatesInput[]
+    NOT?: DojoQualifPoolScalarWhereWithAggregatesInput | DojoQualifPoolScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DojoQualifPool"> | string
+    tournamentId?: UuidWithAggregatesFilter<"DojoQualifPool"> | string
+    dinozId?: IntWithAggregatesFilter<"DojoQualifPool"> | number
+    raceId?: IntWithAggregatesFilter<"DojoQualifPool"> | number
+    level?: IntWithAggregatesFilter<"DojoQualifPool"> | number
   }
 
   export type TournamentTeamWhereInput = {
@@ -105363,6 +106858,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -105416,6 +106912,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -105468,6 +106965,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -105521,6 +107019,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -106193,6 +107692,7 @@ export namespace Prisma {
 
   export type PollOptionCreateInput = {
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
     poll: PollCreateNestedOneWithoutOptionsInput
@@ -106203,6 +107703,7 @@ export namespace Prisma {
     id?: number
     pollId: number
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
     votes?: PollVoteUncheckedCreateNestedManyWithoutPollOptionInput
@@ -106210,6 +107711,7 @@ export namespace Prisma {
 
   export type PollOptionUpdateInput = {
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     poll?: PollUpdateOneRequiredWithoutOptionsNestedInput
@@ -106220,6 +107722,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     pollId?: IntFieldUpdateOperationsInput | number
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     votes?: PollVoteUncheckedUpdateManyWithoutPollOptionNestedInput
@@ -106229,12 +107732,14 @@ export namespace Prisma {
     id?: number
     pollId: number
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
   }
 
   export type PollOptionUpdateManyMutationInput = {
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -106243,6 +107748,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     pollId?: IntFieldUpdateOperationsInput | number
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -110027,8 +111533,14 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     participants?: TournamentTeamCreateNestedManyWithoutTournamentInput
     fights?: FightArchiveCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentUncheckedCreateInput = {
@@ -110042,8 +111554,14 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     participants?: TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput
     fights?: FightArchiveUncheckedCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentUpdateInput = {
@@ -110057,8 +111575,14 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     participants?: TournamentTeamUpdateManyWithoutTournamentNestedInput
     fights?: FightArchiveUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUpdateManyWithoutTournamentNestedInput
   }
 
   export type TournamentUncheckedUpdateInput = {
@@ -110072,8 +111596,14 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     participants?: TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput
     fights?: FightArchiveUncheckedUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutTournamentNestedInput
   }
 
   export type TournamentCreateManyInput = {
@@ -110087,6 +111617,11 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
   }
 
   export type TournamentUpdateManyMutationInput = {
@@ -110100,6 +111635,11 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TournamentUncheckedUpdateManyInput = {
@@ -110113,6 +111653,65 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DojoQualifPoolCreateInput = {
+    id?: string
+    raceId: number
+    level: number
+    tournament: TournamentCreateNestedOneWithoutQualifPoolInput
+    dinoz: DinozCreateNestedOneWithoutDojoQualifPoolInput
+  }
+
+  export type DojoQualifPoolUncheckedCreateInput = {
+    id?: string
+    tournamentId: string
+    dinozId: number
+    raceId: number
+    level: number
+  }
+
+  export type DojoQualifPoolUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    tournament?: TournamentUpdateOneRequiredWithoutQualifPoolNestedInput
+    dinoz?: DinozUpdateOneRequiredWithoutDojoQualifPoolNestedInput
+  }
+
+  export type DojoQualifPoolUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tournamentId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DojoQualifPoolCreateManyInput = {
+    id?: string
+    tournamentId: string
+    dinozId: number
+    raceId: number
+    level: number
+  }
+
+  export type DojoQualifPoolUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DojoQualifPoolUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tournamentId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
   }
 
   export type TournamentTeamCreateInput = {
@@ -111059,6 +112658,12 @@ export namespace Prisma {
     none?: DojoTeamWhereInput
   }
 
+  export type DojoQualifPoolListRelationFilter = {
+    every?: DojoQualifPoolWhereInput
+    some?: DojoQualifPoolWhereInput
+    none?: DojoQualifPoolWhereInput
+  }
+
   export type TournamentTeamListRelationFilter = {
     every?: TournamentTeamWhereInput
     some?: TournamentTeamWhereInput
@@ -111127,6 +112732,10 @@ export namespace Prisma {
   }
 
   export type DojoTeamOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DojoQualifPoolOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -111951,6 +113560,29 @@ export namespace Prisma {
     id?: SortOrder
     newsId?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type PollScalarRelationFilter = {
     is?: PollWhereInput
@@ -111961,6 +113593,7 @@ export namespace Prisma {
     id?: SortOrder
     pollId?: SortOrder
     optionText?: SortOrder
+    labels?: SortOrder
     orderIndex?: SortOrder
     createdDate?: SortOrder
   }
@@ -111991,6 +113624,32 @@ export namespace Prisma {
     id?: SortOrder
     pollId?: SortOrder
     orderIndex?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type PollOptionScalarRelationFilter = {
@@ -115042,6 +116701,11 @@ export namespace Prisma {
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
+    metaArchetype?: SortOrder
+    rules?: SortOrder
+    featuredRaces?: SortOrder
+    nextCandidates?: SortOrder
+    nextPollId?: SortOrder
   }
 
   export type TournamentAvgOrderByAggregateInput = {
@@ -115049,6 +116713,8 @@ export namespace Prisma {
     raceMinimum?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
+    featuredRaces?: SortOrder
+    nextPollId?: SortOrder
   }
 
   export type TournamentMaxOrderByAggregateInput = {
@@ -115062,6 +116728,8 @@ export namespace Prisma {
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
+    metaArchetype?: SortOrder
+    nextPollId?: SortOrder
   }
 
   export type TournamentMinOrderByAggregateInput = {
@@ -115075,6 +116743,8 @@ export namespace Prisma {
     levelLimit?: SortOrder
     cashPrice?: SortOrder
     nextRound?: SortOrder
+    metaArchetype?: SortOrder
+    nextPollId?: SortOrder
   }
 
   export type TournamentSumOrderByAggregateInput = {
@@ -115082,6 +116752,54 @@ export namespace Prisma {
     raceMinimum?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
+    featuredRaces?: SortOrder
+    nextPollId?: SortOrder
+  }
+
+  export type TournamentScalarRelationFilter = {
+    is?: TournamentWhereInput
+    isNot?: TournamentWhereInput
+  }
+
+  export type DojoQualifPoolTournamentIdDinozIdCompoundUniqueInput = {
+    tournamentId: string
+    dinozId: number
+  }
+
+  export type DojoQualifPoolCountOrderByAggregateInput = {
+    id?: SortOrder
+    tournamentId?: SortOrder
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+  }
+
+  export type DojoQualifPoolAvgOrderByAggregateInput = {
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+  }
+
+  export type DojoQualifPoolMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tournamentId?: SortOrder
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+  }
+
+  export type DojoQualifPoolMinOrderByAggregateInput = {
+    id?: SortOrder
+    tournamentId?: SortOrder
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+  }
+
+  export type DojoQualifPoolSumOrderByAggregateInput = {
+    dinozId?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
   }
 
   export type TournamentTeamDojoIdTournamentIdCompoundUniqueInput = {
@@ -115748,6 +117466,13 @@ export namespace Prisma {
     connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
   }
 
+  export type DojoQualifPoolCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput> | DojoQualifPoolCreateWithoutDinozInput[] | DojoQualifPoolUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutDinozInput | DojoQualifPoolCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoQualifPoolCreateManyDinozInputEnvelope
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+  }
+
   export type TournamentTeamCreateNestedManyWithoutDinozInput = {
     create?: XOR<TournamentTeamCreateWithoutDinozInput, TournamentTeamUncheckedCreateWithoutDinozInput> | TournamentTeamCreateWithoutDinozInput[] | TournamentTeamUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: TournamentTeamCreateOrConnectWithoutDinozInput | TournamentTeamCreateOrConnectWithoutDinozInput[]
@@ -115870,6 +117595,13 @@ export namespace Prisma {
     connectOrCreate?: DojoTeamCreateOrConnectWithoutDinozInput | DojoTeamCreateOrConnectWithoutDinozInput[]
     createMany?: DojoTeamCreateManyDinozInputEnvelope
     connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+  }
+
+  export type DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput> | DojoQualifPoolCreateWithoutDinozInput[] | DojoQualifPoolUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutDinozInput | DojoQualifPoolCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoQualifPoolCreateManyDinozInputEnvelope
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
   }
 
   export type TournamentTeamUncheckedCreateNestedManyWithoutDinozInput = {
@@ -116188,6 +117920,20 @@ export namespace Prisma {
     deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
   }
 
+  export type DojoQualifPoolUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput> | DojoQualifPoolCreateWithoutDinozInput[] | DojoQualifPoolUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutDinozInput | DojoQualifPoolCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoQualifPoolUpsertWithWhereUniqueWithoutDinozInput | DojoQualifPoolUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoQualifPoolCreateManyDinozInputEnvelope
+    set?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    disconnect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    delete?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    update?: DojoQualifPoolUpdateWithWhereUniqueWithoutDinozInput | DojoQualifPoolUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoQualifPoolUpdateManyWithWhereWithoutDinozInput | DojoQualifPoolUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
+  }
+
   export type TournamentTeamUpdateManyWithoutDinozNestedInput = {
     create?: XOR<TournamentTeamCreateWithoutDinozInput, TournamentTeamUncheckedCreateWithoutDinozInput> | TournamentTeamCreateWithoutDinozInput[] | TournamentTeamUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: TournamentTeamCreateOrConnectWithoutDinozInput | TournamentTeamCreateOrConnectWithoutDinozInput[]
@@ -116437,6 +118183,20 @@ export namespace Prisma {
     update?: DojoTeamUpdateWithWhereUniqueWithoutDinozInput | DojoTeamUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DojoTeamUpdateManyWithWhereWithoutDinozInput | DojoTeamUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+  }
+
+  export type DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput> | DojoQualifPoolCreateWithoutDinozInput[] | DojoQualifPoolUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutDinozInput | DojoQualifPoolCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoQualifPoolUpsertWithWhereUniqueWithoutDinozInput | DojoQualifPoolUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoQualifPoolCreateManyDinozInputEnvelope
+    set?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    disconnect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    delete?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    update?: DojoQualifPoolUpdateWithWhereUniqueWithoutDinozInput | DojoQualifPoolUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoQualifPoolUpdateManyWithWhereWithoutDinozInput | DojoQualifPoolUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
   }
 
   export type TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput = {
@@ -121580,6 +123340,10 @@ export namespace Prisma {
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutFightWatchedInput, PlayerUpdateWithoutFightWatchedInput>, PlayerUncheckedUpdateWithoutFightWatchedInput>
   }
 
+  export type TournamentCreatefeaturedRacesInput = {
+    set: number[]
+  }
+
   export type TournamentTeamCreateNestedManyWithoutTournamentInput = {
     create?: XOR<TournamentTeamCreateWithoutTournamentInput, TournamentTeamUncheckedCreateWithoutTournamentInput> | TournamentTeamCreateWithoutTournamentInput[] | TournamentTeamUncheckedCreateWithoutTournamentInput[]
     connectOrCreate?: TournamentTeamCreateOrConnectWithoutTournamentInput | TournamentTeamCreateOrConnectWithoutTournamentInput[]
@@ -121594,6 +123358,13 @@ export namespace Prisma {
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
+  export type DojoQualifPoolCreateNestedManyWithoutTournamentInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput> | DojoQualifPoolCreateWithoutTournamentInput[] | DojoQualifPoolUncheckedCreateWithoutTournamentInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutTournamentInput | DojoQualifPoolCreateOrConnectWithoutTournamentInput[]
+    createMany?: DojoQualifPoolCreateManyTournamentInputEnvelope
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+  }
+
   export type TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput = {
     create?: XOR<TournamentTeamCreateWithoutTournamentInput, TournamentTeamUncheckedCreateWithoutTournamentInput> | TournamentTeamCreateWithoutTournamentInput[] | TournamentTeamUncheckedCreateWithoutTournamentInput[]
     connectOrCreate?: TournamentTeamCreateOrConnectWithoutTournamentInput | TournamentTeamCreateOrConnectWithoutTournamentInput[]
@@ -121606,6 +123377,18 @@ export namespace Prisma {
     connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentInput | FightArchiveCreateOrConnectWithoutTournamentInput[]
     createMany?: FightArchiveCreateManyTournamentInputEnvelope
     connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type DojoQualifPoolUncheckedCreateNestedManyWithoutTournamentInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput> | DojoQualifPoolCreateWithoutTournamentInput[] | DojoQualifPoolUncheckedCreateWithoutTournamentInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutTournamentInput | DojoQualifPoolCreateOrConnectWithoutTournamentInput[]
+    createMany?: DojoQualifPoolCreateManyTournamentInputEnvelope
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+  }
+
+  export type TournamentUpdatefeaturedRacesInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type TournamentTeamUpdateManyWithoutTournamentNestedInput = {
@@ -121636,6 +123419,20 @@ export namespace Prisma {
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
+  export type DojoQualifPoolUpdateManyWithoutTournamentNestedInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput> | DojoQualifPoolCreateWithoutTournamentInput[] | DojoQualifPoolUncheckedCreateWithoutTournamentInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutTournamentInput | DojoQualifPoolCreateOrConnectWithoutTournamentInput[]
+    upsert?: DojoQualifPoolUpsertWithWhereUniqueWithoutTournamentInput | DojoQualifPoolUpsertWithWhereUniqueWithoutTournamentInput[]
+    createMany?: DojoQualifPoolCreateManyTournamentInputEnvelope
+    set?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    disconnect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    delete?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    update?: DojoQualifPoolUpdateWithWhereUniqueWithoutTournamentInput | DojoQualifPoolUpdateWithWhereUniqueWithoutTournamentInput[]
+    updateMany?: DojoQualifPoolUpdateManyWithWhereWithoutTournamentInput | DojoQualifPoolUpdateManyWithWhereWithoutTournamentInput[]
+    deleteMany?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
+  }
+
   export type TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput = {
     create?: XOR<TournamentTeamCreateWithoutTournamentInput, TournamentTeamUncheckedCreateWithoutTournamentInput> | TournamentTeamCreateWithoutTournamentInput[] | TournamentTeamUncheckedCreateWithoutTournamentInput[]
     connectOrCreate?: TournamentTeamCreateOrConnectWithoutTournamentInput | TournamentTeamCreateOrConnectWithoutTournamentInput[]
@@ -121662,6 +123459,48 @@ export namespace Prisma {
     update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentInput[]
     updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentInput | FightArchiveUpdateManyWithWhereWithoutTournamentInput[]
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type DojoQualifPoolUncheckedUpdateManyWithoutTournamentNestedInput = {
+    create?: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput> | DojoQualifPoolCreateWithoutTournamentInput[] | DojoQualifPoolUncheckedCreateWithoutTournamentInput[]
+    connectOrCreate?: DojoQualifPoolCreateOrConnectWithoutTournamentInput | DojoQualifPoolCreateOrConnectWithoutTournamentInput[]
+    upsert?: DojoQualifPoolUpsertWithWhereUniqueWithoutTournamentInput | DojoQualifPoolUpsertWithWhereUniqueWithoutTournamentInput[]
+    createMany?: DojoQualifPoolCreateManyTournamentInputEnvelope
+    set?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    disconnect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    delete?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    connect?: DojoQualifPoolWhereUniqueInput | DojoQualifPoolWhereUniqueInput[]
+    update?: DojoQualifPoolUpdateWithWhereUniqueWithoutTournamentInput | DojoQualifPoolUpdateWithWhereUniqueWithoutTournamentInput[]
+    updateMany?: DojoQualifPoolUpdateManyWithWhereWithoutTournamentInput | DojoQualifPoolUpdateManyWithWhereWithoutTournamentInput[]
+    deleteMany?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
+  }
+
+  export type TournamentCreateNestedOneWithoutQualifPoolInput = {
+    create?: XOR<TournamentCreateWithoutQualifPoolInput, TournamentUncheckedCreateWithoutQualifPoolInput>
+    connectOrCreate?: TournamentCreateOrConnectWithoutQualifPoolInput
+    connect?: TournamentWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutDojoQualifPoolInput = {
+    create?: XOR<DinozCreateWithoutDojoQualifPoolInput, DinozUncheckedCreateWithoutDojoQualifPoolInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoQualifPoolInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type TournamentUpdateOneRequiredWithoutQualifPoolNestedInput = {
+    create?: XOR<TournamentCreateWithoutQualifPoolInput, TournamentUncheckedCreateWithoutQualifPoolInput>
+    connectOrCreate?: TournamentCreateOrConnectWithoutQualifPoolInput
+    upsert?: TournamentUpsertWithoutQualifPoolInput
+    connect?: TournamentWhereUniqueInput
+    update?: XOR<XOR<TournamentUpdateToOneWithWhereWithoutQualifPoolInput, TournamentUpdateWithoutQualifPoolInput>, TournamentUncheckedUpdateWithoutQualifPoolInput>
+  }
+
+  export type DinozUpdateOneRequiredWithoutDojoQualifPoolNestedInput = {
+    create?: XOR<DinozCreateWithoutDojoQualifPoolInput, DinozUncheckedCreateWithoutDojoQualifPoolInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoQualifPoolInput
+    upsert?: DinozUpsertWithoutDojoQualifPoolInput
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutDojoQualifPoolInput, DinozUpdateWithoutDojoQualifPoolInput>, DinozUncheckedUpdateWithoutDojoQualifPoolInput>
   }
 
   export type DojoCreateNestedOneWithoutTournamentTeamInput = {
@@ -122705,6 +124544,29 @@ export namespace Prisma {
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedEnumAdminRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
@@ -123065,6 +124927,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -123117,6 +124980,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -123666,6 +125530,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -123718,6 +125583,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -123774,6 +125640,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -123826,6 +125693,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -124036,6 +125904,30 @@ export namespace Prisma {
 
   export type DojoTeamCreateManyDinozInputEnvelope = {
     data: DojoTeamCreateManyDinozInput | DojoTeamCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DojoQualifPoolCreateWithoutDinozInput = {
+    id?: string
+    raceId: number
+    level: number
+    tournament: TournamentCreateNestedOneWithoutQualifPoolInput
+  }
+
+  export type DojoQualifPoolUncheckedCreateWithoutDinozInput = {
+    id?: string
+    tournamentId: string
+    raceId: number
+    level: number
+  }
+
+  export type DojoQualifPoolCreateOrConnectWithoutDinozInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    create: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoQualifPoolCreateManyDinozInputEnvelope = {
+    data: DojoQualifPoolCreateManyDinozInput | DojoQualifPoolCreateManyDinozInput[]
     skipDuplicates?: boolean
   }
 
@@ -124587,6 +126479,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -124639,6 +126532,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -124895,6 +126789,33 @@ export namespace Prisma {
     fighted?: BoolFilter<"DojoTeam"> | boolean
   }
 
+  export type DojoQualifPoolUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    update: XOR<DojoQualifPoolUpdateWithoutDinozInput, DojoQualifPoolUncheckedUpdateWithoutDinozInput>
+    create: XOR<DojoQualifPoolCreateWithoutDinozInput, DojoQualifPoolUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoQualifPoolUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    data: XOR<DojoQualifPoolUpdateWithoutDinozInput, DojoQualifPoolUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DojoQualifPoolUpdateManyWithWhereWithoutDinozInput = {
+    where: DojoQualifPoolScalarWhereInput
+    data: XOR<DojoQualifPoolUpdateManyMutationInput, DojoQualifPoolUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DojoQualifPoolScalarWhereInput = {
+    AND?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
+    OR?: DojoQualifPoolScalarWhereInput[]
+    NOT?: DojoQualifPoolScalarWhereInput | DojoQualifPoolScalarWhereInput[]
+    id?: UuidFilter<"DojoQualifPool"> | string
+    tournamentId?: UuidFilter<"DojoQualifPool"> | string
+    dinozId?: IntFilter<"DojoQualifPool"> | number
+    raceId?: IntFilter<"DojoQualifPool"> | number
+    level?: IntFilter<"DojoQualifPool"> | number
+  }
+
   export type TournamentTeamUpsertWithWhereUniqueWithoutDinozInput = {
     where: TournamentTeamWhereUniqueInput
     update: XOR<TournamentTeamUpdateWithoutDinozInput, TournamentTeamUncheckedUpdateWithoutDinozInput>
@@ -124969,6 +126890,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -125021,6 +126943,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -125172,6 +127095,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -125224,6 +127148,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -125361,6 +127286,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -125413,6 +127339,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -125562,6 +127489,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -125614,6 +127542,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -125759,6 +127688,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -125811,6 +127741,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -125878,6 +127809,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -125930,6 +127862,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -125981,6 +127914,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -126033,6 +127967,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -126164,6 +128099,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -126216,6 +128152,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -126337,6 +128274,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -126389,6 +128327,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -126520,6 +128459,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -126572,6 +128512,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -126693,6 +128634,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -126745,6 +128687,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -126876,6 +128819,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -126928,6 +128872,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -127204,6 +129149,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -127256,6 +129202,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -127583,6 +129530,7 @@ export namespace Prisma {
 
   export type PollOptionCreateWithoutPollInput = {
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
     votes?: PollVoteCreateNestedManyWithoutPollOptionInput
@@ -127591,6 +129539,7 @@ export namespace Prisma {
   export type PollOptionUncheckedCreateWithoutPollInput = {
     id?: number
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
     votes?: PollVoteUncheckedCreateNestedManyWithoutPollOptionInput
@@ -127698,6 +129647,7 @@ export namespace Prisma {
     id?: IntFilter<"PollOption"> | number
     pollId?: IntFilter<"PollOption"> | number
     optionText?: StringFilter<"PollOption"> | string
+    labels?: JsonNullableFilter<"PollOption">
     orderIndex?: IntFilter<"PollOption"> | number
     createdDate?: DateTimeFilter<"PollOption"> | Date | string
   }
@@ -127842,6 +129792,7 @@ export namespace Prisma {
 
   export type PollOptionCreateWithoutVotesInput = {
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
     poll: PollCreateNestedOneWithoutOptionsInput
@@ -127851,6 +129802,7 @@ export namespace Prisma {
     id?: number
     pollId: number
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
   }
@@ -128056,6 +130008,7 @@ export namespace Prisma {
 
   export type PollOptionUpdateWithoutVotesInput = {
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     poll?: PollUpdateOneRequiredWithoutOptionsNestedInput
@@ -128065,6 +130018,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     pollId?: IntFieldUpdateOperationsInput | number
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -128364,6 +130318,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -128416,6 +130371,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -128483,6 +130439,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -128535,6 +130492,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -129135,6 +131093,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -129187,6 +131146,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -132217,6 +134177,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -132269,6 +134230,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -132371,6 +134333,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -132423,6 +134386,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -132503,6 +134467,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -132555,6 +134520,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -132657,6 +134623,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -132709,6 +134676,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -136360,6 +138328,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -136412,6 +138381,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -136680,6 +138650,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -136732,6 +138703,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -136987,6 +138959,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -137039,6 +139012,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -137261,6 +139235,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -137313,6 +139288,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -137525,6 +139501,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -137577,6 +139554,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -137644,6 +139622,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -137696,6 +139675,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -138063,6 +140043,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -138115,6 +140096,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -138337,6 +140319,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -138389,6 +140372,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -140023,6 +142007,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -140075,6 +142060,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -142227,6 +144213,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -142279,6 +144266,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -142403,6 +144391,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -142455,6 +144444,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -144240,6 +146230,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -144292,6 +146283,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -144878,6 +146870,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -144930,6 +146923,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -147856,7 +149850,13 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     participants?: TournamentTeamCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentUncheckedCreateWithoutFightsInput = {
@@ -147870,7 +149870,13 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     participants?: TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentCreateOrConnectWithoutFightsInput = {
@@ -148614,7 +150620,13 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     participants?: TournamentTeamUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUpdateManyWithoutTournamentNestedInput
   }
 
   export type TournamentUncheckedUpdateWithoutFightsInput = {
@@ -148628,7 +150640,13 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     participants?: TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutTournamentNestedInput
   }
 
   export type TournamentTeamUpsertWithoutFightArchiveLeftInput = {
@@ -149382,6 +151400,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DojoQualifPoolCreateWithoutTournamentInput = {
+    id?: string
+    raceId: number
+    level: number
+    dinoz: DinozCreateNestedOneWithoutDojoQualifPoolInput
+  }
+
+  export type DojoQualifPoolUncheckedCreateWithoutTournamentInput = {
+    id?: string
+    dinozId: number
+    raceId: number
+    level: number
+  }
+
+  export type DojoQualifPoolCreateOrConnectWithoutTournamentInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    create: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput>
+  }
+
+  export type DojoQualifPoolCreateManyTournamentInputEnvelope = {
+    data: DojoQualifPoolCreateManyTournamentInput | DojoQualifPoolCreateManyTournamentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TournamentTeamUpsertWithWhereUniqueWithoutTournamentInput = {
     where: TournamentTeamWhereUniqueInput
     update: XOR<TournamentTeamUpdateWithoutTournamentInput, TournamentTeamUncheckedUpdateWithoutTournamentInput>
@@ -149412,6 +151454,344 @@ export namespace Prisma {
   export type FightArchiveUpdateManyWithWhereWithoutTournamentInput = {
     where: FightArchiveScalarWhereInput
     data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutTournamentInput>
+  }
+
+  export type DojoQualifPoolUpsertWithWhereUniqueWithoutTournamentInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    update: XOR<DojoQualifPoolUpdateWithoutTournamentInput, DojoQualifPoolUncheckedUpdateWithoutTournamentInput>
+    create: XOR<DojoQualifPoolCreateWithoutTournamentInput, DojoQualifPoolUncheckedCreateWithoutTournamentInput>
+  }
+
+  export type DojoQualifPoolUpdateWithWhereUniqueWithoutTournamentInput = {
+    where: DojoQualifPoolWhereUniqueInput
+    data: XOR<DojoQualifPoolUpdateWithoutTournamentInput, DojoQualifPoolUncheckedUpdateWithoutTournamentInput>
+  }
+
+  export type DojoQualifPoolUpdateManyWithWhereWithoutTournamentInput = {
+    where: DojoQualifPoolScalarWhereInput
+    data: XOR<DojoQualifPoolUpdateManyMutationInput, DojoQualifPoolUncheckedUpdateManyWithoutTournamentInput>
+  }
+
+  export type TournamentCreateWithoutQualifPoolInput = {
+    id?: string
+    date?: Date | string
+    formatName?: string
+    teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
+    participants?: TournamentTeamCreateNestedManyWithoutTournamentInput
+    fights?: FightArchiveCreateNestedManyWithoutTournamentInput
+  }
+
+  export type TournamentUncheckedCreateWithoutQualifPoolInput = {
+    id?: string
+    date?: Date | string
+    formatName?: string
+    teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
+    participants?: TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput
+    fights?: FightArchiveUncheckedCreateNestedManyWithoutTournamentInput
+  }
+
+  export type TournamentCreateOrConnectWithoutQualifPoolInput = {
+    where: TournamentWhereUniqueInput
+    create: XOR<TournamentCreateWithoutQualifPoolInput, TournamentUncheckedCreateWithoutQualifPoolInput>
+  }
+
+  export type DinozCreateWithoutDojoQualifPoolInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
+    seed?: string
+    championshipPieces?: ClanChampionshipPieceCreateNestedManyWithoutDinozInput
+    castle?: ClanCastleCreateNestedOneWithoutDefenderInput
+    build?: DinozBuildCreateNestedOneWithoutDinozsInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunCreateNestedOneWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutDojoQualifPoolInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    castleId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    FBTournamentStep?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    unavailableUntil?: Date | string | null
+    seed?: string
+    playerId: string
+    buildId?: string | null
+    championshipPieces?: ClanChampionshipPieceUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    dungeonRun?: DungeonRunUncheckedCreateNestedOneWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutDojoQualifPoolInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutDojoQualifPoolInput, DinozUncheckedCreateWithoutDojoQualifPoolInput>
+  }
+
+  export type TournamentUpsertWithoutQualifPoolInput = {
+    update: XOR<TournamentUpdateWithoutQualifPoolInput, TournamentUncheckedUpdateWithoutQualifPoolInput>
+    create: XOR<TournamentCreateWithoutQualifPoolInput, TournamentUncheckedCreateWithoutQualifPoolInput>
+    where?: TournamentWhereInput
+  }
+
+  export type TournamentUpdateToOneWithWhereWithoutQualifPoolInput = {
+    where?: TournamentWhereInput
+    data: XOR<TournamentUpdateWithoutQualifPoolInput, TournamentUncheckedUpdateWithoutQualifPoolInput>
+  }
+
+  export type TournamentUpdateWithoutQualifPoolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
+    teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: TournamentTeamUpdateManyWithoutTournamentNestedInput
+    fights?: FightArchiveUpdateManyWithoutTournamentNestedInput
+  }
+
+  export type TournamentUncheckedUpdateWithoutQualifPoolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
+    teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput
+    fights?: FightArchiveUncheckedUpdateManyWithoutTournamentNestedInput
+  }
+
+  export type DinozUpsertWithoutDojoQualifPoolInput = {
+    update: XOR<DinozUpdateWithoutDojoQualifPoolInput, DinozUncheckedUpdateWithoutDojoQualifPoolInput>
+    create: XOR<DinozCreateWithoutDojoQualifPoolInput, DinozUncheckedCreateWithoutDojoQualifPoolInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutDojoQualifPoolInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutDojoQualifPoolInput, DinozUncheckedUpdateWithoutDojoQualifPoolInput>
+  }
+
+  export type DinozUpdateWithoutDojoQualifPoolInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seed?: StringFieldUpdateOperationsInput | string
+    championshipPieces?: ClanChampionshipPieceUpdateManyWithoutDinozNestedInput
+    castle?: ClanCastleUpdateOneWithoutDefenderNestedInput
+    build?: DinozBuildUpdateOneWithoutDinozsNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUpdateOneWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutDojoQualifPoolInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    castleId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    unavailableUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    buildId?: NullableStringFieldUpdateOperationsInput | string | null
+    championshipPieces?: ClanChampionshipPieceUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    dungeonRun?: DungeonRunUncheckedUpdateOneWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DojoCreateWithoutTournamentTeamInput = {
@@ -149492,6 +151872,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutTournamentTeamInput = {
@@ -149544,6 +151925,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutTournamentTeamInput = {
@@ -149562,7 +151944,13 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     fights?: FightArchiveCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentUncheckedCreateWithoutParticipantsInput = {
@@ -149576,7 +151964,13 @@ export namespace Prisma {
     levelLimit?: number
     cashPrice?: number
     nextRound?: Date | string
+    metaArchetype?: string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentCreatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: number | null
     fights?: FightArchiveUncheckedCreateNestedManyWithoutTournamentInput
+    qualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentCreateOrConnectWithoutParticipantsInput = {
@@ -149761,7 +152155,13 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     fights?: FightArchiveUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUpdateManyWithoutTournamentNestedInput
   }
 
   export type TournamentUncheckedUpdateWithoutParticipantsInput = {
@@ -149775,7 +152175,13 @@ export namespace Prisma {
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    metaArchetype?: StringFieldUpdateOperationsInput | string
+    rules?: JsonNullValueInput | InputJsonValue
+    featuredRaces?: TournamentUpdatefeaturedRacesInput | number[]
+    nextCandidates?: NullableJsonNullValueInput | InputJsonValue
+    nextPollId?: NullableIntFieldUpdateOperationsInput | number | null
     fights?: FightArchiveUncheckedUpdateManyWithoutTournamentNestedInput
+    qualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutTournamentNestedInput
   }
 
   export type FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput = {
@@ -151227,6 +153633,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamCreateNestedManyWithoutDinozInput
   }
 
@@ -151279,6 +153686,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
     DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+    DojoQualifPool?: DojoQualifPoolUncheckedCreateNestedManyWithoutDinozInput
     TournamentTeam?: TournamentTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
@@ -151554,6 +153962,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -151606,6 +154015,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -151753,6 +154163,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -151805,6 +154216,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -151991,6 +154403,13 @@ export namespace Prisma {
     id?: string
     dojoId: string
     fighted?: boolean
+  }
+
+  export type DojoQualifPoolCreateManyDinozInput = {
+    id?: string
+    tournamentId: string
+    raceId: number
+    level: number
   }
 
   export type ClanChampionshipPieceUpdateWithoutDinozInput = {
@@ -152221,6 +154640,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -152273,6 +154693,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -152477,6 +154898,27 @@ export namespace Prisma {
     fighted?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type DojoQualifPoolUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    tournament?: TournamentUpdateOneRequiredWithoutQualifPoolNestedInput
+  }
+
+  export type DojoQualifPoolUncheckedUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tournamentId?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DojoQualifPoolUncheckedUpdateManyWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tournamentId?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+  }
+
   export type TournamentTeamUpdateWithoutDinozInput = {
     id?: StringFieldUpdateOperationsInput | string
     dojoId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -152606,6 +155048,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -152658,6 +155101,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -152718,6 +155162,7 @@ export namespace Prisma {
   export type PollOptionCreateManyPollInput = {
     id?: number
     optionText: string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: number
     createdDate?: Date | string
   }
@@ -152731,6 +155176,7 @@ export namespace Prisma {
 
   export type PollOptionUpdateWithoutPollInput = {
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     votes?: PollVoteUpdateManyWithoutPollOptionNestedInput
@@ -152739,6 +155185,7 @@ export namespace Prisma {
   export type PollOptionUncheckedUpdateWithoutPollInput = {
     id?: IntFieldUpdateOperationsInput | number
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     votes?: PollVoteUncheckedUpdateManyWithoutPollOptionNestedInput
@@ -152747,6 +155194,7 @@ export namespace Prisma {
   export type PollOptionUncheckedUpdateManyWithoutPollInput = {
     id?: IntFieldUpdateOperationsInput | number
     optionText?: StringFieldUpdateOperationsInput | string
+    labels?: NullableJsonNullValueInput | InputJsonValue
     orderIndex?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -153589,6 +156037,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -153641,6 +156090,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -155366,6 +157816,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUpdateManyWithoutDinozNestedInput
   }
 
@@ -155418,6 +157869,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
@@ -155939,6 +158391,13 @@ export namespace Prisma {
     FBTournamentRightId?: number | null
   }
 
+  export type DojoQualifPoolCreateManyTournamentInput = {
+    id?: string
+    dinozId: number
+    raceId: number
+    level: number
+  }
+
   export type TournamentTeamUpdateWithoutTournamentInput = {
     id?: StringFieldUpdateOperationsInput | string
     dojoId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -156025,6 +158484,27 @@ export namespace Prisma {
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
     FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DojoQualifPoolUpdateWithoutTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    dinoz?: DinozUpdateOneRequiredWithoutDojoQualifPoolNestedInput
+  }
+
+  export type DojoQualifPoolUncheckedUpdateWithoutTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DojoQualifPoolUncheckedUpdateManyWithoutTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
   }
 
   export type FightArchiveCreateManyTournamentTeamLeftInput = {
@@ -156116,6 +158596,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutTournamentTeamInput = {
@@ -156168,6 +158649,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+    DojoQualifPool?: DojoQualifPoolUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutTournamentTeamInput = {

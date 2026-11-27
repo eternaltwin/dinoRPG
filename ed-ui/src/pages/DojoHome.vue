@@ -85,6 +85,9 @@
 				<p class="ttu">
 					{{ $t('dojo.reputation') }} : {{ reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} : {{ worth }}%
 				</p>
+				<p v-if="featuredRace !== null" class="featured" data-testid="featured-race-home">
+					★ {{ $t('dojo.ui.featuredRace.short', { race: $t(raceNameKey(featuredRace)) }) }}
+				</p>
 				<p>{{ $t('dojo.position') }} : {{ rank }}</p>
 			</div>
 		</div>
@@ -103,6 +106,7 @@ import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import DojoTimer from '../components/dojo/DojoTimer.vue';
 import { formatDateTime } from '../utils/formatDateTime';
+import { raceNameKey } from '../utils/dojo.js';
 
 export default defineComponent({
 	name: 'DojoHome',
@@ -152,7 +156,8 @@ export default defineComponent({
 		},
 		formatDate(oldDate: Date) {
 			return formatDateTime(oldDate.toString());
-		}
+		},
+		raceNameKey
 	},
 	computed: {
 		TournamentPhase() {
@@ -169,6 +174,10 @@ export default defineComponent({
 		},
 		tournamentState() {
 			return this.dojoStore.getState;
+		},
+		featuredRace(): number | null {
+			if (this.tournamentState?.phase !== TournamentPhase.QUALIFICATION) return null;
+			return this.tournamentState.featuredRace ?? null;
 		}
 	},
 	async created() {
@@ -208,6 +217,10 @@ export default defineComponent({
 
 			p:last-child {
 				color: #aae59c;
+			}
+
+			p.featured {
+				color: #ffd700;
 			}
 		}
 	}

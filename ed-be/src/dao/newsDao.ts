@@ -72,6 +72,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 							options: {
 								select: {
 									optionText: true,
+									labels: true,
 									id: true
 								}
 							},
@@ -127,6 +128,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 							options: {
 								select: {
 									optionText: true,
+									labels: true,
 									id: true
 								}
 							},
@@ -182,6 +184,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 							options: {
 								select: {
 									optionText: true,
+									labels: true,
 									id: true
 								}
 							},
@@ -237,6 +240,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 							options: {
 								select: {
 									optionText: true,
+									labels: true,
 									id: true
 								}
 							},
@@ -292,6 +296,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 							options: {
 								select: {
 									optionText: true,
+									labels: true,
 									id: true
 								}
 							},
